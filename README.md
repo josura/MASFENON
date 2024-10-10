@@ -13,3 +13,10 @@ Standalone project for the framework behind [c2c-sepia](https://github.com/josur
 ├── src # contains the source files
 └── scripts # contains some scripts
 ```
+
+## BUILD
+```bash
+cmake -B build
+cd build
+make
+```
