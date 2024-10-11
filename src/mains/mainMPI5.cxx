@@ -113,6 +113,57 @@ int main(int argc, char** argv) {
         logger.enable();
     }
 
+    //controls over impossible configurations
+    if(vm.count("fUniqueGraph") == 0 && vm.count("graphsFilesFolder") == 0){
+        //no unique graph of folder of the graphs was set
+        std::cerr << "[ERROR] no unique graph filename or folder was set to get the graphs, set one "<<std::endl;
+        return 1;
+    }
+
+    if(vm.count("fInitialPerturbationPerType") == 0 && vm.count("initialPerturbationPerTypeFolder") == 0){
+        //no way of getting the initial perturbation values
+        std::cerr << "[ERROR] no matrix for the initial values was passed as filename or single vector in files contained in the folder specified was set, set one "<<std::endl;
+        return 1;
+    }
+
+    if(vm.count("fInitialPerturbationPerType") && vm.count("graphsFilesFolder")){
+        //unstable configuration of different graphs and single matrix with the same nodes
+        std::cerr << "[ERROR] both fInitialPerturbationPerType and graphsFilesFolder were set, only one can be used"<<std::endl;
+        return 1;
+    }
+
+    if(saturation && conservateInitialNorm){
+        std::cerr << "[ERROR] saturation and conservateInitialNorm cannot be both true, aborting"<<std::endl;
+        return 1;
+    }
+
+    if(vm.count("graphsFilesFolder") && vm.count("fUniqueGraph")){
+        std::cerr << "[ERROR] fUniqueGraph and graphsFilesFolder were both set. Aborting\n";
+        return 1;
+    }
+
+    if(vm.count("initialPerturbationPerTypeFolder") && vm.count("fInitialPerturbationPerType")){
+        std::cerr << "[ERROR] fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting\n";
+        return 1;
+    }
+
+    if(!saturation){
+        if (vm.count("saturationTerm")){
+            std::cerr << "[ERROR] saturationTerm was set but saturation was not set, impossible configuration, aborting"<<std::endl;
+            return 1;
+        }
+        if (customSaturation){
+            std::cerr << "[ERROR] customSaturation was set but saturation was not set, impossible configuration, aborting"<<std::endl;
+            return 1;
+        }
+    } 
+
+    // reading the parameters
+
+    
+
+
+
     auto end = std::chrono::steady_clock::now();
     if(rank == 0){
         if(vm.count("savePerformance")){
