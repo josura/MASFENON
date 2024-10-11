@@ -12,7 +12,7 @@
 #include "computation/PropagationModel.hxx"
 #include "computation/PropagationModelOriginal.hxx"
 #include "computation/PropagationModelNeighbors.hxx"
-#include "PropagationModelCustom.hxx"
+#include "computation/PropagationModelCustom.hxx"
 #include "computation/ConservationModel.hxx"
 #include "computation/DissipationModel.hxx"
 #include "computation/DissipationModelPow.hxx"
