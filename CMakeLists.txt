@@ -48,7 +48,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 include_directories(src)
 
 set(EXEC_MAIN "src/mains/main.cxx")
-set(EXEC_MPI_MAIN "src/mains/mainMPI4.cxx")
+set(EXEC_MPI_MAIN "src/mains/mainMPI.cxx")
 set(EXPERIMENT_MAIN "src/mains/testingPerformance.cxx")
 set(LIB_SRCS 
     src/data_structures/WeightedEdgeGraph.cxx
