@@ -20,3 +20,12 @@ cmake -B build
 cd build
 make
 ```
+
+## PARAMETER CUSTOMIZATION
+
+
+## USAGE
+### HELP MESSAGE
+```bash
+./build/masfenon --help
+```
