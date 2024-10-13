@@ -426,7 +426,7 @@ std::vector<std::string> getTypesFromMatrixFile(std::string matrixFilepath){
     return typeNames;
 }
 
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> logFoldChangeMatrixToCellVectors(std::string filename, const std::vector<std::string>& finalNames,bool useEntrez){
+std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> logFoldChangeMatrixToCellVectors(std::string filename, const std::vector<std::string>& finalNames){
     string line;
     std::vector<std::vector<double>> ret;
     std::vector<std::string> cellNames;
@@ -436,7 +436,6 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
     for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
         finalGenesToIndex[finalNames[i]] = i;
     }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -451,24 +450,11 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==splittedHeader.size()){
-                    if(!useEntrez){
-                        geneNames.push_back(entries[0]);
-                        for(int i = 1; i < SizeToInt(entries.size());i++){
-                            //ret[i-1].push_back(std::stod(entries[i]));
-                            ret[i-1][finalGenesToIndex[entries[0]]] = std::stod(entries[i]);
-                        } //TODO control over the genes in the metapathway like its done below with the mapping, but without the mapping and by taking a vector maybe
+                    geneNames.push_back(entries[0]);
+                    for(int i = 1; i < SizeToInt(entries.size());i++){
+                        ret[i-1][finalGenesToIndex[entries[0]]] = std::stod(entries[i]);
                     }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalGenesToIndex.contains(mapEnsembleToEntrez[entries[0]])) {
-                            geneNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                            for(int i = 1; i < SizeToInt(entries.size());i++){
-                                //ret[i-1].push_back(std::stod(entries[i]));
-                                ret[i-1][finalGenesToIndex[mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[i]);
-                            }
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
-                    }
+                
                 } else {
                     throw std::invalid_argument("utilities::edgeFileEdgesListByIndex: header doesn't have the same amount of columns as the data " + filename);
                 }
@@ -1542,36 +1528,6 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     return ret; 
 }
 
-
-std::map<std::string, std::string> getEnsembletoEntrezidMap(){
-    string line;
-    std::map<std::string,std::string> ret;
-    std::string mapFilename = "resources/graphs/metapathwayNew/nodes.tsv";
-    if(file_exists(mapFilename)){
-        ifstream myfile (mapFilename);
-        if (myfile.is_open())
-        {
-            getline (myfile,line);  // first line is header IMPORTANT
-            while ( getline (myfile,line) )
-            {
-                std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==4){
-                    std::string Id = entries[0];
-                    std::string Name = entries[1];
-                    std::string Type = entries[2];
-                    std::string Aliases = entries[3];
-                    ret[Name] = Id;
-                    
-                }
-            }
-            myfile.close();
-        }
-    } else {
-        throw std::invalid_argument("utilities::getEnsembletoEntrezidMap: file does not exists " + mapFilename);
-    }
-    return ret;
-}
-
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
@@ -1613,7 +1569,7 @@ std::vector<std::string> get_all(std::string const & root, std::string const & e
     return paths;
 } 
 
-void saveNodeValues(std::string folderName, int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValues(std::string folderName, int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1622,20 +1578,16 @@ void saveNodeValues(std::string folderName, int iteration, std::string cellName,
         return;
     }
     if(nodesDescriptionFile.length()==0){
-        if(useEntrez)
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-        else  // no nodes description file is used
-            nodesDescriptionFile = "";
+        std::cout << "[WARNING] no nodes description file provided, using nothing to get the nodes description" << std::endl;
     } else {
         if(!file_exists(nodesDescriptionFile)){
             throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
         }
     }
-    //auto mapToEnsemble = getEnsembletoEntrezidMap();
     //header
     outfile << "nodeID\tnodeName\ttype\talias\tnodeValue\n";
     //body
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         auto mapToEverything = getFullNodesDescription(nodesDescriptionFile);
         for(uint i = 0; i < nodeValues.size(); i++){
             if(mapToEverything.contains(nodeNames[i]))
@@ -1677,7 +1629,7 @@ void saveNodeValues(std::string folderName, int iteration, std::string cellName,
     outfile.close();
 }
 
-void saveNodeValues(std::string folderName, int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValues(std::string folderName, int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iterationOuter + intraIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1686,14 +1638,12 @@ void saveNodeValues(std::string folderName, int iterationOuter, int intraIterati
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
@@ -1719,7 +1669,7 @@ void saveNodeValues(std::string folderName, int iterationOuter, int intraIterati
     }
 }
 
-void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile, double timestep){
+void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile, double timestep){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iterationOuter + intraIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1728,15 +1678,12 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    //TODO specifiy if the nodes description are in a folder with the graphs description files?
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
@@ -1763,7 +1710,7 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
 }
 
 
-void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + typeName + "--"+std::to_string(currentIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1772,15 +1719,12 @@ void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, d
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    //TODO specifiy if the nodes description are in a folder with the graphs description files?
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
