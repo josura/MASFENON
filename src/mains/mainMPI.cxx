@@ -608,12 +608,12 @@ int main(int argc, char** argv) {
         typesFromFolder = allGraphs.first;
         auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
         if(typesFromFolderFiltered.size() != types.size()){
-            std::cerr << "[ERROR] types from folder (filtered with subtypes) and types from values do not have the same length: aborting"<<std::endl;
+            std::cerr << "[ERROR] types from folder (filtered with subtypes) and types from values do not have the same length: aborting" << std::endl;
             return 1;
         }
         for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
             if(typesFromFolderFiltered[i] != types[i]){  // TODO this control can be faulty, since the order of the types is not guaranteed when reading the files
-                std::cerr << "[ERROR] types from folder(filtered with subtypes) and types from file do not match: aborting"<<std::endl;
+                std::cerr << "[ERROR] types from folder(filtered with subtypes) and types from file do not match: aborting" << std::endl;
                 return 1;
             }
         }
@@ -625,7 +625,7 @@ int main(int argc, char** argv) {
             auto typesFromNames = getKeys<std::string,std::vector<std::string>>(namesFromFolder);
             auto typesFromNamesFiltered = vectorsIntersection(typesFromNames, subtypes);
             if(typesFromNamesFiltered.size() != types.size()){ //TODO change the control over the types read from the graph, since the values can be not expressed for some graphs
-                std::cerr << "[ERROR] types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting"<<std::endl;
+                std::cerr << "[ERROR] types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting" << std::endl;
                 return 1;
             }
             // control over the values and the order is useless since the map is unordered and doesn't guarantee the order of reading the files
@@ -652,10 +652,8 @@ int main(int argc, char** argv) {
 
         // create the graphs and the map for the nodes
         for(uint i = 0; i < types.size(); i++){
-            //graphsNodesAll.push_back(namesAndEdges[i].first);
             std::string tmpType = types[i];
             graphsNodesAll.push_back(namesFromFolder[tmpType]);
-            // typeToNodeNamesMap[types[i]] = namesAndEdges[i].first;
             auto tmpNodeNames = namesFromFolder[tmpType];
             
             typeToNodeNamesMap[tmpType] = tmpNodeNames;
