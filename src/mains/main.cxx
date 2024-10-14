@@ -451,7 +451,6 @@ int main(int argc, char** argv ) {
     //use the number of types to allocate an array of pointers to contain the graph for every type
     WeightedEdgeGraph **graphs = new WeightedEdgeGraph*[types.size()];
     std::vector<std::vector<std::string>> graphsNodes;
-    std::vector<std::vector<std::string>> graphsNodesAll; // used only in the setup phase to read the initial input values, contains all types
     std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>> namesAndEdges;
     if(vm.count("fUniqueGraph")){
         namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(filename));
@@ -461,10 +460,6 @@ int main(int argc, char** argv ) {
             namesAndEdges.push_back(namesAndEdges[0]);
             graphsNodes.push_back(namesAndEdges[0].first);
             graphs[i] = graphs[0];
-        }
-        // TODO only use the single graph for the setup phase, without filling all the maps for all the other types, optimize the memory usage
-        for (uint i = 0; i<types.size(); i++){
-            graphsNodesAll.push_back(namesAndEdges[0].first);
         }
     } else if (vm.count("graphsFilesFolder")) {
         auto allGraphs = edgesFileToEdgesListAndNodesByNameFromFolder(graphsFilesFolder);
@@ -507,7 +502,7 @@ int main(int argc, char** argv ) {
         initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
     } else if (vm.count("initialPerturbationPerTypeFolder")){
         logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
-        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes);
+        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodes,subtypes);
     } else {
         std::cerr << "[ERROR] no initial perturbation file or folder specified: aborting"<<std::endl;
         return 1;
