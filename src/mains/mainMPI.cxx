@@ -790,9 +790,9 @@ int main(int argc, char** argv) {
             // the above can be implemented with the use of different matrices for every single type(from 1 to max(contactTimes)), where the matrix represent the current state of the network
             // another possibility is to use two matrices for every type-agent, one for the whole network without contact times and one is used to store the current network state at iteration i 
             // SOLUTION: granularity
-            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, ensembleGeneNames, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
         } else {
-            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, ensembleGeneNames, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
         }
         #pragma omp parallel for
         for (int i = 0; i < finalWorkload;i++) {
@@ -1147,7 +1147,7 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames,ensembleGeneNames, nodesDescriptionFilename);
+                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
             }
 
             //update input

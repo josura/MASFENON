@@ -25,7 +25,6 @@
 
 
 int main(int argc, char** argv ) {
-    bool ensembleGeneNames=false;
     bool sameTypeCommunication=false;
     bool saturation=false;
     bool conservateInitialNorm=false;
@@ -44,7 +43,6 @@ int main(int argc, char** argv ) {
         ("initialPerturbationPerTypeFolder", po::value<std::string>(), "(string) initialPerturbationPerType folder, for an example see in data data/testdata/testGraph/initialValues")
         ("typeInteractionFolder", po::value<std::string>(), "(string) directory for the type interactions, for an example see in data data/testdata/testHeterogeneousGraph/interactions")
         ("nodeDescriptionFile", po::value<std::string>(), "(string) node description file, used to generate the output description, if not specified no names are used. for an example see in data resources/graphs/metapathwayNew/nodes.tsv")
-        ("ensembleGeneNames",po::bool_switch(&ensembleGeneNames),"() use ensemble gene names, since the graph used in resources have entrez_ids, a map will be done from ensemble to entrez, the map is available in resources")
         ("sameTypeCommunication",po::bool_switch(&sameTypeCommunication),"() use same type communication, since it is not permitted as the standard definition of the model, this adds a virtual node for the same type type")
         ("outputFolder",po::value<std::string>()->required(),"(string) output folder for output of the algorithm at each iteration")
         ("intertypeIterations",po::value<uint>(),"(positive integer) number of iterations for intertype communication")
@@ -404,9 +402,7 @@ int main(int argc, char** argv ) {
     //end program options section
 
     std::string nodesDescriptionFilename="";
-    if(ensembleGeneNames){
-        logger <<"[LOG] mapping ensemble gene names to entrez ids"<<std::endl;
-    } else if(vm.count("nodeDescriptionFile")){
+    if(vm.count("nodeDescriptionFile")){
         logger <<"[LOG] using node description file to get the names of the nodes in the graphs"<<std::endl;
         nodesDescriptionFilename = vm["nodeDescriptionFile"].as<std::string>();
     } else {
@@ -455,6 +451,7 @@ int main(int argc, char** argv ) {
     //use the number of types to allocate an array of pointers to contain the graph for every type
     WeightedEdgeGraph **graphs = new WeightedEdgeGraph*[types.size()];
     std::vector<std::vector<std::string>> graphsNodes;
+    std::vector<std::vector<std::string>> graphsNodesAll; // used only in the setup phase to read the initial input values, contains all types
     std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>> namesAndEdges;
     if(vm.count("fUniqueGraph")){
         namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(filename));
@@ -464,6 +461,10 @@ int main(int argc, char** argv ) {
             namesAndEdges.push_back(namesAndEdges[0]);
             graphsNodes.push_back(namesAndEdges[0].first);
             graphs[i] = graphs[0];
+        }
+        // TODO only use the single graph for the setup phase, without filling all the maps for all the other types, optimize the memory usage
+        for (uint i = 0; i<types.size(); i++){
+            graphsNodesAll.push_back(namesAndEdges[0].first);
         }
     } else if (vm.count("graphsFilesFolder")) {
         auto allGraphs = edgesFileToEdgesListAndNodesByNameFromFolder(graphsFilesFolder);
@@ -503,10 +504,10 @@ int main(int argc, char** argv ) {
     std::vector<std::vector<double>> inputInitials;
     if(vm.count("fInitialPerturbationPerType")){
         logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
-        initialValues = logFoldChangeMatrixToCellVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes,ensembleGeneNames);
+        initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
     } else if (vm.count("initialPerturbationPerTypeFolder")){
         logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
-        initialValues = logFoldChangeCellVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodes,subtypes,ensembleGeneNames);
+        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes);
     } else {
         std::cerr << "[ERROR] no initial perturbation file or folder specified: aborting"<<std::endl;
         return 1;
@@ -577,9 +578,9 @@ int main(int argc, char** argv ) {
     for(auto typeInteractionFilename = allFilesInteraction.cbegin() ; typeInteractionFilename != allFilesInteraction.cend() ; typeInteractionFilename++){
         std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> typeInteractionsEdges;
         if (subtypes.size() == 0) {
-            typeInteractionsEdges  = interactionContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations, ensembleGeneNames);
+            typeInteractionsEdges  = interactionContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations);
         } else {
-            typeInteractionsEdges = interactionContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations, ensembleGeneNames);
+            typeInteractionsEdges = interactionContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations);
         }
         #pragma omp parallel for
         for (uint i = 0; i < types.size();i++) {
@@ -762,7 +763,7 @@ int main(int argc, char** argv ) {
             for(uint i = 0; i < typesFiltered.size(); i++){
                 std::vector<std::string> nodeNames = typeToNodeNames[i];
                 //TODO change how to save files to get more information about intratype and intertype iterations
-                saveNodeValues(outputFoldername, iterationInterType*intratypeIterations + iterationIntraType, typesFiltered[i], typeComputations[i]->getOutputAugmented(), nodeNames,ensembleGeneNames, nodesDescriptionFilename);
+                saveNodeValues(outputFoldername, iterationInterType*intratypeIterations + iterationIntraType, typesFiltered[i], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
             }
             // logger<< "[DEBUG] output values before updating input"<<std::endl;
             // for(uint i = 0; i < types.size(); i++){
