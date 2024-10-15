@@ -28,7 +28,6 @@
 
 int main(int argc, char** argv) {    
     //program options
-    bool ensembleGeneNames=false;
     bool sameTypeCommunication=false;
     bool saturation=false;
     bool customSaturation=false;
@@ -52,7 +51,6 @@ int main(int argc, char** argv) {
         ("typeInteractionFolder", po::value<std::string>(), "(string) directory for the type interactions, for an example see in data data/testdata/testHeterogeneousGraph/interactions")
         ("nodeDescriptionFile", po::value<std::string>(), "(string) node description file, used to generate the output description in the case of common graph between types, if not specified no names are used. For an example see in data resources/graphs/metapathwayNew/nodes.tsv")
         ("nodeDescriptionFolder", po::value<std::string>(), "(string) nodes folder, where the files containing the description/nodes for all the graphs are contained, used to read the graph nodes, if not specified the graphs will be built with the edges files(could not contain some isolated nodes) for an example see the folder structure in data/testdata/testHeterogeneousTemporalGraph/nodesDescriptionDifferentStructure")
-        ("ensembleGeneNames",po::bool_switch(&ensembleGeneNames),"() use ensemble gene names, since the graph used in resources have entrez_ids, a map will be done from ensemble to entrez, the map is available in resources")
         ("sameTypeCommunication",po::bool_switch(&sameTypeCommunication),"() use same type communication, since it is not permitted as the standard definition of the model, this adds a virtual node for the same type type")
         ("outputFolder",po::value<std::string>(),"(string) output folder for output of the algorithm at each iteration")
         ("intertypeIterations",po::value<uint>(),"(positive integer) number of iterations for intertype communication")
@@ -467,9 +465,7 @@ int main(int argc, char** argv) {
     //end program options section
 
     std::string nodesDescriptionFilename="";
-    if(ensembleGeneNames){
-        logger <<"[LOG] mapping ensemble gene names to entrez ids"<<std::endl;
-    } else if(vm.count("nodeDescriptionFile")){
+    if(vm.count("nodeDescriptionFile")){
         logger <<"[LOG] using node description file to get the names of the nodes in the graphs"<<std::endl;
         nodesDescriptionFilename = vm["nodeDescriptionFile"].as<std::string>();
     } else {
@@ -612,12 +608,12 @@ int main(int argc, char** argv) {
         typesFromFolder = allGraphs.first;
         auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
         if(typesFromFolderFiltered.size() != types.size()){
-            std::cerr << "[ERROR] types from folder (filtered with subtypes) and types from values do not have the same length: aborting"<<std::endl;
+            std::cerr << "[ERROR] types from folder (filtered with subtypes) and types from values do not have the same length: aborting" << std::endl;
             return 1;
         }
         for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
             if(typesFromFolderFiltered[i] != types[i]){  // TODO this control can be faulty, since the order of the types is not guaranteed when reading the files
-                std::cerr << "[ERROR] types from folder(filtered with subtypes) and types from file do not match: aborting"<<std::endl;
+                std::cerr << "[ERROR] types from folder(filtered with subtypes) and types from file do not match: aborting" << std::endl;
                 return 1;
             }
         }
@@ -629,7 +625,7 @@ int main(int argc, char** argv) {
             auto typesFromNames = getKeys<std::string,std::vector<std::string>>(namesFromFolder);
             auto typesFromNamesFiltered = vectorsIntersection(typesFromNames, subtypes);
             if(typesFromNamesFiltered.size() != types.size()){ //TODO change the control over the types read from the graph, since the values can be not expressed for some graphs
-                std::cerr << "[ERROR] types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting"<<std::endl;
+                std::cerr << "[ERROR] types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting" << std::endl;
                 return 1;
             }
             // control over the values and the order is useless since the map is unordered and doesn't guarantee the order of reading the files
@@ -656,10 +652,8 @@ int main(int argc, char** argv) {
 
         // create the graphs and the map for the nodes
         for(uint i = 0; i < types.size(); i++){
-            //graphsNodesAll.push_back(namesAndEdges[i].first);
             std::string tmpType = types[i];
             graphsNodesAll.push_back(namesFromFolder[tmpType]);
-            // typeToNodeNamesMap[types[i]] = namesAndEdges[i].first;
             auto tmpNodeNames = namesFromFolder[tmpType];
             
             typeToNodeNamesMap[tmpType] = tmpNodeNames;
@@ -696,10 +690,10 @@ int main(int argc, char** argv) {
     std::vector<std::vector<double>> inputInitials;
     if(vm.count("fInitialPerturbationPerType")){
         logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
-        initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes,ensembleGeneNames);
+        initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
     } else if (vm.count("initialPerturbationPerTypeFolder")){
         logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
-        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes,ensembleGeneNames); // TODO change the function to return only the values for the types in the workload
+        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes); // TODO change the function to return only the values for the types in the workload
     } else {
         std::cerr << "[ERROR] no initial perturbation file or folder specified: aborting"<<std::endl;
         return 1;
@@ -794,9 +788,9 @@ int main(int argc, char** argv) {
             // the above can be implemented with the use of different matrices for every single type(from 1 to max(contactTimes)), where the matrix represent the current state of the network
             // another possibility is to use two matrices for every type-agent, one for the whole network without contact times and one is used to store the current network state at iteration i 
             // SOLUTION: granularity
-            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, ensembleGeneNames, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
         } else {
-            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, ensembleGeneNames, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
         }
         #pragma omp parallel for
         for (int i = 0; i < finalWorkload;i++) {
@@ -1151,7 +1145,7 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames,ensembleGeneNames, nodesDescriptionFilename);
+                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
             }
 
             //update input

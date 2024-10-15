@@ -426,135 +426,7 @@ std::vector<std::string> getTypesFromMatrixFile(std::string matrixFilepath){
     return typeNames;
 }
 
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> logFoldChangeMatrixToCellVectors(std::string filename, const std::vector<std::string>& finalNames,bool useEntrez){
-    string line;
-    std::vector<std::vector<double>> ret;
-    std::vector<std::string> cellNames;
-    std::vector<std::string> geneNames;
-    std::vector<std::string> discardedGenes;
-    std::map<std::string, int> finalGenesToIndex;
-    for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
-        finalGenesToIndex[finalNames[i]] = i;
-    }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
-    if(file_exists(filename)){
-        ifstream myfile (filename);
-        if (myfile.is_open())
-        {
-            getline (myfile,line);  // first line is header IMPORTANT
-            std::vector<std::string> splittedHeader = splitStringIntoVector(line, "\t");  //could already be used as the cellnames vector,
-            for (int i = 1; i < SizeToInt( splittedHeader.size()); i++) {
-                cellNames.push_back(splittedHeader[i]);
-                ret.push_back(std::vector<double>(finalNames.size(),0));
-            }
-            while ( getline (myfile,line) )
-            {
-                std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==splittedHeader.size()){
-                    if(!useEntrez){
-                        geneNames.push_back(entries[0]);
-                        for(int i = 1; i < SizeToInt(entries.size());i++){
-                            //ret[i-1].push_back(std::stod(entries[i]));
-                            ret[i-1][finalGenesToIndex[entries[0]]] = std::stod(entries[i]);
-                        } //TODO control over the genes in the metapathway like its done below with the mapping, but without the mapping and by taking a vector maybe
-                    }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalGenesToIndex.contains(mapEnsembleToEntrez[entries[0]])) {
-                            geneNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                            for(int i = 1; i < SizeToInt(entries.size());i++){
-                                //ret[i-1].push_back(std::stod(entries[i]));
-                                ret[i-1][finalGenesToIndex[mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[i]);
-                            }
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
-                    }
-                } else {
-                    throw std::invalid_argument("utilities::edgeFileEdgesListByIndex: header doesn't have the same amount of columns as the data " + filename);
-                }
-            }
-            myfile.close();
-            std::cout << "[LOG] No node in the type specified for nodes: " << std::endl;
-            for(auto iter = discardedGenes.cbegin();iter!=discardedGenes.cend();iter++){
-                std::cout << "," << *iter;
-            }
-            std::cout << std::endl <<"[LOG] discarding values for the nodes not in the graph" << std::endl;
-            
-        }
-    } else {
-        throw std::invalid_argument("utilities::edgeFileEdgesListByIndex: file does not exists " + filename);
-    }
-    return std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> (geneNames,cellNames,ret);
-
-}
-
-
-// TODO: refactor
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> logFoldChangeMatrixToCellVectors(std::string filename, const std::vector<std::string>& finalNames,std::vector<std::string> subTypes ,bool useEntrez){
-    string line;
-    std::vector<std::vector<double>> ret;
-    std::vector<std::string> cellNames;
-    std::vector<std::string> geneNames;
-    std::vector<std::string> discardedGenes;
-    std::map<std::string, int> finalGenesToIndex;
-    for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
-        finalGenesToIndex[finalNames[i]] = i;
-    }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
-    if(file_exists(filename)){
-        ifstream myfile (filename);
-        if (myfile.is_open())
-        {
-            getline (myfile,line);  // first line is header IMPORTANT
-            std::vector<std::string> splittedHeader = splitStringIntoVector(line, "\t");  //could already be used as the cellnames vector,
-            std::vector<int> subTypeIndexes;
-            for (int i = 1; i < SizeToInt( splittedHeader.size()); i++) {
-                if(vectorContains(subTypes,splittedHeader[i])){
-                    cellNames.push_back(splittedHeader[i]);
-                    subTypeIndexes.push_back(i);
-                    ret.push_back(std::vector<double>(finalNames.size(),0));
-                }
-            }
-            while ( getline (myfile,line) )
-            {
-                std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==splittedHeader.size()){
-                    if(!useEntrez){
-                        geneNames.push_back(entries[0]);
-                        for(uint i = 0; i<subTypeIndexes.size();i++){
-                            ret[i][finalGenesToIndex[entries[0]]] = std::stod(entries[subTypeIndexes[i]]);
-                        } //TODO control over the genes in the metapathway like its done below with the mapping, but without the mapping and by taking a vector maybe
-                    }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalGenesToIndex.contains(mapEnsembleToEntrez[entries[0]])) {
-                            geneNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                            for(uint i = 0; i< subTypeIndexes.size();i++){
-                                ret[i][finalGenesToIndex[mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[subTypeIndexes[i]]);
-                            }
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
-                    }
-                } else {
-                    throw std::invalid_argument("utilities::edgeFileEdgesListByIndex: header doesn't have the same amount of columns as the data " + filename);
-                }
-            }
-            myfile.close();
-            std::cout << "[LOG] No nodes in the graph for nodes: " << std::endl;
-            for(auto iter = discardedGenes.cbegin();iter!=discardedGenes.cend();iter++){
-                std::cout << "," << *iter;
-            }
-            std::cout << std::endl <<"[LOG] discarding values for the nodes not in the graph" << std::endl;
-            
-        }
-    } else {
-        throw std::invalid_argument("utilities::edgeFileEdgesListByIndex: file does not exists " + filename);
-    }
-    return std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> (geneNames,cellNames,ret);
-
-}
-
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesMatrixToTypeVectors(std::string filename, const std::vector<std::string>& finalNames,std::vector<std::string> subTypes ,bool useEntrez){
+std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesMatrixToTypeVectors(std::string filename, const std::vector<std::string>& finalNames,std::vector<std::string> subTypes){
     string line;
     std::vector<std::vector<double>> ret;
     std::vector<std::string> typeNames;
@@ -564,7 +436,6 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
     for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
         finalNodesToIndex[finalNames[i]] = i;
     }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -583,21 +454,9 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==splittedHeader.size()){
-                    if(!useEntrez){
-                        nodeNames.push_back(entries[0]);
-                        for(uint i = 0; i<subTypeIndexes.size();i++){
-                            ret[i][finalNodesToIndex[entries[0]]] = std::stod(entries[subTypeIndexes[i]]);
-                        } //TODO control over the names in the network like its done below with the mapping, but without the mapping and by taking a vector maybe
-                    }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalNodesToIndex.contains(mapEnsembleToEntrez[entries[0]])) {
-                            nodeNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                            for(uint i = 0; i< subTypeIndexes.size();i++){
-                                ret[i][finalNodesToIndex[mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[subTypeIndexes[i]]);
-                            }
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
+                    nodeNames.push_back(entries[0]);
+                    for(uint i = 0; i<subTypeIndexes.size();i++){
+                        ret[i][finalNodesToIndex[entries[0]]] = std::stod(entries[subTypeIndexes[i]]);
                     }
                 } else {
                     throw std::invalid_argument("utilities::valuesMatrixToTypeVectors: header doesn't have the same amount of columns as the data " + filename);
@@ -618,112 +477,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
 
 }
 
-// TODO: refactor
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> logFoldChangeCellVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes , const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType, bool useEntrez){
-    std::vector<std::string> cellNames;
-    std::vector<std::string> geneNames;
-    std::vector<std::vector<double>> ret;
-    std::vector<std::string> discardedGenes;
-    std::map<std::string ,std::map<std::string, int>> finalGenesToIndex;
-    for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
-        std::map<std::string, int> tmp;
-        for(int j = 0 ; j < SizeToInt(finalNames[i].size()); j++){
-            tmp[finalNames[i][j]] = j;
-        }
-        finalGenesToIndex[allTypes[i]]= tmp;
-    }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
-    auto files = get_all(folderPath,".tsv");
-    if(files.size()==0){
-        throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: no files found in the folder " + folderPath);
-    }
-    //default argument for subtype is empty, if empty, use all files in the folder
-    if(subType.size()==0){
-        for(auto iter = files.cbegin();iter!=files.cend();iter++){
-            std::vector<std::string> splitted = splitStringIntoVector(*iter, "/"); //split the path
-            std::string filename = splitted[splitted.size()-1]; //last element
-            subType.push_back(splitStringIntoVector(filename, ".")[0]);
-        }
-    }
-    //filter files from subtypes (first part of the filename before the extension)
-    std::vector<std::string> filteredFiles;
-    for(auto iter = files.cbegin();iter!=files.cend();iter++){
-        std::vector<std::string> fileSplitPath = splitStringIntoVector(*iter, "/");
-        std::string filename = fileSplitPath[fileSplitPath.size()-1];
-        std::string type = splitStringIntoVector(filename, ".")[0];
-        if(vectorContains(subType,type)){
-            filteredFiles.push_back(*iter);
-        } else {
-            std::cout << "[LOG] discarding file " << *iter << " since it is not in the subtypes" << std::endl;
-        }
-    }
-    if(filteredFiles.size()==0){
-        throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: no files found in the folder that are similar to the subtypes " + folderPath);
-    }
-    for(auto iter = filteredFiles.cbegin();iter!=filteredFiles.cend();iter++){
-        std::vector<std::string> splitted = splitStringIntoVector(*iter, "/"); //split the path
-        std::string filenameNoPath = splitted[splitted.size()-1]; //last element
-        std::string cellName = splitStringIntoVector(filenameNoPath, ".")[0];
-        cellNames.push_back(cellName);
-        std::string filename = *iter;
-        if(file_exists(filename)){
-            //first line is the header, the first column is the gene, the second column is the value
-            ifstream myfile (filename);
-            string line;
-            std::vector<double> cellValues(finalGenesToIndex[cellName].size(),0);
-            std::string lineHeader;
-            getline (myfile,lineHeader);  // first line is header IMPORTANT
-            std::vector<std::string> splittedHeader = splitStringIntoVector(lineHeader, "\t");
-            //check if the header is correct
-            if(splittedHeader.size()!=2){
-                throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
-            }
-            if(splittedHeader[0]!="name" || splittedHeader[1] != "value"){
-                throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: header doesn't have the name and value columns or it does not have  an header" + filename);
-            }
-            //get file contents
-            while ( getline (myfile,line) )
-            {
-                std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==2){
-                    if(!useEntrez){
-                        if(finalGenesToIndex[cellName].contains(entries[0])){
-                            cellValues[finalGenesToIndex[cellName][entries[0]]] = std::stod(entries[1]);
-                            geneNames.push_back(entries[0]);
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }
-                    }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalGenesToIndex[cellName].contains(mapEnsembleToEntrez[entries[0]])) {
-                            cellValues[finalGenesToIndex[cellName][mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[1]);
-                            geneNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                        } else{
-                            discardedGenes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
-                    }
-                } else {
-                    throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
-                }
-            }
-            myfile.close();
-            std::cout << "[LOG] discarding values for the nodes not in the graph for type "<< cellName << ", the nodes discarded are:" << std::endl;
-            for(auto iter = discardedGenes.cbegin();iter!=discardedGenes.cend();iter++){
-                std::cout << "," << *iter;
-            }
-            std::cout << std::endl;
-            ret.push_back(cellValues);
-
-        
-        } else {
-            throw std::invalid_argument("utilities::logFoldChangeCellVectorsFromFolder: file does not exists " + filename);
-        }
-    }
-    return std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> (geneNames,cellNames,ret);
-            
-}
-
-std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes, const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType, bool useEntrez){
+std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes, const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType){
     std::vector<std::string> typeNames;
     std::vector<std::string> nodeNames;
     std::vector<std::vector<double>> ret;
@@ -736,7 +490,6 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
         }
         finalNodesToIndex[allTypes[i]]= tmp;
     }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     auto files = get_all(folderPath,".tsv");
     if(files.size()==0){
         throw std::invalid_argument("utilities::valuesVectorsFromFolder: no files found in the folder " + folderPath);
@@ -790,21 +543,11 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==2){
-                    if(!useEntrez){
-                        if(finalNodesToIndex[cellName].contains(entries[0])){
-                            cellValues[finalNodesToIndex[cellName][entries[0]]] = std::stod(entries[1]);
-                            nodeNames.push_back(entries[0]);
-                        } else{
-                            discardedNodes.push_back(entries[0]);
-                        }
-                    }
-                    else{
-                        if (mapEnsembleToEntrez.contains(entries[0]) && finalNodesToIndex[cellName].contains(mapEnsembleToEntrez[entries[0]])) {
-                            cellValues[finalNodesToIndex[cellName][mapEnsembleToEntrez[entries[0]]]] = std::stod(entries[1]);
-                            nodeNames.push_back(mapEnsembleToEntrez[entries[0]]);
-                        } else{
-                            discardedNodes.push_back(entries[0]);
-                        }//else don't do nothing since the node is not in the graph
+                    if(finalNodesToIndex[cellName].contains(entries[0])){
+                        cellValues[finalNodesToIndex[cellName][entries[0]]] = std::stod(entries[1]);
+                        nodeNames.push_back(entries[0]);
+                    } else{
+                        discardedNodes.push_back(entries[0]);
                     }
                 } else {
                     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
@@ -873,10 +616,9 @@ std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string f
 
 
 
-std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename,bool useEntrez){
+std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename){
     string line;
     std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> ret;
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -908,57 +650,30 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==5){
                     std::string startNodeName,endNodeName;
-                    if(!useEntrez){
-                        startNodeName = entries[indexStartNode];
-                        endNodeName = entries[indexEndNode];    
+                    startNodeName = entries[indexStartNode];
+                    endNodeName = entries[indexEndNode];    
 
-                        std::string startType = entries[indexTypeStart];
-                        std::string endType = entries[indexTypeEnd];
-                        double weight = std::stod( entries[indexWeight]);
-                        std::string virtualInputEndType = "v-in:" + startType;
-                        std::string virtualOutputstartType = "v-out:" + endType;
-                        std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
-                        std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
-                        if(ret.contains(startType)){
-                            ret[startType].push_back(edgestartType);
-                        }else{
-                            ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
-                            ret[startType].push_back(edgestartType);
-                        }
-
-                        if(ret.contains(endType)){
-                            ret[endType].push_back(edgeEndType);
-                        }else{
-                            ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
-                            ret[endType].push_back(edgeEndType);
-                        }
-                    } else{
-                        if(mapEnsembleToEntrez.contains(entries[indexStartNode]) && mapEnsembleToEntrez.contains(entries[indexEndNode])){
-                            startNodeName = mapEnsembleToEntrez[entries[indexStartNode]];
-                            endNodeName = mapEnsembleToEntrez[entries[indexEndNode]];
-
-                            std::string startType = entries[indexTypeStart];
-                            std::string endType = entries[indexTypeEnd];
-                            double weight = std::stod( entries[indexWeight]);
-                            std::string virtualInputEndType = "v-in:" + startType;
-                            std::string virtualOutputstartType = "v-out:" + endType;
-                            std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
-                            std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
-                            if(ret.contains(startType)){
-                                ret[startType].push_back(edgestartType);
-                            }else{
-                                ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                ret[startType].push_back(edgestartType);
-                            }
-
-                            if(ret.contains(endType)){
-                                ret[endType].push_back(edgeEndType);
-                            }else{
-                                ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                ret[endType].push_back(edgeEndType);
-                            }
-                        }
+                    std::string startType = entries[indexTypeStart];
+                    std::string endType = entries[indexTypeEnd];
+                    double weight = std::stod( entries[indexWeight]);
+                    std::string virtualInputEndType = "v-in:" + startType;
+                    std::string virtualOutputstartType = "v-out:" + endType;
+                    std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
+                    std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
+                    if(ret.contains(startType)){
+                        ret[startType].push_back(edgestartType);
+                    }else{
+                        ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
+                        ret[startType].push_back(edgestartType);
                     }
+
+                    if(ret.contains(endType)){
+                        ret[endType].push_back(edgeEndType);
+                    }else{
+                        ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
+                        ret[endType].push_back(edgeEndType);
+                    }
+                    
                 }
             }
             myfile.close();
@@ -969,10 +684,9 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
     return ret;
 }
 
-std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename,std::vector<std::string> subtypes,bool useEntrez){
+std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename,std::vector<std::string> subtypes){
     string line;
     std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> ret;
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -1003,65 +717,32 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==5){
                     std::string startNodeName,endNodeName;
-                    if(!useEntrez){
-                        startNodeName = entries[indexStartNode];
-                        endNodeName = entries[indexEndNode];    
+                    startNodeName = entries[indexStartNode];
+                    endNodeName = entries[indexEndNode];    
 
-                        std::string startType = entries[indexTypeStart];
-                        std::string endType = entries[indexTypeEnd];
-                        if(vectorContains(subtypes, startType) && vectorContains(subtypes, endType)){
-                            double weight = std::stod( entries[indexWeight]);
-                            std::string virtualInputEndType = "v-in:" + startType;
-                            std::string virtualOutputstartType = "v-out:" + endType;
-                            std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
-                            std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
-                            if(ret.contains(startType)){
-                                ret[startType].push_back(edgestartType);
-                            }else{
-                                ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                ret[startType].push_back(edgestartType);
-                            }
-
-                            if(ret.contains(endType)){
-                                ret[endType].push_back(edgeEndType);
-                            }else{
-                                ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                ret[endType].push_back(edgeEndType);
-                            }
-                        } else {
-                            //ignored because not in the subtypes
+                    std::string startType = entries[indexTypeStart];
+                    std::string endType = entries[indexTypeEnd];
+                    if(vectorContains(subtypes, startType) && vectorContains(subtypes, endType)){
+                        double weight = std::stod( entries[indexWeight]);
+                        std::string virtualInputEndType = "v-in:" + startType;
+                        std::string virtualOutputstartType = "v-out:" + endType;
+                        std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
+                        std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
+                        if(ret.contains(startType)){
+                            ret[startType].push_back(edgestartType);
+                        }else{
+                            ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
+                            ret[startType].push_back(edgestartType);
                         }
-                        
-                    } else{
-                        if(mapEnsembleToEntrez.contains(entries[indexStartNode]) && mapEnsembleToEntrez.contains(entries[indexEndNode])){
-                            startNodeName = mapEnsembleToEntrez[entries[indexStartNode]];
-                            endNodeName = mapEnsembleToEntrez[entries[indexEndNode]];
 
-                            std::string startType = entries[indexTypeStart];
-                            std::string endType = entries[indexTypeEnd];
-                            if(vectorContains(subtypes, startType) && vectorContains(subtypes, endType)){
-                                double weight = std::stod( entries[indexWeight]);
-                                std::string virtualInputEndType = "v-in:" + startType;
-                                std::string virtualOutputstartType = "v-out:" + endType;
-                                std::tuple<std::string,std::string,double> edgestartType(startNodeName, virtualOutputstartType,weight);
-                                std::tuple<std::string,std::string,double> edgeEndType(virtualInputEndType, endNodeName,weight);
-                                if(ret.contains(startType)){
-                                    ret[startType].push_back(edgestartType);
-                                }else{
-                                    ret[startType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                    ret[startType].push_back(edgestartType);
-                                }
-
-                                if(ret.contains(endType)){
-                                    ret[endType].push_back(edgeEndType);
-                                }else{
-                                    ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
-                                    ret[endType].push_back(edgeEndType);
-                                }
-                            } else {
-                                //ignored because not in the subtypes
-                            }
+                        if(ret.contains(endType)){
+                            ret[endType].push_back(edgeEndType);
+                        }else{
+                            ret[endType] = std::vector<std::tuple<std::string,std::string,double>>();
+                            ret[endType].push_back(edgeEndType);
                         }
+                    } else {
+                        //ignored because not in the subtypes
                     }
                 }
             }
@@ -1073,7 +754,7 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
     return ret;
 }
 
-std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> interactionContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes, int maximumIntertypeTime, bool useEntrez, std::string granularity,std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames, bool undirectedTypeEdges){
+std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> interactionContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes, int maximumIntertypeTime, std::string granularity,std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames, bool undirectedTypeEdges){
     string line;
     std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> ret;
     // control if the granularity is valid
@@ -1083,7 +764,6 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     if(granularity == ""){
         granularity = "type";
     }
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -1120,16 +800,8 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==5 || entries.size()==6){
                     std::string startNodeName,endNodeName;
-                    if(!useEntrez){
-                        startNodeName = entries[indexStartNode];
-                        endNodeName = entries[indexEndNode];
-                        
-                    } else{
-                        if(mapEnsembleToEntrez.contains(entries[indexStartNode]) && mapEnsembleToEntrez.contains(entries[indexEndNode])){
-                            startNodeName = mapEnsembleToEntrez[entries[indexStartNode]];
-                            endNodeName = mapEnsembleToEntrez[entries[indexEndNode]];
-                        }
-                    }
+                    startNodeName = entries[indexStartNode];
+                    endNodeName = entries[indexEndNode];
                     std::string startType = entries[indexTypeStart];
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0){
@@ -1227,7 +899,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
 }
 
 // considering a timestep, the function is almost the same as above but generate double contact times, based upon the timestep
-std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes, int maximumIntertypeTime, bool useEntrez, std::string granularity,std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames, bool undirectedTypeEdges, double timestep){
+std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes, int maximumIntertypeTime, std::string granularity,std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames, bool undirectedTypeEdges, double timestep){
     string line;
     std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> ret;
     // control if the granularity is valid
@@ -1237,8 +909,6 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     if(granularity == ""){
         granularity = "type";
     }
-
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -1275,16 +945,8 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==5 || entries.size()==6){
                     std::string startNodeName,endNodeName;
-                    if(!useEntrez){
-                        startNodeName = entries[indexStartNode];
-                        endNodeName = entries[indexEndNode];
-                        
-                    } else{
-                        if(mapEnsembleToEntrez.contains(entries[indexStartNode]) && mapEnsembleToEntrez.contains(entries[indexEndNode])){
-                            startNodeName = mapEnsembleToEntrez[entries[indexStartNode]];
-                            endNodeName = mapEnsembleToEntrez[entries[indexEndNode]];
-                        }
-                    }
+                    startNodeName = entries[indexStartNode];
+                    endNodeName = entries[indexEndNode];    
                     std::string startType = entries[indexTypeStart];
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0){
@@ -1382,7 +1044,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     return ret;
 }
 
-std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,double maximumIntertypeTime, bool useEntrez, std::string granularity, std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames , bool undirectedTypeEdges, double timestep){
+std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,double maximumIntertypeTime, std::string granularity, std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames , bool undirectedTypeEdges, double timestep){
     string line;
     std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> ret;
     // control if the granularity is valid
@@ -1393,7 +1055,6 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
         granularity = "type";
     }
 
-    auto mapEnsembleToEntrez = getEnsembletoEntrezidMap();
     if(file_exists(filename)){
         ifstream myfile (filename);
         if (myfile.is_open())
@@ -1432,16 +1093,8 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==5 || entries.size()==6){
                     std::string startNodeName,endNodeName;
-                    if(!useEntrez){
-                        startNodeName = entries[indexStartNode];
-                        endNodeName = entries[indexEndNode];
-                        
-                    } else{
-                        if(mapEnsembleToEntrez.contains(entries[indexStartNode]) && mapEnsembleToEntrez.contains(entries[indexEndNode])){
-                            startNodeName = mapEnsembleToEntrez[entries[indexStartNode]];
-                            endNodeName = mapEnsembleToEntrez[entries[indexEndNode]];
-                        }
-                    }
+                    startNodeName = entries[indexStartNode];
+                    endNodeName = entries[indexEndNode];
                     std::string startType = entries[indexTypeStart];
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0 && vectorContains(subtypes, startType) && vectorContains(subtypes, endType)){
@@ -1542,36 +1195,6 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     return ret; 
 }
 
-
-std::map<std::string, std::string> getEnsembletoEntrezidMap(){
-    string line;
-    std::map<std::string,std::string> ret;
-    std::string mapFilename = "resources/graphs/metapathwayNew/nodes.tsv";
-    if(file_exists(mapFilename)){
-        ifstream myfile (mapFilename);
-        if (myfile.is_open())
-        {
-            getline (myfile,line);  // first line is header IMPORTANT
-            while ( getline (myfile,line) )
-            {
-                std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==4){
-                    std::string Id = entries[0];
-                    std::string Name = entries[1];
-                    std::string Type = entries[2];
-                    std::string Aliases = entries[3];
-                    ret[Name] = Id;
-                    
-                }
-            }
-            myfile.close();
-        }
-    } else {
-        throw std::invalid_argument("utilities::getEnsembletoEntrezidMap: file does not exists " + mapFilename);
-    }
-    return ret;
-}
-
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
@@ -1613,7 +1236,7 @@ std::vector<std::string> get_all(std::string const & root, std::string const & e
     return paths;
 } 
 
-void saveNodeValues(std::string folderName, int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValues(std::string folderName, int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1622,20 +1245,16 @@ void saveNodeValues(std::string folderName, int iteration, std::string cellName,
         return;
     }
     if(nodesDescriptionFile.length()==0){
-        if(useEntrez)
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-        else  // no nodes description file is used
-            nodesDescriptionFile = "";
+        std::cout << "[WARNING] no nodes description file provided, using nothing to get the nodes description" << std::endl;
     } else {
         if(!file_exists(nodesDescriptionFile)){
             throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
         }
     }
-    //auto mapToEnsemble = getEnsembletoEntrezidMap();
     //header
     outfile << "nodeID\tnodeName\ttype\talias\tnodeValue\n";
     //body
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         auto mapToEverything = getFullNodesDescription(nodesDescriptionFile);
         for(uint i = 0; i < nodeValues.size(); i++){
             if(mapToEverything.contains(nodeNames[i]))
@@ -1677,7 +1296,7 @@ void saveNodeValues(std::string folderName, int iteration, std::string cellName,
     outfile.close();
 }
 
-void saveNodeValues(std::string folderName, int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValues(std::string folderName, int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iterationOuter + intraIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1686,14 +1305,12 @@ void saveNodeValues(std::string folderName, int iterationOuter, int intraIterati
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
@@ -1719,7 +1336,7 @@ void saveNodeValues(std::string folderName, int iterationOuter, int intraIterati
     }
 }
 
-void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile, double timestep){
+void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile, double timestep){
     std::string outputFilename = folderName + "/" + cellName + "--"+std::to_string(iterationOuter + intraIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1728,15 +1345,12 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    //TODO specifiy if the nodes description are in a folder with the graphs description files?
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
@@ -1763,7 +1377,7 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
 }
 
 
-void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, bool useEntrez, std::string nodesDescriptionFile){
+void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile){
     std::string outputFilename = folderName + "/" + typeName + "--"+std::to_string(currentIteration) + ".tsv";
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
@@ -1772,15 +1386,12 @@ void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, d
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
-    //TODO specifiy if the nodes description are in a folder with the graphs description files?
-    if(nodesDescriptionFile.length()==0 && useEntrez){
-            nodesDescriptionFile = "resources/graphs/metapathwayNew/nodes.tsv";
-    } else if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
+    if(nodesDescriptionFile.length()!=0 && !file_exists(nodesDescriptionFile)){
         throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
     }
 
     std::map<std::string, std::vector<std::string>> mapToEverything;
-    if(useEntrez || nodesDescriptionFile.length()!=0){
+    if(nodesDescriptionFile.length()!=0){
         mapToEverything = getFullNodesDescription(nodesDescriptionFile);
     } else {
         mapToEverything = std::map<std::string, std::vector<std::string>>();
