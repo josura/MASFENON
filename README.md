@@ -9,9 +9,13 @@ Standalone project for the framework behind [c2c-sepia](https://github.com/josur
 ## FILE STRUCTURE
 ```shell
 .
+├── CMakeLists.txt # cmake file
+├── examples.md # examples of how to use the program
+├── .github # contains the github actions
 ├── build # contains the object files
 ├── src # contains the source files
-└── scripts # contains some scripts
+├── data # contains the test data files
+└── scripts # contains some scripts in bash and python to be used in the project to visualize the reulting data
 ```
 
 ## BUILD
