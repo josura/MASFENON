@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     namespace po = boost::program_options;
     po::options_description desc("Allowed options");
     std::string performanceFilename = "";
+    std::string outputFormat = "singleIteration";
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
         ("fUniqueGraph", po::value<std::string>(), "(string) graph filename, for an example graph see in resources. NOTE: if this option is chosen, graphsFilesFolder cannot be used. For an example see in data data/testdata/testGraph/edges-Graph1-general.tsv")
@@ -76,6 +77,7 @@ int main(int argc, char** argv) {
         ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none', default to all")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
+        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'") 
     ;
 
     
@@ -246,6 +248,15 @@ int main(int argc, char** argv) {
         logger << "[LOG] resetVirtualOutputs specified, virtual outputs will be reset to 0 after each inter-propagation"<<std::endl;
     } else {
         logger << "[LOG] resetVirtualOutputs not specified, virtual outputs will not be reset to 0 after each inter-propagation"<<std::endl;
+    }
+
+    // output format parameter
+    if(vm.count("outputFormat")){
+        outputFormat = vm["outputFormat"].as<std::string>();
+        if(outputFormat != "singleIteration" && outputFormat != "iterationMatrix"){
+            std::cerr << "[ERROR] outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting"<<std::endl;
+            return 1;
+        }
     }
 
 
