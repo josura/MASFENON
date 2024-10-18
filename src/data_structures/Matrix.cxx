@@ -340,6 +340,53 @@ Matrix<T> Matrix<T>::copyAndAddRowsColsWithZeros(int additionalRows, int additio
 
 template Matrix<double> Matrix<double>::copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols)const;
 
+
+template<typename T>
+Matrix<T>* Matrix<T>::addRowNew(const std::vector<T>& row, int position){
+    if(position >= 0 && position <= rows_){
+        Matrix<T>* ret = new Matrix<T>(rows_+1,cols_);
+        for (int i = 0; i<position; i++) {
+            for (int j = 0; j<cols_; j++) {
+                ret->setValue(i,j,getValue(i, j));
+            }
+        }
+        for (int j = 0; j<cols_; j++) {
+            ret->setValue(position,j,row[j]);
+        }
+        for (int i = position+1; i<rows_+1; i++) {
+            for (int j = 0; j<cols_; j++) {
+                ret->setValue(i,j,getValue(i-1, j));
+            }
+        }
+        return ret;
+    } else {
+        throw std::invalid_argument("Matrix::addRowNew : position is not in the range of the rows");
+    }
+}
+
+template Matrix<double>* Matrix<double>::addRowNew(const std::vector<double>& row, int position);
+
+template<typename T>
+Matrix<T>* Matrix<T>::addColumnNew(const std::vector<T>& column, int position){
+    if(position >= 0 && position <= cols_){
+        Matrix<T>* ret = new Matrix<T>(rows_,cols_+1);
+        for (int i = 0; i<rows_; i++) {
+            for (int j = 0; j<position; j++) {
+                ret->setValue(i,j,getValue(i, j));
+            }
+            ret->setValue(i,position,column[i]);
+            for (int j = position+1; j<cols_+1; j++) {
+                ret->setValue(i,j,getValue(i, j-1));
+            }
+        }
+        return ret;
+    } else {
+        throw std::invalid_argument("Matrix::addColumnNew : position is not in the range of the columns");
+    }
+}
+
+template Matrix<double>* Matrix<double>::addColumnNew(const std::vector<double>& column, int position);
+
 template<typename T>
 std::vector<T> Matrix<T>::asVector()const{
     if(this->isVector()){
