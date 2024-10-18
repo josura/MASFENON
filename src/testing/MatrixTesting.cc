@@ -287,3 +287,31 @@ TEST_F(MatrixTesting,testAddColEnd){
     }
   }
 }
+
+TEST_F(MatrixTesting,testAddColEndQuick){
+  std::vector<double> col = {1,2,3,4,5,6,7,8,9,10,11,12};
+  Matrix<double> testing_matrix = *m2_;
+  testing_matrix.addColumnAtTheEnd(col);
+  EXPECT_EQ(testing_matrix.getCols(), 13);
+  EXPECT_EQ(testing_matrix.getRows(), 10);
+  for (int i = 0; i<testing_matrix.getRows(); i++) {
+    for (int j = 0; j<testing_matrix.getCols(); j++) {
+      if(j==12) EXPECT_FLOAT_EQ(testing_matrix.getValue(i,j), col[i]);
+      else EXPECT_FLOAT_EQ(testing_matrix.getValue(i,j), 100);
+    }
+  }
+}
+
+TEST_F(MatrixTesting,testAddRowEndQuick){
+  std::vector<double> row = {1,2,3,4,5,6,7,8,9,10,11,12};
+  Matrix<double> testing_matrix = *m2_;
+  testing_matrix.addRowAtTheEnd(row);
+  EXPECT_EQ(testing_matrix.getCols(), 12);
+  EXPECT_EQ(testing_matrix.getRows(), 11);
+  for (int i = 0; i<testing_matrix.getRows(); i++) {
+    for (int j = 0; j<testing_matrix.getCols(); j++) {
+      if(i==10) EXPECT_FLOAT_EQ(testing_matrix.getValue(i,j), row[j]);
+      else EXPECT_FLOAT_EQ(testing_matrix.getValue(i,j), 100);
+    }
+  }
+}
