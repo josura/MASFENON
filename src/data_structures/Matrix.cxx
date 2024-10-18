@@ -389,24 +389,24 @@ template Matrix<double>* Matrix<double>::addColumnNew(const std::vector<double>&
 
 template<typename T>
 void Matrix<T>::addRow(const std::vector<T>& row, int position){
-    T* old_matrix = _matrix;
-    int totalLength = (rows_+1) * cols_;
-    _matrix = new T[totalLength];
     if(position >= 0 && position <= rows_){
+        T* old_matrix = _matrix;
+        int totalLength = (rows_+1) * cols_;
+        _matrix = new T[totalLength];
+        rows_++;
         for (int i = 0; i<position; i++) {
             for (int j = 0; j<cols_; j++) {
-                _matrix[i*cols_ + j] = old_matrix[i*cols_ + j];
+                this->setValue(i,j,old_matrix[i*cols_ + j]);
             }
         }
         for (int j = 0; j<cols_; j++) {
-            _matrix[position*cols_ + j] = row[j];
+            this->setValue(position,j,row[j]);
         }
-        for (int i = position+1; i<rows_+1; i++) {
+        for (int i = position+1; i<rows_; i++) {
             for (int j = 0; j<cols_; j++) {
-                _matrix[i*cols_ + j] = old_matrix[(i-1)*cols_ + j];
+                this->setValue(i,j,old_matrix[(i-1)*cols_ + j]);
             }
         }
-        rows_++;
         delete[] old_matrix;
     } else {
         throw std::invalid_argument("Matrix::addRow : position is not in the range of the rows");
@@ -417,20 +417,20 @@ template void Matrix<double>::addRow(const std::vector<double>& row, int positio
 
 template<typename T>
 void Matrix<T>::addColumn(const std::vector<T>& column, int position){
-    T* old_matrix = _matrix;
-    int totalLength = rows_ * (cols_+1);
-    _matrix = new T[totalLength];
     if(position >= 0 && position <= cols_){
+        T* old_matrix = _matrix;
+        int totalLength = rows_ * (cols_+1);
+        _matrix = new T[totalLength];
+        cols_++;
         for (int i = 0; i<rows_; i++) {
             for (int j = 0; j<position; j++) {
-                _matrix[i*cols_ + j] = old_matrix[i*cols_ + j];
+                this->setValue(i,j,old_matrix[i*(cols_-1) + j]);
             }
             _matrix[i*cols_ + position] = column[i];
-            for (int j = position+1; j<cols_+1; j++) {
-                _matrix[i*cols_ + j] = old_matrix[i*cols_ + j-1];
+            for (int j = position+1; j<cols_; j++) {
+                this->setValue(i,j,old_matrix[i*(cols_-1) + j-1]);
             }
         }
-        cols_++;
         delete[] old_matrix;
     } else {
         throw std::invalid_argument("Matrix::addColumn : position is not in the range of the columns");
