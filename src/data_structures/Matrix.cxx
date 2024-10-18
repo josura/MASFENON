@@ -324,6 +324,16 @@ Matrix<T> Matrix<T>::copyAndAddRowsColsWithZeros(int additionalRows, int additio
             ret(i,j) = getValue(i, j);
         }
     }
+    for( int i = this->getRows(); i<this->getRows()+additionalRows; i++){
+        for (int j = 0 ; j<this->getCols(); j++) {
+            ret(i,j) = 0;
+        }
+    }
+    for( int i = 0; i<this->getRows(); i++){
+        for (int j = this->getCols(); j<this->getCols()+additionalCols; j++) {
+            ret(i,j) = 0;
+        }
+    }
 
     return ret;
 }
