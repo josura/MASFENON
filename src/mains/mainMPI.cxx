@@ -1498,6 +1498,13 @@ int main(int argc, char** argv) {
     }
 
     MPI_Finalize();
+
+    // save into the iterationMatrix files for every type if the option was set
+    if (outputFormat == "iterationMatrix") {
+        // save all the iteration values in a single file for every type
+    }
+        
+
     // take ending time after the computation
     auto end = std::chrono::steady_clock::now();
     if(rank == 0){
