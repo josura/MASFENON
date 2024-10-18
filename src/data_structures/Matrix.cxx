@@ -440,6 +440,20 @@ void Matrix<T>::addColumn(const std::vector<T>& column, int position){
 template void Matrix<double>::addColumn(const std::vector<double>& column, int position);
 
 template<typename T>
+void Matrix<T>::addRowAtTheEnd(const std::vector<T>& row){
+    addRow(row,rows_);
+}
+
+template void Matrix<double>::addRowAtTheEnd(const std::vector<double>& row);
+
+template<typename T>
+void Matrix<T>::addColumnAtTheEnd(const std::vector<T>& column){
+    addColumn(column,cols_);
+}
+
+template void Matrix<double>::addColumnAtTheEnd(const std::vector<double>& column);
+
+template<typename T>
 std::vector<T> Matrix<T>::asVector()const{
     if(this->isVector()){
         std::vector<T> ret(rows_,0);

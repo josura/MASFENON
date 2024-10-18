@@ -119,6 +119,20 @@ class Matrix {
          */
         void addColumn(const std::vector<T>& column, int position);
 
+        /**
+         * \brief  add a row to the matrix at the end
+         * \param  row : the row to add
+         * \return nothing
+         */
+        void addRowAtTheEnd(const std::vector<T>& row);
+
+        /**
+         * \brief  add a column to the matrix at the end
+         * \param  column : the column to add
+         * \return nothing
+         */
+        void addColumnAtTheEnd(const std::vector<T>& column);
+
 
 
         //functions to convert to armadillo
