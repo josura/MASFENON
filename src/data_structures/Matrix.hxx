@@ -88,7 +88,7 @@ class Matrix {
         Matrix copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols) const;
 
         /**
-         * \brief   add a row to the matrix
+         * \brief   add a row to the matrix and return a new matrix
          * \param   row :the row to add
          * \param   position : the position where to add the row
          * \return  the pointer to new matrix with the added row
@@ -96,12 +96,28 @@ class Matrix {
         Matrix* addRowNew(const std::vector<T>& row, int position);
 
         /**
-         * \brief   add a column to the matrix
+         * \brief   add a column to the matrix and return a new matrix
          * \param   column :the column to add
          * \param   position : the position where to add the column
          * \return  the pointer to new matrix with the added column
          */
         Matrix* addColumnNew(const std::vector<T>& column, int position);
+
+        /**
+         * \brief  add a row to the matrix
+         * \param  row : the row to add
+         * \param  position : the position where to add the row
+         * \return the new matrix with the added row
+         */
+        Matrix addRow(const std::vector<T>& row, int position);
+
+        /**
+         * \brief  add a column to the matrix
+         * \param  column : the column to add
+         * \param  position : the position where to add the column
+         * \return the new matrix with the added column
+         */
+        Matrix addColumn(const std::vector<T>& column, int position);
 
 
 
