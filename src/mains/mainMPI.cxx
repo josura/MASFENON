@@ -90,6 +90,8 @@ int main(int argc, char** argv) {
     DissipationModel* dissipationModel = nullptr;
     ConservationModel* conservationModel = nullptr;
     double timestep = 1;
+    // final output matrices if the output format is set to iterationMatrix
+    std::vector<Matrix<double>*> outputMatrices;
 
 
     if (vm.count("help")) {
