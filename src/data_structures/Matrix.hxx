@@ -107,17 +107,17 @@ class Matrix {
          * \brief  add a row to the matrix
          * \param  row : the row to add
          * \param  position : the position where to add the row
-         * \return the new matrix with the added row
+         * \return nothing
          */
-        Matrix addRow(const std::vector<T>& row, int position);
+        void addRow(const std::vector<T>& row, int position);
 
         /**
          * \brief  add a column to the matrix
          * \param  column : the column to add
          * \param  position : the position where to add the column
-         * \return the new matrix with the added column
+         * \return nothing
          */
-        Matrix addColumn(const std::vector<T>& column, int position);
+        void addColumn(const std::vector<T>& column, int position);
 
 
 
