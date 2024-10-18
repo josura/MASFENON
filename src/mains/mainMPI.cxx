@@ -332,6 +332,18 @@ int main(int argc, char** argv) {
         }
     }
 
+    // create output folder if the output format is iterationMatrix
+    if(outputFormat == "iterationMatrix"){
+        std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrix";
+        if(!folderExists(outputFolderNameIterationMatrix)){
+            std::cerr << "[WARNING] folder for the output of iteration matrix do not exist: creating the folder"<<std::endl;
+            if(!createFolder(outputFolderNameIterationMatrix)){
+                std::cerr << "[ERROR] folder for the output of iteration matrix could not be created: aborting"<<std::endl;
+                return 1;
+            }
+        }
+    }
+
     if (vm.count("dissipationModel")) {
         logger << "[LOG] dissipation model was set to "
     << vm["dissipationModel"].as<std::string>() << ".\n";
