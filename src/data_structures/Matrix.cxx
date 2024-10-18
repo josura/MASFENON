@@ -437,6 +437,8 @@ void Matrix<T>::addColumn(const std::vector<T>& column, int position){
     }
 }
 
+template void Matrix<double>::addColumn(const std::vector<double>& column, int position);
+
 template<typename T>
 std::vector<T> Matrix<T>::asVector()const{
     if(this->isVector()){
