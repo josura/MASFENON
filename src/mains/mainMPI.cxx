@@ -321,6 +321,17 @@ int main(int argc, char** argv) {
         std::cerr << "[ERROR] output folder was not set. aborting\n";
         return 1;
     }
+
+    // create output folder for the current perturbations
+    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+    if(!folderExists(outputFolderNameSingular)){
+        std::cerr << "[WARNING] folder for the output of singular perturbance values do not exist: creating the folder"<<std::endl;
+        if(!createFolder(outputFolderNameSingular)){
+            std::cerr << "[ERROR] folder for the output of singular perturbance values could not be created: aborting"<<std::endl;
+            return 1;
+        }
+    }
+
     if (vm.count("dissipationModel")) {
         logger << "[LOG] dissipation model was set to "
     << vm["dissipationModel"].as<std::string>() << ".\n";
@@ -1156,7 +1167,7 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
             }
 
             //update input
