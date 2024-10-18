@@ -21,6 +21,7 @@ class Matrix {
 
         inline T& operator()(int x, int y) { if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
         inline T& getValue(int x, int y)const{ if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
+        inline void setValue(int x, int y, T value){ if(x>=0 && y>=0 && x < rows_ && y < cols_) _matrix[x*cols_ +y] = value; else throw std::invalid_argument("Matrix::setValue: x or y not in range"); }
 
         Matrix& operator+=(const Matrix&);
         Matrix& operator-=(const Matrix&);
