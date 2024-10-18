@@ -113,3 +113,31 @@ TEST_F(MatrixTesting,conversionToArmadilloMat){
     }
   }
 }
+
+TEST_F(MatrixTesting,testAddColNewStart){
+  std::vector<double> row = {1,2,3,4,5,6,7,8,9,10,11,12};
+  Matrix<double>* matrixres = m2_->addRowNew(row,0);
+  EXPECT_EQ(matrixres->getCols(), 12);
+  EXPECT_EQ(matrixres->getRows(), 11);
+  for (int i = 0; i<matrixres->getRows(); i++) {
+    for (int j = 0; j<matrixres->getCols(); j++) {
+      if(i==0) EXPECT_FLOAT_EQ(matrixres->getValue(i,j), row[j]);
+      else EXPECT_FLOAT_EQ(matrixres->getValue(i,j), 0);
+    }
+  }
+  delete matrixres;
+}
+
+TEST_F(MatrixTesting,testAddRowNewStart){
+  std::vector<double> row = {1,2,3,4,5,6,7,8,9,10,11,12};
+  Matrix<double>* matrixres = m2_->addRowNew(row,0);
+  EXPECT_EQ(matrixres->getCols(), 12);
+  EXPECT_EQ(matrixres->getRows(), 11);
+  for (int i = 0; i<matrixres->getRows(); i++) {
+    for (int j = 0; j<matrixres->getCols(); j++) {
+      if(i==0) EXPECT_FLOAT_EQ(matrixres->getValue(i,j), row[j]);
+      else EXPECT_FLOAT_EQ(matrixres->getValue(i,j), 0);
+    }
+  }
+  delete matrixres;
+}
