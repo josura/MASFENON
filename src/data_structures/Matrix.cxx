@@ -317,7 +317,7 @@ template Matrix<double> Matrix<double>::transpose()const;
 
 
 template<typename T>
-Matrix<T> Matrix<T>::copyAndAddRowsCols(int additionalRows, int additionalCols)const{
+Matrix<T> Matrix<T>::copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols)const{
     Matrix<T> ret = Matrix<T>(this->getRows()+additionalRows,this->getCols()+additionalCols);
     for (int i = 0 ; i<this->getRows(); i++) {
         for (int j = 0 ; j<this->getRows(); j++) {
@@ -328,7 +328,7 @@ Matrix<T> Matrix<T>::copyAndAddRowsCols(int additionalRows, int additionalCols)c
     return ret;
 }
 
-template Matrix<double> Matrix<double>::copyAndAddRowsCols(int additionalRows, int additionalCols)const;
+template Matrix<double> Matrix<double>::copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols)const;
 
 template<typename T>
 std::vector<T> Matrix<T>::asVector()const{
@@ -351,7 +351,7 @@ template std::vector<double> Matrix<double>::asVector()const;
 template<typename T>
 Matrix<T> Matrix<T>::concatenateRight(const Matrix<T>& rhs)const{
     if(rhs.getRows()==rows_){
-        Matrix<T> ret = this->copyAndAddRowsCols(0, rhs.cols_);
+        Matrix<T> ret = this->copyAndAddRowsColsWithZeros(0, rhs.cols_);
         for (int i = 0; i<rows_; i++) {
             for (int j = 0; j<rhs.getCols(); j++) {
                 ret(i,j+cols_) = rhs.getValue(i,j);    

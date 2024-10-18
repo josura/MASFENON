@@ -84,8 +84,27 @@ class Matrix {
 
         //functions to add rows and columns while mantaining the original data in the upperleft corner(these functions are bad, better use a vector when trying to work with dynamically instantiated data)
         // also these functions create a copy and do not work on the original
-        Matrix copyAndAddRowsCols(int additionalRows, int additionalCols) const;
+        Matrix copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols) const;
 
+        /**
+         * \brief   add a row to the matrix
+         * \param   row :the row to add
+         * \param   position : the position where to add the row
+         * \return  the pointer to new matrix with the added row
+         */
+        Matrix* addRowNew(const std::vector<T>& row, int position);
+
+        /**
+         * \brief   add a column to the matrix
+         * \param   column :the column to add
+         * \param   position : the position where to add the column
+         * \return  the pointer to new matrix with the added column
+         */
+        Matrix* addColumnNew(const std::vector<T>& column, int position);
+
+
+
+        //functions to convert to armadillo
         arma::Mat<T> asArmadilloMatrix()const;
         arma::Col<T> asArmadilloColumnVector()const;
         arma::Row<T> asArmadilloRowVector()const;
