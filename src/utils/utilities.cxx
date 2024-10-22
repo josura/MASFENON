@@ -1417,6 +1417,11 @@ void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, d
     }
 }
 
+void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName){
+
+}
+
+
 
 
 double vectorNorm(std::vector<double> vec){
