@@ -1502,6 +1502,7 @@ int main(int argc, char** argv) {
         // std::cout << std::endl;
         // // TESTING
     }
+    
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
         if (virtualOutputs.at(i) != nullptr) delete[] virtualOutputs.at(i);
@@ -1526,8 +1527,6 @@ int main(int argc, char** argv) {
     }
 
     MPI_Finalize();
-
-        
 
     // take ending time after the computation
     auto end = std::chrono::steady_clock::now();
