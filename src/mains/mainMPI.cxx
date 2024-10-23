@@ -91,7 +91,8 @@ int main(int argc, char** argv) {
     ConservationModel* conservationModel = nullptr;
     double timestep = 1;
     // final output matrices if the output format is set to iterationMatrix
-    std::vector<Matrix<double>*> outputMatrices;
+    std::map<std::string,Matrix<double>*> outputMatrices;
+    std::map<std::string,std::vector<std::string>> outputMatricesRowNames;
 
 
     if (vm.count("help")) {
@@ -336,7 +337,7 @@ int main(int argc, char** argv) {
 
     // create output folder if the output format is iterationMatrix
     if(outputFormat == "iterationMatrix"){
-        std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrix";
+        std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrices";
         if(!folderExists(outputFolderNameIterationMatrix)){
             std::cerr << "[WARNING] folder for the output of iteration matrix do not exist: creating the folder"<<std::endl;
             if(!createFolder(outputFolderNameIterationMatrix)){
@@ -1182,6 +1183,17 @@ int main(int argc, char** argv) {
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
                 saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                if(outputFormat == "iterationMatrix"){
+                    std::vector<double> currentPerturbation = typeComputations[i]->getOutputAugmented();
+                    if(currentIteration != 0){
+                        // add the column to the matrix
+                        outputMatrices[types[i+startIdx]]->addColumnAtTheEnd(currentPerturbation);
+                    } else {
+                        // create the matrix
+                        outputMatrices[types[i+startIdx]] = new Matrix<double>(currentPerturbation, currentPerturbation.size(), 1);
+                        outputMatricesRowNames[types[i+startIdx]] = nodeNames;
+                    }
+                }
             }
 
             //update input
@@ -1499,12 +1511,22 @@ int main(int argc, char** argv) {
         if (rankVirtualInputsBuffer.at(i) != nullptr) delete[] rankVirtualInputsBuffer.at(i);
     }
 
-    MPI_Finalize();
-
     // save into the iterationMatrix files for every type if the option was set
     if (outputFormat == "iterationMatrix") {
+        // create the output folder if it does not exist
+        std::string outputFolderNameMatrices = outputFoldername + "/iterationMatrices";
+        if (!std::filesystem::exists(outputFolderNameMatrices)) {
+            std::filesystem::create_directory(outputFolderNameMatrices);
+        }
         // save all the iteration values in a single file for every type
+        for(int i = 0; i < finalWorkload; i++){
+            std::string type = types[i+startIdx];
+            saveOutputMatrix(outputFolderNameMatrices, outputMatrices[type], outputMatricesRowNames[type], intertypeIterations,intratypeIterations, timestep,type);
+        }
     }
+
+    MPI_Finalize();
+
         
 
     // take ending time after the computation
