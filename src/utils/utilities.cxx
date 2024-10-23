@@ -1435,9 +1435,9 @@ void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outp
     }
     outfile << std::endl;
     // write the body of the matrix
-    for(uint i = 0; i < outputMatrix->getRows(); i++){
+    for(int i = 0; i < outputMatrix->getRows(); i++){
         outfile << outputMatricesRowNames[i];
-        for(uint j = 0; j < outputMatrix->getCols(); j++){
+        for(int j = 0; j < outputMatrix->getCols(); j++){
             outfile << "\t" << outputMatrix->getValue(i,j);
         }
         outfile << std::endl;
