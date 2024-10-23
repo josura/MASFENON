@@ -1417,6 +1417,35 @@ void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, d
     }
 }
 
+void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName){
+    std::string outputFilename = outputFolderNameMatrices + "/" + typeName + ".tsv";
+    // write the header with the times
+    std::ofstream outfile(outputFilename,ios::out|ios::trunc);
+    if (!outfile.is_open()) {
+        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        throw std::invalid_argument("utilities::saveOutputMatrix: unable to open output file " + outputFilename);
+    }
+    // first attribute is nodeNames, representing the node names
+    outfile << "nodeNames\t";
+    for(int i = 0; i < intertypeIterations; i++){
+        for(int j = 0; j < intratypeIterations; j++){
+            int currentIteration = i*intratypeIterations + j;
+            outfile << currentIteration*(timestep/intratypeIterations) << "\t";
+        }
+    }
+    outfile << std::endl;
+    // write the body of the matrix
+    for(int i = 0; i < outputMatrix->getRows(); i++){
+        outfile << outputMatricesRowNames[i];
+        for(int j = 0; j < outputMatrix->getCols(); j++){
+            outfile << "\t" << outputMatrix->getValue(i,j);
+        }
+        outfile << std::endl;
+    }
+    outfile.close();
+}
+
+
 
 
 double vectorNorm(std::vector<double> vec){

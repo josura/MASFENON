@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     namespace po = boost::program_options;
     po::options_description desc("Allowed options");
     std::string performanceFilename = "";
+    std::string outputFormat = "singleIteration";
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
         ("fUniqueGraph", po::value<std::string>(), "(string) graph filename, for an example graph see in resources. NOTE: if this option is chosen, graphsFilesFolder cannot be used. For an example see in data data/testdata/testGraph/edges-Graph1-general.tsv")
@@ -76,6 +77,7 @@ int main(int argc, char** argv) {
         ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none', default to all")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
+        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'") 
     ;
 
     
@@ -88,6 +90,9 @@ int main(int argc, char** argv) {
     DissipationModel* dissipationModel = nullptr;
     ConservationModel* conservationModel = nullptr;
     double timestep = 1;
+    // final output matrices if the output format is set to iterationMatrix
+    std::map<std::string,Matrix<double>*> outputMatrices;
+    std::map<std::string,std::vector<std::string>> outputMatricesRowNames;
 
 
     if (vm.count("help")) {
@@ -248,6 +253,15 @@ int main(int argc, char** argv) {
         logger << "[LOG] resetVirtualOutputs not specified, virtual outputs will not be reset to 0 after each inter-propagation"<<std::endl;
     }
 
+    // output format parameter
+    if(vm.count("outputFormat")){
+        outputFormat = vm["outputFormat"].as<std::string>();
+        if(outputFormat != "singleIteration" && outputFormat != "iterationMatrix"){
+            std::cerr << "[ERROR] outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting"<<std::endl;
+            return 1;
+        }
+    }
+
 
     if (vm.count("fUniqueGraph")) {
         logger << "[LOG] file for the graph was set to " 
@@ -310,6 +324,29 @@ int main(int argc, char** argv) {
         std::cerr << "[ERROR] output folder was not set. aborting\n";
         return 1;
     }
+
+    // create output folder for the current perturbations
+    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+    if(!folderExists(outputFolderNameSingular)){
+        std::cerr << "[WARNING] folder for the output of singular perturbance values do not exist: creating the folder"<<std::endl;
+        if(!createFolder(outputFolderNameSingular)){
+            std::cerr << "[ERROR] folder for the output of singular perturbance values could not be created: aborting"<<std::endl;
+            return 1;
+        }
+    }
+
+    // create output folder if the output format is iterationMatrix
+    if(outputFormat == "iterationMatrix"){
+        std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrices";
+        if(!folderExists(outputFolderNameIterationMatrix)){
+            std::cerr << "[WARNING] folder for the output of iteration matrix do not exist: creating the folder"<<std::endl;
+            if(!createFolder(outputFolderNameIterationMatrix)){
+                std::cerr << "[ERROR] folder for the output of iteration matrix could not be created: aborting"<<std::endl;
+                return 1;
+            }
+        }
+    }
+
     if (vm.count("dissipationModel")) {
         logger << "[LOG] dissipation model was set to "
     << vm["dissipationModel"].as<std::string>() << ".\n";
@@ -1145,7 +1182,18 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFoldername, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                if(outputFormat == "iterationMatrix"){
+                    std::vector<double> currentPerturbation = typeComputations[i]->getOutputAugmented();
+                    if(currentIteration != 0){
+                        // add the column to the matrix
+                        outputMatrices[types[i+startIdx]]->addColumnAtTheEnd(currentPerturbation);
+                    } else {
+                        // create the matrix
+                        outputMatrices[types[i+startIdx]] = new Matrix<double>(currentPerturbation, currentPerturbation.size(), 1);
+                        outputMatricesRowNames[types[i+startIdx]] = nodeNames;
+                    }
+                }
             }
 
             //update input
@@ -1454,6 +1502,7 @@ int main(int argc, char** argv) {
         // std::cout << std::endl;
         // // TESTING
     }
+    
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
         if (virtualOutputs.at(i) != nullptr) delete[] virtualOutputs.at(i);
@@ -1463,7 +1512,22 @@ int main(int argc, char** argv) {
         if (rankVirtualInputsBuffer.at(i) != nullptr) delete[] rankVirtualInputsBuffer.at(i);
     }
 
+    // save into the iterationMatrix files for every type if the option was set
+    if (outputFormat == "iterationMatrix") {
+        // create the output folder if it does not exist
+        std::string outputFolderNameMatrices = outputFoldername + "/iterationMatrices";
+        if (!std::filesystem::exists(outputFolderNameMatrices)) {
+            std::filesystem::create_directory(outputFolderNameMatrices);
+        }
+        // save all the iteration values in a single file for every type
+        for(int i = 0; i < finalWorkload; i++){
+            std::string type = types[i+startIdx];
+            saveOutputMatrix(outputFolderNameMatrices, outputMatrices[type], outputMatricesRowNames[type], intertypeIterations,intratypeIterations, timestep,type);
+        }
+    }
+
     MPI_Finalize();
+
     // take ending time after the computation
     auto end = std::chrono::steady_clock::now();
     if(rank == 0){

@@ -4,8 +4,8 @@
 #include <iterator>
 #include <stdexcept>
 #include <vector>
-#include "utils/utilities.hxx"
 #include <armadillo>
+#include <cmath>
 
 template <typename T>
 class Matrix {
@@ -21,6 +21,7 @@ class Matrix {
 
         inline T& operator()(int x, int y) { if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
         inline T& getValue(int x, int y)const{ if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
+        inline void setValue(int x, int y, T value){ if(x>=0 && y>=0 && x < rows_ && y < cols_) _matrix[x*cols_ +y] = value; else throw std::invalid_argument("Matrix::setValue: x or y not in range"); }
 
         Matrix& operator+=(const Matrix&);
         Matrix& operator-=(const Matrix&);
@@ -84,12 +85,67 @@ class Matrix {
 
         //functions to add rows and columns while mantaining the original data in the upperleft corner(these functions are bad, better use a vector when trying to work with dynamically instantiated data)
         // also these functions create a copy and do not work on the original
-        Matrix copyAndAddRowsCols(int additionalRows, int additionalCols) const;
+        Matrix copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols) const;
 
+        /**
+         * \brief   add a row to the matrix and return a new matrix
+         * \param   row :the row to add
+         * \param   position : the position where to add the row
+         * \return  the pointer to new matrix with the added row
+         */
+        Matrix* addRowNew(const std::vector<T>& row, int position);
+
+        /**
+         * \brief   add a column to the matrix and return a new matrix
+         * \param   column :the column to add
+         * \param   position : the position where to add the column
+         * \return  the pointer to new matrix with the added column
+         */
+        Matrix* addColumnNew(const std::vector<T>& column, int position);
+
+        /**
+         * \brief  add a row to the matrix
+         * \param  row : the row to add
+         * \param  position : the position where to add the row
+         * \return nothing
+         */
+        void addRow(const std::vector<T>& row, int position);
+
+        /**
+         * \brief  add a column to the matrix
+         * \param  column : the column to add
+         * \param  position : the position where to add the column
+         * \return nothing
+         */
+        void addColumn(const std::vector<T>& column, int position);
+
+        /**
+         * \brief  add a row to the matrix at the end
+         * \param  row : the row to add
+         * \return nothing
+         */
+        void addRowAtTheEnd(const std::vector<T>& row);
+
+        /**
+         * \brief  add a column to the matrix at the end
+         * \param  column : the column to add
+         * \return nothing
+         */
+        void addColumnAtTheEnd(const std::vector<T>& column);
+
+
+
+        //functions to convert to armadillo
         arma::Mat<T> asArmadilloMatrix()const;
         arma::Col<T> asArmadilloColumnVector()const;
         arma::Row<T> asArmadilloRowVector()const;
         void printMatrix()const;
+
+
+        bool approximatelyEqual(float a, float b, float epsilon)
+        {
+            return fabs(a - b) <= ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+        }
 
     protected:
         int rows_, cols_;

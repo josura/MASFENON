@@ -180,7 +180,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addEdge(std::string node1name, std::string
 
 WeightedEdgeGraph* WeightedEdgeGraph::addNode(double value){
     this->numberOfNodes++;
-    adjMatrix = adjMatrix.copyAndAddRowsCols(1, 1);
+    adjMatrix = adjMatrix.copyAndAddRowsColsWithZeros(1, 1);
     double* tmp = nodeValues;
     nodeValues = new double[this->numberOfNodes];
     std::copy(tmp,tmp+(this->numberOfNodes-1),nodeValues);
@@ -199,7 +199,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addNode(std::string name, double value){
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::addNode: node name already present");
     }else{
         this->numberOfNodes++;
-        adjMatrix = adjMatrix.copyAndAddRowsCols(1, 1);
+        adjMatrix = adjMatrix.copyAndAddRowsColsWithZeros(1, 1);
         double* tmp = nodeValues;
         nodeValues = new double[this->numberOfNodes];
         std::copy(tmp,tmp+(this->numberOfNodes-1),nodeValues);
@@ -217,7 +217,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addNode(std::string name, double value){
 WeightedEdgeGraph* WeightedEdgeGraph::addNodes(const std::vector<double>& values){
     int oldNumberOfNodes = this->numberOfNodes; 
     this->numberOfNodes += values.size();
-    adjMatrix = adjMatrix.copyAndAddRowsCols(values.size(), values.size());
+    adjMatrix = adjMatrix.copyAndAddRowsColsWithZeros(values.size(), values.size());
     double* tmp = nodeValues;
     nodeValues = new double[this->numberOfNodes];
     std::copy(tmp,tmp+(oldNumberOfNodes),nodeValues);
@@ -244,7 +244,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addNodes(const std::vector<std::string>& n
         //default values
         int oldNumberOfNodes = this->numberOfNodes; 
         this->numberOfNodes += names.size();
-        adjMatrix = adjMatrix.copyAndAddRowsCols(names.size(), names.size());
+        adjMatrix = adjMatrix.copyAndAddRowsColsWithZeros(names.size(), names.size());
         double* tmp = nodeValues;
         nodeValues = new double[this->numberOfNodes];
         std::copy(tmp,tmp+(oldNumberOfNodes),nodeValues);
@@ -265,7 +265,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addNodes(const std::vector<std::string>& n
     else {
         int oldNumberOfNodes = this->numberOfNodes; 
         this->numberOfNodes += names.size();
-        adjMatrix = adjMatrix.copyAndAddRowsCols(names.size(), names.size());
+        adjMatrix = adjMatrix.copyAndAddRowsColsWithZeros(names.size(), names.size());
         double* tmp = nodeValues;
         nodeValues = new double[this->numberOfNodes];
         std::copy(tmp,tmp+(oldNumberOfNodes),nodeValues);

@@ -29,6 +29,9 @@
 // hash function for unordered_map
 #include <bits/stdc++.h>
 
+// my libraries
+#include "data_structures/Matrix.hxx"
+
 //custom types
 typedef std::vector<int> NodeList;
 using NodeBitList = std::vector<bool>;
@@ -452,6 +455,18 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
 */
 void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
+
+/**
+ * \brief   save the iteration values passed as matrices in the folder
+ * \param  folderName the folder where the values are saved
+ * \param  outputMatrices a map (typeName)->(Matrix of values)
+ * \param  nodeNames a map (typeName)->(vector of node names)
+ * \param  interIteration the inter-iteration number
+ * \param  intraIteration the intra-iteration number
+ * \param  timestep the timestep of the simulation
+ * \return void
+ */
+void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName);
 
 template<typename T>
 std::vector<T> vectorSubtraction(std::vector<T> vec1, std::vector<T> vec2){
