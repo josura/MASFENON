@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 
 //add scaling function as lambda function for dissipation
 std::function<double(double)> getDissipationScalingFunction();

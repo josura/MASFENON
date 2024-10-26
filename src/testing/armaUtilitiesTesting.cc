@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "utils/armaUtilities.hxx"
+#include "utils/mathUtilities.hxx"
 
 class armaUtilitiesTesting : public ::testing::Test {
     protected:

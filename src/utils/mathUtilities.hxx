@@ -9,8 +9,6 @@
 #include <cmath>
 #include <map>
 #include <algorithm>
-
-
 /**
  * \brief   Generate a random integer number between min and max
  * \return  the random number

@@ -5,6 +5,7 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "utils/armaUtilities.hxx"
 #include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include <cstdlib>
 #include <iostream>
 #include <map>

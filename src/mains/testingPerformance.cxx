@@ -2,6 +2,7 @@
 #include <vector>
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include "utils/optimization.cxx"
 #include "data_structures/Matrix.hxx"
 
