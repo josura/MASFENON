@@ -114,3 +114,38 @@ double hyperbolicTangentScaled(double xInput, double scaleFactor ){
 double lerping(double a, double b, double t){
     return a + t * (b - a);
 }
+
+
+bool setDoubleContainsInterval(std::set<double> set, double lower, double upper){
+    if(lower > upper){
+        throw std::invalid_argument("utilities::setDoubleContainsInterval: lower bound is greater than upper bound");
+    }
+    if(set.lower_bound(lower) != set.end() && *set.lower_bound(lower) < upper){
+        return true;
+    }
+    return false;
+}
+
+int setDoubleIntervalWidth(std::set<double> set, double lower, double upper){
+    if(lower > upper){
+        throw std::invalid_argument("utilities::setDoubleContainsInterval: lower bound is greater than upper bound");
+    }
+    int count = 0;
+    for(auto iter = set.cbegin(); iter != set.cend(); iter++){
+        if(*iter >= lower && *iter<upper){
+            count++;
+        }
+    }
+    return count;
+}
+
+
+
+double vectorNorm(std::vector<double> vec){
+    double norm=0;
+    for (uint i = 0; i < vec.size(); ++i) {
+        norm+=vec[i]*vec[i];
+    }
+    norm=sqrt(norm);
+    return norm;
+}
