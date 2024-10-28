@@ -1,6 +1,5 @@
 #pragma once
 #include <functional>
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 
 //add scaling function as lambda function for dissipation
