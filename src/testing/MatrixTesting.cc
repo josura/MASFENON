@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "data_structures/Matrix.hxx"
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 
 class MatrixTesting : public ::testing::Test {

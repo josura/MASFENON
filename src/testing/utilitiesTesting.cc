@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 
 class utilitiesTesting : public ::testing::Test {

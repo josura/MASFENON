@@ -4,7 +4,6 @@
 #include <vector>
 #include "computation/Computation.hxx"
 #include "data_structures/Matrix.hxx"
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 #include "computation/DissipationModel.hxx"
 #include "computation/DissipationModelScaled.hxx"
