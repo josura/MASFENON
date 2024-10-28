@@ -267,3 +267,18 @@ bool vectorContains(std::vector<T> vec, const T element){
     }
     return false;
 }
+
+template<typename T>
+int getIndex(std::vector<T> v, T K)
+{
+    auto it = find(v.begin(), v.end(), K);
+  
+    // If element was found
+    if (it != v.end()) 
+    {
+        return (it - v.begin());
+    }
+    else {
+        return -1;
+    }
+}

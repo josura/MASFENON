@@ -61,21 +61,6 @@ void printUsage(std::string execName);
 std::string nodeBitArrayToString(NodeBitArray nodeArray,int size);
 
 template<typename T>
-int getIndex(std::vector<T> v, T K)
-{
-    auto it = find(v.begin(), v.end(), K);
-  
-    // If element was found
-    if (it != v.end()) 
-    {
-        return (it - v.begin());
-    }
-    else {
-        return -1;
-    }
-}
-
-template<typename T>
 bool controlForDuplicates(std::vector<T> v){
     std::vector<T> v2 = v;
     std::sort(v2.begin(), v2.end());
