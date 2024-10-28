@@ -1,14 +1,13 @@
 #include <iostream>
 #include <vector>
 #include "data_structures/WeightedEdgeGraph.hxx"
-#include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include "utils/optimization.cxx"
 #include "data_structures/Matrix.hxx"
 
 using namespace std;
 
 int main() {
-
     auto matrix1 = Matrix<double>::createRandom(4,8);
     auto matrix2 = Matrix<double>::createRandom(8,5);
     auto matrixres=Matrix<double>(4,5);

@@ -1,5 +1,6 @@
 #include "computation/ConservationModel.hxx"
 #include "utils/armaUtilities.hxx"
+#include "utils/mathUtilities.hxx"
 
 
 ConservationModel::ConservationModel(){

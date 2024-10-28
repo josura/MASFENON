@@ -1,5 +1,6 @@
 #include<iostream>
 #include "utils/armaUtilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include <vector>
 
 void print_mat(arma::mat my_matrix){

@@ -11,7 +11,7 @@
 #include "computation/PropagationModelNeighbors.hxx"
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "data_structures/Matrix.hxx"
-#include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 
 class ComputationTestingPerturbation : public ::testing::Test {
     protected:

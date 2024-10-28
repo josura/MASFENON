@@ -20,6 +20,7 @@
 #include "computation/DissipationModelScaled.hxx"
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include "CustomFunctions.hxx"
 #include "logging/Logger.hxx"
 #include "checkpoint/Checkpoint.hxx"

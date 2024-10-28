@@ -1,5 +1,5 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
-#include "utils/utilities.hxx"
+#include "utils/mathUtilities.hxx"
 #include "computation/Computation.hxx"
 #include <iostream>
 
