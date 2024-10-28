@@ -1,5 +1,4 @@
 #include "data_structures/Matrix.hxx"
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 #include <iostream>
 #include <stdexcept>

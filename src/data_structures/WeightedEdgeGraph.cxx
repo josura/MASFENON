@@ -1,6 +1,5 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "data_structures/Matrix.hxx"
-#include "utils/utilities.hxx"
 #include "utils/mathUtilities.hxx"
 #include <algorithm>
 #include <iterator>
