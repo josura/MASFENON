@@ -57,7 +57,7 @@ data["speedup"] = speedup
 
 
 # plot the speedup
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(data["graphNodesNumber"], data["numberProcesses"], data["speedup"])
 ax.set_xlabel('Number of Nodes')
@@ -77,7 +77,7 @@ for i, node in enumerate(nodes):
         Z[j, i] = data[(data['graphNodesNumber'] == node) & (data['numberProcesses'] == process)]['speedup'].values[0]
 
 # Plot the wireframe
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 8))
 ax = fig.add_subplot(111, projection='3d')
 # ax.plot_wireframe(X, Y, Z)
 ax.plot_surface(X, Y, Z)
