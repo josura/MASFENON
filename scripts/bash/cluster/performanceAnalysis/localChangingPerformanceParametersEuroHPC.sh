@@ -12,7 +12,7 @@ outputFolder=$2
 processors=$3
 interface="wlan0"
 
-mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np $processors ./build/c2c-sepia-MPI --graphsFilesFolder $inputsFolder/graphs \
+mpirun --use-hwthread-cpus --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np $processors ./build/masfenon-MPI --graphsFilesFolder $inputsFolder/graphs \
     --initialPerturbationPerTypeFolder $inputsFolder/node_conditions_discr \
     --typeInteractionFolder $inputsFolder/interactions \
     --nodeDescriptionFolder $inputsFolder/communities \
