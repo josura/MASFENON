@@ -10,7 +10,7 @@ import os
 # graphNodesNumber	numberProcesses	numberTypes	numberIterations	time
 
 # read the data
-data = pd.read_csv("/home/josura/Projects/ccc/c2c-sepia/scripts/bash/cluster/performanceAnalysis/localPerformanceTimes.tsv", sep="\t")
+data = pd.read_csv("/home/josura/Projects/ccc/MASFENON/scripts/bash/cluster/performanceAnalysis/localPerformanceTimesEnhanced.tsv", sep="\t")
 
 # create a new dataframe with the average time, group by the number of nodes and the number of processes
 data = data.groupby(["graphNodesNumber", "numberProcesses"]).agg({"time": "mean"}).reset_index()
@@ -25,7 +25,6 @@ ax.set_zlabel('average Time')
 plt.show()
 
 # also plot as wireframe
-ax = plt.figure().add_subplot(projection='3d')
 # Create data
 nodes = data["graphNodesNumber"].unique()
 processes = data["numberProcesses"].unique()
@@ -39,7 +38,8 @@ for i, node in enumerate(nodes):
 # Plot the wireframe
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_wireframe(X, Y, Z)
+# ax.plot_wireframe(X, Y, Z)
+ax.plot_surface(X, Y, Z)
 
 ax.set_xlabel('Number of Nodes')
 ax.set_ylabel('Number of Processes')
@@ -66,7 +66,6 @@ ax.set_zlabel('Speedup')
 plt.show()
 
 # also plot as wireframe
-ax = plt.figure().add_subplot(projection='3d')
 # Create data
 nodes = data["graphNodesNumber"].unique()
 processes = data["numberProcesses"].unique()
@@ -80,7 +79,8 @@ for i, node in enumerate(nodes):
 # Plot the wireframe
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_wireframe(X, Y, Z)
+# ax.plot_wireframe(X, Y, Z)
+ax.plot_surface(X, Y, Z)
 
 ax.set_xlabel('Number of Nodes')
 ax.set_ylabel('Number of Processes')
