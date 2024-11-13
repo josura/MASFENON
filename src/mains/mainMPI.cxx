@@ -101,6 +101,12 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // control if no arguments are passed
+    if(argc == 1){
+        std::cerr << "[ERROR] no arguments passed, use --help to get the list of arguments available, aborting"<<std::endl;
+        return 1;
+    }
+
     //logging options
     Logger logger(std::cout);
     if(vm.count("loggingOptions")){
