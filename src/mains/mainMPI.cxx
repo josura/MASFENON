@@ -1521,7 +1521,7 @@ int main(int argc, char** argv) {
 
     // save into the iterationMatrix files for every type if the option was set
     if (outputFormat == "iterationMatrix") {
-        logger << "[LOG] saving the iteration matrices for every type"<<std::endl;
+        logger << "[LOG] saving the iteration matrices for types in rank " << rank<<std::endl;
         // create the output folder if it does not exist
         std::string outputFolderNameMatrices = outputFoldername + "/iterationMatrices";
         if (!std::filesystem::exists(outputFolderNameMatrices)) {
@@ -1543,6 +1543,7 @@ int main(int argc, char** argv) {
     auto end = std::chrono::steady_clock::now();
     if(rank == 0){
         if(vm.count("savePerformance")){
+            logger << "[LOG] saving performance"<<std::endl;
             std::ofstream performanceFile;
             int numberProcesses = numProcesses;
             int numberTypes = types.size();
@@ -1555,5 +1556,7 @@ int main(int argc, char** argv) {
             performanceFile.close();
         }
     }
+
+    std::cout << "Execution ended for rank " << rank << " with no errors" << std::endl;
     return 0;
 }
