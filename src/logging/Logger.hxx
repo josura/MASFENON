@@ -18,7 +18,18 @@ class Logger{
         Logger& printLog(const std::string& msg);
         Logger& printError(const std::string& msg);
         Logger& printWarning(const std::string& msg);
+        /**
+         * @brief Enables the logger
+         * Enables the logger, so that output is written to the stream
+         * @return void
+         */
         void enable();
+        /**
+        * @brief Disables the logger
+        * Disables the logger, so that no output is written to the stream
+        * @return void
+        * @see enable
+        */
         void disable();
     private:
         std::ostream& os_;
