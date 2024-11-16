@@ -59,6 +59,7 @@ set(LIB_SRCS
     src/utils/optimization.cxx
     src/data_structures/Matrix.cxx
     src/computation/Computation.cxx
+    src/computation/ComputationVectorized.cxx
     src/computation/DissipationModel.cxx
     src/computation/DissipationModelPow.cxx
     src/computation/DissipationModelRandom.cxx
