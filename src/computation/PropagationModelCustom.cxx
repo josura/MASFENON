@@ -1,4 +1,4 @@
-#include "PropagationModelCustom.hxx"
+#include "computation/PropagationModelCustom.hxx"
 #include <armadillo>
 #include <iostream>
 
