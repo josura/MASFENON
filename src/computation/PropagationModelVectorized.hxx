@@ -10,8 +10,8 @@ class PropagationModelVectorized{
     public:
         virtual ~PropagationModelVectorized(){}
         //using the scale function as a parameter itself, dependency injection
-        virtual arma::Col<double> propagate(arma::Col<double> input, double time) = 0;
-        virtual arma::Col<double> propagationTerm(arma::Col<double> input, double time) = 0;
+        virtual arma::Mat<double> propagate(arma::Mat<double> input, double time) = 0;
+        virtual arma::Mat<double> propagationTerm(arma::Mat<double> input, double time) = 0;
 
         //getters and setters
         std::function<double(double)> getScaleFunction(){return this->scaleFunction;}
