@@ -17,6 +17,9 @@ template<typename T>
 arma::Row<T> vectorToArmaRow(std::vector<T> vec){return arma::Row<T>(vec);}
 
 template<typename T>
+arma::Mat<T> vectorToArmaMatrixRepeatColumns(std::vector<T> vec, int n){return arma::repmat(arma::Col<T>(vec), 1, n);}
+
+template<typename T>
 arma::Mat<T> normalizeColumns(arma::Mat<T> matr);
 
 template<typename T>
