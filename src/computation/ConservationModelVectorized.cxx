@@ -39,15 +39,15 @@ arma::Mat<double> ConservationModelVectorized::conservationTerm(arma::Mat<double
     if (q.size()) {
         if (q.size() == input.n_rows) {
             //convert q vector to arma vector
-            arma::Col<double> qArmaMatrix = vectorToArmaMatrixRepeatColumns(q, Wstar.n_cols);
-            arma::Col<double> outputArma =  (scaleFunction(time) * Wstar * qArmaMatrix) % input;
+            arma::Mat<double> qArmaMatrix = vectorToArmaMatrixRepeatColumns(q, Wstar.n_cols);
+            arma::Mat<double> outputArma =  (scaleFunction(time) * Wstar * qArmaMatrix) % input;
             return outputArma;
         } else{
             throw std::invalid_argument("q is not of the same size as input vector. abort");
         }
     } else{
-        arma::Mat<double> qOnes = arma::ones<arma::Mat<double>>(input.n_elem);
-        arma::Col<double> outputArma =  scaleFunction(time) *(Wstar * qOnes) % input;
+        arma::Mat<double> qOnesMatrix = arma::ones<arma::Mat<double>>(input.n_rows, input.n_cols);
+        arma::Mat<double> outputArma =  scaleFunction(time) *(Wstar * qOnesMatrix) % input;
         return outputArma;
     }
 }
