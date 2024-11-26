@@ -20,7 +20,6 @@ arma::Mat<double> ConservationModelVectorized::conservate(arma::Mat<double> inpu
         if (q.size() == input.n_rows) {
             //convert q vector to arma vector
             arma::Mat<double> qArmaMatrix = vectorToArmaMatrixRepeatColumns(q, Wstar.n_cols);
-            // TODO repeat qarma column of the input matrix
             arma::Mat<double> outputArma = inputDissipated -  (scaleFunction(time) * Wstar * qArmaMatrix) % input;
             return outputArma;
         } else{
