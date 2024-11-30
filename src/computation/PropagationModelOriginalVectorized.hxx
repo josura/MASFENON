@@ -11,7 +11,7 @@ class PropagationModelOriginalVectorized : public PropagationModelVectorized
         PropagationModelOriginalVectorized(const WeightedEdgeGraph* graph);
         PropagationModelOriginalVectorized(const WeightedEdgeGraph* graph,std::function<double(double)> scaleFunc);
         ~PropagationModelOriginalVectorized()override;
-        arma::Col<double> propagate(arma::Col<double> input,double time)override;
-        arma::Col<double> propagationTerm(arma::Col<double> input, double time)override;
+        arma::Mat<double> propagate(arma::Mat<double> input,double time)override;
+        arma::Mat<double> propagationTerm(arma::Mat<double> input, double time)override;
         double getScale(double time){return scaleFunction(time);}
 };
