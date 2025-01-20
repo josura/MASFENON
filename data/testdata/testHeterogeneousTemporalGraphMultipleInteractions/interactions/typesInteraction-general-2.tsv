@@ -1,0 +1,7 @@
+startType	startNodeName	endType	endNodeName	weight	contactTimes
+t0	e0	t1	a1	1.0	2,11
+t0	c0	t1	b1	1.0	8,3
+t1	f1	t0	a0	1.0	3
+t0	e0	t2	a2	1.0	2,8
+t3	e3	t0	a0	1.0	1
+t3	f3	t2	a2	1.0	6
