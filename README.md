@@ -35,3 +35,8 @@ The custom functions used for the scaling of the perturbation values (dissipatio
 ```bash
 ./build/masfenon --help
 ```
+
+### EXAMPLE
+```bash
+./build/masfenon --fUniqueGraph [graph].tsv --fInitialPerturbationPerType [matrix].tsv --typeInteractionFolder [typesInteractionFolder]
+```
