@@ -1,4 +1,8 @@
 #!  /bin/bash
+graphsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR"
+initialPerturbationFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR"
+typeInteractionsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/interactionsWithLR"
+nodesFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR"
 
 outputFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR"
 dissipationScaleFactor=0.2
