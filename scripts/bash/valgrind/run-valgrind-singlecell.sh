@@ -1,5 +1,5 @@
 #! /bin/bash
-valgrind --leak-check=yes --log-file="valgrind-single-cell.log" ./build/masfenon-MPI \
+valgrind --leak-check=yes --log-file="/tmp/valgrind-single-cell.log" ./build/masfenon-MPI \
         --graphsFilesFolder /home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR \
         --initialPerturbationPerTypeFolder /home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR \
         --typeInteractionFolder /home/josura/Projects/ccc/datiIdo/inputGraphs/1h/interactionsWithLR \
