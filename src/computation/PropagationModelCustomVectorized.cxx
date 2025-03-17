@@ -1,8 +1,8 @@
-#include "computation/PropagationModelCustom.hxx"
+#include "computation/PropagationModelCustomVectorized.hxx"
 #include <armadillo>
 #include <iostream>
 
-PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph){
+PropagationModelCustomVectorized::PropagationModelCustomVectorized(const WeightedEdgeGraph* graph){
     this->scaleFunction = [](double time)-> double{return 0.5;};
 
     //getting normalization values for the adjacency matrix
@@ -16,10 +16,10 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph){
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
 }
 
-PropagationModelCustom::~PropagationModelCustom(){
+PropagationModelCustomVectorized::~PropagationModelCustomVectorized(){
 }
 
-PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, std::function<double(double)> scaleFun):scaleFunction(scaleFun){
+PropagationModelCustomVectorized::PropagationModelCustomVectorized(const WeightedEdgeGraph* graph, std::function<double(double)> scaleFun):scaleFunction(scaleFun){
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
@@ -32,10 +32,10 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, s
 }
 
 
-arma::Col<double> PropagationModelCustom::propagate(arma::Col<double> input, double time){
+arma::Mat<double> PropagationModelCustomVectorized::propagate(arma::Mat<double> input, double time){
     return input + (Wmat * input * this->scaleFunction(time));
 }
 
-arma::Col<double> PropagationModelCustom::propagationTerm(arma::Col<double> input, double time){
+arma::Mat<double> PropagationModelCustomVectorized::propagationTerm(arma::Mat<double> input, double time){
     return (Wmat * input * this->scaleFunction(time));
 }

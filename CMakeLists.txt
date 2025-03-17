@@ -59,13 +59,17 @@ set(LIB_SRCS
     src/utils/optimization.cxx
     src/data_structures/Matrix.cxx
     src/computation/Computation.cxx
+    src/computation/ComputationVectorized.cxx
     src/computation/DissipationModel.cxx
+    src/computation/DissipationModelVectorized.cxx
     src/computation/DissipationModelPow.cxx
     src/computation/DissipationModelRandom.cxx
     src/computation/DissipationModelPeriodic.cxx
     src/computation/DissipationModelScaled.cxx
     src/computation/ConservationModel.cxx
+    src/computation/ConservationModelVectorized.cxx
     src/computation/PropagationModel.cxx
+    src/computation/PropagationModelVectorized.cxx
     src/computation/PropagationModelNeighbors.cxx
     src/computation/PropagationModelOriginal.cxx
     src/computation/PropagationModelCustom.cxx
