@@ -8,7 +8,7 @@ outputFolder="/tmp/outputValgrind"
 dissipationScaleFactor=0.2
 propagationScaleFactor=0.5
 
-valgrind --leak-check=yes --log-file="/tmp/valgrind-single-cell.log" ./build/masfenon-MPI --graphsFilesFolder $graphsFolder \
+valgrind --leak-check=yes --log-file="/tmp/valgrind-testgraph.log" ./build/masfenon-MPI --graphsFilesFolder $graphsFolder \
         --initialPerturbationPerTypeFolder $initialPerturbationFolder \
         --typeInteractionFolder $typeInteractionsFolder \
         --nodeDescriptionFolder $nodesFolder \
