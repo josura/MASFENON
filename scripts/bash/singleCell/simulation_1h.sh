@@ -21,6 +21,4 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 12 ./
         --timestep 0.1 \
         --virtualNodesGranularity typeAndNode \
         --saturation \
-        --undirectedEdges \
-        --undirectedTypeEdges \
         --outputFolder $outputFolder
