@@ -1509,6 +1509,12 @@ int main(int argc, char** argv) {
         // std::cout << std::endl;
         // // TESTING
     }
+
+    // delete graphs objects
+    for(int i = 0; i < finalWorkload; i++){
+        delete graphs[i];
+    }
+    delete[] graphs;
     
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
