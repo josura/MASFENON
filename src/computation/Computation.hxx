@@ -153,6 +153,7 @@ class Computation{
 
         //optimization
         void freeAugmentedGraphs();
+        void freeFunctions();
 
         // operators
         Computation& operator=( const Computation& );

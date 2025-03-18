@@ -1520,8 +1520,11 @@ int main(int argc, char** argv) {
 
     // delete typeComputations objects
     for(int i = 0; i < finalWorkload; i++){
+        typeComputations[i]->freeFunctions();
         delete typeComputations[i];
     }
+    delete conservationModel; //TO CHANGE
+    delete dissipationModel; // TO CHANGE
     delete[] typeComputations;
     
     // delete the virtual outputs vector of arrays
