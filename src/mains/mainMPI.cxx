@@ -1513,6 +1513,8 @@ int main(int argc, char** argv) {
     // delete graphs objects
     for(int i = 0; i < finalWorkload; i++){
         delete graphs[i];
+        graphs[i] = nullptr;
+        typeComputations[i]->setGraph(nullptr);
     }
     delete[] graphs;
 
