@@ -142,6 +142,7 @@ class Computation{
         void setConservationModel(ConservationModel* conservationModel);
         void setPropagationModel(PropagationModel* propagationModel);
         void setInputAugmented(const std::vector<double>& inputAugmented);
+        void setGraph(WeightedEdgeGraph* _graph){this->graph = _graph;} // only used for testing and pointer management
 
 
         // get-set for saturation function
