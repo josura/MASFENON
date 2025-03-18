@@ -26,6 +26,9 @@ Computation::Computation(){
         else if (value < -saturation) return -saturation;
         else return value;
     };
+    dissipationModel = nullptr;
+    conservationModel = nullptr;
+    propagationModel = nullptr;
 }
 
 Computation::~Computation(){
@@ -45,6 +48,9 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
         else if (value < -saturation) return -saturation;
         else return value;
     };
+    dissipationModel = nullptr;
+    conservationModel = nullptr;
+    propagationModel = nullptr;
 }
 
 
@@ -76,6 +82,9 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
         else if (value < -saturation) return -saturation;
         else return value;
     };
+    dissipationModel = nullptr;
+    conservationModel = nullptr;
+    propagationModel = nullptr;
 }
 
 Computation::Computation(std::string _thisCellType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames){
@@ -106,6 +115,9 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
         else if (value < -saturation) return -saturation;
         else return value;
     };
+    dissipationModel = nullptr;
+    conservationModel = nullptr;
+    propagationModel = nullptr;
 }
 
 void Computation::augmentGraph(const std::vector<std::string>& _types,const std::vector<std::pair<std::string, std::string>>& newEdgesList,const std::vector<double>& newEdgesValue, bool includeSelfVirtual){
@@ -454,6 +466,16 @@ std::vector<double> Computation::computeAugmentedPerturbationEnhanced3(double ti
 
 
 std::vector<double> Computation::computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation, const std::vector<double>& saturationsVector, const std::vector<double>& qVector){
+    //control over the various models
+    if (dissipationModel == nullptr) {
+        throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: dissipationModel is not set. abort");
+    }
+    if (conservationModel == nullptr) {
+        throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: conservationModel is not set. abort");
+    }
+    if (propagationModel == nullptr) {
+        throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: propagationModel is not set. abort");
+    }
     if (saturation) {
         std::vector<double> saturationVectorVar = saturationsVector;
         std::vector<double> qVectorVar = qVector;
