@@ -1515,6 +1515,12 @@ int main(int argc, char** argv) {
         delete graphs[i];
     }
     delete[] graphs;
+
+    // delete typeComputations objects
+    for(int i = 0; i < finalWorkload; i++){
+        delete typeComputations[i];
+    }
+    delete[] typeComputations;
     
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
