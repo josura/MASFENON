@@ -16,9 +16,10 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 12 ./
         --dissipationModelParameters $dissipationScaleFactor \
         --propagationModel neighbors \
         --propagationModelParameters $propagationScaleFactor \
-        --intertypeIterations 20 \
+        --intertypeIterations 10 \
         --intratypeIterations 5 \
         --timestep 0.1 \
         --virtualNodesGranularity typeAndNode \
         --saturation \
+        --outputFormat iterationMatrix \
         --outputFolder $outputFolder
