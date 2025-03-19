@@ -96,8 +96,17 @@ class Computation{
          * @param std::string nodeName: the name of the node in the graph
         */
         double getOutputNodeValue(std::string nodeName)const{
-            if(nodeToIndex.find(nodeName) == nodeToIndex.end())
+            if(nodeToIndex.find(nodeName) == nodeToIndex.end()){
+                // TESTING
+                // printing the node names
+                // std::cout << "Node names: ";
+                // for(auto it = nodeToIndex.begin(); it != nodeToIndex.end(); it++){
+                //     std::cout << it->first << " ";
+                // }
+                // std::cout << std::endl;
+                // TESTING
                 throw std::out_of_range("Computation::getOutputNodeValue: the node name is not in the graph");
+            }
             int index = nodeToIndex.at(nodeName);
             return outputAugmented[index];
             };
