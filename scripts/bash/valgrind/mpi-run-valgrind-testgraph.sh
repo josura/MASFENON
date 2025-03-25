@@ -8,7 +8,7 @@ outputFolder="/tmp/outputValgrind"
 dissipationScaleFactor=0.2
 propagationScaleFactor=0.5
 
-mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 valgrind --suppressions=$PREFIX/share/openmpi/openmpi-valgrind.supp --leak-check=yes --log-file="/tmp/valgrind-testgraph.log" ./build/masfenon-MPI \
+mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 valgrind --leak-check=yes --log-file="/tmp/valgrind-testgraph.log" ./build/masfenon-MPI \
         --graphsFilesFolder $graphsFolder \
         --initialPerturbationPerTypeFolder $initialPerturbationFolder \
         --typeInteractionFolder $typeInteractionsFolder \
