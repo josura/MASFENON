@@ -288,7 +288,6 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
     std::vector<std::string> typeNames;
     std::vector<std::string> nodeNames;
     std::vector<std::vector<double>> ret;
-    std::vector<std::string> discardedNodes;
     std::map<std::string ,std::map<std::string, int>> finalNodesToIndex;
     for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
         std::map<std::string, int> tmp;
@@ -331,6 +330,8 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
         typeNames.push_back(cellName);
         std::string filename = *iter;
         if(file_exists(filename)){
+            // discarded nodes for the single type
+            std::vector<std::string> discardedNodes;
             //first line is the header, the first column is the gene, the second column is the value
             ifstream myfile (filename);
             string line;

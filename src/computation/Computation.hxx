@@ -96,8 +96,17 @@ class Computation{
          * @param std::string nodeName: the name of the node in the graph
         */
         double getOutputNodeValue(std::string nodeName)const{
-            if(nodeToIndex.find(nodeName) == nodeToIndex.end())
+            if(nodeToIndex.find(nodeName) == nodeToIndex.end()){
+                // TESTING
+                // printing the node names
+                // std::cout << "Node names: ";
+                // for(auto it = nodeToIndex.begin(); it != nodeToIndex.end(); it++){
+                //     std::cout << it->first << " ";
+                // }
+                // std::cout << std::endl;
+                // TESTING
                 throw std::out_of_range("Computation::getOutputNodeValue: the node name is not in the graph");
+            }
             int index = nodeToIndex.at(nodeName);
             return outputAugmented[index];
             };
@@ -142,6 +151,7 @@ class Computation{
         void setConservationModel(ConservationModel* conservationModel);
         void setPropagationModel(PropagationModel* propagationModel);
         void setInputAugmented(const std::vector<double>& inputAugmented);
+        void setGraph(WeightedEdgeGraph* _graph){this->graph = _graph;} // only used for testing and pointer management
 
 
         // get-set for saturation function
@@ -152,6 +162,7 @@ class Computation{
 
         //optimization
         void freeAugmentedGraphs();
+        void freeFunctions();
 
         // operators
         Computation& operator=( const Computation& );
