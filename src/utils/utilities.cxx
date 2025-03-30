@@ -288,7 +288,6 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
     std::vector<std::string> typeNames;
     std::vector<std::string> nodeNames;
     std::vector<std::vector<double>> ret;
-    std::vector<std::string> discardedNodes;
     std::map<std::string ,std::map<std::string, int>> finalNodesToIndex;
     for(int i = 0 ; i < SizeToInt(finalNames.size()); i++){
         std::map<std::string, int> tmp;
@@ -331,6 +330,8 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
         typeNames.push_back(cellName);
         std::string filename = *iter;
         if(file_exists(filename)){
+            // discarded nodes for the single type
+            std::vector<std::string> discardedNodes;
             //first line is the header, the first column is the gene, the second column is the value
             ifstream myfile (filename);
             string line;
@@ -898,7 +899,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
             while ( getline (myfile,line) )
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==5 || entries.size()==6){
+                // if(entries.size()==5 || entries.size()==6){
                     std::string startNodeName,endNodeName;
                     startNodeName = entries[indexStartNode];
                     endNodeName = entries[indexEndNode];
@@ -988,10 +989,10 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                     if(undirectedTypeEdges){
                         ret.second.push_back(std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>(endNodeName, startNodeName, endType, startType, contactTimes, weight));
                     }
-                } else {
-                    std::cerr << "[ERROR] columns detected: " << entries.size() << " columns " <<std::endl;
-                    throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: header in file " + filename +" doesn't have the right amount of columns(5 or 6 when considering interaction times) ");
-                }
+                // } else {
+                //     std::cerr << "[ERROR] columns detected: " << entries.size() << " columns " <<std::endl;
+                //     throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: header in file " + filename +" doesn't have the right amount of columns(5 or 6 when considering interaction times) ");
+                // }
             }
             myfile.close();
         }
