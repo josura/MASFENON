@@ -1169,16 +1169,24 @@ int main(int argc, char** argv) {
             for(int i = 0; i < finalWorkload; i++){
                 logger << "[LOG] computation of perturbation for iteration intertype-intratype ("+ std::to_string(iterationInterType) + "<->"+ std::to_string(iterationIntraType) + ") for type (" + types[i+startIdx]<<std::endl; 
                 // TODO use stateful scaling function to consider previous times
-                if (saturation) {
-                    if(vm.count("saturationTerm") == 0){
-                        std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
-                    } else if (vm.count("saturationTerm") >= 1) {
-                        double saturationTerm = vm["saturationTerm"].as<double>();
-                        std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
-                        std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
+                try
+                {
+                    if (saturation) {
+                        if(vm.count("saturationTerm") == 0){
+                            std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
+                        } else if (vm.count("saturationTerm") >= 1) {
+                            double saturationTerm = vm["saturationTerm"].as<double>();
+                            std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
+                            std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
+                        }
+                    } else{
+                        std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = false);
                     }
-                } else{
-                    std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = false);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << '\n';
+                    exit(1);
                 }
             }
 
@@ -1509,6 +1517,23 @@ int main(int argc, char** argv) {
         // std::cout << std::endl;
         // // TESTING
     }
+
+    // delete graphs objects
+    for(int i = 0; i < finalWorkload; i++){
+        delete graphs[i];
+        graphs[i] = nullptr;
+        typeComputations[i]->setGraph(nullptr);
+    }
+    delete[] graphs;
+
+    // delete typeComputations objects
+    for(int i = 0; i < finalWorkload; i++){
+        typeComputations[i]->freeFunctions();
+        delete typeComputations[i];
+    }
+    delete conservationModel; //TO CHANGE
+    delete dissipationModel; // TO CHANGE
+    delete[] typeComputations;
     
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
