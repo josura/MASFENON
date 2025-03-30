@@ -483,7 +483,7 @@ std::vector<double> Computation::computeAugmentedPerturbationEnhanced4(double ti
             saturationVectorVar = std::vector<double>(InputAugmentedArma.n_elem,1);
         }
         if(saturationVectorVar.size() != InputAugmentedArma.n_elem ){
-            throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: saturationVector is not of the same size as output vector. abort");
+            throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: saturationVector is not of the same size as output vector: " + std::to_string(saturationVectorVar.size()) + "!=" + std::to_string(InputAugmentedArma.n_elem) +  ". abort");
         }
         //dissipation
         arma::Col<double> dissipatedPerturbationArma;
