@@ -1,0 +1,6 @@
+Start	End	Type	Subtype	Weight	SomethingElse
+a0	b0	TEST	ACTIVATION	1.0	boh
+b0	e0	TEST	ACTIVATION	1.0	both
+b0	d0	TEST	ACTIVATION	1.0	dos
+c0	d0	TEST	ACTIVATION	1.0	sod
+a0	c0	TEST	INHIBITION	-1.0	aerf
