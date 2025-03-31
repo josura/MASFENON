@@ -168,6 +168,12 @@ std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::strin
                         presentNames.insert(node2);
 
                     }
+                } else {
+                    std::cerr << "[ERROR] utilities::edgesFileToEdgesListAndNodesByName: header doesn't have the same amount of columns as the data for file " + filename << std::endl;
+                    std::cerr << "[ERROR] line: " << line << std::endl;
+                    std::cerr << "[ERROR] header size: " << entriesHeader.size() << std::endl;
+                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
+                    throw std::invalid_argument("utilities::edgesFileToEdgesListAndNodesByName: header doesn't have the same amount of columns as the data " + filename);
                 }
             }
             // control if resulting edges vector is empty
