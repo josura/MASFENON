@@ -337,29 +337,65 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
             string line;
             std::vector<double> cellValues(finalNodesToIndex[cellName].size(),0);
             std::string lineHeader;
+            int indexName = -1, indexValue = -1;
             getline (myfile,lineHeader);  // first line is header IMPORTANT
             std::vector<std::string> splittedHeader = splitStringIntoVector(lineHeader, "\t");
-            //check if the header is correct
-            if(splittedHeader.size()!=2){
-                throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
+            //check if the header is correct, meaning that it should have the right names for some columns
+            for(uint i = 0; i < splittedHeader.size(); i++){
+                if (boost::algorithm::to_lower_copy(splittedHeader[i]).find("name") != std::string::npos) {
+                    indexName = i;
+                }
+                else if (boost::algorithm::to_lower_copy(splittedHeader[i]).find("value") != std::string::npos) {
+                    indexValue = i;
+                }
             }
-            if(splittedHeader[0]!="name" || splittedHeader[1] != "value"){
-                throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the name and value columns or it does not have  an header" + filename);
+            if(indexName < 0 || indexValue < 0){
+                if(splittedHeader.size()==2){
+                    indexName = 0;
+                    indexValue = 1;
+                    std::cout << "[WARNING] using the first and second column as name and value in the graph file:" << filename << std::endl;
+                } else {
+                    std::string error = "utilities::valuesVectorsFromFolder: header of file" + filename + " does not contain name and value";
+                    throw std::invalid_argument(error);
+                }
             }
+            // if(splittedHeader.size()!=2){
+            //     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
+            // }
+            // if(splittedHeader[0]!="name" || splittedHeader[1] != "value"){
+            //     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the name and value columns or it does not have  an header" + filename);
+            // }
             //get file contents
             while ( getline (myfile,line) )
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                if(entries.size()==2){
-                    if(finalNodesToIndex[cellName].contains(entries[0])){
-                        cellValues[finalNodesToIndex[cellName][entries[0]]] = std::stod(entries[1]);
-                        nodeNames.push_back(entries[0]);
-                    } else{
-                        discardedNodes.push_back(entries[0]);
+                //check if the line has the same amount of columns as the header
+                if(entries.size()==splittedHeader.size()){
+                    //check if the node is in the graph
+                    if(finalNodesToIndex[cellName].contains(entries[indexName])){
+                        cellValues[finalNodesToIndex[cellName][entries[indexName]]] = std::stod(entries[indexValue]);
+                        nodeNames.push_back(entries[indexName]);
+                    } else {
+                        discardedNodes.push_back(entries[indexName]);
                     }
                 } else {
+                    std::cerr << "[ERROR] utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data for file " + filename << std::endl;
+                    std::cerr << "[ERROR] header: " << lineHeader << std::endl;
+                    std::cerr << "[ERROR] line: " << line << std::endl;
+                    std::cerr << "[ERROR] header size: " << splittedHeader.size() << std::endl;
+                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
                     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
                 }
+                // if(entries.size()==2){
+                //     if(finalNodesToIndex[cellName].contains(entries[0])){
+                //         cellValues[finalNodesToIndex[cellName][entries[0]]] = std::stod(entries[1]);
+                //         nodeNames.push_back(entries[0]);
+                //     } else{
+                //         discardedNodes.push_back(entries[0]);
+                //     }
+                // } else {
+                //     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
+                // }
             }
             myfile.close();
             std::cout << "[LOG] discarding values for the nodes not in the graph for type "<< cellName << ", the nodes discarded are:" << std::endl;
@@ -899,7 +935,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
             while ( getline (myfile,line) )
             {
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
-                // if(entries.size()==5 || entries.size()==6){
+                if (entries.size() == entriesHeader.size()) {
                     std::string startNodeName,endNodeName;
                     startNodeName = entries[indexStartNode];
                     endNodeName = entries[indexEndNode];
@@ -989,10 +1025,10 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                     if(undirectedTypeEdges){
                         ret.second.push_back(std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>(endNodeName, startNodeName, endType, startType, contactTimes, weight));
                     }
-                // } else {
-                //     std::cerr << "[ERROR] columns detected: " << entries.size() << " columns " <<std::endl;
-                //     throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: header in file " + filename +" doesn't have the right amount of columns(5 or 6 when considering interaction times) ");
-                // }
+                } else {
+                    std::cerr << "[ERROR] entries detected: " << entries.size() << " != " << entriesHeader.size() << "for file " << filename << std::endl;
+                    throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: entries.size() != entriesHeader.size() " + std::to_string(entries.size()) + " != " + std::to_string(entriesHeader.size()) + " meaning one of the entries of file " + filename + " has not the same amount of features as the header");    
+                }
             }
             myfile.close();
         }
