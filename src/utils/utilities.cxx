@@ -434,10 +434,10 @@ std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string f
         std::vector<std::string> nodeNames;
         if(file_exists(*iter)){
             ifstream myfile (*iter);
-            string line;
-            getline (myfile,line);  // first line is header
+            string header, line;
+            getline (myfile,header);  // first line is header
             // search for name column
-            std::vector<std::string> splittedHeader = splitStringIntoVector(line, "\t");
+            std::vector<std::string> splittedHeader = splitStringIntoVector(header, "\t");
             int indexName=-1;
             for(uint i = 0; i < splittedHeader.size(); i++){
                 if (boost::algorithm::to_lower_copy(splittedHeader[i]).find("name") != std::string::npos) {
@@ -452,6 +452,13 @@ std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string f
                 std::vector<std::string> entries = splitStringIntoVector(line, "\t");
                 if(entries.size()==splittedHeader.size()){
                     nodeNames.push_back(entries[indexName]);
+                } else {
+                    std::cerr << "[ERROR] utilities::nodeNamesFromFolder: header doesn't have the same amount of columns as the data for file " + *iter << std::endl;
+                    std::cerr << "[ERROR] header: " << header << std::endl;
+                    std::cerr << "[ERROR] line: " << line << std::endl;
+                    std::cerr << "[ERROR] header size: " << splittedHeader.size() << std::endl;
+                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
+                    throw std::invalid_argument("utilities::nodeNamesFromFolder: header doesn't have the same amount of columns as the data " + *iter);
                 }
             }
             myfile.close();
