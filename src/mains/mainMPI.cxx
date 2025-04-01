@@ -1176,7 +1176,8 @@ int main(int argc, char** argv) {
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
                         } else if (vm.count("saturationTerm") >= 1) {
                             double saturationTerm = vm["saturationTerm"].as<double>();
-                            std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
+                            //std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
+                            std::vector<double> saturationVector = std::vector<double>(typeComputations[i]->getAugmentedGraph()->getNumNodes(),saturationTerm);
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
                         }
                     } else{
