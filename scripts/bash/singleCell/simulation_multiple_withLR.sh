@@ -4,7 +4,7 @@ initialPerturbationFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/node
 typeInteractionsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/interactionsWithLR"
 nodesFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR"
 
-allOutputsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR"
+allOutputsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR"
 dissipationScaleFactors=(0 0.1 0.2 0.3)
 propagationScaleFactors=(0 0.1 0.2 0.3)
 conservationScaleFactors=(0 0.1 0.2 0.3)
@@ -12,7 +12,7 @@ conservationScaleFactors=(0 0.1 0.2 0.3)
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
         for conservationScaleFactor in "${conservationScaleFactors[@]}"; do
-                outputFolder="$allOutputsFolder/dissipation_$dissipationScaleFactor/propagation_$propagationScaleFactor/conservation_$conservationScaleFactor"
+                outputFolder="$allOutputsFolder/dissipation_$dissipationScaleFactor-propagation_$propagationScaleFactor-conservation_$conservationScaleFactor"
                 mkdir -p $outputFolder
 
                 echo "Running simulation with dissipation: $dissipationScaleFactor, propagation: $propagationScaleFactor, conservation: $conservationScaleFactor"
