@@ -24,7 +24,7 @@ jobs:
       id: cache-dependencies
       with:
         path: "~/Dependencies"
-        key: armadillo-11.4.3
+        key: armadillo-14.4.1
     - name: Download dependencies
       env:
         CACHE_HIT: ${{steps.cache-dependencies.outputs.cache-hit}}
@@ -36,8 +36,8 @@ jobs:
         sudo apt-get install -y libsuperlu-dev 
         sudo apt-get install -y libboost-all-dev
         sudo apt-get install libitpp-dev libidn11-dev libkrb5-dev libldap2-dev librtmp-dev libssh2-1-dev
-        wget http://sourceforge.net/projects/arma/files/armadillo-11.4.3.tar.xz && tar -xvf armadillo-11.4.3.tar.xz 
-        cd armadillo-11.4.3 && ./configure && make && sudo make install
+        wget http://sourceforge.net/projects/arma/files/armadillo-14.4.1.tar.xz && tar -xvf armadillo-14.4.1.tar.xz 
+        cd armadillo-14.4.1 && ./configure && make && sudo make install
         #sudo apt-get install -y libarmadillo-dev
         # install MPI
         sudo apt-get install -y libopenmpi-dev openmpi-bin
