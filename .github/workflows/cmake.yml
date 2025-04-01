@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: [ "31-problems-with-github-actions"]
+    branches: [ "main"]
   pull_request:
     branches: [ "main" ]
 
