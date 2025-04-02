@@ -17,7 +17,7 @@ def generate_color():
  
 
 # load the graph nodes and edges from
-nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/AT1-metabolites.tsv"
+nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/AT1-metabolites.tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-metabolites.tsv"
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
