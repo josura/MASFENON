@@ -1,6 +1,7 @@
 import random
 from pyvis import network as net
 from IPython.display import display, HTML
+import pandas as pd
  
 def generate_edge():
   s = random.randint(1,10)
@@ -18,6 +19,8 @@ def generate_color():
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/AT1-metabolites.tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-metabolites.tsv"
+nodes_df = pd.read_csv(nodesFile, sep="\t")
+edges_df = pd.read_csv(edgesFile, sep="\t")
 g_complete =net.Network(height='600px',width='50%',
               bgcolor='white',font_color="red",notebook=True,
               heading="An example Graph for" + ,directed=True)
