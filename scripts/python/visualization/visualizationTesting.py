@@ -4,10 +4,12 @@ from pyvis import network as net
 from IPython.display import display, HTML
 import pandas as pd
 import networkx as nx
- 
+import plotly.graph_objects as go
+import plotly.express as px
+
 def generate_color():
   return '#%06x' % random.randint(0, 0xFFFFFF)
- 
+
 
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/AT1-metabolites.tsv"
@@ -15,7 +17,7 @@ edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-m
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
 network_name = "AT1-metabolites"
-g_complete =net.Network(height='600px',width='50%',
+g_from_nx = net.Network(height='600px',width='50%',
               bgcolor='white',font_color="red",notebook=True,
               heading="An example Graph for " + network_name,directed=True)
 
@@ -42,21 +44,60 @@ timeSeries_df.index = timepoints
 ## change index name to be 'time'
 timeSeries_df.index.name = 'time'
 
+allNodes = timeSeries_df.columns.tolist()
+
+# create the networkx graph
+nx_graph = nx.Graph()
+# add nodes to the graph
+nx_graph.add_nodes_from(allNodes)
+# add values to the nodes as size
+dict_size = {}
+for i in range(0,len(allNodes)):
+  val = timeSeries_df.iloc[0,i]
+  dict_size[allNodes[i]] = val
+nx.set_node_attributes(nx_graph, dict_size, 'size')
+# add the values to the nodes as attribute
+dict_attr = {}
+for i in range(0,len(allNodes)):
+  val = timeSeries_df.iloc[0,i]
+  dict_attr[allNodes[i]] = val
+nx.set_node_attributes(nx_graph, dict_attr, 'value')
+# # create the pyvis graph
+# g_from_nx = g_from_nx.from_nx(nx_graph)
+
+# graph_from_nx_IFrame = g_from_nx.show('AnExampleGraphFor_AT1-metabolites_from_nx.html')
+# display(HTML('AnExampleGraphFor_AT1-metabolites_from_nx.html'))
+
+
+
+# g_complete =net.Network(height='600px',width='50%',
+#               bgcolor='white',font_color="red",notebook=True,
+#               heading="An example Graph for " + network_name,directed=True)
+# for i in range(0,len(allNodes)):
+#   # the color is light blue if value is bigger than 0, otherwise it is light red
+#   val = timeSeries_df.iloc[0,i]
+#   if(val>=0):
+#     c = 'lightblue'
+#   else:
+#     c = 'lightcoral'
+#   borderWidth = random.randint(3,5)
+#   g_complete.add_node(allNodes[i],label=str(allNodes[i]),color=c,value=val,
+#                       title=str(val),borderWidth=borderWidth)
 
 
 # colors=[]
-# for i in range(1,11):  
+# for i in range(1,11):
 #   c = generate_color()
 #   while(c in colors):
 #       c = generate_color()
 #   colors.append(c)
- 
+
 #   val = generate_size_node()
 #   b = random.randint(3,5)
- 
+
 #   g_complete.add_node(i,label=str(i),color=c,value=val,
 #                       title="Hello! I am Node "+str(i),borderWidth=b)
- 
+
 # i=0
 # chosen_set = []
 # while(i!=20):
@@ -65,8 +106,8 @@ timeSeries_df.index.name = 'time'
 #       chosen_set.append(eg)
 #       g_complete.add_edge(eg[0],eg[1])
 #       i+=1
- 
-g_complete.show_buttons(['physics'])
- 
-graph_IFrame = g_complete.show('AnExampleGraphFor_AT1-metabolites.html')
-display(HTML('AnExampleGraphFor_AT1-metabolites.html'))
+
+# g_complete.show_buttons(['physics'])
+
+# graph_IFrame = g_complete.show('AnExampleGraphFor_AT1-metabolites.html')
+# display(HTML('AnExampleGraphFor_AT1-metabolites.html'))
