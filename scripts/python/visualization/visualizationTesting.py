@@ -22,6 +22,26 @@ g_complete =net.Network(height='600px',width='50%',
 # load the time series data for the values of the nodes through time
 timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/AT1-metabolites.tsv"
 timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
+## preprocess the time series data
+### drop the last column (useless)
+timeSeries_df = timeSeries_df.drop(timeSeries_df.columns[-1], axis=1)
+## first row of the matrix is the node names (nodeNames), the rest of the columns are the timepoints (the names go from 0 to the end of the simulation timepoint)
+nodeNames = timeSeries_df['nodeNames']
+## drop the nodeNames column
+timeSeries_df = timeSeries_df.drop('nodeNames', axis=1)
+## get the timepoints
+timepoints = timeSeries_df.columns
+## we need to transpose the matrix so that the columns are the node names and the rows are the timepoints iteration results
+timeSeries_df = timeSeries_df.transpose()
+## set the column names to be the node names
+timeSeries_df.columns = nodeNames
+## set the index to be the timepoints
+timeSeries_df.index = timepoints
+## add a column to be the timepoints
+# temp_iterationMatrix['time'] = timepoints
+## change index name to be 'time'
+timeSeries_df.index.name = 'time'
+
 
 
 # colors=[]
