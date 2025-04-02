@@ -14,9 +14,13 @@ def generate_size_node():
 def generate_color():
   return '#%06x' % random.randint(0, 0xFFFFFF)
  
+
+# load the graph nodes and edges from
+nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/AT1-metabolites.tsv"
+edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-metabolites.tsv"
 g_complete =net.Network(height='600px',width='50%',
               bgcolor='white',font_color="red",notebook=True,
-              heading="A Complete Networkx Graph",directed=True)
+              heading="An example Graph for" + ,directed=True)
  
 colors=[]
 for i in range(1,11):  
