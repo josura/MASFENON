@@ -25,6 +25,10 @@ network_name = "AT1-metabolites"
 g_complete =net.Network(height='600px',width='50%',
               bgcolor='white',font_color="red",notebook=True,
               heading="An example Graph for" + network_name,directed=True)
+
+# load the time series data for the values of the nodes through time
+timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/AT1-metabolites.tsv"
+timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
  
 # colors=[]
 # for i in range(1,11):  
