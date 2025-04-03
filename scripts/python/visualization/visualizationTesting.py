@@ -155,6 +155,10 @@ for i in range(0,len(timepoints)):
   node_values_every_timepoint[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
   node_text_every_timepoint_dict[timepoints[i]] = 'Node: ' + str(node) + '\nValue: '+str(timeSeries_df.iloc[i,:].tolist()))
 
+# create a page with a slider, where the slider is the timepoints
+# create a slider for the timepoints
+
+
 
 node_trace.marker.color = node_values
 node_trace.marker.size = node_sizes_plotly
