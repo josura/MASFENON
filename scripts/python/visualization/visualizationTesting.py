@@ -135,13 +135,15 @@ node_trace = go.Scatter(
         ),
         line_width=2))
 
-node_adjacencies = []
+node_values = []
 node_text = []
-for node, adjacencies in enumerate(G.adjacency()):
-    node_adjacencies.append(len(adjacencies[1]))
-    node_text.append('# of connections: '+str(len(adjacencies[1])))
+for node in G.nodes():
+    value = G.nodes[node]['value']
+    node_values.append(value)
+    # node_text.append('Node: '+str(node))
+    node_text.append('Value: '+str(value))
 
-node_trace.marker.color = node_adjacencies
+node_trace.marker.color = node_values
 node_trace.text = node_text
 
 
