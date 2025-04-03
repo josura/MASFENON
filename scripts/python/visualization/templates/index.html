@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Plotly Slider</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h2>Select Timepoint:</h2>
+    <input type="range" id="slider" min="{{timepoints[0]}}" max="{{timepoints[-1]}}" value="{{timepoints[0]}}" step="1">
+    <span id="timepointLabel">{{timepoints[0]}}</span>
+
+    <div id="plot" style="width:800px;height:500px;"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
