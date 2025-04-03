@@ -70,14 +70,17 @@ for i in range(0,len(edges_df)):
   weight = edges_df["Weight"].iloc[i]
   nx_graph.add_edge(start,end,weight=weight)
 
+# generate the positions of the nodes
+pos = nx.spring_layout(nx_graph, seed=42)  # positions for all nodes
+
 # plotly plotting
 edge_x = []
 edge_y = []
 weights = []
-for edge in G.edges():
-    x0, y0 = G.nodes[edge[0]]['pos']
-    x1, y1 = G.nodes[edge[1]]['pos']
-    weight = G.edges[edge]['weight']
+for edge in nx_graph.edges():
+    x0, y0 = nx_graph.nodes[edge[0]]['pos']
+    x1, y1 = nx_graph.nodes[edge[1]]['pos']
+    weight = nx_graph.edges[edge]['weight']
     weights.append(weight)
     edge_x.append(x0)
     edge_x.append(x1)
