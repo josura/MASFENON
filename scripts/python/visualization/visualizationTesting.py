@@ -91,7 +91,7 @@ for edge in nx_graph.edges():
 
 edge_trace = go.Scatter(
     x=edge_x, y=edge_y,
-    line=dict(width=weight, color='#888'),
+    line=dict(width=0.3, color='#888'),
     hoverinfo='text',
     mode='lines',
     text=weights_str,
@@ -109,10 +109,12 @@ edge_trace = go.Scatter(
 
 node_x = []
 node_y = []
+node_sizes_plotly = []
 for node in nx_graph.nodes():
     x, y = pos[node]
     node_x.append(x)
     node_y.append(y)
+    node_sizes_plotly.append((timeSeries_df[node].iloc[0] + 1) * 10)
 
 node_trace = go.Scatter(
     x=node_x, y=node_y,
@@ -144,10 +146,40 @@ for node in nx_graph.nodes():
     value = nx_graph.nodes[node]['value']
     node_values.append(value)
     # node_text.append('Node: '+str(node))
-    node_text.append('Value: '+str(value))
+    node_text.append('Node: '+ str(node) + '\nValue: '+str(value))
+
+node_values_every_timepoint_dict = {}
+node_sizes_every_timepoint_dict = {}
+node_text_every_timepoint_dict = {}
+for i in range(0,len(timepoints)):
+  node_values_every_timepoint[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
+  node_text_every_timepoint_dict[timepoints[i]] = 'Node: ' + str(node) + '\nValue: '+str(timeSeries_df.iloc[i,:].tolist()))
+
 
 node_trace.marker.color = node_values
+node_trace.marker.size = node_sizes_plotly
 node_trace.text = node_text
+
+fig = go.Figure(data=[edge_trace, node_trace],
+             layout=go.Layout(
+                title=dict(
+                    text="<br>AT1-metabolites<br>",
+                    font=dict(
+                        size=16
+                    )
+                ),
+                showlegend=False,
+                hovermode='closest',
+                margin=dict(b=20,l=5,r=5,t=40),
+                annotations=[ dict(
+                    text="Python code: <a href='https://plotly.com/python/network-graphs/'> https://plotly.com/python/network-graphs/</a>",
+                    showarrow=False,
+                    xref="paper", yref="paper",
+                    x=0.005, y=-0.002 ) ],
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                )
+fig.show()
 
 
 # # create the pyvis graph
