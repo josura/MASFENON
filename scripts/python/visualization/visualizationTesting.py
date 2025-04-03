@@ -140,8 +140,8 @@ node_trace = go.Scatter(
 
 node_values = []
 node_text = []
-for node in G.nodes():
-    value = G.nodes[node]['value']
+for node in nx_graph.nodes():
+    value = nx_graph.nodes[node]['value']
     node_values.append(value)
     # node_text.append('Node: '+str(node))
     node_text.append('Value: '+str(value))
