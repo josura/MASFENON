@@ -78,8 +78,8 @@ edge_x = []
 edge_y = []
 weights = []
 for edge in nx_graph.edges():
-    x0, y0 = nx_graph.nodes[edge[0]]['pos']
-    x1, y1 = nx_graph.nodes[edge[1]]['pos']
+    x0, y0 = pos[edge[0]]
+    x1, y1 = pos[edge[1]]
     weight = nx_graph.edges[edge]['weight']
     weights.append(weight)
     edge_x.append(x0)
@@ -109,8 +109,8 @@ edge_trace = go.Scatter(
 
 node_x = []
 node_y = []
-for node in G.nodes():
-    x, y = G.nodes[node]['pos']
+for node in nx_graph.nodes():
+    x, y = pos[node]
     node_x.append(x)
     node_y.append(y)
 
