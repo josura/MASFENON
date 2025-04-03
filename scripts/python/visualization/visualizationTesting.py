@@ -76,12 +76,12 @@ pos = nx.spring_layout(nx_graph, seed=42)  # positions for all nodes
 # plotly plotting
 edge_x = []
 edge_y = []
-weights = []
+weights_str = []
 for edge in nx_graph.edges():
     x0, y0 = pos[edge[0]]
     x1, y1 = pos[edge[1]]
     weight = nx_graph.edges[edge]['weight']
-    weights.append(weight)
+    weights_str.append(str(weight))
     edge_x.append(x0)
     edge_x.append(x1)
     edge_x.append(None)
@@ -94,7 +94,7 @@ edge_trace = go.Scatter(
     line=dict(width=weight, color='#888'),
     hoverinfo='text',
     mode='lines',
-    text=weights,
+    text=weights_str,
     textposition='top center',
     textfont=dict(
         family='sans serif',
