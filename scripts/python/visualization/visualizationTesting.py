@@ -63,12 +63,22 @@ for i in range(0,len(allNodes)):
   dict_attr[allNodes[i]] = val
 nx.set_node_attributes(nx_graph, dict_attr, 'value')
 
+# add edges to the graph, the relevant features are Start, End and Weight
+for i in range(0,len(edges_df)):
+  start = edges_df["Start"].iloc[i]
+  end = edges_df["End"].iloc[i]
+  weight = edges_df["Weight"].iloc[i]
+  nx_graph.add_edge(start,end,weight=weight)
+
 # plotly plotting
 edge_x = []
 edge_y = []
+weights = []
 for edge in G.edges():
     x0, y0 = G.nodes[edge[0]]['pos']
     x1, y1 = G.nodes[edge[1]]['pos']
+    weight = G.edges[edge]['weight']
+    weights.append(weight)
     edge_x.append(x0)
     edge_x.append(x1)
     edge_x.append(None)
@@ -78,9 +88,21 @@ for edge in G.edges():
 
 edge_trace = go.Scatter(
     x=edge_x, y=edge_y,
-    line=dict(width=0.5, color='#888'),
-    hoverinfo='none',
-    mode='lines')
+    line=dict(width=weight, color='#888'),
+    hoverinfo='text',
+    mode='lines',
+    text=weights,
+    textposition='top center',
+    textfont=dict(
+        family='sans serif',
+        size=12,
+        color='#000'
+    ),
+    marker=dict(
+        line=dict(width=0.5, color='#888')
+    )
+)
+
 
 node_x = []
 node_y = []
@@ -106,7 +128,7 @@ node_trace = go.Scatter(
         colorbar=dict(
             thickness=15,
             title=dict(
-              text='Node Connections',
+              text='Values',
               side='right'
             ),
             xanchor='left',
