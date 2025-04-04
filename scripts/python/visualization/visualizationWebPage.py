@@ -7,15 +7,15 @@ import pandas as pd
 
 app = Flask(__name__)
 
+network_name = "AT1-metabolites"
 # load the graph nodes and edges from
-nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/AT1-metabolites.tsv"
-edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-metabolites.tsv"
+nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
+edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
-network_name = "AT1-metabolites"
 
 # load the time series data for the values of the nodes through time
-timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/AT1-metabolites.tsv"
+timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/" + network_name +  ".tsv"
 timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
 ## preprocess the time series data
 ### drop the last column (useless)
@@ -184,7 +184,7 @@ def create_plot_network(timepoint):
     fig = go.Figure(data=[edge_trace, node_trace],
                 layout=go.Layout(
                     title=dict(
-                        text="<br>AT1-metabolites<br>",
+                        text="<br>" + network_name +  "<br>",
                         font=dict(
                             size=16
                         )
