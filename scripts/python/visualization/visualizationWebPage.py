@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-network_name = "AT1"
+network_name = "AT1-metabolites"
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
@@ -153,7 +153,9 @@ node_sizes_every_timepoint_dict = {}
 node_text_every_timepoint_dict = {}
 for i in range(0,len(timepoints)):
     node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
-    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
+    # node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
+    # normalize the values  of the sizes to be between 2 and 20, but take the absolute value of the values so that the size is big even if the value is negative
+    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
     node_text_every_timepoint_dict[timepoints[i]] = []
     for j in range(0,len(allNodes)):
         node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
@@ -193,7 +195,7 @@ def create_plot_network(timepoint):
     # show the figure
     return fig.to_dict()
 
-def create_plot_network(timepoint,timepoints,
+def create_plot_network_singular(timepoint,timepoints,
                         node_values_every_timepoint_dict,
                         node_sizes_every_timepoint_dict,
                         node_text_every_timepoint_dict):
@@ -231,7 +233,7 @@ def create_plot_network(timepoint,timepoints,
     return fig.to_dict()
 
 # create the traces by reading the data from the file
-def read_data_from_file(file_path):
+# def read_data_from_file(file_path):
     
 
 @app.route('/')
