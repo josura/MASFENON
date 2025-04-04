@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-network_name = "AT1-metabolites"
+network_name = "AT1"
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
@@ -39,6 +39,9 @@ timeSeries_df.index.name = 'time'
 
 allNodes = timeSeries_df.columns.tolist()
 
+# changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
+if 'Source' in edges_df.columns and 'Target' in edges_df.columns:
+    edges_df.rename(columns={'Source': 'Start', 'Target': 'End'}, inplace=True)
 
 # create the networkx graph
 nx_graph = nx.Graph()
