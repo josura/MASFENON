@@ -70,6 +70,74 @@ for i in range(0,len(edges_df)):
 # generate the positions of the nodes
 pos = nx.spring_layout(nx_graph, seed=42)  # positions for all nodes
 
+# plotly plotting
+edge_x = []
+edge_y = []
+weights_str = []
+for edge in nx_graph.edges():
+    x0, y0 = pos[edge[0]]
+    x1, y1 = pos[edge[1]]
+    weight = nx_graph.edges[edge]['weight']
+    weights_str.append(str(weight))
+    edge_x.append(x0)
+    edge_x.append(x1)
+    edge_x.append(None)
+    edge_y.append(y0)
+    edge_y.append(y1)
+    edge_y.append(None)
+
+edge_trace = go.Scatter(
+    x=edge_x, y=edge_y,
+    line=dict(width=0.3, color='#888'),
+    hoverinfo='text',
+    mode='lines',
+    text=weights_str,
+    textposition='top center',
+    textfont=dict(
+        family='sans serif',
+        size=12,
+        color='#000'
+    ),
+    marker=dict(
+        line=dict(width=0.5, color='#888')
+    )
+)
+
+
+node_x = []
+node_y = []
+node_sizes_plotly = []
+for node in nx_graph.nodes():
+    x, y = pos[node]
+    node_x.append(x)
+    node_y.append(y)
+    node_sizes_plotly.append((timeSeries_df[node].iloc[0] + 1) * 10)
+
+node_trace = go.Scatter(
+    x=node_x, y=node_y,
+    mode='markers',
+    hoverinfo='text',
+    marker=dict(
+        showscale=True,
+        # colorscale options
+        #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
+        #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
+        #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
+        colorscale='YlGnBu',
+        reversescale=True,
+        color=[],
+        size=10,
+        colorbar=dict(
+            thickness=15,
+            title=dict(
+              text='Values',
+              side='right'
+            ),
+            xanchor='left',
+        ),
+        line_width=2))
+
+
 
 # Function generating Plotly plot for each timepoint
 def create_plot(timepoint):
@@ -84,6 +152,8 @@ def create_plot(timepoint):
         margin=dict(l=40, r=40, t=40, b=40)
     )
     return fig.to_dict()
+
+def create_plot_network(timepoint):
 
 @app.route('/')
 def index():
