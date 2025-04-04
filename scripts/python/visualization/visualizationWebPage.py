@@ -139,19 +139,6 @@ node_trace = go.Scatter(
 
 
 
-# Function generating Plotly plot for each timepoint
-def create_plot(timepoint):
-    np.random.seed(timepoint)
-    x = np.linspace(0, 10, 100).tolist()  # <-- convert to list explicitly
-    y = (np.sin(np.array(x) + timepoint) + np.random.normal(0, 0.1, size=len(x))).tolist()  # <-- also convert y
-    fig = go.Figure(data=[go.Scatter(x=x, y=y, mode='lines+markers')])
-    fig.update_layout(
-        title=f"Timepoint: {timepoint}",
-        xaxis_title='X Axis',
-        yaxis_title='Y Axis',
-        margin=dict(l=40, r=40, t=40, b=40)
-    )
-    return fig.to_dict()
 
 node_values = []
 node_text = []
@@ -205,6 +192,47 @@ def create_plot_network(timepoint):
                     )
     # show the figure
     return fig.to_dict()
+
+def create_plot_network(timepoint,timepoints,
+                        node_values_every_timepoint_dict,
+                        node_sizes_every_timepoint_dict,
+                        node_text_every_timepoint_dict):
+    indexTimepoint = -1
+    for i in range(0,len(timepoints)):
+        if timepoints[i] == str(timepoint):
+            indexTimepoint = i
+            break
+    if indexTimepoint == -1:
+        raise ValueError("Timepoint not found in the data.")
+    node_trace.marker.color = node_values_every_timepoint_dict[str(timepoint)]
+    node_trace.marker.size = node_sizes_every_timepoint_dict[str(timepoint)]
+    node_trace.text = node_text_every_timepoint_dict[str(timepoint)]
+    # plotting the figure
+    fig = go.Figure(data=[edge_trace, node_trace],
+                layout=go.Layout(
+                    title=dict(
+                        text="<br>" + network_name +  "<br>",
+                        font=dict(
+                            size=16
+                        )
+                    ),
+                    showlegend=False,
+                    hovermode='closest',
+                    margin=dict(b=20,l=5,r=5,t=40),
+                    annotations=[ dict(
+                        text="Conservation:0.3 Dissipation:0.3 Propagation:0.3",
+                        showarrow=False,
+                        xref="paper", yref="paper",
+                        x=0.005, y=-0.002 ) ],
+                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                    )
+    # show the figure
+    return fig.to_dict()
+
+# create the traces by reading the data from the file
+def read_data_from_file(file_path):
+    
 
 @app.route('/')
 def index():
