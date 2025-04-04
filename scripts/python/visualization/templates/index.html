@@ -7,10 +7,10 @@
 </head>
 <body>
     <h2>Select Timepoint:</h2>
-    <input type="range" id="slider" min="{{timepoints[0]}}" max="{{timepoints[-1]}}" value="{{timepoints[0]}}" step="1">
+    <input type="range" id="slider" min="{{timepoints[0]}}" max="{{timepoints[-1]}}" value="{{timepoints[0]}}" step="0.2">
     <span id="timepointLabel">{{timepoints[0]}}</span>
 
-    <div id="plot" style="width:800px;height:500px;"></div>
+    <div id="plot" style="width:1920px;height:1080px;"></div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
