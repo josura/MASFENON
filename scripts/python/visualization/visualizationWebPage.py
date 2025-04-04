@@ -42,6 +42,35 @@ timeSeries_df.index.name = 'time'
 
 allNodes = timeSeries_df.columns.tolist()
 
+
+# create the networkx graph
+nx_graph = nx.Graph()
+# add nodes to the graph
+nx_graph.add_nodes_from(allNodes)
+# add values to the nodes as size
+dict_size = {}
+for i in range(0,len(allNodes)):
+  val = timeSeries_df.iloc[0,i]
+  dict_size[allNodes[i]] = val
+nx.set_node_attributes(nx_graph, dict_size, 'size')
+# add the values to the nodes as attribute
+dict_attr = {}
+for i in range(0,len(allNodes)):
+  val = timeSeries_df.iloc[0,i]
+  dict_attr[allNodes[i]] = val
+nx.set_node_attributes(nx_graph, dict_attr, 'value')
+
+# add edges to the graph, the relevant features are Start, End and Weight
+for i in range(0,len(edges_df)):
+  start = edges_df["Start"].iloc[i]
+  end = edges_df["End"].iloc[i]
+  weight = edges_df["Weight"].iloc[i]
+  nx_graph.add_edge(start,end,weight=weight)
+
+# generate the positions of the nodes
+pos = nx.spring_layout(nx_graph, seed=42)  # positions for all nodes
+
+
 # Function generating Plotly plot for each timepoint
 def create_plot(timepoint):
     np.random.seed(timepoint)
