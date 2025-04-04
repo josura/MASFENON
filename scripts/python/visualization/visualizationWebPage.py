@@ -13,9 +13,6 @@ edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/AT1-m
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
 network_name = "AT1-metabolites"
-g_from_nx = net.Network(height='600px',width='50%',
-              bgcolor='white',font_color="red",notebook=True,
-              heading="An example Graph for " + network_name,directed=True)
 
 # load the time series data for the values of the nodes through time
 timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/AT1-metabolites.tsv"
@@ -153,15 +150,67 @@ def create_plot(timepoint):
     )
     return fig.to_dict()
 
+node_values = []
+node_text = []
+for node in nx_graph.nodes():
+    value = nx_graph.nodes[node]['value']
+    node_values.append(value)
+    # node_text.append('Node: '+str(node))
+    node_text.append('Node: '+ str(node) + '\nValue: '+str(value))
+
+node_values_every_timepoint_dict = {}
+node_sizes_every_timepoint_dict = {}
+node_text_every_timepoint_dict = {}
+for i in range(0,len(timepoints)):
+    node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
+    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
+    node_text_every_timepoint_dict[timepoints[i]] = []
+    for j in range(0,len(allNodes)):
+        node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
+
+
 def create_plot_network(timepoint):
+    indexTimepoint = -1
+    for i in range(0,len(timepoints)):
+        if timepoints[i] == str(timepoint):
+            indexTimepoint = i
+            break
+    if indexTimepoint == -1:
+        raise ValueError("Timepoint not found in the data.")
+    node_trace.marker.color = node_values_every_timepoint_dict[str(timepoint)]
+    node_trace.marker.size = node_sizes_every_timepoint_dict[str(timepoint)]
+    node_trace.text = node_text_every_timepoint_dict[str(timepoint)]
+    # plotting the figure
+    fig = go.Figure(data=[edge_trace, node_trace],
+                layout=go.Layout(
+                    title=dict(
+                        text="<br>AT1-metabolites<br>",
+                        font=dict(
+                            size=16
+                        )
+                    ),
+                    showlegend=False,
+                    hovermode='closest',
+                    margin=dict(b=20,l=5,r=5,t=40),
+                    annotations=[ dict(
+                        text="Conservation:0.3 Dissipation:0.3 Propagation:0.3",
+                        showarrow=False,
+                        xref="paper", yref="paper",
+                        x=0.005, y=-0.002 ) ],
+                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                    )
+    # show the figure
+    return fig.to_dict()
 
 @app.route('/')
 def index():
     return render_template('index.html', timepoints=timepoints)
 
-@app.route('/plot/<int:timepoint>')
+@app.route('/plot/<float:timepoint>')
 def plot(timepoint):
-    plot_json = create_plot(timepoint)
+    # plot_json = create_plot(timepoint)
+    plot_json = create_plot_network(timepoint)
     return jsonify(plot_json)
 
 if __name__ == '__main__':
