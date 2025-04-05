@@ -233,7 +233,13 @@ def create_plot_network_singular(timepoint,timepoints,
     return fig.to_dict()
 
 # create the traces by reading the data from the file
-# def read_data_from_file(file_path):
+def read_data_from_file(file_path):
+    # Read the data from the file
+    data = pd.read_csv(file_path, sep="\t")
+    # Extract the timepoints and values
+    timepoints = data.columns[1:].tolist()
+    values = data.iloc[:, 1:].values.tolist()
+    return timepoints, values
     
 
 @app.route('/')
