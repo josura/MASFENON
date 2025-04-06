@@ -252,5 +252,16 @@ def plot(timepoint):
     plot_json = create_plot_network(timepoint)
     return jsonify(plot_json)
 
+@app.route('/plot_singular/<string:type>/<float:timepoint>')
+def plot_singular(type, timepoint):
+    if type == 'node':
+        plot_json = create_plot_network_singular(timepoint,timepoints,
+                        node_values_every_timepoint_dict,
+                        node_sizes_every_timepoint_dict,
+                        node_text_every_timepoint_dict)
+    else:
+        raise ValueError("Type not found in the data.")
+    return jsonify(plot_json)
+
 if __name__ == '__main__':
     app.run(debug=True)
