@@ -7,7 +7,11 @@ import pandas as pd
 
 app = Flask(__name__)
 
+OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
+NodesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/"
+GraphsDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/"
 network_name = "AT1-metabolites"
+
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
@@ -232,15 +236,8 @@ def create_plot_network_singular(timepoint,timepoints,
     # show the figure
     return fig.to_dict()
 
-# create the traces by reading the data from the file
-def read_data_from_file(file_path):
-    # Read the data from the file
-    data = pd.read_csv(file_path, sep="\t")
-    # Extract the timepoints and values
-    timepoints = data.columns[1:].tolist()
-    values = data.iloc[:, 1:].values.tolist()
-    return timepoints, values
-    
+# create the list of available types in the folder
+types = []
 
 @app.route('/')
 def index():
