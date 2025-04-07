@@ -22,7 +22,7 @@ g_from_nx = net.Network(height='600px',width='50%',
               heading="An example Graph for " + network_name,directed=True)
 
 # load the time series data for the values of the nodes through time
-timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/AT1-metabolites.tsv"
+timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/" + network_name + ".tsv"
 timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
 ## preprocess the time series data
 ### drop the last column (useless)
