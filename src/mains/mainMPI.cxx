@@ -1521,6 +1521,21 @@ int main(int argc, char** argv) {
         // // TESTING
     }
 
+    // save the augmented graph for every type if the option was set
+    if (saveAugmentedNetworks) {
+        logger << "[LOG] saving the augmented graphs for types in rank " << rank<<std::endl;
+        // create the output folder if it does not exist
+        std::string outputFolderNameGraphs = outputFoldername + "/augmentedGraphs";
+        if (!std::filesystem::exists(outputFolderNameGraphs)) {
+            std::filesystem::create_directory(outputFolderNameGraphs);
+        }
+        // save all the augmented graphs in a single file for every type
+        for(int i = 0; i < finalWorkload; i++){
+            std::string type = types[i+startIdx];
+            //typeComputations[i]->saveAugmentedGraph(outputFolderNameGraphs, type);
+        }
+    }
+
     // delete graphs objects
     for(int i = 0; i < finalWorkload; i++){
         delete graphs[i];
