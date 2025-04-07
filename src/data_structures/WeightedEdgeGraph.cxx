@@ -622,3 +622,20 @@ std::ostream& operator<< (std::ostream &out, const WeightedEdgeGraph& data) {
 //         return *this;
 //     } else throw std::invalid_argument("adjMatrix is not square(does not represent a graph)");
 // }
+
+
+void WeightedEdgeGraph::saveEdgesToFile(std::string outputFolder, std::string filename)const{
+    std::ofstream myfile;
+    myfile.open(outputFolder + filename);
+    if(myfile.is_open()){
+        for(auto it = edgesVector.cbegin(); it!=edgesVector.cend();it++){
+            int node1 = std::get<0>(*it);
+            int node2 = std::get<1>(*it);
+            double weight = std::get<2>(*it);
+            myfile << node1 << "\t" << node2 << "\t" << weight << std::endl;
+        }
+        myfile.close();
+    } else {
+        std::cerr << "[ERROR] WeightedEdgeGraph::saveEdgesToFile: file not opened" << std::endl;
+    }
+}
