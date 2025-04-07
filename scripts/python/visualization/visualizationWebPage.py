@@ -159,7 +159,8 @@ for i in range(0,len(timepoints)):
     node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
     # node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
     # normalize the values  of the sizes to be between 2 and 20, but take the absolute value of the values so that the size is big even if the value is negative
-    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
+    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:].abs()  - timeSeries_df.iloc[i,:].abs().min()) / (timeSeries_df.iloc[i,:].abs().max() - timeSeries_df.iloc[i,:].abs().min()) * 18 + 2).tolist()
+    #node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
     node_text_every_timepoint_dict[timepoints[i]] = []
     for j in range(0,len(allNodes)):
         node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
@@ -244,6 +245,11 @@ def index():
     return render_template('index.html', timepoints=timepoints)
 
 @app.route('/<string:type>')
+def type(type):
+    if type == 'node':
+        return render_template('index.html', timepoints=timepoints)
+    else:
+        raise ValueError("Type not found in the data.")
 
 @app.route('/plot/<float:timepoint>')
 def plot(timepoint):
