@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
     bool undirectedTypeEdges = false;
     bool resetVirtualOutputs = false;
     bool resumeCheckpoint = false;
+    bool saveAugmentedNetworks = false;
     std::string logMode="";
     std::string quantizationMethod = "single";
     std::string virtualNodesGranularity = "type";
@@ -78,7 +79,8 @@ int main(int argc, char** argv) {
         ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none', default to all")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
-        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'") 
+        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'")
+        ("saveAugmentedNetworks",po::bool_switch(&saveAugmentedNetworks), "save the augmented networks for each iteration, default to false")
     ;
 
     
