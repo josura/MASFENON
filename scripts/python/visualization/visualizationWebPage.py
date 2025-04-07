@@ -246,6 +246,8 @@ def read_data_from_file(file_path):
 def index():
     return render_template('index.html', timepoints=timepoints)
 
+@app.route('/<string:type>')
+
 @app.route('/plot/<float:timepoint>')
 def plot(timepoint):
     # plot_json = create_plot(timepoint)
