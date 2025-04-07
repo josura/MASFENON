@@ -20,6 +20,7 @@ nodesValuesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWi
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
 nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
+# contains a column (name) and another column (value) with the initial values of the nodes
 
 # load the time series data for the values of the nodes through time
 timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/" + network_name +  ".tsv"
@@ -48,7 +49,16 @@ timeSeries_df.index.name = 'time'
 ### shifting all the timepoints by the minimum interval between them (that is the intra timestep)
 timestep = timeSeries_df.index.astype(float)[1] - timeSeries_df.index.astype(float)[0]
 timeSeries_df.index = timeSeries_df.index.astype(float) + timestep
-add the 
+### adding the real values as the 0 timepoint to the data
+pd_row_to_add = pd.DataFrame(index=[0], columns=timeSeries_df.columns)
+for i in range(0,len(timeSeries_df.columns)):
+    node_name = timeSeries_df.columns[i]
+    if node_name in nodes_values_df['name'].values:
+        val = nodes_values_df[nodes_values_df['name'] == node_name]['value'].values[0]
+    else:
+        val = 0
+    pd_row_to_add.iloc[0,i] = val
+timeSeries_df = pd.concat([pd_row_to_add, timeSeries_df], ignore_index=False)
 
 allNodes = timeSeries_df.columns.tolist()
 
@@ -167,8 +177,8 @@ node_text_every_timepoint_dict = {}
 for i in range(0,len(timepoints)):
     node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
     # node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
-    # normalize the values  of the sizes to be between 2 and 20, but take the absolute value of the values so that the size is big even if the value is negative
-    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:].abs()  - timeSeries_df.iloc[i,:].abs().min()) / (timeSeries_df.iloc[i,:].abs().max() - timeSeries_df.iloc[i,:].abs().min()) * 18 + 2).tolist()
+    # normalize the values  of the sizes to be between 4 and 22, but take the absolute value of the values so that the size is big even if the value is negative
+    node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:].abs()  - timeSeries_df.iloc[i,:].abs().min()) / (timeSeries_df.iloc[i,:].abs().max() - timeSeries_df.iloc[i,:].abs().min()) * 18 + 4).tolist()
     #node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
     node_text_every_timepoint_dict[timepoints[i]] = []
     for j in range(0,len(allNodes)):
