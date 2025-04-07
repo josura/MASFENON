@@ -10,13 +10,16 @@ app = Flask(__name__)
 OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
 NodesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/"
 GraphsDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/"
+InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
 network_name = "AT1-metabolites"
 
 # load the graph nodes and edges from
 nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
 edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
+nodesValuesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/" + network_name +  ".tsv"
 nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
+nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
 
 # load the time series data for the values of the nodes through time
 timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/" + network_name +  ".tsv"
