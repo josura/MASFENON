@@ -44,6 +44,12 @@ timeSeries_df.index = timepoints
 ## change index name to be 'time'
 timeSeries_df.index.name = 'time'
 
+## adding the 1h real values to the simulated data, since it's the first timepoint
+### shifting all the timepoints by the minimum interval between them (that is the intra timestep)
+timestep = timeSeries_df.index.astype(float)[1] - timeSeries_df.index.astype(float)[0]
+timeSeries_df.index = timeSeries_df.index.astype(float) + timestep
+add the 
+
 allNodes = timeSeries_df.columns.tolist()
 
 # changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
