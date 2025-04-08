@@ -1532,7 +1532,8 @@ int main(int argc, char** argv) {
         // save all the augmented graphs in a single file for every type
         for(int i = 0; i < finalWorkload; i++){
             std::string type = types[i+startIdx];
-            //typeComputations[i]->saveAugmentedGraph(outputFolderNameGraphs, type);
+            std::string filename = type + ".tsv";
+            typeComputations[i]->getAugmentedGraph()->saveEdgesToFile(outputFolderNameGraphs, filename);
         }
     }
 
