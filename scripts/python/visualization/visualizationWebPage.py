@@ -10,6 +10,7 @@ app = Flask(__name__)
 OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
 NodesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/"
 GraphsDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/"
+AugmentedGraphDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs"
 InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
 network_name = "AT1-metabolites"
 
