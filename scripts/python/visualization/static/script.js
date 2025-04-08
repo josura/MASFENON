@@ -15,11 +15,20 @@ function updatePlot(timepoint) {
         .catch(err => console.error("Error fetching plot:", err));
 }
 
+function updatePlotSingle(type){}
+
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('slider');
     const label = document.getElementById('timepointLabel');
     const playButton = document.getElementById('playButton');
     const typeSelect = document.getElementById("typeSelect");
+
+    // add empty option to the dropdown
+    const emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = "Select type";
+    typeSelect.appendChild(emptyOption);
+    
 
     // Fetch types from the server
     fetch("/read_types") 
