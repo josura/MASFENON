@@ -190,14 +190,16 @@ for i in range(0,len(timepoints)):
 def create_plot_network(timepoint):
     indexTimepoint = -1
     for i in range(0,len(timepoints)):
-        if timepoints[i] == str(timepoint):
+        timepoint_float = float(timepoint)
+        current_timepoint_float = float(timepoints[i])
+        if current_timepoint_float == timepoint_float:
             indexTimepoint = i
             break
     if indexTimepoint == -1:
         raise ValueError("Timepoint not found in the data.")
-    node_trace.marker.color = node_values_every_timepoint_dict[str(timepoint)]
-    node_trace.marker.size = node_sizes_every_timepoint_dict[str(timepoint)]
-    node_trace.text = node_text_every_timepoint_dict[str(timepoint)]
+    node_trace.marker.color = node_values_every_timepoint_dict[timepoints[i]]
+    node_trace.marker.size = node_sizes_every_timepoint_dict[timepoints[i]]
+    node_trace.text = node_text_every_timepoint_dict[timepoints[i]]
     # plotting the figure
     fig = go.Figure(data=[edge_trace, node_trace],
                 layout=go.Layout(
