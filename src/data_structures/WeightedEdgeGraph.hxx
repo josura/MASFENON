@@ -168,6 +168,7 @@ class WeightedEdgeGraph{
 
         std::map<std::string, int> getNodeToIndexMap()const {return nodeToIndex;}
         void print()const;
+        void saveEdgesToFile(std::string outputFolder, std::string filename)const;
 
 };
 

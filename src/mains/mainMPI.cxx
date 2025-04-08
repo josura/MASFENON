@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
     bool undirectedTypeEdges = false;
     bool resetVirtualOutputs = false;
     bool resumeCheckpoint = false;
+    bool saveAugmentedNetworks = false;
     std::string logMode="";
     std::string quantizationMethod = "single";
     std::string virtualNodesGranularity = "type";
@@ -78,7 +79,8 @@ int main(int argc, char** argv) {
         ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none', default to all")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
-        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'") 
+        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'")
+        ("saveAugmentedNetworks",po::bool_switch(&saveAugmentedNetworks), "save the augmented networks for each iteration, default to false")
     ;
 
     
@@ -1517,6 +1519,22 @@ int main(int argc, char** argv) {
         // } 
         // std::cout << std::endl;
         // // TESTING
+    }
+
+    // save the augmented graph for every type if the option was set
+    if (saveAugmentedNetworks) {
+        logger << "[LOG] saving the augmented graphs for types in rank " << rank<<std::endl;
+        // create the output folder if it does not exist
+        std::string outputFolderNameGraphs = outputFoldername + "/augmentedGraphs";
+        if (!std::filesystem::exists(outputFolderNameGraphs)) {
+            std::filesystem::create_directory(outputFolderNameGraphs);
+        }
+        // save all the augmented graphs in a single file for every type
+        for(int i = 0; i < finalWorkload; i++){
+            std::string type = types[i+startIdx];
+            std::string filename = type + ".tsv";
+            typeComputations[i]->getAugmentedGraph()->saveEdgesToFile(outputFolderNameGraphs, filename);
+        }
     }
 
     // delete graphs objects
