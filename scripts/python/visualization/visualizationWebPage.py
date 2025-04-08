@@ -262,12 +262,27 @@ def create_plot_network_singular(timepoint,timepoints,
 
 # create the list of available types in the folder
 types = []
+# function to read the file names from a directory and returns them as a list, without the .tsv extension
+def read_file_names(directory):
+    import os
+    file_names = []
+    for filename in os.listdir(directory):
+        if filename.endswith(".tsv"):
+            file_names.append(filename[:-4])
+    return file_names
+
+@app.route('/read_types')
+def read_types():
+    # read the file names from the directory and returns them as a list, without the .tsv extension
+    file_names = read_file_names(OutputDirectory)
+    return jsonify(file_names)
+
 
 @app.route('/')
 def index():
     return render_template('index.html', timepoints=timepoints)
 
-@app.route('/<string:type>')
+@app.route('/types/<string:type>')
 def type(type):
     if type == 'node':
         return render_template('index.html', timepoints=timepoints)
