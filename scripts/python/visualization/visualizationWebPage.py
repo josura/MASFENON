@@ -274,6 +274,8 @@ def type(type):
     else:
         raise ValueError("Type not found in the data.")
 
+# routing for both floats and integers, since the slider has a problem of consistency on what is throwing out
+@app.route('/plot/<int:timepoint>')
 @app.route('/plot/<float:timepoint>')
 def plot(timepoint):
     # plot_json = create_plot(timepoint)
