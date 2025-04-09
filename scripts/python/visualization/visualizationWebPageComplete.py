@@ -15,13 +15,13 @@ network_name = "AT1-metabolites"
 # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
 # edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
 edgesFile = AugmentedGraphDirectory + network_name +  ".tsv"
-nodesValuesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/" + network_name +  ".tsv"
+nodesValuesFile = InputValuesDirectory + network_name +  ".tsv"
 edges_df = pd.read_csv(edgesFile, sep="\t")
 nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
 # contains a column (name) and another column (value) with the initial values of the nodes
 
 # load the time series data for the values of the nodes through time
-timeSeriesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/" + network_name +  ".tsv"
+timeSeriesFile = OutputDirectory + network_name +  ".tsv"
 timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
 ## preprocess the time series data
 ### drop the last column (useless)
