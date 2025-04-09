@@ -30,19 +30,19 @@ if len(types) == 0:
     raise ValueError("The directory is empty, please check the path: " + OutputDirectory) 
 
 # the network name will be read when a call to the web page /types/<type> is made, network name defaults to the first type in the list
-network_name = types[0]
+current_network_name = types[0]
 
 
 # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
-# edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
-edgesFile = AugmentedGraphDirectory + network_name +  ".tsv"
-nodesValuesFile = InputValuesDirectory + network_name +  ".tsv"
+# edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + current_network_name +  ".tsv"
+edgesFile = AugmentedGraphDirectory + current_network_name +  ".tsv"
+nodesValuesFile = InputValuesDirectory + current_network_name +  ".tsv"
 edges_df = pd.read_csv(edgesFile, sep="\t")
 nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
 # contains a column (name) and another column (value) with the initial values of the nodes
 
 # load the time series data for the values of the nodes through time
-timeSeriesFile = OutputDirectory + network_name +  ".tsv"
+timeSeriesFile = OutputDirectory + current_network_name +  ".tsv"
 timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
 ## preprocess the time series data
 ### drop the last column (useless)
@@ -221,7 +221,7 @@ def create_plot_network(timepoint):
     fig = go.Figure(data=[edge_trace, node_trace],
                 layout=go.Layout(
                     title=dict(
-                        text="<br>" + network_name +  "<br>",
+                        text="<br>" + current_network_name +  "<br>",
                         font=dict(
                             size=16
                         )
@@ -258,7 +258,7 @@ def create_plot_network_singular(timepoint,timepoints,
     fig = go.Figure(data=[edge_trace, node_trace],
                 layout=go.Layout(
                     title=dict(
-                        text="<br>" + network_name +  "<br>",
+                        text="<br>" + current_network_name +  "<br>",
                         font=dict(
                             size=16
                         )
@@ -292,6 +292,10 @@ def index():
 @app.route('/types/<string:type>')
 def type(type):
     if type in types:
+        if type == current_network_name:
+            # if the type is already selected, do nothing
+            pass
+        else:
         # fill the trace with the data of the selected type
 
     else:
