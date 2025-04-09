@@ -7,10 +7,31 @@ import pandas as pd
 
 app = Flask(__name__)
 
+# TODO these are variables that will be read from the config file in the future
 OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
 AugmentedGraphDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs/"
 InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
-network_name = "AT1-metabolites"
+
+# create the list of available types in the folder
+types = []
+# function to read the file names from a directory and returns them as a list, without the .tsv extension
+def read_file_names(directory):
+    import os
+    file_names = []
+    for filename in os.listdir(directory):
+        if filename.endswith(".tsv"):
+            file_names.append(filename[:-4])
+    return file_names
+
+types = read_file_names(OutputDirectory)
+
+# control if the directory is empty
+if len(types) == 0:
+    raise ValueError("The directory is empty, please check the path: " + OutputDirectory) 
+
+# the network name will be read when a call to the web page /types/<type> is made, network name defaults to the first type in the list
+network_name = types[0]
+
 
 # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
 # edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
@@ -256,18 +277,6 @@ def create_plot_network_singular(timepoint,timepoints,
     # show the figure
     return fig.to_dict()
 
-# create the list of available types in the folder
-types = []
-# function to read the file names from a directory and returns them as a list, without the .tsv extension
-def read_file_names(directory):
-    import os
-    file_names = []
-    for filename in os.listdir(directory):
-        if filename.endswith(".tsv"):
-            file_names.append(filename[:-4])
-    return file_names
-
-types = read_file_names(OutputDirectory)
 
 @app.route('/read_types')
 def read_types():
