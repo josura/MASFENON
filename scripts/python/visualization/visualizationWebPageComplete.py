@@ -8,16 +8,14 @@ import pandas as pd
 app = Flask(__name__)
 
 OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
-< = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs/"
+AugmentedGraphDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs/"
 InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
 network_name = "AT1-metabolites"
 
-# load the graph nodes and edges from
-nodesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR/" + network_name +  ".tsv"
+# load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
 # edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + network_name +  ".tsv"
 edgesFile = AugmentedGraphDirectory + network_name +  ".tsv"
 nodesValuesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/" + network_name +  ".tsv"
-nodes_df = pd.read_csv(nodesFile, sep="\t")
 edges_df = pd.read_csv(edgesFile, sep="\t")
 nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
 # contains a column (name) and another column (value) with the initial values of the nodes
@@ -269,6 +267,8 @@ def read_file_names(directory):
             file_names.append(filename[:-4])
     return file_names
 
+types = read_file_names(OutputDirectory)
+
 @app.route('/read_types')
 def read_types():
     # read the file names from the directory and returns them as a list, without the .tsv extension
@@ -282,8 +282,9 @@ def index():
 
 @app.route('/types/<string:type>')
 def type(type):
-    if type == 'node':
-        return render_template('index.html', timepoints=timepoints)
+    if type in types:
+        # fill the trace with the data of the selected type
+
     else:
         raise ValueError("Type not found in the data.")
 
