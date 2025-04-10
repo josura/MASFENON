@@ -41,49 +41,77 @@ edges_df = pd.read_csv(edgesFile, sep="\t")
 nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
 # contains a column (name) and another column (value) with the initial values of the nodes
 
-# load the time series data for the values of the nodes through time
-timeSeriesFile = OutputDirectory + current_network_name +  ".tsv"
-timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
-## preprocess the time series data
-### drop the last column (useless)
-timeSeries_df = timeSeries_df.drop(timeSeries_df.columns[-1], axis=1)
-## first row of the matrix is the node names (nodeNames), the rest of the columns are the timepoints (the names go from 0 to the end of the simulation timepoint)
-nodeNames = timeSeries_df['nodeNames']
-## drop the nodeNames column
-timeSeries_df = timeSeries_df.drop('nodeNames', axis=1)
-## get the timepoints
-timepoints = timeSeries_df.columns
-## we need to transpose the matrix so that the columns are the node names and the rows are the timepoints iteration results
-timeSeries_df = timeSeries_df.transpose()
-## set the column names to be the node names
-timeSeries_df.columns = nodeNames
-## set the index to be the timepoints
-timeSeries_df.index = timepoints
-## add a column to be the timepoints
-# temp_iterationMatrix['time'] = timepoints
-## change index name to be 'time'
-timeSeries_df.index.name = 'time'
+# utility function to control if two real numbers are approximately equal
+def approximately_equal(a, b, tolerance=1e-9):
+    return abs(a - b) < tolerance
 
-## adding the 1h real values to the simulated data, since it's the first timepoint
-### shifting all the timepoints by the minimum interval between them (that is the intra timestep)
-timestep = timeSeries_df.index.astype(float)[1] - timeSeries_df.index.astype(float)[0]
-timeSeries_df.index = timeSeries_df.index.astype(float) + timestep
-### adding the real values as the 0 timepoint to the data
-pd_row_to_add = pd.DataFrame(index=[0], columns=timeSeries_df.columns)
-for i in range(0,len(timeSeries_df.columns)):
-    node_name = timeSeries_df.columns[i]
-    if node_name in nodes_values_df['name'].values:
-        val = nodes_values_df[nodes_values_df['name'] == node_name]['value'].values[0]
-    else:
-        val = 0
-    pd_row_to_add.iloc[0,i] = val
-timeSeries_df = pd.concat([pd_row_to_add, timeSeries_df], ignore_index=False)
+# function to read timeseries data
+def read_timeseries_data(directoryTimeSeries, directoryInitialInput, type):
+    timeSeriesFile = directoryTimeSeries + type +  ".tsv"
+    timeSeries_df = pd.read_csv(timeSeriesFile, sep="\t")
+    ## preprocess the time series data
+    ### drop the last column (useless)
+    timeSeries_df = timeSeries_df.drop(timeSeries_df.columns[-1], axis=1)
+    ## first row of the matrix is the node names (nodeNames), the rest of the columns are the timepoints (the names go from 0 to the end of the simulation timepoint)
+    nodeNames = timeSeries_df['nodeNames']
+    ## drop the nodeNames column
+    timeSeries_df = timeSeries_df.drop('nodeNames', axis=1)
+    ## read timepoints
+    tmp_timepoints = timeSeries_df.columns
+    ## we need to transpose the matrix so that the columns are the node names and the rows are the timepoints iteration results
+    timeSeries_df = timeSeries_df.transpose()
+    ## set the column names to be the node names
+    timeSeries_df.columns = nodeNames
+    ## set the index to be the timepoints
+    timeSeries_df.index = tmp_timepoints
+    ## add a column to be the timepoints
+    # temp_iterationMatrix['time'] = timepoints
+    ## change index name to be 'time'
+    timeSeries_df.index.name = 'time'
+
+    # reading node_values for the first timepoint
+    nodesValuesFile = directoryInitialInput + type +  ".tsv"
+    nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
+
+    ## adding the 1h real values to the simulated data, since it's the first timepoint
+    ### shifting all the timepoints by the minimum interval between them (that is the intra timestep)
+    timestep = timeSeries_df.index.astype(float)[1] - timeSeries_df.index.astype(float)[0]
+    timeSeries_df.index = timeSeries_df.index.astype(float) + timestep
+    ### adding the real values as the 0 timepoint to the data
+    pd_row_to_add = pd.DataFrame(index=[0], columns=timeSeries_df.columns)
+    for i in range(0,len(timeSeries_df.columns)):
+        node_name = timeSeries_df.columns[i]
+        if node_name in nodes_values_df['name'].values:
+            val = nodes_values_df[nodes_values_df['name'] == node_name]['value'].values[0]
+        else:
+            val = 0
+        pd_row_to_add.iloc[0,i] = val
+    timeSeries_df = pd.concat([pd_row_to_add, timeSeries_df], ignore_index=False)
+    return timeSeries_df
+
+
+# load the time series data for the values of the nodes through time
+timeSeriesFile = OutputDirectory + current_network_name + ".tsv"
+timeSeries_df = read_timeseries_data(OutputDirectory, InputValuesDirectory, current_network_name)
+## get the timepoints
+timepoints = timeSeries_df.index
 
 allNodes = timeSeries_df.columns.tolist()
 
 # changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
-if 'Source' in edges_df.columns and 'Target' in edges_df.columns:
-    edges_df.rename(columns={'Source': 'Start', 'Target': 'End'}, inplace=True)
+# if 'Source' in edges_df.columns and 'Target' in edges_df.columns:
+#     edges_df.rename(columns={'Source': 'Start', 'Target': 'End'}, inplace=True)
+if 'Source' in edges_df.columns:
+    edges_df.rename(columns={'Source': 'Start'}, inplace=True)
+if 'Target' in edges_df.columns:
+    edges_df.rename(columns={'Target': 'End'}, inplace=True)
+if 'weight' in edges_df.columns:
+    edges_df.rename(columns={'weight': 'Weight'}, inplace=True)
+if 'source' in edges_df.columns:
+    edges_df.rename(columns={'source': 'Start'}, inplace=True)
+if 'target' in edges_df.columns:
+    edges_df.rename(columns={'target': 'End'}, inplace=True)
+# also for 
 
 # create the networkx graph
 nx_graph = nx.Graph()
@@ -209,7 +237,7 @@ def create_plot_network(timepoint):
     for i in range(0,len(timepoints)):
         timepoint_float = float(timepoint)
         current_timepoint_float = float(timepoints[i])
-        if current_timepoint_float == timepoint_float:
+        if approximately_equal(current_timepoint_float,timepoint_float):
             indexTimepoint = i
             break
     if indexTimepoint == -1:
@@ -293,11 +321,9 @@ def index():
 def type(type):
     if type in types:
         if type == current_network_name:
-            # if the type is already selected, do nothing
-            pass
-        else:
+            # if the type is already selected, do nothing and return a status
+            return jsonify({'status': 'already selected'})
         # fill the trace with the data of the selected type
-
     else:
         raise ValueError("Type not found in the data.")
 
