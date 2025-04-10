@@ -51,8 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching types:", error);
         });
 
-    // Initialize plot
+    // Initialize plot 
     updatePlot(slider.value);
+    // After a selection of the type, 
+    typeSelect.onchange = function() {
+        const selectedType = this.value;
+        if (selectedType === "") {
+            return;  // No type selected
+        }
+        if (selectedType) {
+            fetch(`/types/${selectedType}`)
+                // .then(response => response.json())
+                // .then(plotData => {
+                //     Plotly.newPlot('plot', plotData.data, plotData.layout);
+                // })
+                .catch(err => console.error("Error fetching initial plot:", err));
+            updatePlot(slider.value);
+        }
+    };
 
     slider.oninput = function() {
         label.textContent = this.value;
