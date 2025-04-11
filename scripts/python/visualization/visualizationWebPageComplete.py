@@ -388,7 +388,37 @@ with open('node_traces_for_networks.pkl', 'rb') as f:
 with open('edge_traces_for_networks.pkl', 'rb') as f:
     edge_traces_for_networks = pickle.load(f)
     
-
+# also create a dictionary where the key is the combination of network and timepoint, and the value is the json for the plot
+json_for_plot = {}
+def create_json_for_plot():
+    for type in types:
+        for i in range(0,len(timepoints)):
+            # create the json for the plot
+            tmp_node_trace = node_traces_for_networks[type][timepoints[i]]
+            tmp_edge_trace = edge_traces_for_networks[type]
+            # plotting the figure
+            fig = go.Figure(data=[tmp_edge_trace, tmp_node_trace],
+                        layout=go.Layout(
+                            title=dict(
+                                text="<br>" + type +  "<br>",
+                                font=dict(
+                                    size=16
+                                )
+                            ),
+                            showlegend=False,
+                            hovermode='closest',
+                            margin=dict(b=20,l=5,r=5,t=40),
+                            annotations=[ dict(
+                                text="Conservation:0.3 Dissipation:0.3 Propagation:0.3",
+                                showarrow=False,
+                                xref="paper", yref="paper",
+                                x=0.005, y=-0.002 ) ],
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                            )
+            # save the json for the plot
+            json_for_plot[type + "_" + timepoints[i]] = fig.to_dict()
+    return json_for_plot
 
 def create_plot_network(timepoint):
     indexTimepoint = -1
