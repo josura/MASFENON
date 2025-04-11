@@ -34,7 +34,6 @@ current_network_name = types[0]
 
 
 # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
-# edgesFile = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR/" + current_network_name +  ".tsv"
 edgesFile = AugmentedGraphDirectory + current_network_name +  ".tsv"
 nodesValuesFile = InputValuesDirectory + current_network_name +  ".tsv"
 edges_df = pd.read_csv(edgesFile, sep="\t")
@@ -176,12 +175,10 @@ edge_trace = go.Scatter(
 
 node_x = []
 node_y = []
-node_sizes_plotly = []
 for node in nx_graph.nodes():
     x, y = pos[node]
     node_x.append(x)
     node_y.append(y)
-    node_sizes_plotly.append((timeSeries_df[node].iloc[0] + 1) * 10)
 
 node_trace = go.Scatter(
     x=node_x, y=node_y,
@@ -230,6 +227,34 @@ for i in range(0,len(timepoints)):
     node_text_every_timepoint_dict[timepoints[i]] = []
     for j in range(0,len(allNodes)):
         node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
+
+# create the node trace and edge trace for every combination of network and timepoint
+for type in types:
+    # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
+    edgesFile = AugmentedGraphDirectory + type +  ".tsv"
+    edges_df = pd.read_csv(edgesFile, sep="\t")
+    # load the time series data for the values of the nodes through time
+    timeSeriesFile = OutputDirectory + type + ".tsv"
+    timeSeries_df = read_timeseries_data(OutputDirectory, InputValuesDirectory, type)
+    ## get the timepoints
+    timepoints = timeSeries_df.index
+    allNodes = timeSeries_df.columns.tolist()
+    # changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
+    if 'Source' in edges_df.columns:
+        edges_df.rename(columns={'Source': 'Start'}, inplace=True)
+    if 'Target' in edges_df.columns:
+        edges_df.rename(columns={'Target': 'End'}, inplace=True)
+    if 'weight' in edges_df.columns:
+        edges_df.rename(columns={'weight': 'Weight'}, inplace=True)
+    if 'source' in edges_df.columns:
+        edges_df.rename(columns={'source': 'Start'}, inplace=True)
+    if 'target' in edges_df.columns:
+        edges_df.rename(columns={'target': 'End'}, inplace=True)
+    # create the networkx graph
+    nx_graph = nx.Graph()
+    # add nodes to the graph
+    nx_graph.add_nodes_from(allNodes)
+    
 
 
 def create_plot_network(timepoint):
@@ -327,6 +352,8 @@ def type(type):
         else:
             # changing the network and the plots variables
             print("Changing network to: " + type)
+
+            return jsonify({'status': 'changed'})
 
     else:
         raise ValueError("Type not found in the data.")
