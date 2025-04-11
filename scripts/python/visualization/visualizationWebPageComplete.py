@@ -323,7 +323,11 @@ def type(type):
         if type == current_network_name:
             # if the type is already selected, do nothing and return a status
             return jsonify({'status': 'already selected'})
-        # fill the trace with the data of the selected type
+            # fill the trace with the data of the selected type TODO
+        else:
+            # changing the network and the plots variables
+            print("Changing network to: " + type)
+
     else:
         raise ValueError("Type not found in the data.")
 
