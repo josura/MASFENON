@@ -374,12 +374,12 @@ def create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDi
 
 
 # create the node traces and edge traces by calling the function, only once, then commented for now, TODO implement a control to check if the files are already created
-node_traces_for_networks, edge_traces_for_networks = create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory)
-# save the traces in two files
-with open('node_traces_for_networks.pkl', 'wb') as f:
-    pickle.dump(node_traces_for_networks, f)
-with open('edge_traces_for_networks.pkl', 'wb') as f:
-    pickle.dump(edge_traces_for_networks, f)
+# node_traces_for_networks, edge_traces_for_networks = create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory)
+# # save the traces in two files
+# with open('node_traces_for_networks.pkl', 'wb') as f:
+#     pickle.dump(node_traces_for_networks, f)
+# with open('edge_traces_for_networks.pkl', 'wb') as f:
+#     pickle.dump(edge_traces_for_networks, f)
       
 node_traces_for_networks = {}
 edge_traces_for_networks = {}
