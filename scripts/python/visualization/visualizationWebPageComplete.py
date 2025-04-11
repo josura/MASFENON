@@ -4,6 +4,8 @@ import plotly.io as pio
 import numpy as np
 import networkx as nx
 import pandas as pd
+import pickle
+import copy
 
 app = Flask(__name__)
 
@@ -228,32 +230,163 @@ for i in range(0,len(timepoints)):
     for j in range(0,len(allNodes)):
         node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
 
-# create the node trace and edge trace for every combination of network and timepoint
-for type in types:
-    # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
-    edgesFile = AugmentedGraphDirectory + type +  ".tsv"
-    edges_df = pd.read_csv(edgesFile, sep="\t")
-    # load the time series data for the values of the nodes through time
-    timeSeriesFile = OutputDirectory + type + ".tsv"
-    timeSeries_df = read_timeseries_data(OutputDirectory, InputValuesDirectory, type)
-    ## get the timepoints
-    timepoints = timeSeries_df.index
-    allNodes = timeSeries_df.columns.tolist()
-    # changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
-    if 'Source' in edges_df.columns:
-        edges_df.rename(columns={'Source': 'Start'}, inplace=True)
-    if 'Target' in edges_df.columns:
-        edges_df.rename(columns={'Target': 'End'}, inplace=True)
-    if 'weight' in edges_df.columns:
-        edges_df.rename(columns={'weight': 'Weight'}, inplace=True)
-    if 'source' in edges_df.columns:
-        edges_df.rename(columns={'source': 'Start'}, inplace=True)
-    if 'target' in edges_df.columns:
-        edges_df.rename(columns={'target': 'End'}, inplace=True)
-    # create the networkx graph
-    nx_graph = nx.Graph()
-    # add nodes to the graph
-    nx_graph.add_nodes_from(allNodes)
+# create the node trace for every combination of network and timepoint
+# edge trace is the same for all timepoints, but different for the networks
+def create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory):
+    node_traces_for_networks = {} # dictionary of dictionaries
+    edge_traces_for_networks = {} # dictionary of edge traces
+    for type in types:
+        print("Creating the network for: " + type)
+        # load the graph edges from the augmented graph, graph nodes will be directly taken from the time series data
+        edgesFile = AugmentedGraphDirectory + type +  ".tsv"
+        edges_df = pd.read_csv(edgesFile, sep="\t")
+        # load the time series data for the values of the nodes through time
+        timeSeriesFile = OutputDirectory + type + ".tsv"
+        timeSeries_df = read_timeseries_data(OutputDirectory, InputValuesDirectory, type)
+        ## get the timepoints
+        timepoints = timeSeries_df.index
+        allNodes = timeSeries_df.columns.tolist()
+        # changes edges_df names in case they are not Start and End (for example, if they are 'Source' and 'Target')
+        if 'Source' in edges_df.columns:
+            edges_df.rename(columns={'Source': 'Start'}, inplace=True)
+        if 'Target' in edges_df.columns:
+            edges_df.rename(columns={'Target': 'End'}, inplace=True)
+        if 'weight' in edges_df.columns:
+            edges_df.rename(columns={'weight': 'Weight'}, inplace=True)
+        if 'source' in edges_df.columns:
+            edges_df.rename(columns={'source': 'Start'}, inplace=True)
+        if 'target' in edges_df.columns:
+            edges_df.rename(columns={'target': 'End'}, inplace=True)
+        # create the networkx graph
+        nx_graph = nx.Graph()
+        # add nodes to the graph
+        nx_graph.add_nodes_from(allNodes)
+        # add values to the nodes as size
+        dict_size = {}
+        for i in range(0,len(allNodes)):
+            val = timeSeries_df.iloc[0,i]
+            dict_size[allNodes[i]] = val
+        nx.set_node_attributes(nx_graph, dict_size, 'size')
+        # add the values to the nodes as attribute
+        dict_attr = {}
+        for i in range(0,len(allNodes)):
+            val = timeSeries_df.iloc[0,i]
+            dict_attr[allNodes[i]] = val
+        nx.set_node_attributes(nx_graph, dict_attr, 'value')
+        # add edges to the graph, the relevant features are Start, End and Weight
+        for i in range(0,len(edges_df)):
+            start = edges_df["Start"].iloc[i]
+            end = edges_df["End"].iloc[i]
+            weight = edges_df["Weight"].iloc[i]
+            nx_graph.add_edge(start,end,weight=weight)
+        # generate the positions of the nodes
+        pos = nx.spring_layout(nx_graph, seed=42)  # positions for all nodes
+        edge_x = []
+        edge_y = []
+        weights_str = []
+        for edge in nx_graph.edges():
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            weight = nx_graph.edges[edge]['weight']
+            weights_str.append(str(weight))
+            edge_x.append(x0)
+            edge_x.append(x1)
+            edge_x.append(None)
+            edge_y.append(y0)
+            edge_y.append(y1)
+            edge_y.append(None)
+        tmp_edge_trace = go.Scatter(
+            x=edge_x, y=edge_y,
+            line=dict(width=0.3, color='#888'),
+            hoverinfo='text',
+            mode='lines',
+            text=weights_str,
+            textposition='top center',
+            textfont=dict(
+                family='sans serif',
+                size=12,
+                color='#000'
+            ),
+            marker=dict(
+                line=dict(width=0.5, color='#888')
+            )
+        )
+        node_x = []
+        node_y = []
+        for node in nx_graph.nodes():
+            x, y = pos[node]
+            node_x.append(x)
+            node_y.append(y)
+        node_trace = go.Scatter(
+            x=node_x, y=node_y,
+            mode='markers',
+            hoverinfo='text',
+            marker=dict(
+                showscale=True,
+                # colorscale options
+                #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
+                #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
+                #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
+                colorscale='YlGnBu',
+                reversescale=True,
+                color=[],
+                size=10,
+                colorbar=dict(
+                    thickness=15,
+                    title=dict(
+                    text='Values',
+                    side='right'
+                    ),
+                    xanchor='left',
+                ),
+                line_width=2))
+        node_values = []
+        node_text = []
+        for node in nx_graph.nodes():
+            value = nx_graph.nodes[node]['value']
+            node_values.append(value)
+            # node_text.append('Node: '+str(node))
+            node_text.append('Node: '+ str(node) + '\nValue: '+str(value))
+        node_values_every_timepoint_dict = {}
+        node_sizes_every_timepoint_dict = {}
+        node_text_every_timepoint_dict = {}
+        tmp_node_traces_for_timepoints = {}
+        for i in range(0,len(timepoints)):
+            node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
+            # node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
+            # normalize the values  of the sizes to be between 4 and 22, but take the absolute value of the values so that the size is big even if the value is negative
+            node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:].abs()  - timeSeries_df.iloc[i,:].abs().min()) / (timeSeries_df.iloc[i,:].abs().max() - timeSeries_df.iloc[i,:].abs().min()) * 18 + 4).tolist()
+            #node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
+            node_text_every_timepoint_dict[timepoints[i]] = []
+            for j in range(0,len(allNodes)):
+                node_text_every_timepoint_dict[timepoints[i]].append('Node: ' + str(allNodes[j]) + '\nValue: '+str(timeSeries_df.iloc[i,j]))
+            node_trace.marker.color = node_values_every_timepoint_dict[timepoints[i]]
+            node_trace.marker.size = node_sizes_every_timepoint_dict[timepoints[i]]
+            node_trace.text = node_text_every_timepoint_dict[timepoints[i]]
+            # assign the node trace to the timepoint, make a copy of the node trace
+            tmp_node_traces_for_timepoints[timepoints[i]] = copy.deepcopy(node_trace)
+        # create the node trace for every combination of network and timepoint
+        node_traces_for_networks[type] = tmp_node_traces_for_timepoints
+        # create the edge trace for every network
+        edge_traces_for_networks[type] = tmp_edge_trace
+    return node_traces_for_networks, edge_traces_for_networks
+
+
+
+# create the node traces and edge traces by calling the function, only once, then commented for now, TODO implement a control to check if the files are already created
+node_traces_for_networks, edge_traces_for_networks = create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory)
+# save the traces in two files
+with open('node_traces_for_networks.pkl', 'wb') as f:
+    pickle.dump(node_traces_for_networks, f)
+with open('edge_traces_for_networks.pkl', 'wb') as f:
+    pickle.dump(edge_traces_for_networks, f)
+      
+node_traces_for_networks = {}
+edge_traces_for_networks = {}
+with open('node_traces_for_networks.pkl', 'rb') as f:
+    node_traces_for_networks = pickle.load(f)
+with open('edge_traces_for_networks.pkl', 'rb') as f:
+    edge_traces_for_networks = pickle.load(f)
     
 
 
@@ -293,25 +426,23 @@ def create_plot_network(timepoint):
     # show the figure
     return fig.to_dict()
 
-def create_plot_network_singular(timepoint,timepoints,
-                        node_values_every_timepoint_dict,
-                        node_sizes_every_timepoint_dict,
-                        node_text_every_timepoint_dict):
+def create_plot_network_singular(timepoint,type):
     indexTimepoint = -1
     for i in range(0,len(timepoints)):
-        if timepoints[i] == str(timepoint):
+        timepoint_float = float(timepoint)
+        current_timepoint_float = float(timepoints[i])
+        if approximately_equal(current_timepoint_float,timepoint_float):
             indexTimepoint = i
             break
     if indexTimepoint == -1:
         raise ValueError("Timepoint not found in the data.")
-    node_trace.marker.color = node_values_every_timepoint_dict[str(timepoint)]
-    node_trace.marker.size = node_sizes_every_timepoint_dict[str(timepoint)]
-    node_trace.text = node_text_every_timepoint_dict[str(timepoint)]
+    tmp_node_trace = node_traces_for_networks[type][timepoints[indexTimepoint]]
+    tmp_edge_trace = edge_traces_for_networks[type]
     # plotting the figure
-    fig = go.Figure(data=[edge_trace, node_trace],
+    fig = go.Figure(data=[tmp_edge_trace, tmp_node_trace],
                 layout=go.Layout(
                     title=dict(
-                        text="<br>" + current_network_name +  "<br>",
+                        text="<br>" + type +  "<br>",
                         font=dict(
                             size=16
                         )
@@ -344,6 +475,8 @@ def index():
 
 @app.route('/types/<string:type>')
 def type(type):
+    print("Type selected: " + type)
+    global current_network_name
     if type in types:
         if type == current_network_name:
             # if the type is already selected, do nothing and return a status
@@ -352,7 +485,7 @@ def type(type):
         else:
             # changing the network and the plots variables
             print("Changing network to: " + type)
-
+            current_network_name = type
             return jsonify({'status': 'changed'})
 
     else:
@@ -362,8 +495,11 @@ def type(type):
 @app.route('/plot/<int:timepoint>')
 @app.route('/plot/<float:timepoint>')
 def plot(timepoint):
+    global current_network_name
+    print("Timepoint selected: " + str(timepoint) + " for network: " + current_network_name)
     # plot_json = create_plot(timepoint)
-    plot_json = create_plot_network(timepoint)
+    # plot_json = create_plot_network(timepoint)
+    plot_json = create_plot_network_singular(timepoint,current_network_name)
     return jsonify(plot_json)
 
 @app.route('/plot_singular/<string:type>/<float:timepoint>')
