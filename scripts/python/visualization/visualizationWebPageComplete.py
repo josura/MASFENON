@@ -420,6 +420,8 @@ def create_json_for_plot():
             json_for_plot[type + "_" + timepoints[i]] = fig.to_dict()
     return json_for_plot
 
+json_for_plot = create_json_for_plot()
+
 def create_plot_network(timepoint):
     indexTimepoint = -1
     for i in range(0,len(timepoints)):
