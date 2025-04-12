@@ -393,7 +393,8 @@ dict_for_plot = {}
 def create_dict_for_plot():
     for type in types:
         for i in range(0,len(timepoints)):
-            # create the json for the plot
+            print("Creating the plot for: " + type + " at timepoint: " + str(timepoints[i]))
+            # create the plot
             tmp_node_trace = node_traces_for_networks[type][timepoints[i]]
             tmp_edge_trace = edge_traces_for_networks[type]
             # plotting the figure
@@ -417,7 +418,7 @@ def create_dict_for_plot():
                             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                             )
             # save the dict for the plot
-            dict_for_plot[type + "_" + timepoints[i]] = fig.to_dict()
+            dict_for_plot[type + "_" + str(timepoints[i])] = fig.to_dict()
     return dict_for_plot
 
 dict_for_plot = create_dict_for_plot()
@@ -503,7 +504,7 @@ def create_dict_plot_network_singular_optimized(timepoint,type):
             break
     if indexTimepoint == -1:
         raise ValueError("Timepoint not found in the data.")
-    target_dict = dict_for_plot[type + "_" + timepoints[indexTimepoint]]
+    target_dict = dict_for_plot[type + "_" + str(timepoints[indexTimepoint])]
     # returning the json for the plot
     return target_dict
 
