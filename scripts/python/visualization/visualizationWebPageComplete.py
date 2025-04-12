@@ -389,8 +389,8 @@ with open('edge_traces_for_networks.pkl', 'rb') as f:
     edge_traces_for_networks = pickle.load(f)
     
 # also create a dictionary where the key is the combination of network and timepoint, and the value is the json for the plot
-json_for_plot = {}
-def create_json_for_plot():
+dict_for_plot = {}
+def create_dict_for_plot():
     for type in types:
         for i in range(0,len(timepoints)):
             # create the json for the plot
@@ -416,11 +416,11 @@ def create_json_for_plot():
                             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                             )
-            # save the json for the plot
-            json_for_plot[type + "_" + timepoints[i]] = fig.to_dict()
-    return json_for_plot
+            # save the dict for the plot
+            dict_for_plot[type + "_" + timepoints[i]] = fig.to_dict()
+    return dict_for_plot
 
-json_for_plot = create_json_for_plot()
+dict_for_plot = create_dict_for_plot()
 
 def create_plot_network(timepoint):
     indexTimepoint = -1
@@ -493,7 +493,7 @@ def create_plot_network_singular(timepoint,type):
     # show the figure
     return fig.to_dict()
 
-def create_json_plot_network_singular_optimized(timepoint,type):
+def create_dict_plot_network_singular_optimized(timepoint,type):
     indexTimepoint = -1
     for i in range(0,len(timepoints)):
         timepoint_float = float(timepoint)
@@ -503,9 +503,9 @@ def create_json_plot_network_singular_optimized(timepoint,type):
             break
     if indexTimepoint == -1:
         raise ValueError("Timepoint not found in the data.")
-    target_json = json_for_plot[type + "_" + timepoints[indexTimepoint]]
+    target_dict = dict_for_plot[type + "_" + timepoints[indexTimepoint]]
     # returning the json for the plot
-    return target_json
+    return target_dict
 
 
 
@@ -546,7 +546,8 @@ def plot(timepoint):
     print("Timepoint selected: " + str(timepoint) + " for network: " + current_network_name)
     # plot_json = create_plot(timepoint)
     # plot_json = create_plot_network(timepoint)
-    plot_json = create_plot_network_singular(timepoint,current_network_name)
+    # plot_json = create_plot_network_singular(timepoint,current_network_name)
+    plot_json = create_dict_plot_network_singular_optimized(timepoint,current_network_name)
     return jsonify(plot_json)
 
 @app.route('/plot_singular/<string:type>/<float:timepoint>')
