@@ -493,6 +493,21 @@ def create_plot_network_singular(timepoint,type):
     # show the figure
     return fig.to_dict()
 
+def create_json_plot_network_singular_optimized(timepoint,type):
+    indexTimepoint = -1
+    for i in range(0,len(timepoints)):
+        timepoint_float = float(timepoint)
+        current_timepoint_float = float(timepoints[i])
+        if approximately_equal(current_timepoint_float,timepoint_float):
+            indexTimepoint = i
+            break
+    if indexTimepoint == -1:
+        raise ValueError("Timepoint not found in the data.")
+    target_json = json_for_plot[type + "_" + timepoints[indexTimepoint]]
+    # returning the json for the plot
+    return target_json
+
+
 
 @app.route('/read_types')
 def read_types():
