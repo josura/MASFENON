@@ -44,7 +44,7 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./b
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --saturation \
-            --outputFolder /tmp/outputExamples/testingMPISingleGranular \
+            --outputFolder /tmp/outputExamples/testingMPISingleGranular-2 \
             --outputFormat iterationMatrix
 
 ## heterogeneous graphs
@@ -74,7 +74,7 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./b
             --virtualNodesGranularity typeAndNode \
             --saturation \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors \
+            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors-2 \
             --outputFormat iterationMatrix
 
 mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
@@ -89,7 +89,7 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./b
             --virtualNodesGranularity typeAndNode \
             --saturation \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors \
+            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors-3 \
             --outputFormat iterationMatrix
 
 mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
@@ -103,5 +103,5 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 2 ./b
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors \
+            --outputFolder /tmp/outputExamples/testingMPIgranularDifferentProcessors-4 \
             --outputFormat iterationMatrix
