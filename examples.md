@@ -5,7 +5,7 @@ This page contains a collection of MPI examples of running the framework on test
 
 ## Homogeneous graph
     
-### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type
+### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --fInitialPerturbation data/testdata/testHomogeneousGraph/initialValues-general.tsv \
@@ -17,10 +17,11 @@ mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGr
             --propagationModel customPropagation \
             --propagationModelParameters 0.2 \
             --saturation \
-            --outputFolder outputs/testingMPIsingle
+            --outputFolder outputs/testingMPIsingle \
+            --outputFormat iterationMatrix
 ```
 
-### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node
+### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --fInitialPerturbation data/testdata/testHomogeneousGraph/initialValues-general.tsv \
@@ -33,10 +34,11 @@ mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGr
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --saturation \
-            --outputFolder outputs/testingMPISingleGranular
+            --outputFolder outputs/testingMPISingleGranular \
+            --outputFormat iterationMatrix
 ```
 
-### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node, using a folder for the  initial perturbation values
+### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node, using a folder for the  initial perturbation values, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --initialPerturbationPerTypeFolder data/testdata/testHomogeneousGraph/initialValues \
@@ -49,13 +51,14 @@ mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGr
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --saturation \
-            --outputFolder outputs/testingMPISingleGranular
+            --outputFolder outputs/testingMPISingleGranular \
+            --outputFormat iterationMatrix
 ```
 
 
 ## Heterogeneous temporal graph
 
-### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0)
+### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
@@ -68,10 +71,11 @@ mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeteroge
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --saturation \
-            --outputFolder outputs/testingMPIgranularDifferentProcessors
+            --outputFolder outputs/testingMPIgranularDifferentProcessors \
+            --outputFormat iterationMatrix
 ```
 
-### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph
+### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
@@ -85,10 +89,11 @@ mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeteroge
             --virtualNodesGranularity typeAndNode \
             --saturation \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder outputs/testingMPIgranularDifferentProcessors
+            --outputFolder outputs/testingMPIgranularDifferentProcessors \
+            --outputFormat iterationMatrix
 ```
 
-### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph, using temporal contact information between types
+### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph, using temporal contact information between types, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
@@ -102,11 +107,12 @@ mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeteroge
             --virtualNodesGranularity typeAndNode \
             --saturation \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder outputs/testingMPIgranularDifferentProcessors
+            --outputFolder outputs/testingMPIgranularDifferentProcessors \
+            --outputFormat iterationMatrix
 ```
 
 
-### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, no saturation, node description folder provided to get the nodes in the graph, using temporal contact information between types
+### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, no saturation, node description folder provided to get the nodes in the graph, using temporal contact information between types, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
@@ -119,5 +125,6 @@ mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeteroge
             --propagationModelParameters 0.2 \
             --virtualNodesGranularity typeAndNode \
             --nodeDescriptionFolder data/testdata/testHeterogeneousGraph/nodesDescriptionDifferentStructure \
-            --outputFolder outputs/testingMPIgranularDifferentProcessors
+            --outputFolder outputs/testingMPIgranularDifferentProcessors \
+            --outputFormat iterationMatrix
 ```
