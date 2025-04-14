@@ -1538,9 +1538,20 @@ int main(int argc, char** argv) {
     }
 
     // delete graphs objects
+    // if the graph was homogenous (having specified a single graph file) the graph pointer is shared between all the types, so it needs to be deleted only once
+    // if the graph was heterogeneous, the graph pointer is different for each type, so it needs to be deleted for each type
+    if(vm.count("graphsFilesFolder") > 0){
+        for(int i = 0; i < finalWorkload; i++){
+            delete graphs[i];
+            graphs[i] = nullptr;
+        }
+    } else {
+        // delete the graph only once
+        delete graphs[0];
+        graphs[0] = nullptr;
+    }
+    // set the graph pointer to nullptr for all the types computations
     for(int i = 0; i < finalWorkload; i++){
-        delete graphs[i];
-        graphs[i] = nullptr;
         typeComputations[i]->setGraph(nullptr);
     }
     delete[] graphs;
