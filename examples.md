@@ -112,7 +112,7 @@ mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeteroge
 ```
 
 
-### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, no saturation, node description folder provided to get the nodes in the graph, using temporal contact information between types, also save the iteration matrix
+### Example 4: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, no saturation, node description folder provided to get the nodes in the graph, using temporal contact information between types, also save the iteration matrix
 ```bash
 mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
