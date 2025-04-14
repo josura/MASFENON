@@ -7,7 +7,7 @@ This page contains a collection of MPI examples of running the framework on test
     
 ### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
+mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --fInitialPerturbation data/testdata/testHomogeneousGraph/initialValues-general.tsv \
             --typeInteractionFolder data/testdata/testHomogeneousGraph/interactions \
             --dissipationModel scaled \
@@ -22,7 +22,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousG
 
 ### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
+mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --fInitialPerturbation data/testdata/testHomogeneousGraph/initialValues-general.tsv \
             --typeInteractionFolder data/testdata/testHomogeneousGraph/interactions \
             --dissipationModel scaled \
@@ -38,7 +38,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousG
 
 ### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), virtual nodes granularity set to type and node, using a folder for the  initial perturbation values
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
+mpirun -np 2 ./build/masfenon-MPI --fUniqueGraph data/testdata/testHomogeneousGraph/edges-Graph1-general.tsv \
             --initialPerturbationPerTypeFolder data/testdata/testHomogeneousGraph/initialValues \
             --typeInteractionFolder data/testdata/testHomogeneousGraph/interactions \
             --dissipationModel scaled \
@@ -57,7 +57,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --fUniqueGraph data/testdata/testHomogeneousG
 
 ### Example 1: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0)
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
+mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
             --typeInteractionFolder data/testdata/testHeterogeneousTemporalGraph/interactions \
             --dissipationModel scaled \
@@ -73,7 +73,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterog
 
 ### Example 2: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
+mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
             --typeInteractionFolder data/testdata/testHeterogeneousTemporalGraph/interactions \
             --dissipationModel scaled \
@@ -90,7 +90,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterog
 
 ### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, saturation at default value (1.0), node description folder provided to get the nodes in the graph, using temporal contact information between types
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
+mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
             --typeInteractionFolder data/testdata/testHeterogeneousTemporalGraph/interactions \
             --dissipationModel scaled \
@@ -108,7 +108,7 @@ mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterog
 
 ### Example 3: custom propagation model (neighbors if the code in src/propagationModelCustom.cxx is unmodified), scaled dissipation and conservation models set at constants, no saturation, node description folder provided to get the nodes in the graph, using temporal contact information between types
 ```bash
-mpirun -np 2 ./build/c2c-sepia-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
+mpirun -np 2 ./build/masfenon-MPI --graphsFilesFolder data/testdata/testHeterogeneousTemporalGraph/graphs \
             --initialPerturbationPerTypeFolder data/testdata/testHeterogeneousTemporalGraph/initialValuesPartialTypes \
             --typeInteractionFolder data/testdata/testHeterogeneousTemporalGraph/interactions \
             --dissipationModel scaled \
