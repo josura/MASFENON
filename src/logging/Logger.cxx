@@ -1,3 +1,10 @@
+/**
+ * @file Logger.cxx
+ * @ingroup Core
+ * @brief Implements the Logger class for writing log, error, and warning messages.
+ * @details Provides log-level formatted output to a stream and allows runtime toggling of logging behavior.
+ */
+
 #include "logging/Logger.hxx"
 
 
