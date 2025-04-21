@@ -12,18 +12,21 @@
 /**
  * @brief Generates a scaling function for dissipation.
  * @return A lambda function that takes a double value and returns a double value.
+ * @details The dissipation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system.
  */
 std::function<double(double)> getDissipationScalingFunction();
 
 /**
  * @brief Generates a scaling function for conservation.
  * @return A theta function that takes a double value and returns a double value.
+ * @details The conservation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system.
  */
 std::function<double(double)> getConservationScalingFunction();
 
 /**
  * @brief Generates a scaling function for propagation.
  * @return A omega function that takes a double value and returns a double value.
+ * @details The propagation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system.
  */
 std::function<double(double)> getPropagationScalingFunction();
 
