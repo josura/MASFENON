@@ -1,3 +1,9 @@
+/**
+ * @file Checkpoint.cxx
+ * @ingroup Core
+ * @brief Implements the Checkpoint class for managing simulation states.
+ * @details Includes logic for saving, loading, and cleaning checkpoint data during MASFENON simulations.
+ */
 #include "checkpoint/Checkpoint.hxx"
 #include "computation/Computation.hxx"
 #include <string>
