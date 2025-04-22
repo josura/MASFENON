@@ -1,3 +1,10 @@
+/**
+ * @file Computation.hxx
+ * @ingroup Core
+ * @brief Defines the Computation class used for managing the logic of intra- and inter-network dynamics in MASFENON.
+ * @details This class handles core data structures, including graphs and matrices, and executes propagation,
+ * dissipation, and conservation steps using models. It supports augmented graphs and integrates with Armadillo for efficient computations.
+ */
 #pragma once
 
 #include "computation/DissipationModel.hxx"
@@ -11,23 +18,40 @@
 #include <vector>
 #include <functional>
 
+/**
+ * @class Computation
+ * @brief Core class for executing propagation, dissipation, and conservation over a network in MASFENON.
+ * @details Handles data transformations, internal and augmented graph representations, and provides matrix operations.
+ */
 class Computation{
     private:
-        std::vector<double> input,output,inputAugmented,outputAugmented;
-        WeightedEdgeGraph* graph;
-        WeightedEdgeGraph* augmentedGraph;
-        std::vector<std::string> cellTypes;
-        std::string localCellType;
-        bool armaInitializedNotAugmented = false, armaInitializedAugmented = false;
-        arma::Col<double> InputArma;
-        arma::Mat<double> pseudoInverseArma;
-        arma::Col<double> InputAugmentedArma;
-        arma::Mat<double> pseudoInverseAugmentedArma;
-        std::map<std::string,int> nodeToIndex;
-        DissipationModel* dissipationModel=nullptr;
-        ConservationModel* conservationModel=nullptr;
-        PropagationModel* propagationModel=nullptr;
-        std::function<double(double,double)> saturationFunction;
+        std::vector<double> input;                    /**< Input vector for the normal graph. */
+        std::vector<double> output;                   /**< Output vector after computation on the normal graph. */
+        std::vector<double> inputAugmented;           /**< Input vector for the augmented graph. */
+        std::vector<double> outputAugmented;          /**< Output vector after computation on the augmented graph. */
+
+        WeightedEdgeGraph* graph;                     /**< Pointer to the core graph. */
+        WeightedEdgeGraph* augmentedGraph;            /**< Pointer to the augmented graph. */
+
+        std::vector<std::string> cellTypes;           /**< List of all known cell types. */
+        std::string localCellType;                    /**< The cell type of the current agent. */
+
+        bool armaInitializedNotAugmented = false;     /**< Indicates whether the Armadillo structure is initialized for the core graph. */
+        bool armaInitializedAugmented = false;        /**< Indicates whether the Armadillo structure is initialized for the augmented graph. */
+
+        arma::Col<double> InputArma;                  /**< Armadillo vector of inputs for core graph. */
+        arma::Mat<double> pseudoInverseArma;          /**< Armadillo pseudo-inverse matrix for core graph. */
+        arma::Col<double> InputAugmentedArma;         /**< Armadillo vector of inputs for augmented graph. */
+        arma::Mat<double> pseudoInverseAugmentedArma; /**< Armadillo pseudo-inverse matrix for augmented graph. */
+
+        std::map<std::string, int> nodeToIndex;       /**< Maps node names to their indices. */
+
+        DissipationModel* dissipationModel = nullptr;     /**< Pointer to dissipation model. */
+        ConservationModel* conservationModel = nullptr;   /**< Pointer to conservation model. */
+        PropagationModel* propagationModel = nullptr;     /**< Pointer to propagation model. */
+
+        std::function<double(double,double)> saturationFunction; /**< Function to apply saturation logic to computed values. */
+
     public:
         Computation();
         ~Computation();
