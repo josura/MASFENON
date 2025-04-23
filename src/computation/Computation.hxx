@@ -53,9 +53,23 @@ class Computation{
         std::function<double(double,double)> saturationFunction; /**< Function to apply saturation logic to computed values. */
 
     public:
+        /**
+         * @brief Default constructor for Computation class.
+         * @details Initializes the computation object with default values. Not typically used in practice.
+         */
         Computation();
+        /**
+         * @brief Destructor for Computation class.
+         * @details Cleans up resources and memory used by the computation object.
+         */
         ~Computation();
-        Computation(std::string _thisCellType, const std::vector<double>& _input);   // useless???
+        /**
+         * @brief Construct a Computation object from cell type and input.
+         * @param _thisCellType The cell type of the current agent.
+         * @param _input Initial values for the computation.
+         * @details technically, this constructor is not used in the code, but it is useful for testing purposes.
+         */
+        Computation(std::string _thisCellType, const std::vector<double>& _input); 
         /**
          * \brief constructor function without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
          * @param std::string _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
