@@ -71,7 +71,7 @@ class Computation{
          */
         Computation(std::string _thisCellType, const std::vector<double>& _input); 
         /**
-         * \brief constructor function without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
+         * @brief constructor function without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
          * @param std::string _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
          * @param const std::vector<double>& _input: input vector of the nodes values, initially the one passed in the input
          * @param const Matrix<double>& _W: the adjacency matrix along the values of every edge in the graph that it represents
@@ -82,7 +82,7 @@ class Computation{
 
 
         /**
-         * \brief constructor function Computation without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
+         * @brief constructor function Computation without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
          * @param std::string _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
          * @param const std::vector<double>& _input: input vector of the nodes values, initially the one passed in the input
          * @param const Matrix<double>& _W: the adjacency matrix along the values of every edge in the graph that it represents
@@ -199,7 +199,7 @@ class Computation{
          */
         arma::Mat<double> getPseudoInverseAugmentedArma()const{return pseudoInverseAugmentedArma;}
         /**
-         * \brief get the output value of a node in the graph
+         * @brief get the output value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
          * @return double: the value of the node in the graph
         */
@@ -211,7 +211,7 @@ class Computation{
             return outputAugmented[index];
             };
         /**
-         * \brief get the input value of a node in the graph
+         * @brief get the input value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
          * @return double: the value of the node in the graph
          */
@@ -222,7 +222,7 @@ class Computation{
             return inputAugmented[index];
             };
         /**
-         * \brief get the value of a node in the graph in the Armadillo structure
+         * @brief get the value of a node in the graph in the Armadillo structure
          * @param std::string nodeName: the name of the node in the graph
          * @return double: the value of the node in the graph
          */
@@ -233,7 +233,7 @@ class Computation{
             return InputAugmentedArma[index];
             };
         /**
-         * \brief set the input value of a node in the graph
+         * @brief set the input value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
          * @param double value: the value to set
          */
@@ -245,50 +245,50 @@ class Computation{
             InputAugmentedArma[index] = value;
         };
         /**
-         * \brief get the value of a virtual input node in the graph
+         * @brief get the value of a virtual input node in the graph
          * @param std::string type: the type of the node in the source graph
          * @param std::string sourceNode: the name of the source node in the source graph
          * @return double: the value of the node in the graph
          */
         double getVirtualInputForType(std::string type, std::string sourceNode="")const;
         /**
-         * \brief get the value of a virtual output node in the graph
+         * @brief get the value of a virtual output node in the graph
          * @param std::string type: the type of the node in the target graph
          * @param std::string targetNode: the name of the target node in the target graph
          * @return double: the value of the node in the graph
          */
         double getVirtualOutputForType(std::string type, std::string targetNode="")const;
         /**
-         * \brief set the value of a virtual input node in the graph
+         * @brief set the value of a virtual input node in the graph
          * @param std::string type: the type of the node in the source graph
          * @param double value: the value to set
          * @param std::string sourceNode: the name of the source node in the source graph
          */
         void setInputVinForType(std::string type, double value, std::string sourceNode="");
         /**
-         * \brief set the value of a virtual output node in the graph
+         * @brief set the value of a virtual output node in the graph
          * @param std::string type: the type of the node in the target graph
          * @param double value: the value to set
          * @param std::string targetNode: the name of the target node in the target graph
          */
         void setInputVoutForType(std::string type, double value, std::string targetNode="");
         /**
-         * \brief set the Dissipation model of the graph (passing the pointer to the instance of the model)
+         * @brief set the Dissipation model of the graph (passing the pointer to the instance of the model)
          * @param DissipationModel* dissipationModel: the pointer to the instance of the model
          */
         void setDissipationModel(DissipationModel* dissipationModel);
         /**
-         * \brief set the Conservation model of the graph (passing the pointer to the instance of the model)
+         * @brief set the Conservation model of the graph (passing the pointer to the instance of the model)
          * @param ConservationModel* conservationModel: the pointer to the instance of the model
          */
         void setConservationModel(ConservationModel* conservationModel);
         /**
-         * \brief set the Propagation model of the graph (passing the pointer to the instance of the model)
+         * @brief set the Propagation model of the graph (passing the pointer to the instance of the model)
          * @param PropagationModel* propagationModel: the pointer to the instance of the model
          */
         void setPropagationModel(PropagationModel* propagationModel);
         /**
-         * \brief set the value of all the input nodes in the graph
+         * @brief set the value of all the input nodes in the graph
          * @param std::vector<double> input: the vector of values to set
          * @details This function sets the value of all the input nodes in the graph to the values in the vector.
          * @details The size of the vector must be equal to the number of nodes in the graph.
@@ -296,7 +296,7 @@ class Computation{
          */
         void setInputAugmented(const std::vector<double>& inputAugmented);
         /**
-         * \brief set the graph of the computation object
+         * @brief set the graph of the computation object
          * @param WeightedEdgeGraph* _graph: the pointer to the graph
          * @details This function sets the graph of the computation object to the graph passed as a parameter.
          * @details This function is only used for testing and pointer management.
@@ -305,19 +305,66 @@ class Computation{
         void setGraph(WeightedEdgeGraph* _graph){this->graph = _graph;}
 
 
-        // get-set for saturation function
+        /**
+         * @brief get the saturation function
+         * @details This function returns the saturation function used in the computation.
+         * @details The saturation function is a function that takes two double values as input and returns a double value.
+         * @return std::function<double(double,double)>: the saturation function        
+         */
         std::function<double(double,double)> getSaturationFunction()const{return saturationFunction;}
+        /**
+         * @brief set the saturation function
+         * @param std::function<double(double;double)> saturationFunction: the saturation function to set
+         * @details This function sets the saturation function used in the computation.
+         * @details The saturation function is a function that takes two double values as input and returns a double value.
+         */
         void setSaturationFunction(std::function<double(double,double)> saturationFunction){this->saturationFunction = saturationFunction;}
 
+        /**
+         * @brief reset the virtual outputs for the computation, setting them to 0
+         * @details This function resets the virtual output nodes values for the computation, setting them to 0.
+         */
         void resetVirtualOutputs();
 
         //optimization
+        /**
+         * @brief free the Augmented graph
+         * @details This function frees the memory used by the augmented graph.
+         */
         void freeAugmentedGraphs();
+        /**
+         * @brief free the models used in the computation, that is the dissipation, conservation and propagation models
+         * @details This function frees the memory used by the functions used in the computation.
+         * @details At the moment only the dissipation model is freed, the conservation and propagation models are not freed since they are the same for each computation (for now)
+         * @warning This function is unstable for now, it's only used for having a clean memory
+         */
         void freeFunctions();
 
         // operators
+        /**
+         * @brief Assignment operator for Computation class.
+         * @param rhs The right-hand side Computation object to assign from.
+         * @details This operator allows for the assignment of one Computation object to another.
+         * @return A reference to the current object.
+         * @warning This operator does not perform a deep copy of the graph and augmented graph, only the pointers are copied.
+         * @warning This operator does not perform a deep copy of the dissipation, conservation and propagation models, only the pointers are copied.
+         */
         Computation& operator=( const Computation& );
+        /**
+         * @brief Copy constructor for Computation class.
+         * @param rhs The right-hand side Computation object to copy from.
+         * @details This constructor allows for the creation of a new Computation object as a copy of an existing one.
+         * @return A reference to the new object.
+         * @warning This constructor does not perform a deep copy of the graph and augmented graph, only the pointers are copied.
+         * @warning This constructor does not perform a deep copy of the dissipation, conservation and propagation models, only the pointers are copied.
+         */
         Computation copy()const;
+        /**
+         * @brief Assignment operator for Computation class.
+         * @param rhs The right-hand side Computation object to assign from.
+         * @details This operator allows for the assignment of one Computation object to another.
+         * @return A reference to the current object.
+         */
         void assign(const Computation&);
         
 };
