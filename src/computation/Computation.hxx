@@ -33,8 +33,8 @@ class Computation{
         WeightedEdgeGraph* graph;                     /**< Pointer to the core graph. */
         WeightedEdgeGraph* augmentedGraph;            /**< Pointer to the augmented graph. */
 
-        std::vector<std::string> cellTypes;           /**< List of all known cell types. */
-        std::string localCellType;                    /**< The cell type of the current agent. */
+        std::vector<std::string> types;           /**< List of all known cell types. */
+        std::string localType;                    /**< The cell type of the current agent. */
 
         bool armaInitializedNotAugmented = false;     /**< Indicates whether the Armadillo structure is initialized for the core graph. */
         bool armaInitializedAugmented = false;        /**< Indicates whether the Armadillo structure is initialized for the augmented graph. */
@@ -78,7 +78,7 @@ class Computation{
         
         /*
         Augment the graph with types and a new set of edges from virtual nodes in the augmented graph to the graph(virtual inputs and virtual outputs) 
-        @param const std::vector<std::string>& _cellTypes: the types other than this type, the other agents in the network
+        @param const std::vector<std::string>& _types: the types other than this type, the other agents in the network
         @param 
         */
         void augmentGraph(const std::vector<std::string>&,const std::vector<std::pair<std::string,std::string>>& newEdgesList =std::vector<std::pair<std::string,std::string>>(), const std::vector<double>& newEdgesValue = std::vector<double>(), bool includeSelfVirtual=false);
@@ -107,8 +107,8 @@ class Computation{
         std::vector<double> getOutputAugmented()const{return outputAugmented;}
         WeightedEdgeGraph* getGraph()const{return graph;}
         WeightedEdgeGraph* getAugmentedGraph()const{return augmentedGraph;}
-        std::vector<std::string> getCellTypes()const{return cellTypes;}
-        std::string getLocalCellType()const{return localCellType;}
+        std::vector<std::string> getCellTypes()const{return types;}
+        std::string getLocalCellType()const{return localType;}
         bool isInitializedArmaNotAugmented()const{return armaInitializedNotAugmented;}
         bool isInitializedArmaAugmented()const{return armaInitializedAugmented;}
         arma::Col<double> getInputArma()const{return InputArma;}

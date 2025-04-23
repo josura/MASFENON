@@ -17,10 +17,10 @@
 Computation::Computation(){
     input=std::vector<double>();
     output=std::vector<double>();
-    localCellType = "";
+    localType = "";
     graph = new WeightedEdgeGraph();
     augmentedGraph = new WeightedEdgeGraph();
-    cellTypes = std::vector<std::string>();
+    types = std::vector<std::string>();
     saturationFunction = [](double value,double saturation)-> double{
         if(value > saturation)return saturation;
         else if (value < -saturation) return -saturation;
@@ -36,13 +36,13 @@ Computation::~Computation(){
     if(augmentedGraph) {delete augmentedGraph; augmentedGraph=nullptr;}
 }
 
-Computation::Computation(std::string _thisCellType,const std::vector<double>& _input){
+Computation::Computation(std::string _thisType,const std::vector<double>& _input){
     input=_input;
     output=std::vector<double>();
-    localCellType = _thisCellType;
+    localType = _thisType;
     graph = new WeightedEdgeGraph();
     augmentedGraph = new WeightedEdgeGraph();
-    cellTypes = std::vector<std::string>();
+    types = std::vector<std::string>();
     saturationFunction = [](double value,double saturation)-> double{
         if(value > saturation)return saturation;
         else if (value < -saturation) return -saturation;
@@ -54,14 +54,14 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
 }
 
 
-Computation::Computation(std::string _thisCellType,const std::vector<double>& _input, const Matrix<double>& _W, const std::vector<std::string>& graphNames){
+Computation::Computation(std::string _thisType,const std::vector<double>& _input, const Matrix<double>& _W, const std::vector<std::string>& graphNames){
     input=_input;
     output=std::vector<double>();
-    localCellType = _thisCellType;
+    localType = _thisType;
     graph = new WeightedEdgeGraph(_W);
     augmentedGraph = new WeightedEdgeGraph();
     graph->setNodesNames(graphNames); //With default selection of the node names to change(all the nodes in the order established by the matrix rows and columns)
-    cellTypes = std::vector<std::string>();
+    types = std::vector<std::string>();
 
 
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
@@ -87,14 +87,14 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
     propagationModel = nullptr;
 }
 
-Computation::Computation(std::string _thisCellType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames){
+Computation::Computation(std::string _thisType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames){
     input=_input;
     output=std::vector<double>();
-    localCellType = _thisCellType;
+    localType = _thisType;
     graph = _graph;
     augmentedGraph = new WeightedEdgeGraph();
     graph->setNodesNames(graphNames); //With default selection of the node names to change(all the nodes in the order established by the matrix rows and columns)
-    cellTypes = std::vector<std::string>();
+    types = std::vector<std::string>();
 
 
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
@@ -107,7 +107,7 @@ Computation::Computation(std::string _thisCellType,const std::vector<double>& _i
     
     arma::Mat<double> IdentityArma = arma::eye(graph->getNumNodes(),graph->getNumNodes());
     InputArma = Matrix<double>(input).asArmadilloColumnVector();
-    // std::cout << "[LOG] computing pseudoinverse for graph cell : " + localCellType << std::endl;
+    // std::cout << "[LOG] computing pseudoinverse for graph cell : " + localType << std::endl;
     // pseudoInverseArma = arma::pinv(IdentityArma - WtransArma);
     // armaInitializedNotAugmented = true;
     saturationFunction = [](double value,double saturation)-> double{
@@ -128,12 +128,12 @@ void Computation::augmentGraph(const std::vector<std::string>& _types,const std:
         std::vector<std::string> tmptypes;
         if (!includeSelfVirtual){
             for (uint i = 0; i < _types.size(); i++) {
-                if(_types[i] != localCellType) tmptypes.push_back(_types[i]);
+                if(_types[i] != localType) tmptypes.push_back(_types[i]);
             }
         } else {
             tmptypes = _types;
         }
-        cellTypes = tmptypes;
+        types = tmptypes;
         auto virtualNodes = tmptypes;
         for (int i = 0; i < SizeToInt( tmptypes.size()); i++) {
             std::string cellTyp = virtualNodes[i];
@@ -164,7 +164,7 @@ void Computation::augmentGraph(const std::vector<std::string>& _types,const std:
             inputAugmented.push_back(0.0);
         }
         InputAugmentedArma = arma::Col<double>(inputAugmented);
-        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localCellType << std::endl;
+        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localType << std::endl;
         pseudoInverseAugmentedArma = arma::pinv(IdentityAugmentedArma - WtransAugmentedArma);
         armaInitializedAugmented = true;
 
@@ -185,12 +185,12 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
         std::vector<std::string> tmptypes;
         if (!includeSelfVirtual){
             for (uint i = 0; i < _types.size(); i++) {
-                if(_types[i] != localCellType) tmptypes.push_back(_types[i]);
+                if(_types[i] != localType) tmptypes.push_back(_types[i]);
             }
         } else {
             tmptypes = _types;
         }
-        cellTypes = tmptypes;
+        types = tmptypes;
         auto virtualNodes = tmptypes;
         for (int i = 0; i < SizeToInt( tmptypes.size()); i++) {
             std::string cellTyp = virtualNodes[i];
@@ -213,13 +213,13 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
             }
         }
 
-        // std::cout << "[LOG + TESTING] normalization factors for augmented graph cell : " + localCellType << std::endl;
+        // std::cout << "[LOG + TESTING] normalization factors for augmented graph cell : " + localType << std::endl;
         // printVector(normalizationFactors);
-        // std::cout << "[LOG + TESTING] augmented graph matrix : " + localCellType << std::endl;
+        // std::cout << "[LOG + TESTING] augmented graph matrix : " + localType << std::endl;
         // augmentedGraph->adjMatrix.printMatrix();
-        // std::cout << "[LOG + TESTING] augmented graph matrix transposed : " + localCellType << std::endl;
+        // std::cout << "[LOG + TESTING] augmented graph matrix transposed : " + localType << std::endl;
         // augmentedGraph->adjMatrix.transpose().printMatrix();
-        // std::cout << "[LOG + TESTING] augmented graph matrix transposed normalized : " + localCellType << std::endl;
+        // std::cout << "[LOG + TESTING] augmented graph matrix transposed normalized : " + localType << std::endl;
         // augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).printMatrix();
         arma::Mat<double> WtransAugmentedArma = augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
         //TODO normalization by previous weight nodes for the matrix
@@ -230,7 +230,7 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
             inputAugmented.push_back(0.0);
         }
         InputAugmentedArma = arma::Col<double>(inputAugmented);
-        // std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localCellType << std::endl;
+        // std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localType << std::endl;
         // pseudoInverseAugmentedArma = arma::pinv(IdentityAugmentedArma - WtransAugmentedArma);
         // armaInitializedAugmented = true;
 
@@ -265,7 +265,7 @@ void Computation::addEdges(const std::vector<std::pair<std::string,std::string>>
         arma::Mat<double> WtransAugmentedArma = augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
         //TODO normalization by previous weight nodes for the matrix
         arma::Mat<double> IdentityAugmentedArma = arma::eye(augmentedGraph->getNumNodes(),augmentedGraph->getNumNodes());
-        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localCellType << std::endl;
+        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localType << std::endl;
         pseudoInverseAugmentedArma = arma::pinv(IdentityAugmentedArma - WtransAugmentedArma);
         armaInitializedAugmented = true;
     }
@@ -294,7 +294,7 @@ void Computation::addEdges(const std::vector<std::tuple<std::string,std::string,
         arma::Mat<double> WtransAugmentedArma = augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
         //TODO normalization by previous weight nodes for the matrix
         arma::Mat<double> IdentityAugmentedArma = arma::eye(augmentedGraph->getNumNodes(),augmentedGraph->getNumNodes());
-        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localCellType << std::endl;
+        std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localType << std::endl;
         pseudoInverseAugmentedArma = arma::pinv(IdentityAugmentedArma - WtransAugmentedArma);
         armaInitializedAugmented = true;
     }
@@ -639,8 +639,8 @@ Computation& Computation::operator=( const Computation& rhs){
     output = rhs.getOutput();
     inputAugmented = rhs.getInputAugmented();
     outputAugmented = rhs.getOutputAugmented();
-    cellTypes = rhs.getCellTypes();
-    localCellType = rhs.getLocalCellType();
+    types = rhs.getCellTypes();
+    localType = rhs.getLocalCellType();
     armaInitializedNotAugmented = rhs.isInitializedArmaNotAugmented();
     armaInitializedAugmented = rhs.isInitializedArmaAugmented();
     InputArma = rhs.getInputArma();
@@ -670,8 +670,8 @@ void Computation::assign(const Computation & rhs){
     output = rhs.getOutput();
     inputAugmented = rhs.getInputAugmented();
     outputAugmented = rhs.getOutputAugmented();
-    cellTypes = rhs.getCellTypes();
-    localCellType = rhs.getLocalCellType();
+    types = rhs.getCellTypes();
+    localType = rhs.getLocalCellType();
     armaInitializedNotAugmented = rhs.isInitializedArmaNotAugmented();
     armaInitializedAugmented = rhs.isInitializedArmaAugmented();
     InputArma = rhs.getInputArma();
