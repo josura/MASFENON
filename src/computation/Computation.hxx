@@ -114,20 +114,89 @@ class Computation{
         void updateInput(const std::vector<double>& newInp = std::vector<double>(), bool augmented = false);
 
         // get sets
-        
+        /**
+         * @brief Getting input of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         std::vector<double> getInput()const{return input;}
+        /**
+         * @brief Getting output of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         std::vector<double> getOutput()const{return output;}
+        /**
+         * @brief Getting input augmented of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         std::vector<double> getInputAugmented()const{return inputAugmented;}
+        /**
+         * @brief Getting output augmented of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         std::vector<double> getOutputAugmented()const{return outputAugmented;}
+        /**
+         * @brief Getting the graph pointer of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         WeightedEdgeGraph* getGraph()const{return graph;}
+        /**
+         * @brief Getting the augmented graph pointer of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         WeightedEdgeGraph* getAugmentedGraph()const{return augmentedGraph;}
-        std::vector<std::string> getCellTypes()const{return types;}
-        std::string getLocalCellType()const{return localType;}
+        /**
+         * @brief Getting the types of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
+        std::vector<std::string> getTypes()const{return types;}
+        /**
+         * @brief Getting the local type of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
+        std::string getLocalType()const{return localType;}
+        /**
+         * @brief Know if the Armadillo structure is initialized for the core graph
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return True if the Armadillo structure is initialized for the core graph, false otherwise.
+         */
         bool isInitializedArmaNotAugmented()const{return armaInitializedNotAugmented;}
+        /**
+         * @brief Know if the Armadillo structure is initialized for the augmented graph
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return True if the Armadillo structure is initialized for the augmented graph, false otherwise.
+         */
         bool isInitializedArmaAugmented()const{return armaInitializedAugmented;}
+        /**
+         * @brief Getting the Armadillo input vector of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         arma::Col<double> getInputArma()const{return InputArma;}
+        /**
+         * @brief Getting the Armadillo pseudo-inverse matrix of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         arma::Mat<double> getPseudoInverseArma()const{return pseudoInverseArma;}
+        /**
+         * @brief Getting the Armadillo input augmented vector of the Computation object
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         arma::Col<double> getInputAugmentedArma()const{return InputAugmentedArma;}
+        /**
+         * @brief Getting the Armadillo pseudo-inverse matrix of the augmented graph
+         * @details These functions provide access to the private members of the class, allowing read-only access to the data.
+         * @return The corresponding private member.
+         */
         arma::Mat<double> getPseudoInverseAugmentedArma()const{return pseudoInverseAugmentedArma;}
         /**
          * \brief get the value of a node in the graph
