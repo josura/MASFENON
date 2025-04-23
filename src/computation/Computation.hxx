@@ -199,27 +199,21 @@ class Computation{
          */
         arma::Mat<double> getPseudoInverseAugmentedArma()const{return pseudoInverseAugmentedArma;}
         /**
-         * \brief get the value of a node in the graph
+         * \brief get the output value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
+         * @return double: the value of the node in the graph
         */
         double getOutputNodeValue(std::string nodeName)const{
             if(nodeToIndex.find(nodeName) == nodeToIndex.end()){
-                // TESTING
-                // printing the node names
-                // std::cout << "Node names: ";
-                // for(auto it = nodeToIndex.begin(); it != nodeToIndex.end(); it++){
-                //     std::cout << it->first << " ";
-                // }
-                // std::cout << std::endl;
-                // TESTING
                 throw std::out_of_range("Computation::getOutputNodeValue: the node name is not in the graph");
             }
             int index = nodeToIndex.at(nodeName);
             return outputAugmented[index];
             };
         /**
-         * \brief get the value of a node in the graph
+         * \brief get the input value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
+         * @return double: the value of the node in the graph
          */
         double getInputNodeValue(std::string nodeName)const{
             if(nodeToIndex.find(nodeName) == nodeToIndex.end())
@@ -228,8 +222,9 @@ class Computation{
             return inputAugmented[index];
             };
         /**
-         * \brief get the value of a node in the graph
+         * \brief get the value of a node in the graph in the Armadillo structure
          * @param std::string nodeName: the name of the node in the graph
+         * @return double: the value of the node in the graph
          */
         double getInputNodeValueArma(std::string nodeName)const{
             if(nodeToIndex.find(nodeName) == nodeToIndex.end())
@@ -238,7 +233,7 @@ class Computation{
             return InputAugmentedArma[index];
             };
         /**
-         * \brief set the value of a node in the graph
+         * \brief set the input value of a node in the graph
          * @param std::string nodeName: the name of the node in the graph
          * @param double value: the value to set
          */
@@ -249,16 +244,65 @@ class Computation{
             inputAugmented[index] = value;
             InputAugmentedArma[index] = value;
         };
-
+        /**
+         * \brief get the value of a virtual input node in the graph
+         * @param std::string type: the type of the node in the source graph
+         * @param std::string sourceNode: the name of the source node in the source graph
+         * @return double: the value of the node in the graph
+         */
         double getVirtualInputForType(std::string type, std::string sourceNode="")const;
+        /**
+         * \brief get the value of a virtual output node in the graph
+         * @param std::string type: the type of the node in the target graph
+         * @param std::string targetNode: the name of the target node in the target graph
+         * @return double: the value of the node in the graph
+         */
         double getVirtualOutputForType(std::string type, std::string targetNode="")const;
+        /**
+         * \brief set the value of a virtual input node in the graph
+         * @param std::string type: the type of the node in the source graph
+         * @param double value: the value to set
+         * @param std::string sourceNode: the name of the source node in the source graph
+         */
         void setInputVinForType(std::string type, double value, std::string sourceNode="");
+        /**
+         * \brief set the value of a virtual output node in the graph
+         * @param std::string type: the type of the node in the target graph
+         * @param double value: the value to set
+         * @param std::string targetNode: the name of the target node in the target graph
+         */
         void setInputVoutForType(std::string type, double value, std::string targetNode="");
+        /**
+         * \brief set the Dissipation model of the graph (passing the pointer to the instance of the model)
+         * @param DissipationModel* dissipationModel: the pointer to the instance of the model
+         */
         void setDissipationModel(DissipationModel* dissipationModel);
+        /**
+         * \brief set the Conservation model of the graph (passing the pointer to the instance of the model)
+         * @param ConservationModel* conservationModel: the pointer to the instance of the model
+         */
         void setConservationModel(ConservationModel* conservationModel);
+        /**
+         * \brief set the Propagation model of the graph (passing the pointer to the instance of the model)
+         * @param PropagationModel* propagationModel: the pointer to the instance of the model
+         */
         void setPropagationModel(PropagationModel* propagationModel);
+        /**
+         * \brief set the value of all the input nodes in the graph
+         * @param std::vector<double> input: the vector of values to set
+         * @details This function sets the value of all the input nodes in the graph to the values in the vector.
+         * @details The size of the vector must be equal to the number of nodes in the graph.
+         * @details The function will throw an exception if the size of the vector is not equal to the number of nodes in the graph.
+         */
         void setInputAugmented(const std::vector<double>& inputAugmented);
-        void setGraph(WeightedEdgeGraph* _graph){this->graph = _graph;} // only used for testing and pointer management
+        /**
+         * \brief set the graph of the computation object
+         * @param WeightedEdgeGraph* _graph: the pointer to the graph
+         * @details This function sets the graph of the computation object to the graph passed as a parameter.
+         * @details This function is only used for testing and pointer management.
+         * @details This function is not really used in the code in key phases, but it is useful for testing purposes and pointer management.
+         */
+        void setGraph(WeightedEdgeGraph* _graph){this->graph = _graph;}
 
 
         // get-set for saturation function
