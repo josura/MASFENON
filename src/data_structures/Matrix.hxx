@@ -179,13 +179,14 @@ class Matrix {
          * @return A new matrix containing the result of the multiplication.
          */
         Matrix operator*(T)const;
+
+        // friend functions
         template<typename U>
         friend Matrix<U> operator*(double, const Matrix<U>&);
         template<typename U>
         friend Matrix<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
         template<typename U>
         friend Matrix<U> operator*(std::vector<U>&,const Matrix<U>&);
-        Matrix operator/(double);
         
         template<typename U>
         friend std::ostream& operator<<(std::ostream&, const Matrix<U>&);
