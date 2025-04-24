@@ -1,3 +1,9 @@
+/**
+ * @file Matrix.hxx
+ * @ingroup Core
+ * @brief Template class for representing a 2D matrix with row-major ordering.
+ * @details Provides accessors, mutators, and operations for internal storage and manipulation of matrix elements.
+ */
 #pragma once
 
 #include <iostream>
