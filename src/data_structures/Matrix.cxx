@@ -685,3 +685,17 @@ std::vector<U> operator*(std::vector<U>& lhs, const Matrix<U>& rhs){  //vector m
     return result;
 }
 template std::vector<double> operator*(std::vector<double>& lhs, const Matrix<double>& rhs);  //vector multiplication leftwise
+
+template<typename U>
+std::ostream& operator<<(std::ostream& os, const Matrix<U>& m)
+{
+    os << "Matrix " << m.getRows() << "x" << m.getCols() << std::endl;
+    for (int i = 0; i < m.getRows(); ++i) {
+        for (int j = 0; j < m.getCols(); ++j) {
+            os << m.getValue(i,j) << " ";
+        }
+        os << std::endl;
+    }
+    return os;
+}
+template std::ostream& operator<<(std::ostream& os, const Matrix<double>& m);
