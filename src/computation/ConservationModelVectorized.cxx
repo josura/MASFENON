@@ -1,3 +1,8 @@
+/**
+ * @file ConservationModelVectorized.cxx
+ * @ingroup Experimental
+ * @brief Implements the ConservationModelVectorized class for vectorized conservation computations.
+ */
 #include "computation/ConservationModelVectorized.hxx"
 #include "utils/armaUtilities.hxx"
 #include "utils/mathUtilities.hxx"
