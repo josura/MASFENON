@@ -99,7 +99,21 @@ class Matrix {
          */
         inline void setValue(int x, int y, T value){ if(x>=0 && y>=0 && x < rows_ && y < cols_) _matrix[x*cols_ +y] = value; else throw std::invalid_argument("Matrix::setValue: x or y not in range"); }
 
+        /**
+         * @brief Assignment operator for adding a matrix to another matrix.
+         * @param rhs The right-hand side matrix to add.
+         * @details Allocates memory for the new matrix and adds the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator+=(const Matrix&);
+        /**
+         * @brief Assignment operator for subtracting a matrix from another matrix.
+         * @param rhs The right-hand side matrix to subtract.
+         * @details Allocates memory for the new matrix and subtracts the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator-=(const Matrix&);
         /**
          * @brief Assignment operator for multiplying a matrix with another matrix.
@@ -109,9 +123,22 @@ class Matrix {
          * @return A reference to the current object.
          */
         Matrix& operator*=(const Matrix&);
+        /**
+         * @brief Assignment operator for multiplying a matrix with a scalar.
+         * @param rhs The scalar value to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided scalar.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator*=(T);
+        /**
+         * @brief Assignment operator for dividing a matrix by a scalar.
+         * @param rhs The scalar value to divide by.
+         * @details Allocates memory for the new matrix and divides the values from the provided scalar.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator/=(T);
-        Matrix operator^(int);  //integer power
         Matrix operator+(const Matrix<T>&)const;
         Matrix operator-(const Matrix<T>&)const;
         Matrix operator*(const Matrix<T>&)const;
