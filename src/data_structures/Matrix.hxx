@@ -139,10 +139,45 @@ class Matrix {
          * @return A reference to the current object.
          */
         Matrix& operator/=(T);
+        /**
+         * @brief Addition operator for adding two matrices.
+         * @param rhs The right-hand side matrix to add.
+         * @details Allocates memory for the new matrix and adds the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A new matrix containing the result of the addition.
+         */
         Matrix operator+(const Matrix<T>&)const;
+        /**
+         * @brief Subtraction operator for subtracting two matrices.
+         * @param rhs The right-hand side matrix to subtract.
+         * @details Allocates memory for the new matrix and subtracts the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A new matrix containing the result of the subtraction.
+         */
         Matrix operator-(const Matrix<T>&)const;
+        /**
+         * @brief Multiplication operator for multiplying two matrices.
+         * @param rhs The right-hand side matrix to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A new matrix containing the result of the multiplication.
+         */
         Matrix operator*(const Matrix<T>&)const;
+        /**
+         * @brief Multiplication operator for multiplying a matrix with a vector.
+         * @param rhs The right-hand side vector to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided vector.
+         * @warning This operator does not check for memory leaks.
+         * @return A new matrix containing the result of the multiplication.
+         */
         Matrix operator*(const std::vector<T>&)const;
+        /**
+         * @brief Multiplication operator for multiplying a matrix with a scalar.
+         * @param rhs The scalar value to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided scalar.
+         * @warning This operator does not check for memory leaks.
+         * @return A new matrix containing the result of the multiplication.
+         */
         Matrix operator*(T)const;
         template<typename U>
         friend Matrix<U> operator*(double, const Matrix<U>&);
