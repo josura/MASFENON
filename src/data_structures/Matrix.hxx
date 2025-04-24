@@ -181,17 +181,42 @@ class Matrix {
         Matrix operator*(T)const;
 
         // friend functions
+        /**
+         * @brief Multiplication operator for multiplying a scalar with a matrix.
+         * @param lhs The scalar value to multiply with.
+         * @param rhs The right-hand side matrix to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided scalar.
+         */
         template<typename U>
         friend Matrix<U> operator*(U, const Matrix<U>&);
+        /**
+         * @brief Multiplication operator for multiplying a vector with a matrix.
+         * @param lhs The left-hand side vector to multiply with.
+         * @param rhs The right-hand side matrix to multiply with.
+         * @returns A new vector containing the result of the multiplication.
+         * @details Allocates memory for the new vector and multiplies the values from the provided vector.
+         * @warning This operator does not check for memory leaks.
+         */
         template<typename U>
         friend std::vector<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
+        /**
+         * @brief Multiplication operator for multiplying a vector with a matrix.
+         * @param lhs The left-hand side vector to multiply with.
+         * @param rhs The right-hand side matrix to multiply with.
+         * @returns A new vector containing the result of the multiplication.
+         * @details Allocates memory for the new vector and multiplies the values from the provided vector.
+         */
         template<typename U>
         friend std::vector<U> operator*(std::vector<U>&,const Matrix<U>&);
         
+        /**
+         * @brief Output stream operator for printing a matrix.
+         * @param os The output stream to print to.
+         * @param m The matrix to print.
+         * @details Prints the matrix in a readable format.
+         */
         template<typename U>
         friend std::ostream& operator<<(std::ostream&, const Matrix<U>&);
-        template<typename U>
-        friend std::istream& operator>>(std::istream&, Matrix<U>&);
 
         void swapRows(int, int);
         Matrix transpose()const;
