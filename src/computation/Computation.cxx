@@ -1,4 +1,8 @@
-
+/**
+ * @file ConservationModelVectorized.cxx
+ * @ingroup Core
+ * @brief Implements the ConservationModelVectorized class for vectorized conservation computations.
+ */
 
 #include "computation/Computation.hxx"
 #include "data_structures/Matrix.hxx"
