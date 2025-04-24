@@ -13,14 +13,49 @@
 #include <armadillo>
 #include <cmath>
 
+/**
+ * @class Matrix
+ * @brief Generic 2D matrix implementation using flat row-major storage.
+ * @tparam T Type of the matrix elements.
+ */
 template <typename T>
 class Matrix {
     public:
+        /**
+         * @brief Constructor for creating a matrix with specified dimensions.
+         * @param rows Number of rows.
+         * @param cols Number of columns.
+         * @details Allocates memory for the matrix and initializes all elements to zero.
+         */
         Matrix(int, int);
+        /**
+         * @brief Constructor for creating a matrix with specified dimensions and initial values.
+         * @param a Pointer to a 2D array of type T.
+         * @param rows Number of rows.
+         * @param cols Number of columns.
+         * @details Allocates memory for the matrix and initializes all elements with the provided values in the 2D array.
+         * @note The caller is responsible for managing the memory of the 2D array.
+         * @warning This constructor does not check for memory leaks.
+         */
         Matrix(T**, int, int);
+        /**
+         * @brief Default constructor for creating a 1x1 matrix initialized to zero.
+         * @details Allocates memory for the matrix and initializes the single element to zero.
+         */
         Matrix();
+        /**
+         * @brief Copy constructor for creating a matrix from another matrix.
+         * @param m The matrix to copy from.
+         * @details Allocates memory for the new matrix and copies the values from the provided matrix.
+         */
         Matrix(const Matrix&);
-        Matrix(const T*);
+        /**
+         * @brief Constructor for creating a matrix from a vector.
+         * @param _wvector The vector to initialize the matrix with.
+         * @param nrows Number of rows (default is 0).
+         * @param ncols Number of columns (default is 1).
+         * @details Allocates memory for the matrix and initializes the elements with the values from the vector.
+         */
         Matrix(const std::vector<T>& _wvector, uint nrows=0, uint ncols=1);
         ~Matrix();
         Matrix& operator=(const Matrix&);
