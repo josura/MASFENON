@@ -57,15 +57,57 @@ class Matrix {
          * @details Allocates memory for the matrix and initializes the elements with the values from the vector.
          */
         Matrix(const std::vector<T>& _wvector, uint nrows=0, uint ncols=1);
+        /**
+         * @brief Destructor for cleaning up the allocated memory.
+         * @details Deallocates the memory used for the matrix.
+         */
         ~Matrix();
+        /**
+         * @brief Assignment operator for copying a matrix.
+         * @param m The matrix to copy from.
+         * @details Allocates memory for the new matrix and copies the values from the provided matrix.
+         * @details deletes the old matrix and allocates a new one with the same size as the new matrix.
+         * @details Copies the values from the provided matrix to the new matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator=(const Matrix&);
-
+        /**
+         * @brief Selector operator for accessing matrix elements.
+         * @param x Row index.
+         * @param y Column index.
+         * @details Provides access to the element at the specified row and column.
+         * @details Throws an exception if the indices are out of bounds.
+         */
         inline T& operator()(int x, int y) { if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
+        /**
+         * @brief Selector operator for accessing matrix elements (const version).
+         * @param x Row index.
+         * @param y Column index.
+         * @details Provides access to the element at the specified row and column.
+         * @details Throws an exception if the indices are out of bounds.
+         * @return A reference to the element at the specified position.
+         */
         inline T& getValue(int x, int y)const{ if(x>=0 && y>=0 && x < rows_ && y < cols_)return _matrix[x*cols_ +y]; else throw std::invalid_argument("Matrix::getValue: x or y not in range"); }
+        /**
+         * @brief Mutator operator for setting matrix elements.
+         * @param x Row index.
+         * @param y Column index.
+         * @param value The value to set.
+         * @details Sets the element at the specified row and column to the provided value.
+         * @details Throws an exception if the indices are out of bounds.
+         */
         inline void setValue(int x, int y, T value){ if(x>=0 && y>=0 && x < rows_ && y < cols_) _matrix[x*cols_ +y] = value; else throw std::invalid_argument("Matrix::setValue: x or y not in range"); }
 
         Matrix& operator+=(const Matrix&);
         Matrix& operator-=(const Matrix&);
+        /**
+         * @brief Assignment operator for multiplying a matrix with another matrix.
+         * @param rhs The right-hand side matrix to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided matrix.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator*=(const Matrix&);
         Matrix& operator*=(T);
         Matrix& operator/=(T);
