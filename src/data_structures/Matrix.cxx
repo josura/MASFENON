@@ -645,3 +645,43 @@ void Matrix<T>::printMatrix()const{
 }
 
 template void Matrix<double>::printMatrix()const;
+
+//friend functions
+template<typename U>
+Matrix<U> operator*(const U lhs, const Matrix<U>& rhs){
+    Matrix<U> ret = Matrix<U>(rhs.getRows(), rhs.getCols());
+    for (int i = 0; i < rhs.getRows(); ++i) {
+        for (int j = 0; j < rhs.getCols(); ++j) {
+            ret(i,j) = lhs * rhs.getValue(i,j);
+        }
+    }
+    return ret;
+}
+template Matrix<double> operator*(const double lhs, const Matrix<double>& rhs);
+
+template<typename U>
+std::vector<U> operator*(U* lhs, const Matrix<U>& rhs){  //vector multiplication leftwise, very unstable
+    std::vector<U> result(rhs.getCols(),0);
+    for (int i = 0; i < rhs.getRows(); ++i) {
+        for (int k = 0; k < rhs.getCols(); ++k) {
+            result[i] += lhs[k] * rhs.getValue(k,i);
+        }
+    }
+    return result;
+}
+template std::vector<double> operator*(double* lhs, const Matrix<double>& rhs);  //vector multiplication leftwise
+
+template<typename U>
+std::vector<U> operator*(std::vector<U>& lhs, const Matrix<U>& rhs){  //vector multiplication leftwise
+    if(SizeToInt(lhs.size()) != rhs.getCols()){
+        throw std::invalid_argument("vector multiplication leftwise: lhs size is not equal to rhs cols");
+    }
+    std::vector<U> result(rhs.getCols(),0);
+    for (int i = 0; i < rhs.getRows(); ++i) {
+        for (int k = 0; k < rhs.getCols(); ++k) {
+            result[i] += lhs[k] * rhs.getValue(k,i);
+        }
+    }
+    return result;
+}
+template std::vector<double> operator*(std::vector<double>& lhs, const Matrix<double>& rhs);  //vector multiplication leftwise

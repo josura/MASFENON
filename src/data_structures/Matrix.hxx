@@ -182,11 +182,11 @@ class Matrix {
 
         // friend functions
         template<typename U>
-        friend Matrix<U> operator*(double, const Matrix<U>&);
+        friend Matrix<U> operator*(U, const Matrix<U>&);
         template<typename U>
-        friend Matrix<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
+        friend std::vector<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
         template<typename U>
-        friend Matrix<U> operator*(std::vector<U>&,const Matrix<U>&);
+        friend std::vector<U> operator*(std::vector<U>&,const Matrix<U>&);
         
         template<typename U>
         friend std::ostream& operator<<(std::ostream&, const Matrix<U>&);
