@@ -1,9 +1,9 @@
 /**
- * @file ConservationModelVectorized.cxx
+ * @file Computation.cxx
  * @ingroup Core
- * @brief Implements the ConservationModelVectorized class for vectorized conservation computations.
+ * @brief Implements the Computation class for simulation dynamics in MASFENON.
+ * @details Handles core algorithms for propagation, dissipation, and conservation over core and augmented graphs.
  */
-
 #include "computation/Computation.hxx"
 #include "data_structures/Matrix.hxx"
 #include "data_structures/WeightedEdgeGraph.hxx"
