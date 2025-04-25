@@ -218,9 +218,27 @@ class Matrix {
         template<typename U>
         friend std::ostream& operator<<(std::ostream&, const Matrix<U>&);
 
+        /**
+         * @brief Function to swap two rows in the matrix.
+         * @param i The index of the first row.
+         * @param j The index of the second row.
+         * @details Swaps the values of the two specified rows in the matrix.
+         * @warning This function is not implemented yet.
+         */
         void swapRows(int, int);
+        /**
+         * @brief Function to swap two columns in the matrix.
+         * @param i The index of the first column.
+         * @param j The index of the second column.
+         * @details Swaps the values of the two specified columns in the matrix.
+         */
         Matrix transpose()const;
 
+        /**
+         * @brief Static function to create an identity matrix of specified size.
+         * @param size The size of the identity matrix.
+         * @details Allocates memory for the new matrix and initializes it as an identity matrix.
+         */
         static Matrix createIdentity(int);
         static Matrix createRandom(int,int);
         static Matrix solve(Matrix, Matrix);
