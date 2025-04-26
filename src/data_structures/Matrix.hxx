@@ -240,8 +240,29 @@ class Matrix {
          * @details Allocates memory for the new matrix and initializes it as an identity matrix.
          */
         static Matrix createIdentity(int);
+        /**
+         * @brief Static function to create a random matrix of specified size.
+         * @param rows The number of rows.
+         * @param cols The number of columns.
+         * @details Allocates memory for the new matrix and initializes it with random values.
+         */
         static Matrix createRandom(int,int);
+        /**
+         * @brief Static function to create a zero matrix of specified size.
+         * @param rows The number of rows.
+         * @param cols The number of columns.
+         * @details Allocates memory for the new matrix and initializes all elements to zero.
+         * @warning This function is not implemented yet.
+         */
         static Matrix solve(Matrix, Matrix);
+        /**
+         * @brief Static function to create a banded matrix of specified size.
+         * @param rows The number of rows.
+         * @param cols The number of columns.
+         * @param bandWidth The width of the band.
+         * @details Allocates memory for the new matrix and initializes it as a banded matrix.
+         * @warning This function is not implemented yet.
+         */
         static Matrix bandSolve(Matrix, Matrix, int);
 
         // functions on vectors
