@@ -266,6 +266,13 @@ class Matrix {
         static Matrix bandSolve(Matrix, Matrix, int);
 
         // functions on vectors
+        /**
+         * @brief Function to calculate the dot product of two matrices.
+         * @param A The first matrix.
+         * @param B The second matrix.
+         * @details Allocates memory for the new matrix and calculates the dot product of the two matrices.
+         * @warning This function is not implemented yet.
+         */
         static double dotProduct(Matrix, Matrix);
         static Matrix getMinor(const Matrix<T>&,int, int,int);
         static T determinant(const Matrix<T>& A);
