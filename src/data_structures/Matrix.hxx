@@ -372,67 +372,91 @@ class Matrix {
 
         //functions to add rows and columns while mantaining the original data in the upperleft corner(these functions are bad, better use a vector when trying to work with dynamically instantiated data)
         // also these functions create a copy and do not work on the original
+        /**
+         * @brief Function to create a new matrix with additional rows and columns filled with zeros.
+         * @param additionalRows The number of additional rows to add.
+         * @param additionalCols The number of additional columns to add.
+         * @details Allocates memory for the new matrix and initializes the additional rows and columns with zeros.
+         * @return A new matrix containing the result of the addition.
+         */
         Matrix copyAndAddRowsColsWithZeros(int additionalRows, int additionalCols) const;
 
         /**
-         * \brief   add a row to the matrix and return a new matrix
-         * \param   row :the row to add
-         * \param   position : the position where to add the row
-         * \return  the pointer to new matrix with the added row
+         * @brief   add a row to the matrix and return a new matrix
+         * @param   row :the row to add
+         * @param   position : the position where to add the row
+         * @return  the pointer to new matrix with the added row
          */
         Matrix* addRowNew(const std::vector<T>& row, int position);
 
         /**
-         * \brief   add a column to the matrix and return a new matrix
-         * \param   column :the column to add
-         * \param   position : the position where to add the column
-         * \return  the pointer to new matrix with the added column
+         * @brief   add a column to the matrix and return a new matrix
+         * @param   column :the column to add
+         * @param   position : the position where to add the column
+         * @return  the pointer to new matrix with the added column
          */
         Matrix* addColumnNew(const std::vector<T>& column, int position);
 
         /**
-         * \brief  add a row to the matrix
-         * \param  row : the row to add
-         * \param  position : the position where to add the row
-         * \return nothing
+         * @brief  add a row to the matrix
+         * @param  row : the row to add
+         * @param  position : the position where to add the row
          */
         void addRow(const std::vector<T>& row, int position);
 
         /**
-         * \brief  add a column to the matrix
-         * \param  column : the column to add
-         * \param  position : the position where to add the column
-         * \return nothing
+         * @brief  add a column to the matrix
+         * @param  column : the column to add
+         * @param  position : the position where to add the column
          */
         void addColumn(const std::vector<T>& column, int position);
 
         /**
-         * \brief  add a row to the matrix at the end
-         * \param  row : the row to add
-         * \return nothing
+         * @brief  add a row to the matrix at the end
+         * @param  row : the row to add
          */
         void addRowAtTheEnd(const std::vector<T>& row);
 
         /**
-         * \brief  add a column to the matrix at the end
-         * \param  column : the column to add
-         * \return nothing
+         * @brief  add a column to the matrix at the end
+         * @param  column : the column to add
          */
         void addColumnAtTheEnd(const std::vector<T>& column);
 
 
 
         //functions to convert to armadillo
+        /**
+         * @brief Function to convert the matrix to an Armadillo matrix(immutable).
+         * @return An Armadillo matrix containing the elements of the matrix.
+         */
         arma::Mat<T> asArmadilloMatrix()const;
+        /**
+         * @brief Function to convert the matrix to an Armadillo column vector(immutable).
+         * @return An Armadillo column vector containing the elements of the matrix.
+         */
         arma::Col<T> asArmadilloColumnVector()const;
+        /**
+         * @brief Function to convert the matrix to an Armadillo row vector(immutable).
+         * @return An Armadillo row vector containing the elements of the matrix.
+         */
         arma::Row<T> asArmadilloRowVector()const;
+        /**
+         * @brief Function to print the matrix.
+         * @details Prints the matrix in a readable format.
+         */
         void printMatrix()const;
 
 
     protected:
-        int rows_, cols_;
-        T *_matrix=nullptr;
+        int rows_; ///< Number of rows in the matrix.
+        int cols_; ///< Number of columns in the matrix.
+        T *_matrix=nullptr; ///< Pointer to the matrix data.
 
+        /**
+         * @brief Protected function to allocate memory for the matrix.
+         * @details Allocates memory for the matrix and initializes all elements to zero.
+         */
         void allocateMatrixSpace();
         Matrix expHelper(const Matrix&, int);
 };
