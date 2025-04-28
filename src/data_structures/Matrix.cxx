@@ -211,7 +211,7 @@ template Matrix<double>& Matrix<double>::operator*=(double m);
 template<typename T>
 Matrix<T>& Matrix<T>::operator+=(const Matrix<T>& m)
 {
-    if(getCols() == m.getRows()){
+    if(getCols() == m.getCols() && getRows() == m.getRows()){
         for (int i = 0; i < rows_; ++i) {
             for (int j = 0; j < cols_; ++j) {
                 _matrix[i * cols_ + j] += m.getValue(i,j);
@@ -219,7 +219,7 @@ Matrix<T>& Matrix<T>::operator+=(const Matrix<T>& m)
         }
         return *this;
     } else {
-        throw std::invalid_argument("column dimension of lhs for operation += is not equal to row dimension of lhs\n");
+        throw std::invalid_argument("Matrix dimensions are not the same when applying addition\n");
     }
 }
 
@@ -229,7 +229,7 @@ template Matrix<double>& Matrix<double>::operator+=(const Matrix<double>& m);
 template<typename T>
 Matrix<T>& Matrix<T>::operator-=(const Matrix<T>& m)
 {
-    if(getCols() == m.getRows()){
+    if(getCols() == m.getCols() && getRows() == m.getRows()){
         for (int i = 0; i < rows_; ++i) {
             for (int j = 0; j < cols_; ++j) {
                 _matrix[i * cols_ + j] -= m.getValue(i,j);
