@@ -36,15 +36,37 @@ class WeightedEdgeGraph{
         // constructors and destructors
         /**
          * @brief Default constructor for creating an empty weighted edge graph.
-         * @details Initializes the graph with zero nodes and edges, and allocates memory for the adjacency matrix.
+         * @details Initializes the graph with zero nodes and edges, and allocates memory for the adjacency matrix(with 0x0 elements).
          */
         WeightedEdgeGraph();
 
+        /**
+         * @brief Constructor for creating a weighted edge graph with a specified number of nodes.
+         * @param numNodes The number of nodes in the graph.
+         * @details Initializes the graph with the specified number of nodes and zero edges, and allocates memory for the adjacency matrix(with nxn elements).
+         */
         WeightedEdgeGraph(int numNodes);
 
+        /**
+         * @brief Constructor for creating a weighted edge graph with specified node names.
+         * @param nodeNames A vector of strings representing the names of the nodes.
+         * @details Initializes the graph with the specified node names and zero edges, and allocates memory for the adjacency matrix(with nxn elements).
+         */
         WeightedEdgeGraph(std::vector<std::string>& nodeNames);
+        /**
+         * @brief Constructor for creating a weighted edge graph with specified node names and values.
+         * @param nodeNames A vector of strings representing the names of the nodes.
+         * @param nodeVal A vector of doubles representing the values of the nodes.
+         * @details Initializes the graph with the specified node names and values, and zero edges, and allocates memory for the adjacency matrix(with nxn elements).
+         */
         WeightedEdgeGraph(std::vector<std::string>& nodeNames,std::vector<double>& nodeVal);
-
+        /**
+         * @brief Constructor for creating a weighted edge graph from an adjacency matrix.
+         * @param _adjMatrix The adjacency matrix representing the graph.
+         * @details Initializes the graph with the specified adjacency matrix. Edges are added based on the non-zero values in the matrix.
+         * @warning The adjacency matrix must be square (same number of rows and columns).
+         * @throw std::invalid_argument if the adjacency matrix is not square.
+         */
         WeightedEdgeGraph(const Matrix<double>& _adjMatrix);
 
         ~WeightedEdgeGraph();
