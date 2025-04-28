@@ -421,10 +421,10 @@ def create_dict_for_plot():
             dict_for_plot[type + "_" + str(timepoints[i])] = fig.to_dict()
     return dict_for_plot
 
-dict_for_plot = create_dict_for_plot()
-# save the dict for the plot
-with open('dict_for_plot.pkl', 'wb') as f:
-    pickle.dump(dict_for_plot, f)
+# dict_for_plot = create_dict_for_plot()
+# # save the dict for the plot
+# with open('dict_for_plot.pkl', 'wb') as f:
+#     pickle.dump(dict_for_plot, f)
 # load the dict for the plot
 with open('dict_for_plot.pkl', 'rb') as f:
     dict_for_plot = pickle.load(f)
