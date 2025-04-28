@@ -157,6 +157,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and subtracts the values from the provided matrix.
          * @warning This operator does not check for memory leaks.
          * @return A new matrix containing the result of the subtraction.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for subtraction.
          */
         Matrix operator-(const Matrix<T>&)const;
         /**
@@ -165,6 +166,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and multiplies the values from the provided matrix.
          * @warning This operator does not check for memory leaks.
          * @return A new matrix containing the result of the multiplication.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for multiplication.
          */
         Matrix operator*(const Matrix<T>&)const;
         /**
@@ -173,6 +175,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and multiplies the values from the provided vector.
          * @warning This operator does not check for memory leaks.
          * @return A new matrix containing the result of the multiplication.
+         * @throw std::invalid_argument if the dimensions of the matrix and vector are not compatible for multiplication.
          */
         Matrix operator*(const std::vector<T>&)const;
         /**
@@ -200,6 +203,7 @@ class Matrix {
          * @returns A new vector containing the result of the multiplication.
          * @details Allocates memory for the new vector and multiplies the values from the provided vector.
          * @warning This operator does not check for memory leaks.
+         * @throw std::invalid_argument if the dimensions of the vector and matrix are not compatible for multiplication.
          */
         template<typename U>
         friend std::vector<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
@@ -208,6 +212,7 @@ class Matrix {
          * @param lhs The left-hand side vector to multiply with.
          * @param rhs The right-hand side matrix to multiply with.
          * @returns A new vector containing the result of the multiplication.
+         * @throw std::invalid_argument if the dimensions of the vector and matrix are not compatible for multiplication.
          * @details Allocates memory for the new vector and multiplies the values from the provided vector.
          */
         template<typename U>
@@ -217,6 +222,7 @@ class Matrix {
          * @brief Output stream operator for printing a matrix.
          * @param os The output stream to print to.
          * @param m The matrix to print.
+         * @returns A reference to the output stream.
          * @details Prints the matrix in a readable format.
          */
         template<typename U>
