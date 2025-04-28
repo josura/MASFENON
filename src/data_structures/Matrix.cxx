@@ -1,3 +1,9 @@
+/**
+ * @file Matrix.cxx
+ * @ingroup Core
+ * @brief Implementation of the Matrix class template.
+ * @details This file contains the implementation of the Matrix class template, which provides a 2D matrix representation with row-major ordering.
+ */
 #include "data_structures/Matrix.hxx"
 #include "utils/mathUtilities.hxx"
 #include <iostream>
