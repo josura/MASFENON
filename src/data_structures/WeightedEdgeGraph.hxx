@@ -1,6 +1,12 @@
+/**
+ * @file WeightedEdgeGraph.hxx
+ * @ingroup Core
+ * @brief Class for representing a weighted edge graph.
+ * @details This class provides methods for creating, modifying, and accessing properties of a weighted edge graph.
+ */
 #pragma once
 
-#include "data_structures/Matrix.hxx"  //circular dependency :'(
+#include "data_structures/Matrix.hxx"
 #include <map>
 #include <ostream>
 #include <stdexcept>
@@ -15,19 +21,19 @@
 
 class WeightedEdgeGraph{
     private:
-        int numberOfNodes=0;
-        int numberOfEdges=0;
-        double* nodeValues=nullptr;  //arrays of nodeValues
-        std::vector<std::unordered_set<int>> adjList;  //adjList as vector of unordered sets
-        std::vector<std::string> nameVector;
-        std::map<std::string, int> nodeToIndex;
+        int numberOfNodes=0; ///< number of nodes in the graph
+        int numberOfEdges=0; ///< number of edges in the graph
+        double* nodeValues=nullptr;  ///< arrays of nodeValues
+        std::vector<std::unordered_set<int>> adjList;  ///< adjList as vector of unordered sets
+        std::vector<std::string> nameVector; ///< vector of node names
+        std::map<std::string, int> nodeToIndex; ///< map of node names to indexes
 
     public:
 
-        //public since they will be accessed a lot
-        Matrix<double> adjMatrix;
-        std::vector<std::tuple<int, int, double> > edgesVector;
+        Matrix<double> adjMatrix; ///< adjacency matrix, public for easy access
+        std::vector<std::tuple<int, int, double> > edgesVector; ///< vector of edges as tuples (node1ID, node2ID, weight)
 
+        // constructors and destructors
         WeightedEdgeGraph();
 
         WeightedEdgeGraph(int numNodes);
