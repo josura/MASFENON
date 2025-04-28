@@ -54,6 +54,7 @@ class Matrix {
          * @param _wvector The vector to initialize the matrix with.
          * @param nrows Number of rows (default is 0).
          * @param ncols Number of columns (default is 1).
+         * @throw std::invalid_argument if the vector size does not match the specified dimensions.
          * @details Allocates memory for the matrix and initializes the elements with the values from the vector.
          */
         Matrix(const std::vector<T>& _wvector, uint nrows=0, uint ncols=1);
@@ -105,6 +106,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and adds the values from the provided matrix.
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for addition.
          */
         Matrix& operator+=(const Matrix&);
         /**
@@ -113,6 +115,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and subtracts the values from the provided matrix.
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for subtraction.
          */
         Matrix& operator-=(const Matrix&);
         /**
@@ -121,6 +124,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and multiplies the values from the provided matrix.
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for multiplication.
          */
         Matrix& operator*=(const Matrix&);
         /**
