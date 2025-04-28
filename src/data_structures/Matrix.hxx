@@ -274,6 +274,15 @@ class Matrix {
          * @warning This function is not implemented yet.
          */
         static double dotProduct(Matrix, Matrix);
+        /**
+         * @brief Function to the the minor of a matrix.
+         * @param matrix The matrix to get the minor from.
+         * @param i The row index to exclude.
+         * @param j The column index to exclude.
+         * @param n The size of the matrix.
+         * @details Allocates memory for the new matrix and calculates the minor of the specified matrix.
+         * @warning This function is not implemented yet.
+         */
         static Matrix getMinor(const Matrix<T>&,int, int,int);
         static T determinant(const Matrix<T>& A);
         Matrix& operator*=(const std::vector<T>&);
