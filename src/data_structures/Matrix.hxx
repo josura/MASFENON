@@ -289,15 +289,25 @@ class Matrix {
          * @details Allocates memory for the new matrix and calculates the determinant of the specified matrix.
          */
         static T determinant(const Matrix<T>& A);
+        /**
+         * @brief assignment operator for multiplying a matrix with a vector.
+         * @param rhs The right-hand side vector to multiply with.
+         * @details Allocates memory for the new matrix and multiplies the values from the provided vector.
+         * @warning This operator does not check for memory leaks.
+         * @return A reference to the current object.
+         */
         Matrix& operator*=(const std::vector<T>&);
-        /*
-        * \brief   divide the values in column i by the value in 
-        *           vector at the index i
+        /**
+        * @brief   divide the values in column i by the value in vector at the index i
+        * @param   normVector : the vector to divide by
+        * @details The function normalizes the matrix by dividing each element in the column by the corresponding element in the vector.
         */
         Matrix& normalizeByVectorColumn(const std::vector<double>& normVector);
-        /*
-        * \brief   divide the values in row i by the value in 
-        *           vector at the index i
+        /**
+        * @brief   divide the values in row i by the value in vector at the index i
+        * @param   normVector : the vector to divide by
+        * @details The function normalizes the matrix by dividing each element in the row by the corresponding element in the vector.
+        * @return the reference to the new matrix
         */
         Matrix& normalizeByVectorRow(const std::vector<double>& normVector);
         // functions for reduction and inverse
