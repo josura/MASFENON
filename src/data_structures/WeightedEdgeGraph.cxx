@@ -19,7 +19,7 @@ WeightedEdgeGraph::WeightedEdgeGraph(){
     this->numberOfNodes = 0;
     this->nodeValues = nullptr;
     this->adjList = std::vector<std::unordered_set<int>>();
-    this->adjMatrix = Matrix<double>();
+    this->adjMatrix = Matrix<double>(0,0);
     this->nodeToIndex = std::map<std::string, int>();
     
 }

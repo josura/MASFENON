@@ -34,6 +34,10 @@ class WeightedEdgeGraph{
         std::vector<std::tuple<int, int, double> > edgesVector; ///< vector of edges as tuples (node1ID, node2ID, weight)
 
         // constructors and destructors
+        /**
+         * @brief Default constructor for creating an empty weighted edge graph.
+         * @details Initializes the graph with zero nodes and edges, and allocates memory for the adjacency matrix.
+         */
         WeightedEdgeGraph();
 
         WeightedEdgeGraph(int numNodes);
