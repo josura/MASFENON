@@ -310,6 +310,8 @@ class Matrix {
         /**
         * @brief   divide the values in column i by the value in vector at the index i
         * @param   normVector : the vector to divide by
+        * @return  the reference to the new matrix
+        * @throw   std::invalid_argument if the size of the vector is less than the number of columns
         * @details The function normalizes the matrix by dividing each element in the column by the corresponding element in the vector.
         */
         Matrix& normalizeByVectorColumn(const std::vector<double>& normVector);
@@ -318,6 +320,7 @@ class Matrix {
         * @param   normVector : the vector to divide by
         * @details The function normalizes the matrix by dividing each element in the row by the corresponding element in the vector.
         * @return the reference to the new matrix
+        * @throw std::invalid_argument if the size of the vector is less than the number of rows
         */
         Matrix& normalizeByVectorRow(const std::vector<double>& normVector);
         // functions for reduction and inverse
@@ -326,6 +329,7 @@ class Matrix {
          * @param rhs The right-hand side matrix to concatenate with.
          * @details Allocates memory for the new matrix and concatenates the two matrices.
          * @return A new matrix containing the result of the concatenation.
+         * @throw std::invalid_argument if the dimensions of the matrices are not compatible for concatenation.
          */
         Matrix concatenateRight(const Matrix&)const;
         /**
@@ -396,6 +400,7 @@ class Matrix {
          * @param   row :the row to add
          * @param   position : the position where to add the row
          * @return  the pointer to new matrix with the added row
+         * @throw   std::invalid_argument if the position is not in the range of the rows
          */
         Matrix* addRowNew(const std::vector<T>& row, int position);
 
@@ -404,6 +409,7 @@ class Matrix {
          * @param   column :the column to add
          * @param   position : the position where to add the column
          * @return  the pointer to new matrix with the added column
+         * @throw   std::invalid_argument if the position is not in the range of the columns
          */
         Matrix* addColumnNew(const std::vector<T>& column, int position);
 
@@ -411,6 +417,7 @@ class Matrix {
          * @brief  add a row to the matrix
          * @param  row : the row to add
          * @param  position : the position where to add the row
+         * @throw  std::invalid_argument if the position is not in the range of the rows
          */
         void addRow(const std::vector<T>& row, int position);
 
@@ -418,6 +425,7 @@ class Matrix {
          * @brief  add a column to the matrix
          * @param  column : the column to add
          * @param  position : the position where to add the column
+         * @throw  std::invalid_argument if the position is not in the range of the columns
          */
         void addColumn(const std::vector<T>& column, int position);
 
