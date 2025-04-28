@@ -281,9 +281,13 @@ class Matrix {
          * @param j The column index to exclude.
          * @param n The size of the matrix.
          * @details Allocates memory for the new matrix and calculates the minor of the specified matrix.
-         * @warning This function is not implemented yet.
          */
         static Matrix getMinor(const Matrix<T>&,int, int,int);
+        /**
+         * @brief Function to calculate the determinant of a matrix.
+         * @param A The matrix to calculate the determinant of.
+         * @details Allocates memory for the new matrix and calculates the determinant of the specified matrix.
+         */
         static T determinant(const Matrix<T>& A);
         Matrix& operator*=(const std::vector<T>&);
         /*
