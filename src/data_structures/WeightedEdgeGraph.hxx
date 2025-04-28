@@ -69,6 +69,10 @@ class WeightedEdgeGraph{
          */
         WeightedEdgeGraph(const Matrix<double>& _adjMatrix);
 
+        /**
+         * @brief Destructor for cleaning up the allocated memory.
+         * @details Deallocates the memory used for the node values. Memory handling for adjMatrix is done in the Matrix class.
+         */
         ~WeightedEdgeGraph();
 
         WeightedEdgeGraph* addEdge(int node1, int node2, double weight, bool directed=true);
