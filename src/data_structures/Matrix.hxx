@@ -284,7 +284,7 @@ class Matrix {
          */
         static Matrix getMinor(const Matrix<T>&,int, int,int);
         /**
-         * @brief Function to calculate the determinant of a matrix.
+         * @brief Static function to calculate the determinant of a matrix.
          * @param A The matrix to calculate the determinant of.
          * @details Allocates memory for the new matrix and calculates the determinant of the specified matrix.
          */
@@ -311,11 +311,41 @@ class Matrix {
         */
         Matrix& normalizeByVectorRow(const std::vector<double>& normVector);
         // functions for reduction and inverse
+        /**
+         * @brief Function to concatenate two matrices.
+         * @param rhs The right-hand side matrix to concatenate with.
+         * @details Allocates memory for the new matrix and concatenates the two matrices.
+         * @return A new matrix containing the result of the concatenation.
+         */
         Matrix concatenateRight(const Matrix&)const;
+        /**
+         * @brief Function to calculate the determinant of the matrix.
+         * @details Allocates memory for the new matrix and calculates the determinant of the specified matrix.
+         * @return The determinant of the matrix.
+         */
         T determinant()const;
+        // not implemented yet
+        /**
+         * @brief Function to calculate Gaussian elimination.
+         * @details Allocates memory for the new matrix and calculates the Gaussian elimination of the specified matrix.
+         * @warning This function is not implemented yet.
+         * @return A new matrix containing the result of the Gaussian elimination.
+         */
         Matrix gaussianElimination();
+        /**
+         * @brief Function to calculate Gaussian elimination with partial pivoting.
+         * @details Allocates memory for the new matrix and calculates the Gaussian elimination with partial pivoting of the specified matrix.
+         * @warning This function is not implemented yet.
+         * @return A new matrix containing the result of the Gaussian elimination with partial pivoting.
+         */
         Matrix rowReduceGaussian();
-        Matrix inverse();  // to implement
+        /**
+         * @brief Function to calculate the inverse of the matrix.
+         * @details Allocates memory for the new matrix and calculates the inverse of the specified matrix.
+         * @warning This function is not implemented yet.
+         * @return A new matrix containing the result of the inverse.
+         */
+        Matrix inverse();
 
         //get functions
         int getRows()const{return rows_;}
