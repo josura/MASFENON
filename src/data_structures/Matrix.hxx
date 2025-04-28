@@ -348,9 +348,26 @@ class Matrix {
         Matrix inverse();
 
         //get functions
+        /**
+         * @brief Function to get the number of rows in the matrix.
+         * @return The number of rows in the matrix.
+         */
         int getRows()const{return rows_;}
+        /**
+         * @brief Function to get the number of columns in the matrix.
+         * @return The number of columns in the matrix.
+         */
         int getCols()const{return cols_;}
+        /**
+         * @brief Function to check if the matrix is a vector.
+         * @return True if the matrix is a vector(vertical, meaning that columns == 1), false otherwise.
+         */
         bool isVector()const{return (rows_ >= 1 && cols_ == 1); }
+        /**
+         * @brief Function to convert the matrix to a vector. Only works if the matrix is a vector.
+         * @return A vector containing the elements of the matrix.
+         * @throw std::domain_error if the matrix is not a vector.
+         */
         std::vector<T> asVector()const; 
 
         //functions to add rows and columns while mantaining the original data in the upperleft corner(these functions are bad, better use a vector when trying to work with dynamically instantiated data)
