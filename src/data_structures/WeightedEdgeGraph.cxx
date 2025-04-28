@@ -69,6 +69,9 @@ WeightedEdgeGraph::WeightedEdgeGraph(const Matrix<double>& _adjMatrix){
             nodeToIndex[std::to_string(i)] = i;
             nameVector.push_back(std::to_string(i));
         }
+    } else {
+        std::cerr << "[ERROR] WeightedEdgeGraph::WeightedEdgeGraph(constructor): invalid argument for graph constructor, the matrix is not square" << std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::WeightedEdgeGraph(constructor): invalid argument for graph constructor, the matrix is not square");
     }
     
 }
