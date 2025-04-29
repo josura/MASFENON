@@ -352,6 +352,29 @@ TEST_F(GraphTesting, degreeOfNode){
   EXPECT_EQ(g4_->degreeOfNode(g4_->getIndexFromName("node4")), 0);
   EXPECT_EQ(g4_->degreeOfNode(g4_->getIndexFromName("node5")), 0);
 }
+
+TEST_F(GraphTesting, adjacencyControl){ // TODO: control for throws in the next sections of tests
+  EXPECT_FALSE(g4_->adjNodes("node1","node2"));
+  EXPECT_TRUE(g4_->adjNodes("node1","node3"));
+  EXPECT_FALSE(g4_->adjNodes("node1","node4"));
+  EXPECT_FALSE(g4_->adjNodes("node1","node5"));
+  EXPECT_FALSE(g4_->adjNodes("node2","node1"));
+  EXPECT_TRUE(g4_->adjNodes("node2","node3"));
+  EXPECT_FALSE(g4_->adjNodes("node2","node4"));
+  EXPECT_FALSE(g4_->adjNodes("node2","node5"));
+  EXPECT_TRUE(g4_->adjNodes("node3","node1"));
+  EXPECT_TRUE(g4_->adjNodes("node3","node2"));
+  EXPECT_FALSE(g4_->adjNodes("node3","node4"));
+  EXPECT_FALSE(g4_->adjNodes("node3","node5"));
+  EXPECT_FALSE(g4_->adjNodes("node4","node1"));
+  EXPECT_FALSE(g4_->adjNodes("node4","node2"));
+  EXPECT_FALSE(g4_->adjNodes("node4","node3"));
+  EXPECT_FALSE(g4_->adjNodes("node4","node5"));
+  EXPECT_FALSE(g4_->adjNodes("node5","node1"));
+  EXPECT_FALSE(g4_->adjNodes("node5","node2"));
+  EXPECT_FALSE(g4_->adjNodes("node5","node3"));
+  EXPECT_FALSE(g4_->adjNodes("node5","node4"));
+}
 //throws and unexpected behaviour management TODO
 
 TEST_F(GraphTesting, gettingNodeValueOfNotPresentNode){
