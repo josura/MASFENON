@@ -380,20 +380,46 @@ class WeightedEdgeGraph{
 
         //boolean functions to control adjacency or connectection(using adjacency list)
         /**
-         * @brief Function to check if two nodes are adjacent by their indexes(immutable).
+         * @brief Function to check if two nodes are adjacent by their indexes.
          * @param node1 The index of the first node.
          * @param node2 The index of the second node.
          * @return true if the nodes are adjacent, false otherwise.
          */
         bool adjNodes(int node1, int node2);
-        //return true if the nodes are adjacent (by name)
+        /**
+         * @brief Function to check if two nodes are adjacent by their names.
+         * @param node1 The name of the first node.
+         * @param node2 The name of the second node.
+         * @return true if the nodes are adjacent, false otherwise.
+         */
         bool adjNodes(std::string node1, std::string node2);
-        //return true if the nodes are connected (by index)
+        /**
+         * @brief Function to check if two nodes are connected by their indexes.
+         * @param node1 The index of the first node.
+         * @param node2 The index of the second node.
+         * @return true if the nodes are connected, false otherwise.
+         * @details Two nodes are connected if there is a path between them.
+         * @details This function uses the adjacency list to check if the nodes are connected.
+         * @warning This function is not completely implemented yet. Only returns true if the nodes are also adjacent.
+         */
         bool connectedNodes(int node1, int node2);
-        //return true if the nodes are connected (by name)
+        /**
+         * @brief Function to check if two nodes are connected by their names.
+         * @param node1 The name of the first node.
+         * @param node2 The name of the second node.
+         * @return true if the nodes are connected, false otherwise.
+         * @details Two nodes are connected if there is a path between them.
+         * @details This function uses the adjacency list to check if the nodes are connected.
+         * @warning This function is not completely implemented yet. Only returns true if the nodes are also adjacent.
+         */
         bool connectedNodes(std::string node1, std::string node2);
         // TODO implement above functions using adjacency matrix
 
+        /**
+         * @brief Function to get the edges of the graph as a vector of tuples.
+         * @return A vector of tuples representing the edges of the graph.
+         * @details Each tuple contains the index of the first node, the index of the second node, and the weight of the edge.
+         */
         std::vector<std::tuple<int, int, double>> getEdgesVector()const;
 
 
