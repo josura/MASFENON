@@ -219,15 +219,25 @@ class WeightedEdgeGraph{
          * @throw std::invalid_argument if the node name is not found in the graph.
         */
         WeightedEdgeGraph* setNodeValue(std::string node, double value);
-        //WeightedEdgeGraph* setNodesValues(std::vector< double> value,const std::vector<std::string> node = std::vector<std::string>());
 
-        /*
-        change node name
+        /**
+         * @brief Function to set the names of the nodes in the graph.
+         * @param nodenameTarget The name of the node to change.
+         * @param nodenameSet The new name for the node.
+         * @return A pointer to the updated graph.
+         * @details Sets the name of the specified node to the given new name.
+         * @throw std::invalid_argument if the node name is not found in the graph.
         */
         WeightedEdgeGraph* setNodeName(std::string nodenameTarget, std::string nodenameSet);
-        /*
-        If provided with one parameter, controls the vector size and sets the node names if they are of the same size.
-        If provided with two parameters, changes the nodes in nodenameTargets with the values in nodenameSets 
+        /**
+         * @brief Function to set the names of multiple nodes in the graph.
+         * @param nodenameSets A vector of strings representing the new names for the nodes.
+         * @param nodenameTargets A vector of strings representing the names of the nodes to change (default is an empty vector).
+         * @return A pointer to the updated graph.
+         * @details Sets the names of the specified nodes to the given new names.
+         * @details If provided with one parameter, controls the vector size and sets the node names if they are of the same size.
+         * @details If provided with two parameters, changes the nodes in nodenameTargets with the values in nodenameSets.
+         * @throw std::invalid_argument if the node names are not found in the graph or if the sizes of the vectors are not equal.
         */
         WeightedEdgeGraph* setNodesNames(const std::vector<std::string>& nodenameSets, const std::vector<std::string>& nodenameTargets = std::vector<std::string>());
 
