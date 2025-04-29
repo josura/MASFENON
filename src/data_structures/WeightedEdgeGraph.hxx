@@ -425,11 +425,26 @@ class WeightedEdgeGraph{
         std::vector<std::tuple<int, int, double>> getEdgesVector()const;
 
 
-
+        /**
+         * @brief Operator to assign a new graph to the current graph.
+         * @param g2 The graph to assign.
+         * @return A reference to the current graph.
+         * @details This operator assigns a new graph to the current graph. It copies the adjacency matrix, node values, and adjacency list from the new graph.
+         */
         WeightedEdgeGraph& operator=(const WeightedEdgeGraph& g2);
-        //WeightedEdgeGraph& operator=(const WeightedEdgeGraph g2);
-        //WeightedEdgeGraph& setAdjMatrix(Matrix<double>& mat);
+        /**
+         * @brief Function to assign a new graph to the current graph.
+         * @param g2 The graph to assign.
+         * @details This function assigns a new graph to the current graph. It copies the adjacency matrix, node values, and adjacency list from the new graph.
+         * @warning This function is not implemented yet.
+         */
         void assign(const WeightedEdgeGraph& g2);
+        /**
+         * @brief Function to copy the current graph into a new graph in dynamic memory.
+         * @return A pointer to the new graph.
+         * @details This function copies the current graph into a new graph in dynamic memory. It uses the copy constructor to create the new graph.
+         * @warning This function is not implemented yet.
+         */
         WeightedEdgeGraph* copyNew()const;
 
         // optimization methods
