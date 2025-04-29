@@ -704,5 +704,6 @@ void WeightedEdgeGraph::saveEdgesToFile(std::string outputFolder, std::string fi
         myfile.close();
     } else {
         std::cerr << "[ERROR] WeightedEdgeGraph::saveEdgesToFile: file not opened" << std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::saveEdgesToFile: file not opened");
     }
 }

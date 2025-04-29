@@ -462,8 +462,30 @@ class WeightedEdgeGraph{
          */
         double getAverageDegree()const;
 
+        /**
+         * @brief Function to get the node to index map(immutable).
+         * @return A map of node names to indexes.
+         * @details This function just returns the private member nodeToIndex.
+         */
         std::map<std::string, int> getNodeToIndexMap()const {return nodeToIndex;}
+        /**
+         * @brief Function to print the graph
+         * @return void
+         * @details This function prints the graph to the standard output. It uses the operator<< to print the graph.
+         */
         void print()const;
+        /**
+         * @brief Function to save the graph edges to a file.
+         * @param outputFolder The folder where the file will be saved.
+         * @param filename The name of the file.
+         * @details This function saves the graph edges to a file. The file will be saved in the specified folder with the specified name.
+         * @details The file will be saved in the following format:
+         * ```
+         * node1 node2 weight
+         * ```
+         * @details The function will overwrite the file if it already exists.
+         * @throw std::invalid_argument if the file is not opened.
+         */
         void saveEdgesToFile(std::string outputFolder, std::string filename)const;
 
 };
