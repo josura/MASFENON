@@ -124,7 +124,13 @@ class WeightedEdgeGraph{
         }
 
         
-        //return -1 if the name is not found, so be careful
+        /**
+         * @brief Function to get the index of a node by its name.
+         * @param name The name of the node.
+         * @return The index of the node. Or -1 if the node is not found.
+         * @warning This function doesn't throw exceptions for invalid node names. It just returns -1 if the node is not found.
+         * @details This function is used to get the index of a node by its name. It uses the nodeToIndex map to find the index.
+         */
         int getIndexFromName(std::string name)const {
             try {
                 return nodeToIndex.at(name);
