@@ -234,6 +234,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::addNodes(const std::vector<double>& values
     }
     return this;
 }
+
 WeightedEdgeGraph* WeightedEdgeGraph::addNodes(const std::vector<std::string>& names, const std::vector<double>& values){
     //how to handle some names already present in the graph?
     auto controlMapContainsValue = [this](std::string name){return this->nodeToIndex.contains(name);};

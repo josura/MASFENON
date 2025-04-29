@@ -158,12 +158,21 @@ class WeightedEdgeGraph{
          */
         WeightedEdgeGraph* addNode(std::string name, double value=0);
 
-        /*
-        add n nodes, where n is the size of the vector passed as input, and assign to each node its corrispondent value
-        */
+        /**
+         * @brief Function to add multiple nodes to the graph.
+         * @param values A vector of doubles representing the values of the nodes.
+         * @return A pointer to the updated graph.
+         * @details Adds multiple nodes with the specified values to the graph. The nodes are added at the end of the adjacency matrix and the adjacency list.
+         * @details The names of the nodes will be set to the index (so same name and index)
+         */
         WeightedEdgeGraph* addNodes(const std::vector<double>& values);
-        /*
-        add n nodes with names, where n is the size of the vector passed as input, and assign to each node its corrispondent value
+        /**
+         * @brief Function to add multiple nodes to the graph with specified names and values.
+         * @param names A vector of strings representing the names of the nodes.
+         * @param values A vector of doubles representing the values of the nodes (default is an empty vector).
+         * @return A pointer to the updated graph.
+         * @details Adds multiple nodes with the specified names and values to the graph. The nodes are added at the end of the adjacency matrix and the adjacency list.
+         * @throw std::invalid_argument if the some of the node names already exist in the graph.
         */
         WeightedEdgeGraph* addNodes(const std::vector<std::string>& names, const std::vector<double>& values=std::vector<double>());
 
