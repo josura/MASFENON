@@ -400,17 +400,19 @@ class WeightedEdgeGraph{
          * @return true if the nodes are connected, false otherwise.
          * @details Two nodes are connected if there is a path between them.
          * @details This function uses the adjacency list to check if the nodes are connected.
-         * @warning This function is not completely implemented yet. Only returns true if the nodes are also adjacent.
+         * @warning This function is not implemented yet.
+         * @warning The order of the nodes is important. The function will return true only if there exists a path from node1 to node2.
          */
         bool connectedNodes(int node1, int node2);
         /**
          * @brief Function to check if two nodes are connected by their names.
-         * @param node1 The name of the first node.
-         * @param node2 The name of the second node.
+         * @param node1 The name of the first node. It is used as the starting point of the search.
+         * @param node2 The name of the second node. It is used as the target of the search.
          * @return true if the nodes are connected, false otherwise.
          * @details Two nodes are connected if there is a path between them.
          * @details This function uses the adjacency list to check if the nodes are connected.
          * @warning This function is not completely implemented yet. Only returns true if the nodes are also adjacent.
+         * @warning The order of the nodes is important. The function will return true only if there exists a path from node1 to node2.
          */
         bool connectedNodes(std::string node1, std::string node2);
         // TODO implement above functions using adjacency matrix
