@@ -516,6 +516,25 @@ bool WeightedEdgeGraph::connectedNodes(std::string node1, std::string node2){
     return ( connectedNodes(node1Index,node2Index)); ;
 }
 
+int WeightedEdgeGraph::getMaxDegree()const{
+    int maxDegree = 0;
+    for (int i = 0; i < numberOfNodes; i++) {
+        int degree = this->degreeOfNode(i);
+        if(degree > maxDegree){
+            maxDegree = degree;
+        }
+    }
+    return maxDegree;
+}
+
+double WeightedEdgeGraph::getAverageDegree()const{
+    double sum = 0;
+    for (int i = 0; i < numberOfNodes; i++) {
+        sum += this->degreeOfNode(i);
+    }
+    return sum/numberOfNodes;
+}
+
 //non copy and swap to not reallocate some of the resources (doesn't get called with g1 = g2 but its called when invocking *g1=*g2 on pointers)
 WeightedEdgeGraph& WeightedEdgeGraph::operator=(const WeightedEdgeGraph& g2){
     if (this!=&g2) {

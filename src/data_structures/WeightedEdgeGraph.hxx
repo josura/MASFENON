@@ -449,10 +449,6 @@ class WeightedEdgeGraph{
 
         // optimization methods
 
-        double costFunction(bool* NodeSubset);
-
-        std::vector<int> getSharedAdjacentNodes(std::vector<int>& nodes);
-
         int getMaxDegree()const;
         double getAverageDegree()const;
 
