@@ -462,11 +462,15 @@ std::vector<std::tuple<int, int,double>> WeightedEdgeGraph::getEdgesVector()cons
 
 
 bool WeightedEdgeGraph::adjNodes(int node1, int node2){
-    return ( (adjList[node1].find(node2) != adjList[node1].end()) || (adjList[node2].find(node1) != adjList[node2].end())) ;
+    std::unordered_set<int> adjListNode1 = getAdjList(node1);
+    std::unordered_set<int> adjListNode2 = getAdjList(node2);
+    return ( (adjListNode1.find(node2) != adjListNode1.end()) || (adjListNode2.find(node1) != adjListNode2.end())) ;
 }
 
 bool WeightedEdgeGraph::adjNodes(std::string node1, std::string node2){
-    return ( (adjList[nodeToIndex[node1]].find(nodeToIndex[node2]) != adjList[nodeToIndex[node1]].end()) || (adjList[nodeToIndex[node2]].find(nodeToIndex[node1]) != adjList[nodeToIndex[node2]].end())) ;
+    int node1Index = nodeToIndex.at(node1);
+    int node2Index = nodeToIndex.at(node2);
+    return adjNodes(node1Index,node2Index);
 }
 
 
