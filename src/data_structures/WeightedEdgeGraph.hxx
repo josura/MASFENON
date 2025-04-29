@@ -378,7 +378,7 @@ class WeightedEdgeGraph{
         std::string getAdjListStr(std::string node)const;
 
 
-        //return true if the nodes are adjacent (by index)
+        //boolean functions to control adjacency or connectection(using adjacency list)
         /**
          * @brief Function to check if two nodes are adjacent by their indexes(immutable).
          * @param node1 The index of the first node.
@@ -392,6 +392,7 @@ class WeightedEdgeGraph{
         bool connectedNodes(int node1, int node2);
         //return true if the nodes are connected (by name)
         bool connectedNodes(std::string node1, std::string node2);
+        // TODO implement above functions using adjacency matrix
 
         std::vector<std::tuple<int, int, double>> getEdgesVector()const;
 

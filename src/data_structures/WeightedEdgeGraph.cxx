@@ -502,11 +502,18 @@ bool WeightedEdgeGraph::adjNodes(std::string node1, std::string node2){
 
 
 bool WeightedEdgeGraph::connectedNodes(int node1, int node2){
-    return ( (adjList[node1].find(node2) != adjList[node1].end()) ) ;
+    std::unordered_set<int> adjListNode = getAdjList(node1);
+    return ( adjListNode.find(node2) != adjListNode.end());
 }
 
 bool WeightedEdgeGraph::connectedNodes(std::string node1, std::string node2){
-    return ( (adjList[nodeToIndex[node1]].find(nodeToIndex[node2]) != adjList[nodeToIndex[node1]].end())) ;
+    if(!nodeToIndex.contains(node1) || !nodeToIndex.contains(node2)){
+        std::cerr << "[ERROR] WeightedEdgeGraph::connectedNodes: node "<< node1 << " or " << node2 << " is not in the graph "<<std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::connectedNodes: invalid argument for connected nodes");
+    }
+    int node1Index = nodeToIndex.at(node1);
+    int node2Index = nodeToIndex.at(node2);
+    return ( connectedNodes(node1Index,node2Index)); ;
 }
 
 //non copy and swap to not reallocate some of the resources (doesn't get called with g1 = g2 but its called when invocking *g1=*g2 on pointers)
