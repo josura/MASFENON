@@ -327,6 +327,15 @@ TEST_F(GraphTesting, setNodeValueName){
   g5_->setNodeValue("node2",4.5);
   EXPECT_FLOAT_EQ(g5_->getNodeValue("node2"),4.5);
 }
+
+//controlling adjacency of nodes and connectivity
+TEST_F(GraphTesting, outDegreeOfNode){
+  EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node1")), 1);
+  EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node2")), 0);
+  EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node3")), 1);
+  EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node4")), 0);
+  EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node5")), 0);
+}
 //throws and unexpected behaviour management TODO
 
 TEST_F(GraphTesting, gettingNodeValueOfNotPresentNode){

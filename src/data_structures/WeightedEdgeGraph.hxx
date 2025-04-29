@@ -300,11 +300,13 @@ class WeightedEdgeGraph{
          */
         std::vector<std::string> getNodeNames()const{ return nameVector;}
         /**
-         * @brief Function to get the names of the nodes in the graph(immutable).
+         * @brief Function to get the out degree of a certain node in the graph(immutable).
          * @param node The index of the node.
-         * @return A vector of strings representing the names of the nodes.
+         * @return an integer representing the out degree of the node.
+         * @details The out degree of a node is the number of edges that are directed away from the node.
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
          */
-        int degreeOfNode(int node)const;
+        int outDegreeOfNode(int node)const;
         /**
          * @brief Function to know if a node is in the graph(immutable)
          * @param node The name of the node.
@@ -361,6 +363,12 @@ class WeightedEdgeGraph{
 
 
         //return true if the nodes are adjacent (by index)
+        /**
+         * @brief Function to check if two nodes are adjacent by their indexes(immutable).
+         * @param node1 The index of the first node.
+         * @param node2 The index of the second node.
+         * @return true if the nodes are adjacent, false otherwise.
+         */
         bool adjNodes(int node1, int node2);
         //return true if the nodes are adjacent (by name)
         bool adjNodes(std::string node1, std::string node2);

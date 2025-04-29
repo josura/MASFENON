@@ -120,7 +120,11 @@ WeightedEdgeGraph::~WeightedEdgeGraph(){
     
 }
 
-int WeightedEdgeGraph::degreeOfNode(int node)const{
+int WeightedEdgeGraph::outDegreeOfNode(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        std::cerr << "[ERROR] WeightedEdgeGraph::outDegreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::outDegreeOfNode: invalid argument for outdegree of node");
+    }
     return adjList[node].size();
 }
 
