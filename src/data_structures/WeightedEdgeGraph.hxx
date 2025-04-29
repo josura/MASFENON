@@ -176,15 +176,25 @@ class WeightedEdgeGraph{
         */
         WeightedEdgeGraph* addNodes(const std::vector<std::string>& names, const std::vector<double>& values=std::vector<double>());
 
-        /*
-        add n nodes, where n is the size of the vector passed as input, and assign to each node its corrispondent value
-        and copy the graph into a new graph in dynamic memory
+        /**
+         * @brief Function to add multiple nodes to the graph and copy the graph into a new graph in dynamic memory.
+         * @param values A vector of doubles representing the values of the nodes.
+         * @return A pointer to the new graph.
+         * @details add n nodes, where n is the size of the vector passed as input, and assign to each node its corrispondent value
+         * @details Copy the graph into a new graph in dynamic memory
+         * @details Internally uses the addNodes function to add the nodes to the new graph.
         */
         WeightedEdgeGraph* addNodesAndCopyNew(const std::vector<double>& values);
         
-        /*
-        add n nodes with names, where n is the size of the vector passed as input, and assign to each node its corrispondent value
-        and copy the graph into a new graph in dynamic memory
+        /**        
+         * @brief Function to add multiple nodes to the graph and copy the graph into a new graph in dynamic memory.
+         * @param names A vector of strings representing the names of the nodes.
+         * @param values A vector of doubles representing the values of the nodes (default is an empty vector).
+         * @return A pointer to the new graph.
+         * @details add n nodes(with n names), where n is the size of the vector passed as input, and assign to each node its corrispondent value
+         * @details Copy the graph into a new graph in dynamic memory.
+         * @details Internally uses the addNodes function to add the nodes to the new graph
+         * @throw std::invalid_argument if the some of the node names already exist in the graph.
         */
         WeightedEdgeGraph* addNodesAndCopyNew(const std::vector<std::string>& names, const std::vector<double>& values=std::vector<double>());
 
