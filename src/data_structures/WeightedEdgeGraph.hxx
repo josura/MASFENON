@@ -272,26 +272,91 @@ class WeightedEdgeGraph{
          * @throw std::invalid_argument if the node names are not found in the graph
          */
         std::vector<double> getNodeValues(const std::vector<std::string>& node=std::vector<std::string>())const;
-//TODO controls over nodes and other things
 
         //optimization functions to make new Matrix, SUGGESTED not using these functions
+        /**
+         * @brief Function to create a new adjacency matrix from the current graph.
+         * @return A new adjacency matrix representing the graph.
+         * @details This function creates a new adjacency matrix from the current graph. It is suggested not to use this function as it may cause memory leaks.
+         * @warning This function is not implemented completely and will probably be removed in the future.
+         */
         Matrix<double> makeMatrix();
 
         // accessory functions
 
+        /**
+         * @brief Function to get the number of nodes in the graph(immutable).
+         * @return The number of nodes in the graph.
+         */
         int getNumNodes()const ;
+        /**
+         * @brief Function to get the number of edges in the graph(immutable).
+         * @return The number of edges in the graph.
+         */
         int getNumEdges()const ;
+        /**
+         * @brief Function to get the names of the nodes in the graph(immutable).
+         * @return A vector of strings representing the names of the nodes.
+         */
         std::vector<std::string> getNodeNames()const{ return nameVector;}
+        /**
+         * @brief Function to get the names of the nodes in the graph(immutable).
+         * @param node The index of the node.
+         * @return A vector of strings representing the names of the nodes.
+         */
         int degreeOfNode(int node)const;
+        /**
+         * @brief Function to know if a node is in the graph(immutable)
+         * @param node The name of the node.
+         * @return true if the node is in the graph, false otherwise.
+         * 
+         */
         bool containsNode(std::string node)const;
 
 
+        /**
+         * @brief Function to get the string representation of the node values(immutable)
+         * @return A string representing the node values.
+         * @details This function returns a string representation of the node values in the graph.
+         */
         std::string getnodeValuesStr()const;
 
+        /**
+         * @brief Function to get the adjacency list of a node by its index(immutable).
+         * @param node The index of the node.
+         * @return A vector of integers representing the adjacent nodes.
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         */
         std::unordered_set<int> getAdjList(int node)const;
+        /**
+         * @brief Function to get the adjacency list of a node by its name(immutable).
+         * @param node The name of the node.
+         * @return A vector of integers representing the adjacent nodes.
+         * @throw std::invalid_argument if the node name is not found in the graph.
+         * @details Internally calls the getAdjList(int node) function.
+         * @see getAdjList(int node)
+         * @see getIndexFromName(std::string name)
+         * @see getNodeToIndexMap()
+         */
         std::unordered_set<int> getAdjList(std::string node)const;
 
+        /**
+         * @brief Function to get the string representation of the adjacency list of a node by its index(immutable).
+         * @param node The index of the node.
+         * @return A string representing the adjacency list of the specified node.
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses the getAdjList(int node) function to get the adjacency list of the specified node and then converts it to a string.
+         * @see getAdjList(int node)
+         */
         std::string getAdjListStr(int node)const;
+        /**
+         * @brief Function to get the string representation of the adjacency list of a node by its name(immutable).
+         * @param node The name of the node.
+         * @return A string representing the adjacency list of the specified node.
+         * @throw std::invalid_argument if the node name is not found in the graph.
+         * @details This function uses the getAdjList(std::string node) function to get the adjacency list of the specified node and then converts it to a string.
+         * @see getAdjList(std::string node)
+         */
         std::string getAdjListStr(std::string node)const;
 
 
