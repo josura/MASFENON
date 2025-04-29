@@ -449,7 +449,17 @@ class WeightedEdgeGraph{
 
         // optimization methods
 
+        /**
+         * @brief Function to get the maximum degree of the graph(immutable).
+         * @return The maximum degree of the graph.
+         * @details The maximum degree of the graph is the maximum degree of all nodes in the graph.
+         */
         int getMaxDegree()const;
+        /**
+         * @brief Function to get the average degree of the graph(immutable).
+         * @return The average degree of the graph.
+         * @details The average degree of the graph is the sum of the degrees of all nodes divided by the number of nodes.
+         */
         double getAverageDegree()const;
 
         std::map<std::string, int> getNodeToIndexMap()const {return nodeToIndex;}
