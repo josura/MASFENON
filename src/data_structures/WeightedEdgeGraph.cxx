@@ -440,7 +440,8 @@ std::unordered_set<int> WeightedEdgeGraph::getAdjList(std::string node)const{
 
 std::string WeightedEdgeGraph::getAdjListStr(int node)const{
     std::string stringa;
-    for(auto it = adjList[node].cbegin(); it != adjList[node].cend();it++){
+    std::unordered_set<int> adjListNode = getAdjList(node);
+    for(auto it = adjListNode.cbegin(); it != adjListNode.cend();it++){
                 stringa += std::to_string(*it) + " ";
             }
     return stringa;
