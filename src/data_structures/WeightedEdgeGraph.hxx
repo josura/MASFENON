@@ -241,9 +241,36 @@ class WeightedEdgeGraph{
         */
         WeightedEdgeGraph* setNodesNames(const std::vector<std::string>& nodenameSets, const std::vector<std::string>& nodenameTargets = std::vector<std::string>());
 
+        // getters
+        /**
+         * @brief Function to get the value of a node by its index.
+         * @param node The index of the node.
+         * @return The value of the specified node.
+         * @throw std::invalid_argument if the node index is out of range.
+        */
         double getNodeValue(int node)const;
+        /**
+         * @brief Function to get the value of a node by its name.
+         * @param node The name of the node.
+         * @return The value of the specified node.
+         * @throw std::invalid_argument if the node name is not found in the graph.
+        */
         double getNodeValue(std::string node)const;
+        /**
+         * @brief Function to get the values of multiple nodes by their indexes
+         * @param node A vector of integers representing the indexes of the nodes
+         * @return A vector of doubles representing the values of the specified nodes.
+         * @details If the vector is empty, returns all node values.
+         * @throw std::invalid_argument if the node indexes are out of range
+         */
         std::vector<double> getNodeValues(const std::vector<int>& node)const;
+        /**
+         * @brief Function to get the values of multiple nodes by their names
+         * @param node A vector of strings representing the names of the nodes
+         * @return A vector of doubles representing the values of the specified nodes.
+         * @details If the vector is empty, returns all node values.
+         * @throw std::invalid_argument if the node names are not found in the graph
+         */
         std::vector<double> getNodeValues(const std::vector<std::string>& node=std::vector<std::string>())const;
 //TODO controls over nodes and other things
 
