@@ -141,7 +141,21 @@ class WeightedEdgeGraph{
             }
         }
 
+        /**
+         * @brief Function to add a node to the graph.
+         * @param value The value of the node (default is 0).
+         * @return A pointer to the updated graph.
+         * @details Adds a node with the specified value to the graph. The node is added at the end of the adjacency matrix and the adjacency list. The name of the node will be set to the index (so same name and index)
+         */
         WeightedEdgeGraph* addNode(double value=0);
+        /**
+         * @brief Function to add a node to the graph with a specified name.
+         * @param name The name of the node.
+         * @param value The value of the node (default is 0).
+         * @return A pointer to the updated graph.
+         * @details Adds a node with the specified name and value to the graph. The node is added at the end of the adjacency matrix and the adjacency list.
+         * @throw std::invalid_argument if the node name already exists in the graph.
+         */
         WeightedEdgeGraph* addNode(std::string name, double value=0);
 
         /*
