@@ -199,13 +199,24 @@ class WeightedEdgeGraph{
         WeightedEdgeGraph* addNodesAndCopyNew(const std::vector<std::string>& names, const std::vector<double>& values=std::vector<double>());
 
 
-        /*
-        set node values by index
+        // setters
+        /**
+         * @brief Function to set the value of a node by its index.
+         * @param node The index of the node.
+         * @param value The value to set.
+         * @return A pointer to the updated graph.
+         * @details Sets the value of the specified node to the given value.
+         * @throw std::invalid_argument if the node index is out of range.
         */
         WeightedEdgeGraph* setNodeValue(int node, double value);
         
-        /*
-        set node values by name
+        /**
+         * @brief Function to set the value of a node by its name.
+         * @param node The name of the node.
+         * @param value The value to set.
+         * @return A pointer to the updated graph.
+         * @details Sets the value of the specified node to the given value.
+         * @throw std::invalid_argument if the node name is not found in the graph.
         */
         WeightedEdgeGraph* setNodeValue(std::string node, double value);
         //WeightedEdgeGraph* setNodesValues(std::vector< double> value,const std::vector<std::string> node = std::vector<std::string>());
