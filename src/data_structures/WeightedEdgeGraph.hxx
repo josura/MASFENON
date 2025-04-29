@@ -98,11 +98,25 @@ class WeightedEdgeGraph{
          */
         WeightedEdgeGraph* addEdge(std::string node1name, std::string node2name, double weight, bool directed=true);
 
+        /**
+         * @brief Function to get the weight of an edge between two nodes.
+         * @param node1 The index of the first node.
+         * @param node2 The index of the second node.
+         * @return The weight of the edge between the specified nodes.
+         * @throw std::out_of_range if one of the nodes is out of range (index). 
+         */
         double getEdgeWeight(int node1, int node2)const{
             if(node1 >= 0 && node2 >= 0)
                 return adjMatrix.getValue(node1,node2);
             else throw std::out_of_range("WeightedEdgeGraph::getEdgeWeight: one of the nodes is out of range(index)");
         }
+        /**
+         * @brief Function to get the weight of an edge between two nodes using their names.
+         * @param node1 The name of the first node.
+         * @param node2 The name of the second node.
+         * @return The weight of the edge between the specified nodes.
+         * @throw std::out_of_range if one of the nodes is out of range (meaning that no node has that name). 
+         */
         double getEdgeWeight(std::string node1, std::string node2)const{
             if(getIndexFromName(node1) >= 0 && getIndexFromName(node2) >= 0)
                 return adjMatrix.getValue(nodeToIndex.at(node1),nodeToIndex.at(node2));
