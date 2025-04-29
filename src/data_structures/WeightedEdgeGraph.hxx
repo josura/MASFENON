@@ -308,6 +308,14 @@ class WeightedEdgeGraph{
          */
         int outDegreeOfNode(int node)const;
         /**
+         * @brief Function to get the in degree of a certain node in the graph(immutable).
+         * @param node The index of the node.
+         * @return an integer representing the in degree of the node.
+         * @details The in degree of a node is the number of edges that are directed towards the node.
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         */
+        int inDegreeOfNode(int node)const;
+        /**
          * @brief Function to know if a node is in the graph(immutable)
          * @param node The name of the node.
          * @return true if the node is in the graph, false otherwise.

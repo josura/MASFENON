@@ -336,6 +336,14 @@ TEST_F(GraphTesting, outDegreeOfNode){
   EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node4")), 0);
   EXPECT_EQ(g4_->outDegreeOfNode(g4_->getIndexFromName("node5")), 0);
 }
+
+TEST_F(GraphTesting, inDegreeOfNode){
+  EXPECT_EQ(g4_->inDegreeOfNode(g4_->getIndexFromName("node1")), 0);
+  EXPECT_EQ(g4_->inDegreeOfNode(g4_->getIndexFromName("node2")), 1);
+  EXPECT_EQ(g4_->inDegreeOfNode(g4_->getIndexFromName("node3")), 1);
+  EXPECT_EQ(g4_->inDegreeOfNode(g4_->getIndexFromName("node4")), 0);
+  EXPECT_EQ(g4_->inDegreeOfNode(g4_->getIndexFromName("node5")), 0);
+}
 //throws and unexpected behaviour management TODO
 
 TEST_F(GraphTesting, gettingNodeValueOfNotPresentNode){

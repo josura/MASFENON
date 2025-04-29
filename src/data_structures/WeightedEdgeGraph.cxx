@@ -128,6 +128,21 @@ int WeightedEdgeGraph::outDegreeOfNode(int node)const{
     return adjList[node].size();
 }
 
+//TODO use adjacency matrix to get the outdegree, since it's more efficient
+int WeightedEdgeGraph::inDegreeOfNode(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        std::cerr << "[ERROR] WeightedEdgeGraph::inDegreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::inDegreeOfNode: invalid argument for indegree of node");
+    }
+    int inDegree = 0;
+    for(int i = 0; i < numberOfNodes; i++){
+        if(adjList[i].contains(node)){
+            inDegree++;
+        }
+    }
+    return inDegree;
+}
+
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weight, bool directed){
     if(node1 >= numberOfNodes || node2 >= numberOfNodes){
         std::cerr << "add edge failed for edges " << std::to_string(node1) << " and " << std::to_string(node2) << std::endl;
