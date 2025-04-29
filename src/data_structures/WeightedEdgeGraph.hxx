@@ -75,6 +75,16 @@ class WeightedEdgeGraph{
          */
         ~WeightedEdgeGraph();
 
+        /**
+         * @brief Function to add an edge to the graph.
+         * @param node1 The index of the first node.
+         * @param node2 The index of the second node.
+         * @param weight The weight of the edge.
+         * @param directed Whether the edge is directed (default is true).
+         * @details Adds an edge between the specified nodes with the given weight. If the edge already exists, it updates the weight.
+         * @return A pointer to the updated graph.
+         * @warning This function doesn't throw exceptions for invalid node indexes. It just prints an error message in cerror and continues 
+         */
         WeightedEdgeGraph* addEdge(int node1, int node2, double weight, bool directed=true);
         WeightedEdgeGraph* addEdge(std::string node1name, std::string node2name, double weight, bool directed=true);
 
