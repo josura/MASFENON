@@ -143,6 +143,14 @@ int WeightedEdgeGraph::inDegreeOfNode(int node)const{
     return inDegree;
 }
 
+int WeightedEdgeGraph::degreeOfNode(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        std::cerr << "[ERROR] WeightedEdgeGraph::degreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::degreeOfNode: invalid argument for degree of node");
+    }
+    return outDegreeOfNode(node) + inDegreeOfNode(node);
+}
+
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weight, bool directed){
     if(node1 >= numberOfNodes || node2 >= numberOfNodes){
         std::cerr << "add edge failed for edges " << std::to_string(node1) << " and " << std::to_string(node2) << std::endl;
