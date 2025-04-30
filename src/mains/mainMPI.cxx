@@ -43,8 +43,8 @@ int main(int argc, char** argv) {
     std::string virtualNodesGranularity = "type"; ///< string variable to indicate the virtual nodes granularity
     std::string performanceFilename = ""; ///< string variable to indicate the performance filename where the performance times are saved
     std::string outputFormat = "singleIteration"; ///< string variable to indicate the output format
-    namespace po = boost::program_options;
-    po::options_description desc("Allowed options");
+    namespace po = boost::program_options; ///< namespace for program options
+    po::options_description desc("Allowed options"); ///< options description
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
         ("fUniqueGraph", po::value<std::string>(), "(string) graph filename, for an example graph see in resources. NOTE: if this option is chosen, graphsFilesFolder cannot be used. For an example see in data data/testdata/testGraph/edges-Graph1-general.tsv")
@@ -85,10 +85,20 @@ int main(int argc, char** argv) {
 
     
 
-    po::variables_map vm;
+    po::variables_map vm; ///< variables map for program options
+    // parse the command line arguments
     po::store(po::parse_command_line(argc, argv, desc), vm);
+    // notify the variables map
+    // this will throw an exception if there are any errors in the command line arguments
     po::notify(vm);
-    std::string filename,subtypesFilename,typesFilename,typesInteractionFoldername,typesInitialPerturbationMatrixFilename,graphsFilesFolder, typeInitialPerturbationFolderFilename,outputFoldername;
+    std::string uniqueGraphFilename; ///< string variable to indicate the filename of the graph, in the case of a single graph for every type
+    std::string subtypesFilename;
+    std::string typesFilename;
+    std::string typesInteractionFoldername;
+    std::string typesInitialPerturbationMatrixFilename;
+    std::string graphsFilesFolder;
+    std::string typeInitialPerturbationFolderFilename;
+    std::string outputFoldername;
     int intertypeIterations,intratypeIterations;
     DissipationModel* dissipationModel = nullptr;
     ConservationModel* conservationModel = nullptr;
@@ -275,9 +285,9 @@ int main(int argc, char** argv) {
     if (vm.count("fUniqueGraph")) {
         logger << "[LOG] file for the graph was set to " 
     << vm["fUniqueGraph"].as<std::string>() << ".\n";
-        filename = vm["fUniqueGraph"].as<std::string>();
-        if(!fileExistsPath(filename)){
-            std::cerr << "[ERROR] file "<< filename <<" for the graph do not exist: aborting"<<std::endl;
+        uniqueGraphFilename = vm["fUniqueGraph"].as<std::string>();
+        if(!fileExistsPath(uniqueGraphFilename)){
+            std::cerr << "[ERROR] file "<< uniqueGraphFilename <<" for the graph do not exist: aborting"<<std::endl;
             return 1;
         }
     } else if(vm.count("graphsFilesFolder")){
@@ -629,7 +639,7 @@ int main(int argc, char** argv) {
     std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>> namesAndEdges;
     // a single graph is used for all the types in case it is specified by the parameter
     if(vm.count("fUniqueGraph")){
-        namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(filename));
+        namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(uniqueGraphFilename));
         graphsNodes.push_back(namesAndEdges[0].first);
         graphs[0] = new WeightedEdgeGraph(graphsNodes[0]);
         for(int i = 1; i < finalWorkload; i++){
