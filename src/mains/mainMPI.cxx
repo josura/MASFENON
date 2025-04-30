@@ -29,15 +29,15 @@
 
 int main(int argc, char** argv) {    
     //program options
-    bool sameTypeCommunication=false;
-    bool saturation=false;
-    bool customSaturation=false;
-    bool conservateInitialNorm=false;
-    bool undirected = false;
-    bool undirectedTypeEdges = false;
-    bool resetVirtualOutputs = false;
-    bool resumeCheckpoint = false;
-    bool saveAugmentedNetworks = false;
+    bool sameTypeCommunication=false; ///< boolean variable to indicate if the same type communication is used
+    bool saturation=false; ///< boolean variable to indicate if saturation is used
+    bool customSaturation=false; ///< boolean variable to indicate if custom saturation is used
+    bool conservateInitialNorm=false; ///< boolean variable to indicate if the initial norm is conserved
+    bool undirected = false; ///< boolean variable to indicate if the single graphs associated to every type are undirected
+    bool undirectedTypeEdges = false; ///< boolean variable to indicate if the edges between types are undirected
+    bool resetVirtualOutputs = false; ///< boolean variable to indicate if the virtual outputs are reset at each iteration
+    bool resumeCheckpoint = false; ///< boolean variable to indicate if the computation should resume from the checkpoint
+    bool saveAugmentedNetworks = false; ///< boolean variable to indicate if the augmented networks should be saved
     std::string logMode="";
     std::string quantizationMethod = "single";
     std::string virtualNodesGranularity = "type";

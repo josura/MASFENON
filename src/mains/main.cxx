@@ -26,7 +26,7 @@
 
 
 int main(int argc, char** argv ) {
-    bool sameTypeCommunication=false;
+    bool sameTypeCommunication=false; ///< boolean variable to indicate if the same type communication is used
     bool saturation=false;
     bool conservateInitialNorm=false;
     bool undirected = false;
