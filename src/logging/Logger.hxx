@@ -81,7 +81,7 @@ public:
     void disable();
 
 private:
-    std::ostream& os_; /**< Output stream reference*/
-    bool enabled_ = true; /**< Flag indicating if logging is currently enabled*/
+    std::ostream& os_; ///< Output stream reference
+    bool enabled_ = true; ///< Flag indicating if logging is currently enabled
 };
  
