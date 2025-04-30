@@ -92,13 +92,12 @@ int main(int argc, char** argv) {
     // this will throw an exception if there are any errors in the command line arguments
     po::notify(vm);
     std::string uniqueGraphFilename; ///< string variable to indicate the filename of the graph, in the case of a single graph for every type
-    std::string subtypesFilename;
-    std::string typesFilename;
-    std::string typesInteractionFoldername;
-    std::string typesInitialPerturbationMatrixFilename;
-    std::string graphsFilesFolder;
-    std::string typeInitialPerturbationFolderFilename;
-    std::string outputFoldername;
+    std::string subtypesFilename; ///< string variable to indicate the filename of the subtypes, where the list of subtypes to use during the computation is contained
+    std::string typesInteractionFoldername; ///< string variable to indicate the folder where the types interactions are contained
+    std::string typesInitialPerturbationMatrixFilename; ///< string variable to indicate the filename of the initial perturbation matrix, where the initial perturbation values are contained. WARNING: only use this option if the graph is unique for every type, otherwise use the initialPerturbationPerTypeFolder
+    std::string graphsFilesFolder; ///< string variable to indicate the folder where the graphs edges files are contained
+    std::string typeInitialPerturbationFolderFilename; ///< string variable to indicate the folder where the initial perturbation values for every type are contained
+    std::string outputFoldername; ///< string variable to indicate the folder where the output files will be saved
     int intertypeIterations,intratypeIterations;
     DissipationModel* dissipationModel = nullptr;
     ConservationModel* conservationModel = nullptr;
