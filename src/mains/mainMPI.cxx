@@ -38,13 +38,13 @@ int main(int argc, char** argv) {
     bool resetVirtualOutputs = false; ///< boolean variable to indicate if the virtual outputs are reset at each iteration
     bool resumeCheckpoint = false; ///< boolean variable to indicate if the computation should resume from the checkpoint
     bool saveAugmentedNetworks = false; ///< boolean variable to indicate if the augmented networks should be saved
-    std::string logMode="";
-    std::string quantizationMethod = "single";
-    std::string virtualNodesGranularity = "type";
+    std::string logMode=""; ///< string variable to indicate the logging mode
+    std::string quantizationMethod = "single"; ///< string variable to indicate the quantization method
+    std::string virtualNodesGranularity = "type"; ///< string variable to indicate the virtual nodes granularity
+    std::string performanceFilename = ""; ///< string variable to indicate the performance filename where the performance times are saved
+    std::string outputFormat = "singleIteration"; ///< string variable to indicate the output format
     namespace po = boost::program_options;
     po::options_description desc("Allowed options");
-    std::string performanceFilename = "";
-    std::string outputFormat = "singleIteration";
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
         ("fUniqueGraph", po::value<std::string>(), "(string) graph filename, for an example graph see in resources. NOTE: if this option is chosen, graphsFilesFolder cannot be used. For an example see in data data/testdata/testGraph/edges-Graph1-general.tsv")
