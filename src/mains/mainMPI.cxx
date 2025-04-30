@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
         ("virtualNodesGranularity", po::value<std::string>(), "(string) granularity of the virtual nodes, available options are: 'type', 'node'(unstable), 'typeAndNode', default to type")
         ("virtualNodesGranularityParameters", po::value<std::vector<std::string>>()->multitoken(), "(vector<string>) parameters for the virtual nodes granularity, NOT USED for now")
         ("quantizationMethod",po::value<std::string>(), "(string) define the quantization method used to quantize the contact times for the edges between different types, available options are: 'single' and 'multiple'") // aggiungere documentazione
-        ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none', default to all")
+        ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none'. Default to all")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
         ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'")
@@ -108,6 +108,7 @@ int main(int argc, char** argv) {
     std::map<std::string,std::vector<std::string>> outputMatricesRowNames; ///< map of the output matrices row names, where the key is the name of the type, and the value is the vector of the row names(node names for the selected type)
 
 
+    // printing the help section if the help option is set, and return
     if (vm.count("help")) {
         std::cout << desc << std::endl;
         return 1;
@@ -120,7 +121,7 @@ int main(int argc, char** argv) {
     }
 
     //logging options
-    Logger logger(std::cout);
+    Logger logger(std::cout); ///< logger object to log the messages
     if(vm.count("loggingOptions")){
         if(logMode == "all"){
             std::cout << "[LOG] logging options set to all"<<std::endl;
