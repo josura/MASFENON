@@ -1,3 +1,9 @@
+/**
+ * @file stringUtilities.hxx
+ * @ingroup Core
+ * @brief  This file contains the declaration of the string utilities functions
+ * @details  The functions are used to work on strings
+ */
 #pragma once
 #include <vector>
 #include <string>
