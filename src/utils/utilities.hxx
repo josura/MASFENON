@@ -194,6 +194,15 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
  */
 std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes);
 
+/**
+ * @brief Read the node names from the names in a folder
+ * @param folderPath the path of the folder
+ * @return  the map of the node names <type, vector of node names>
+ * @note The files must contain the column : name
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the name column
+ * @note Other columns are ignored
+ */
 std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string folderPath);
 
 /**
