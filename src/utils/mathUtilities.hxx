@@ -351,7 +351,14 @@ bool setDoubleContainsInterval(std::set<double> set, double lower, double upper)
  */
 int setDoubleIntervalWidth(std::set<double> set, double lower, double upper);
 
-
+/**
+ * @brief  Function that implements the subtraction of two vectors of the same size
+ * @return  the result of the subtraction
+ * @param  vec1 : the first vector
+ * @param  vec2 : the second vector
+ * @details the function is used to subtract two vectors of the same size, the function throws an exception if the vectors are not of the same size. The vector can contain any type of value, as long as that type has the operator - defined
+ * @throws std::invalid_argument if the vectors are not of the same size
+ */
 template<typename T>
 std::vector<T> vectorSubtraction(std::vector<T> vec1, std::vector<T> vec2){
     if(vec1.size()!=vec2.size()){
@@ -364,6 +371,14 @@ std::vector<T> vectorSubtraction(std::vector<T> vec1, std::vector<T> vec2){
     return retVec;
 }
 
+/**
+ * @brief  Function that implements the addition of two vectors of the same size
+ * @return  the result of the addition
+ * @param  vec1 : the first vector
+ * @param  vec2 : the second vector
+ * @details the function is used to add two vectors of the same size, the function throws an exception if the vectors are not of the same size. The vector can contain any type of value, as long as that type has the operator + defined
+ * @throws std::invalid_argument if the vectors are not of the same size
+ */
 template<typename T>
 std::vector<T> vectorAddition(std::vector<T> vec1, std::vector<T> vec2){
     if(vec1.size()!=vec2.size()){
@@ -376,6 +391,13 @@ std::vector<T> vectorAddition(std::vector<T> vec1, std::vector<T> vec2){
     return retVec;
 }
 
+/**
+ * @brief  Function that implements the intersection of two vectors(set intersection)
+ * @return  the result of the intersection
+ * @param  vec1 : the first vector
+ * @param  vec2 : the second vector
+ * @details the function is used to find the intersection of two vectors. The vector can contain any type of value, as long as that type has the operator == defined
+ */
 template<typename T>
 std::vector<T> vectorsIntersection(std::vector<T> vec1, std::vector<T> vec2){
     std::vector<T> retVec;
