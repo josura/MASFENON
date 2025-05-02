@@ -73,6 +73,7 @@ long int szudzik(int x, int y);
 */
 std::unordered_set<int> intersectionSet(std::unordered_set<int> set1,std::unordered_set<int> set2);
 
+// setters for random values
 void setRandom(int& val);
 void setRandom(double& val);
 void setRandom(char& val);
@@ -81,6 +82,10 @@ void setRandom(char& val);
 /**
  * @brief   Generate a random matrix of size rows x cols
  * @return  the random matrix
+ * @param  rows : the number of rows
+ * @param  cols : the number of columns
+ * @details the matrix is generated using the random number generator.
+ * This function is mainly used for testing purposes.
 */
 template<typename T>
 std::vector<std::vector< T>> createRandomMatrixVector(int rows,int cols){
@@ -95,11 +100,55 @@ std::vector<std::vector< T>> createRandomMatrixVector(int rows,int cols){
 
 
 // convert size to int and  launch an exception if it is not possible
+/**
+ * @brief  Convert a size_t to an int
+ * @return  the int value
+ * @param  u : the size_t value
+ * @details the function is used to convert a size_t to an int, the function throws an exception if the size_t value is greater than the maximum value of an int
+ * This function is mainly used to avoid overflow errors when using size_t values in functions that expect int values, and to get rid of the warnings.
+ */
 int SizeToInt(size_t u);
 
+// accessory functions for the comparison of floating point numbers
+/**
+ * @brief  Compare two floating point numbers
+ * @return  true if the numbers are approximately equal, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the numbers are approximately equal, false otherwise
+ * approximately Equal means that |a-b| <= epsilon * max(|a|, |b|)
+ */
 bool approximatelyEqual(float a, float b, float epsilon);
+/**
+ * @brief  Compare two floating point numbers
+ * @return  true if the numbers are essentially equal, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the numbers are essentially equal, false otherwise
+ * essentially Equal means that |a-b| <= epsilon * min(|a|, |b|)
+ */
 bool essentiallyEqual(float a, float b, float epsilon);
+/**
+ * @brief  Compare two floating point numbers
+ * @return  true if the first number is definitely greater than the second number, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the first number is definitely greater than the second number, false otherwise
+ * definitelyGreaterThan means that a-b > epsilon * max(|a|, |b|)
+ */
 bool definitelyGreaterThan(float a, float b, float epsilon);
+/**
+ * @brief  Compare two floating point numbers
+ * @return  true if the first number is definitely less than the second number, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the first number is definitely less than the second number, false otherwise
+ * definitelyLessThan means that b-a > epsilon * max(|a|, |b|)
+ */
 bool definitelyLessThan(float a, float b, float epsilon);
 
 
