@@ -215,15 +215,22 @@ double lerping(double a, double b, double t);
 /**
  * @brief  Convert an array to a vector
  * @return  the vector
+ * @param  array : the array
+ * @param  size : the size of the array
+ * @details the function is used to convert an array to a vector, the function is used to avoid using dynamic arrays
 */
-
 template<typename T>
 std::vector<T> arrayToVector(T* array, int size){
     return std::vector<T>(array, array + size);
 }
 
 
-// function to return the keys in a map
+/**
+ * @brief  Get the keys of a map
+ * @return  the keys of the map
+ * @param  input_map : the map
+ * @details the function is used to get the keys of a map, the function is used to avoid using dynamic arrays
+*/
 template<typename K, typename V>
 std::vector<K> getKeys(std::map<K,V> const& input_map) {
     std::vector<K> retval;
@@ -233,8 +240,19 @@ std::vector<K> getKeys(std::map<K,V> const& input_map) {
     return retval;
 }
 
-// A hash function used to hash a pair of any kind
+// hash structures for unordered_map
+/**
+ * @brief Hash structure for a pair of strings
+ * @details the structure is used to hash a pair of strings, the function is used to generate a hash value for a pair of strings
+ * the function implemented inside is used to generate a hash value for a pair of strings
+ */
 struct hash_pair_strings {
+    /**
+     * @brief  Hash function for a pair of strings, implemented with the operator() that will be used by unordered_map
+     * @return  the hash value
+     * @param  p : the pair of strings
+     * @details the function is used to generate a hash value for a pair of strings, the function is used to generate a hash value for a pair of strings
+     */
     size_t operator()(const std::pair<std::string, std::string>& p) const
     {
         std::string tmp;
@@ -256,7 +274,18 @@ struct hash_pair_strings {
     }
 };
 
+/**
+ * @brief Hash structure for a pair of integers
+ * @details the structure is used to hash a pair of integers, the function is used to generate a hash value for a pair of integers
+ * the function implemented inside is used to generate a hash value for a pair of integers
+ */
 struct hash_pair_ints {
+    /**
+     * @brief  Hash function for a pair of integers, implemented with the operator() that will be used by unordered_map
+     * @return  the hash value
+     * @param  p : the pair of integers
+     * @details the function is used to generate a hash value for a pair of integers, the function is used to generate a hash value for a pair of integers
+     */
     size_t operator()(const std::pair<int, int>& p) const
     {
         long int tmp;
@@ -269,7 +298,18 @@ struct hash_pair_ints {
     }
 };
 
+/**
+ * @brief Hash structure for a quadruple of strings
+ * @details the structure is used to hash a quadruple of strings, the function is used to generate a hash value for a quadruple of strings
+ * the function implemented inside is used to generate a hash value for a quadruple of strings
+ */
 struct hash_quadruple_strings {
+    /**
+     * @brief  Hash function for a quadruple of strings, implemented with the operator() that will be used by unordered_map
+     * @return  the hash value
+     * @param  t : the quadruple of strings
+     * @details the function is used to generate a hash value for a quadruple of strings, the function is used to generate a hash value for a quadruple of strings
+     */
     size_t operator()(const std::tuple<std::string, std::string,std::string, std::string>& t) const
     {
         std::string tmp;
