@@ -74,6 +74,7 @@ bool controlForDuplicates(std::vector<T> v){
 
 /**
  * @brief   Control if the file exists in the current directory
+ * @param name the name of the file
  * @return  true if the file exists, false otherwise
  * @details  The file is checked using the stat function
  */
@@ -81,6 +82,7 @@ bool file_exists (const std::string& name);
 
 /**
  * @brief   Control if the file exists in the specified path
+ * @param filePath the path of the file
  * @return  true if the file exists, false otherwise
  * @details  The file is checked using the stat function
  * @note also check if the file is a regular file
@@ -88,6 +90,7 @@ bool file_exists (const std::string& name);
 bool fileExistsPath(const std::string& filePath);
 /**
  * @brief   Control if the folder exists in the specified path
+ * @param folderPath the path of the folder
  * @return  true if the folder exists, false otherwise
  * @details  The folder is checked using the stat function
  */
@@ -95,6 +98,7 @@ bool folderExists(const std::string& folderPath);
 /**
  * @brief   Create the folder in the specified path
  * @return  true if the folder is created, false otherwise
+ * @param folderPath the path of the folder
  * @details  The folder is created using the create_directory function
  * @warning Sometimes the creation of the folder fails and the function still returns true
  * @note the function will return false if the folder already exists and also if the folder is not created, so this needs to be controlled (and probably the function should be changed)
@@ -103,6 +107,10 @@ bool createFolder(const std::string& folderPath);
 /**
  * @brief   List the files in the specified folder
  * @return  the vector of the files in the folder
+ * @param folderPath the path of the folder
+ * @param noHiddenFiles if true, the hidden files are not included in the list
+ * @param noFolders if true, the folders are not included in the list
+ * @details  The files are listed using the directory_iterator function
  */
 std::vector<std::string> listFiles(const std::string& folderPath,bool noHiddenFiles=true, bool noFolders=true);
 
