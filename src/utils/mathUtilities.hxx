@@ -284,7 +284,9 @@ struct hash_pair_ints {
      * @brief  Hash function for a pair of integers, implemented with the operator() that will be used by unordered_map
      * @return  the hash value
      * @param  p : the pair of integers
-     * @details the function is used to generate a hash value for a pair of integers, the function is used to generate a hash value for a pair of integers
+     * @details the function is used to generate a hash value for a pair of integers, the function is used to generate a hash value for a pair of integers. Uses szudzik function to generate a unique integer from two integers
+     * @see https://en.wikipedia.org/wiki/Szudzik%27s_function
+     * @see utils/mathUtilities.hxx szudzik function
      */
     size_t operator()(const std::pair<int, int>& p) const
     {
@@ -293,7 +295,6 @@ struct hash_pair_ints {
 
         auto hashStrings = std::hash<long int>();
          
-        // If hash1 == hash2, their XOR is zero.
         return hashStrings(tmp);
     }
 };
