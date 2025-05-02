@@ -64,16 +64,49 @@ arma::Mat<T> vectorToArmaMatrixRepeatColumns(std::vector<T> vec, int n){
     return arma::repmat(arma::Col<T>(vec), 1, n);
 }
 
+/**
+ * @brief  normalize the columns of an armadillo matrix
+ * @param matr the Armadillo matrix
+ * @return the normalized Armadillo matrix
+ * @details  The columns are normalized to have a norm of 1
+ */
 template<typename T>
 arma::Mat<T> normalizeColumns(arma::Mat<T> matr);
 
+/**
+ * @brief  normalize the rows of an armadillo matrix
+ * @param matr the Armadillo matrix
+ * @return the normalized Armadillo matrix
+ * @details  The rows are normalized to have a norm of 1
+ */
 template<typename T>
 arma::Mat<T> normalizeRows(arma::Mat<T> matr);
 
+/**
+ * @brief  normalize the columns of an armadillo matrix to have a sum of 1
+ * @param matr the Armadillo matrix
+ * @return the normalized Armadillo matrix
+ * @details  The columns are normalized to have a sum of 1
+ * @warning  The columns are normalized to have a sum of 1, not a norm of 1
+ * @warning  Negative values could lead to a final sum of 0
+ */
 template<typename T>
 arma::Mat<T> normalize1Columns(arma::Mat<T> matr);
 
+/**
+ * @brief  normalize the rows of an armadillo matrix to have a sum of 1
+ * @param matr the Armadillo matrix
+ * @return the normalized Armadillo matrix
+ * @details  The rows are normalized to have a sum of 1
+ * @warning  The rows are normalized to have a sum of 1, not a norm of 1
+ * @warning  Negative values could lead to a final sum of 0
+ */
 template<typename T>
 arma::Mat<T> normalize1Rows(arma::Mat<T> matr);
 
+/**
+ * @brief  print a Armadillo matrix
+ * @param my_matrix the Armadillo matrix
+ * @details  The matrix is printed to the standard output
+ */
 void print_mat(arma::mat my_matrix);
