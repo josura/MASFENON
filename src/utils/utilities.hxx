@@ -40,20 +40,6 @@
 #include "utils/mathUtilities.hxx"
 #include "utils/stringUtilities.hxx"
 
-//custom types
-typedef std::vector<int> NodeList;
-using NodeBitList = std::vector<bool>;
-using NodeBitArray = bool*;
-using NodeSet = std::unordered_set<int>; 
-
-std::ostream& operator<< (std::ostream &out, NodeBitList const& data);
-std::ostream& operator<< (std::ostream &out, NodeList const& data);
-std::ostream& operator<< (std::ostream &out, NodeSet const& data);
-
-NodeList* nodeBitArrayToList(NodeBitArray const& nodeArray,int arraySize);
-NodeSet* nodeBitArrayToSet(NodeBitArray const& nodeArray,int arraySize);
-
-void printNodeBitArray(NodeBitArray nodeArray,int size);
 
 template<typename T>
 void printVector(std::vector<T> vec){
@@ -65,7 +51,6 @@ void printVector(std::vector<T> vec){
 
 void printUsage(std::string execName);
 
-std::string nodeBitArrayToString(NodeBitArray nodeArray,int size);
 
 template<typename T>
 bool controlForDuplicates(std::vector<T> v){
