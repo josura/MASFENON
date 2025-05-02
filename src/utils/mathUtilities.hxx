@@ -16,45 +16,45 @@
 #include <map>
 #include <algorithm>
 /**
- * \brief   Generate a random integer number between min and max
- * \return  the random number
+ * @brief   Generate a random integer number between min and max
+ * @return  the random number
 */
 int randomNumber(int min, int max);
 /**
- * \brief   Generate a random real number between min and max
- * \return  the random number
+ * @brief   Generate a random real number between min and max
+ * @return  the random number
 */
 double randomRealNumber(double min, double max);
 /**
- * \brief   Generate a random character between A and Z
- * \return  the random character
+ * @brief   Generate a random character between A and Z
+ * @return  the random character
 */
 char generateRandomCharacter();
 
 /**
- * \brief   Generate a random integer vector of length size
- * \return  the random vector
+ * @brief   Generate a random integer vector of length size
+ * @return  the random vector
 */
 std::vector<int> randomVector(int min, int max , int size);
 
 /**
- * \brief   Generate a random Boolean vector of length size
- * \return  the random vector
+ * @brief   Generate a random Boolean vector of length size
+ * @return  the random vector
 */
 bool* randomBooleanArray(int size);
 
 /**
- * \brief   szudzik function to generate a unique integer from two integers
- * \return  the unique integer
- * \param  x : the first integer
- * \param  y : the second integer
+ * @brief   szudzik function to generate a unique integer from two integers
+ * @return  the unique integer
+ * @param  x : the first integer
+ * @param  y : the second integer
 */
 long int szudzik(int x, int y);
 
 
 /**
- * \brief  Generate the intersection of two sets
- * \return  the intersection of the two sets
+ * @brief  Generate the intersection of two sets
+ * @return  the intersection of the two sets
 */
 std::unordered_set<int> intersectionSet(std::unordered_set<int> set1,std::unordered_set<int> set2);
 
@@ -64,8 +64,8 @@ void setRandom(char& val);
 
 //generate random matrix
 /**
- * \brief   Generate a random matrix of size rows x cols
- * \return  the random matrix
+ * @brief   Generate a random matrix of size rows x cols
+ * @return  the random matrix
 */
 template<typename T>
 std::vector<std::vector< T>> createRandomMatrixVector(int rows,int cols){
@@ -99,15 +99,15 @@ scale the hyperbolic tangent function, the return value is always < c , the func
 double hyperbolicTangentScaled(double xInput, double scaleFactor );
 
 /**
- * \brief  Linear interpolation between two values, a and b, with a parameter t going from 0 to 1
- * \return  the interpolated value
+ * @brief  Linear interpolation between two values, a and b, with a parameter t going from 0 to 1
+ * @return  the interpolated value
 */
 
 double lerping(double a, double b, double t);
 
 /**
- * \brief  Convert an array to a vector
- * \return  the vector
+ * @brief  Convert an array to a vector
+ * @return  the vector
 */
 
 template<typename T>
@@ -185,21 +185,21 @@ struct hash_quadruple_strings {
 };
 
 /**
- * \brief   Returns a boolean value if the set contains the interval(width is nonzero):
+ * @brief   Returns a boolean value if the set contains the interval(width is nonzero):
  *         - set is the set of values
  *         - lower is the lower bound of the interval
  *         - upper  is the upper bound of the interval
- * \return true if the set contains the interval, false otherwise
+ * @return true if the set contains the interval, false otherwise
  */
 bool setDoubleContainsInterval(std::set<double> set, double lower, double upper);
 
 
 /**
- * \brief   Returns how many values fall in the interval:
+ * @brief   Returns how many values fall in the interval:
  *         - set is the set of values
  *         - lower is the lower bound of the interval
  *         - upper  is the upper bound of the interval
- * \return the number of values that fall in the interval
+ * @return the number of values that fall in the interval
  */
 int setDoubleIntervalWidth(std::set<double> set, double lower, double upper);
 
