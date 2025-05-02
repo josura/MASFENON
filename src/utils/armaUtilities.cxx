@@ -1,3 +1,9 @@
+/**
+ * @file armaUtilities.cxx
+ * @ingroup Core
+ * @brief  This file contains the implementation of the Armadillo utilities functions that were not implemented in the header file
+ * @details  The functions are used to work on Armadillo matrices and vectors
+ */
 #include<iostream>
 #include "utils/armaUtilities.hxx"
 #include "utils/mathUtilities.hxx"
