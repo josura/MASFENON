@@ -151,10 +151,45 @@ bool definitelyGreaterThan(float a, float b, float epsilon);
  */
 bool definitelyLessThan(float a, float b, float epsilon);
 
-
+/**
+ * @brief  Compare two floating point numbers (double precision)
+ * @return  true if the numbers are approximately equal, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the numbers are approximately equal, false otherwise
+ * approximately Equal means that |a-b| <= epsilon * max(|a|, |b|)
+ */
 bool approximatelyEqual(double a, double b, double epsilon);
+/**
+ * @brief  Compare two floating point numbers (double precision)
+ * @return  true if the numbers are essentially equal, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the numbers are essentially equal, false otherwise
+ * essentially Equal means that |a-b| <= epsilon * min(|a|, |b|)
+ */
 bool essentiallyEqual(double a, double b, double epsilon);
+/**
+ * @brief  Compare two floating point numbers (double precision)
+ * @return  true if the first number is definitely greater than the second number, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the first number is definitely greater than the second number, false otherwise
+ * definitelyGreaterThan means that a-b > epsilon * max(|a|, |b|)
+ */
 bool definitelyGreaterThan(double a, double b, double epsilon);
+/**
+ * @brief  Compare two floating point numbers (double precision)
+ * @return  true if the first number is definitely less than the second number, false otherwise
+ * @param  a : the first number
+ * @param  b : the second number
+ * @param  epsilon : the tolerance value
+ * @details the function is used to compare two floating point numbers, the function returns true if the first number is definitely less than the second number, false otherwise
+ * definitelyLessThan means that b-a > epsilon * max(|a|, |b|)
+ */
 bool definitelyLessThan(double a, double b, double epsilon);
 
 /**
