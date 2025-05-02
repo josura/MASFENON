@@ -15,7 +15,12 @@ Checkpoint::Checkpoint() {
     // if not, create it
     if (folderExists(this->checkPointFolder) == false)
     {
-        createFolder(this->checkPointFolder);
+        bool success = createFolder(this->checkPointFolder);
+        if (!success)
+        {
+            std::cerr << "[ERROR] Checkpoint::Checkpoint: Unable to create folder " << this->checkPointFolder << std::endl;
+            throw std::runtime_error("[ERROR] Checkpoint::Checkpoint: Unable to create folder " + this->checkPointFolder);
+        }
     }
     
 }
