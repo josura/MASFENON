@@ -53,7 +53,12 @@ void printVector(std::vector<T> vec){
     std::cout << std::endl;
 }
 
-
+/**
+ * @brief control for duplicates in a vector
+ * @param v the vector to control
+ * @return true if there are duplicates, false otherwise
+ * @details the vector is sorted and then the unique function is used to remove duplicates
+ */
 template<typename T>
 bool controlForDuplicates(std::vector<T> v){
     std::vector<T> v2 = v;
@@ -70,22 +75,27 @@ bool controlForDuplicates(std::vector<T> v){
 /**
  * @brief   Control if the file exists in the current directory
  * @return  true if the file exists, false otherwise
+ * @details  The file is checked using the stat function
  */
 bool file_exists (const std::string& name);
 
 /**
  * @brief   Control if the file exists in the specified path
  * @return  true if the file exists, false otherwise
+ * @details  The file is checked using the stat function
+ * @note also check if the file is a regular file
  */
 bool fileExistsPath(const std::string& filePath);
 /**
  * @brief   Control if the folder exists in the specified path
  * @return  true if the folder exists, false otherwise
+ * @details  The folder is checked using the stat function
  */
 bool folderExists(const std::string& folderPath);
 /**
  * @brief   Create the folder in the specified path
  * @return  true if the folder is created, false otherwise
+ * @details  The folder is created using the create_directory function
  */
 bool createFolder(const std::string& folderPath);
 /**
