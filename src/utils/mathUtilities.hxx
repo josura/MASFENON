@@ -333,9 +333,9 @@ struct hash_quadruple_strings {
 
 /**
  * @brief   Returns a boolean value if the set contains the interval(width is nonzero):
- *         - set is the set of values
- *         - lower is the lower bound of the interval
- *         - upper  is the upper bound of the interval
+ * @param set is the set of values
+ * @param lower is the lower bound of the interval
+ * @param upper  is the upper bound of the interval
  * @return true if the set contains the interval, false otherwise
  */
 bool setDoubleContainsInterval(std::set<double> set, double lower, double upper);
@@ -343,9 +343,9 @@ bool setDoubleContainsInterval(std::set<double> set, double lower, double upper)
 
 /**
  * @brief   Returns how many values fall in the interval:
- *         - set is the set of values
- *         - lower is the lower bound of the interval
- *         - upper  is the upper bound of the interval
+ * @param set is the set of values
+ * @param lower is the lower bound of the interval
+ * @param upper  is the upper bound of the interval
  * @return the number of values that fall in the interval
  */
 int setDoubleIntervalWidth(std::set<double> set, double lower, double upper);
