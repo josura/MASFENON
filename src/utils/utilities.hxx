@@ -114,6 +114,14 @@ bool createFolder(const std::string& folderPath);
  */
 std::vector<std::string> listFiles(const std::string& folderPath,bool noHiddenFiles=true, bool noFolders=true);
 
+// reading from files
+/**
+ * @brief   Returns the edges list by index from a file
+ * @param filename the name of the file
+ * @return  the edges list of indices
+ * @details  The file is read using the ifstream function
+ * @note    The file must be in the format: node1 node2 weight
+ */
 std::pair<std::vector<int>,std::vector<std::tuple<int,int,double>>> edgesFileToEdgesListByIndex(std::string filename);
 std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>> edgesFileToEdgesListAndNodesByName(std::string filename);
 std::pair<std::vector<std::string>,std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>>> edgesFileToEdgesListAndNodesByNameFromFolder(std::string filename);
