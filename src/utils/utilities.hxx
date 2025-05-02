@@ -123,7 +123,31 @@ std::vector<std::string> listFiles(const std::string& folderPath,bool noHiddenFi
  * @note    The file must be in the format: node1 node2 weight
  */
 std::pair<std::vector<int>,std::vector<std::tuple<int,int,double>>> edgesFileToEdgesListByIndex(std::string filename);
+/**
+ * @brief   Returns the edges list and nodes from a file
+ * @param filename the name of the file
+ * @return  the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges)
+ * @details  The file is read using the ifstream function
+ * @note    The file must contain the following columns:
+ *         - start/source
+ *         - end/target
+ *         - weight
+ * @note Other columns are ignored
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the start/source, end/target or weight columns
+ */
 std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>> edgesFileToEdgesListAndNodesByName(std::string filename);
+/**
+ * @brief   Returns the edges list and nodes from the files in a folder
+ * @param filename the name of the folder
+ * @return  the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges)
+ * @details  The files are read using the function edgesFileToEdgesListAndNodesByName
+ * @note    The files must contain the following columns:
+ *        - start/source
+ *        - end/target
+ *        - weight
+ * @see edgesFileToEdgesListAndNodesByName
+ */
 std::pair<std::vector<std::string>,std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>>> edgesFileToEdgesListAndNodesByNameFromFolder(std::string filename);
 std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesMatrixToTypeVectors(std::string filename, const std::vector<std::string>& finalNames,std::vector<std::string> subTypes);
 std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes, const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType = std::vector<std::string>());
