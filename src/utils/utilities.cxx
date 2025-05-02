@@ -1,3 +1,9 @@
+/**
+ * @file utilities.cxx
+ * @ingroup Core
+ * @brief  This file contains the implementation of the utilities functions
+ * @details  The functions are used to work on files, strings, vectors and matrices
+ */
 #include "utils/utilities.hxx"
 #include <algorithm>
 #include <cmath>
