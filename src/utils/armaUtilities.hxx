@@ -31,14 +31,38 @@ std::vector<T> armaColumnToVector(arma::Col<T> matr){return arma::conv_to< std::
 template<typename T>
 std::vector<T> armaRowToVector(arma::Row<T> matr){return arma::conv_to< std::vector<T> >::from(matr);}
 
+/**
+ * @brief  convert a vector to an armadillo column vector
+ * @param vec the vector
+ * @return the Armadillo column vector
+ */
 template<typename T>
 arma::Col<T> vectorToArmaColumn(std::vector<T> vec){return arma::Col<T>(vec);}
 
+/**
+ * @brief  convert a vector to an armadillo row vector
+ * @param vec the vector
+ * @return the Armadillo row vector
+ */
 template<typename T>
 arma::Row<T> vectorToArmaRow(std::vector<T> vec){return arma::Row<T>(vec);}
 
+/**
+ * @brief  convert a vector to an armadillo matrix, repeating the vector n times
+ * @param vec the vector
+ * @param n the number of times to repeat the vector
+ * @return the Armadillo matrix
+ * @details  The vector is repeated n times as columns
+ * @note  The vector must be of size n > 0
+ * @throw std::invalid_argument if n <= 0
+ */
 template<typename T>
-arma::Mat<T> vectorToArmaMatrixRepeatColumns(std::vector<T> vec, int n){return arma::repmat(arma::Col<T>(vec), 1, n);}
+arma::Mat<T> vectorToArmaMatrixRepeatColumns(std::vector<T> vec, int n){
+    if (n<=0) {
+        throw std::invalid_argument("vectorToArmaMatrixRepeatColumns: n must be greater than 0");
+    }
+    return arma::repmat(arma::Col<T>(vec), 1, n);
+}
 
 template<typename T>
 arma::Mat<T> normalizeColumns(arma::Mat<T> matr);
