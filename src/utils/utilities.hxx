@@ -40,7 +40,11 @@
 #include "utils/mathUtilities.hxx"
 #include "utils/stringUtilities.hxx"
 
-
+/**
+ * @brief print a vector of any type
+ * @param vec the vector to print
+ * @details the vector is printed in the format 1,2,3
+ */
 template<typename T>
 void printVector(std::vector<T> vec){
     for (uint i = 0; i < vec.size(); ++i) {
@@ -48,8 +52,6 @@ void printVector(std::vector<T> vec){
     }
     std::cout << std::endl;
 }
-
-void printUsage(std::string execName);
 
 
 template<typename T>
@@ -66,29 +68,29 @@ bool controlForDuplicates(std::vector<T> v){
 
 
 /**
- * \brief   Control if the file exists in the current directory
- * \return  true if the file exists, false otherwise
+ * @brief   Control if the file exists in the current directory
+ * @return  true if the file exists, false otherwise
  */
 bool file_exists (const std::string& name);
 
 /**
- * \brief   Control if the file exists in the specified path
- * \return  true if the file exists, false otherwise
+ * @brief   Control if the file exists in the specified path
+ * @return  true if the file exists, false otherwise
  */
 bool fileExistsPath(const std::string& filePath);
 /**
- * \brief   Control if the folder exists in the specified path
- * \return  true if the folder exists, false otherwise
+ * @brief   Control if the folder exists in the specified path
+ * @return  true if the folder exists, false otherwise
  */
 bool folderExists(const std::string& folderPath);
 /**
- * \brief   Create the folder in the specified path
- * \return  true if the folder is created, false otherwise
+ * @brief   Create the folder in the specified path
+ * @return  true if the folder is created, false otherwise
  */
 bool createFolder(const std::string& folderPath);
 /**
- * \brief   List the files in the specified folder
- * \return  the vector of the files in the folder
+ * @brief   List the files in the specified folder
+ * @return  the vector of the files in the folder
  */
 std::vector<std::string> listFiles(const std::string& folderPath,bool noHiddenFiles=true, bool noFolders=true);
 
@@ -103,41 +105,41 @@ std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> in
 std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string folderPath);
 
 /**
- * \brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, it also return the graph of the interactions between types(as a tuple of:
+ * @brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, it also return the graph of the interactions between types(as a tuple of:
  *         - the start type/agent
  *         - the end type/agent
  *         - the contact times of the interaction
  *         granularity needs to be specified as an argument
- * \return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> interactionContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,int maximumIntertypeTime=INT32_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false);
 /**
- * \brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, it also return the graph of the interactions between types(as a tuple of:
+ * @brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, it also return the graph of the interactions between types(as a tuple of:
  *         - the start type/agent
  *         - the end type/agent
  *         - the contact times of the interaction, as an unordered set of doubles
  *         granularity needs to be specified as an argument
- * \return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,int maximumIntertypeTime=INT32_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false, double timestep=1.0);
 /**
- * \brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, uses doubles in principle for contacts it also return the graph of the interactions between types(as a tuple of:
+ * @brief   Returns the new virtual nodes associated with a type along the edges in the augmented graph, uses doubles in principle for contacts it also return the graph of the interactions between types(as a tuple of:
  *         - the start type/agent
  *         - the end type/agent
  *         - the contact times of the interaction, as an unordered set of doubles
  *         granularity needs to be specified as an argument
- * \return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,double maximumIntertypeTime=DBL_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false, double timestep=1.0);
 std::vector<double> saturationFileToVector(std::string filename,const std::map<std::string, int>& ensembleToIndexMap);
 /**
- * \brief   Return the types taken from the file names in a folder with the extension .tsv
+ * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
  *         the function will return the vector {"A","B","C","D","E"}
  */
 std::vector<std::string> getTypesFromFolderFileNames(std::string folderPath);
 /**
- * \brief   Return the types taken from the first line of a file
+ * @brief   Return the types taken from the first line of a file
  *          that is if the first line contains: name, A, B, C, D, E
  *         the function will return the vector {"A","B","C","D","E"}
  */
@@ -161,12 +163,12 @@ std::vector<T> getVectorFromFile(std::string filename){
 
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename); 
 /**
- * \brief   Return the filenames of all files that have the specified extension
+ * @brief   Return the filenames of all files that have the specified extension
  *          in the specified directory and all subdirectories.
  */
 std::vector<std::string> get_all(std::string const & root, std::string const & ext);
 /**
- * \brief   Return map of the vector values from the first vector to the second vector
+ * @brief   Return map of the vector values from the first vector to the second vector
  */
 template<typename T>
 std::vector<int> get_indexmap_vector_values(std::vector<T> const & origin, std::vector<T> const & toMap){
@@ -185,7 +187,7 @@ std::vector<int> get_indexmap_vector_values(std::vector<T> const & origin, std::
 }
 
 /**
- * \brief   Return map of the vector values from the second vector to the first vector, if the value is not found in the first vector the value -1 is added to the map
+ * @brief   Return map of the vector values from the second vector to the first vector, if the value is not found in the first vector the value -1 is added to the map
  */
 template<typename T>
 std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, std::vector<T> const & toMap){
@@ -219,33 +221,33 @@ std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, 
 void saveNodeValues(std::string folderName,int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
 /**
- * \brief   save node values in folder
+ * @brief   save node values in folder
  *         better version of the above function
 */
 void saveNodeValues(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
 /**
- * \brief   save node values in folder
+ * @brief   save node values in folder
  *         add times as an additional feature
 */
 void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="", double timestep=1.0);
 
 /**
- * \brief   save node values in folder, no info about intra-iteration and inter-iteration is passed
+ * @brief   save node values in folder, no info about intra-iteration and inter-iteration is passed
  *         add times as an additional feature
 */
 void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
 
 /**
- * \brief   save the iteration values passed as matrices in the folder
- * \param  folderName the folder where the values are saved
- * \param  outputMatrices a map (typeName)->(Matrix of values)
- * \param  nodeNames a map (typeName)->(vector of node names)
- * \param  interIteration the inter-iteration number
- * \param  intraIteration the intra-iteration number
- * \param  timestep the timestep of the simulation
- * \return void
+ * @brief   save the iteration values passed as matrices in the folder
+ * @param  folderName the folder where the values are saved
+ * @param  outputMatrices a map (typeName)->(Matrix of values)
+ * @param  nodeNames a map (typeName)->(vector of node names)
+ * @param  interIteration the inter-iteration number
+ * @param  intraIteration the intra-iteration number
+ * @param  timestep the timestep of the simulation
+ * @return void
  */
 void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName);
 
