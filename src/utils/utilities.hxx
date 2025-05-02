@@ -96,6 +96,8 @@ bool folderExists(const std::string& folderPath);
  * @brief   Create the folder in the specified path
  * @return  true if the folder is created, false otherwise
  * @details  The folder is created using the create_directory function
+ * @warning Sometimes the creation of the folder fails and the function still returns true
+ * @note the function will return false if the folder already exists and also if the folder is not created, so this needs to be controlled (and probably the function should be changed)
  */
 bool createFolder(const std::string& folderPath);
 /**
