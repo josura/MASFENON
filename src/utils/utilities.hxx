@@ -170,7 +170,28 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
  * @throw std::invalid_argument if the file does not contain the name or value columns
  */
 std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes, const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType = std::vector<std::string>());
+/**
+ * @brief   Read the graph edges from a file and return the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges)
+ * @param filename the name of the file
+ * @return  the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges)
+ * @details  The file is read using the ifstream function
+ * @note   The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the startType, endType, startNodeName, endNodeName or weight columns
+ * @note Other columns are ignored
+ */
 std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename);
+/**
+ * @brief   Read the graph edges from a file and return the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges), considering the subtypes
+ * @param filename the name of the file
+ * @param subtypes the subtypes to filter the edges
+ * @return  the edges list and nodes as a pair of vectors (vector of strings for the names, vector of tuples for the edges)
+ * @details  The file is read using the ifstream function
+ * @note   The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the startType, endType, startNodeName, endNodeName or weight columns
+ * @note Other columns are ignored
+ */
 std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes);
 
 std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string folderPath);
