@@ -212,6 +212,17 @@ std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string f
  *         - the contact times of the interaction
  *         granularity needs to be specified as an argument
  * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @param filename the name of the file
+ * @param subtypes the subtypes to filter the edges
+ * @param maximumIntertypeTime the maximum time between two interactions
+ * @param granularity the granularity of the interactions, can be "type" or "node"
+ * @param typeToNodeNames the map of the node names <type, vector of node names>
+ * @param undirectedTypeEdges if true, the edges are undirected
+ * @note The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
+ * @note File could also contain the column contactTimes, which is a vector of times
+ * @warning This function is deprecated, use interactionContinuousContactsFileToEdgesListAndNodesByName instead
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the startType, endType, startNodeName, endNodeName or weight columns
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>>> interactionContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,int maximumIntertypeTime=INT32_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false);
 /**
@@ -221,6 +232,18 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
  *         - the contact times of the interaction, as an unordered set of doubles
  *         granularity needs to be specified as an argument
  * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @param filename the name of the file
+ * @param subtypes the subtypes to filter the edges
+ * @param maximumIntertypeTime the maximum time between two interactions
+ * @param granularity the granularity of the interactions, can be "type" or "node"
+ * @param typeToNodeNames the map of the node names <type, vector of node names>
+ * @param undirectedTypeEdges if true, the edges are undirected
+ * @note The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
+ * @note File could also contain the column contactTimes, which is a vector of times
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the startType, endType, startNodeName, endNodeName or weight columns
+ * @note Other columns are ignored
+ * @warning This function is also technically deprecated, since the version with double as the maximum intertype time is used
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,int maximumIntertypeTime=INT32_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false, double timestep=1.0);
 /**
@@ -230,6 +253,17 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
  *         - the contact times of the interaction, as an unordered set of doubles
  *         granularity needs to be specified as an argument
  * @return the pair (map of the new virtual nodes associated with a type, graph of the interactions between types)
+ * @param filename the name of the file
+ * @param subtypes the subtypes to filter the edges
+ * @param maximumIntertypeTime the maximum time between two interactions
+ * @param granularity the granularity of the interactions, can be "type" or "node"
+ * @param typeToNodeNames the map of the node names <type, vector of node names>
+ * @param undirectedTypeEdges if true, the edges are undirected
+ * @note The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
+ * @note File could also contain the column contactTimes, which is a vector of times
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the startType, endType, startNodeName, endNodeName or weight columns
+ * @note Other columns are ignored
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,double maximumIntertypeTime=DBL_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false, double timestep=1.0);
 std::vector<double> saturationFileToVector(std::string filename,const std::map<std::string, int>& ensembleToIndexMap);
