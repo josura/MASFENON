@@ -1,3 +1,9 @@
+/**
+ * @brief This file contains the implementation of the string utilities functions
+ * @details The functions are used to work on strings
+ * @ingroup Core
+ * @file stringUtilities.cxx
+ */
 #include "utils/stringUtilities.hxx"
 
 
