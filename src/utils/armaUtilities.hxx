@@ -1,3 +1,9 @@
+/**
+ * @file armaUtilities.hxx
+ * @ingroup Core
+ * @brief  This file contains the declaration of the Armadillo utilities functions
+ * @details  The functions are used to work on Armadillo matrices and vectors
+ */
 #include <armadillo>
 #include <vector>
 
