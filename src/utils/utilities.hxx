@@ -149,7 +149,26 @@ std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::strin
  * @see edgesFileToEdgesListAndNodesByName
  */
 std::pair<std::vector<std::string>,std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>>> edgesFileToEdgesListAndNodesByNameFromFolder(std::string filename);
+/**
+ * @brief Convert a file where there is a matrix of values into a vector of vectors(each vector representing a type)
+ * @param filename the name of the file
+ * @return  the vector of vectors of values
+ * @details  The file is read using the ifstream function
+ * @note    The file must be a matrix of values, where the first line is the header and contains the names of the types, first column is the names of the nodes
+ *         and the rest of the columns are the values
+ */
 std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesMatrixToTypeVectors(std::string filename, const std::vector<std::string>& finalNames,std::vector<std::string> subTypes);
+/**
+ * @brief Read the files in a folder and return the values as a vector of vectors
+ * @param folderPath the path of the folder
+ * @param allTypes the names of the types
+ * @param finalNames the names of the final types
+ * @param subType the names of the subtypes
+ * @return  the vector of vectors of values
+ * @details The files contain the following columns: name value
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the name or value columns
+ */
 std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::vector<double>>> valuesVectorsFromFolder(std::string folderPath,const std::vector<std::string>& allTypes, const std::vector<std::vector<std::string>>& finalNames,std::vector<std::string> subType = std::vector<std::string>());
 std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename);
 std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>> interactionFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes);
