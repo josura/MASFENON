@@ -112,6 +112,9 @@ double hyperbolicTangentScaled(double xInput, double scaleFactor ){
 
 
 double lerping(double a, double b, double t){
+    if (t < 0 || t > 1) {
+        throw std::invalid_argument("utilities::lerping: t must be in the range [0, 1]");
+    }
     return a + t * (b - a);
 }
 
