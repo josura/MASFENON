@@ -145,6 +145,9 @@ int setDoubleIntervalWidth(std::set<double> set, double lower, double upper){
 
 
 double vectorNorm(std::vector<double> vec){
+    if(vec.size()==0){
+        throw std::invalid_argument( "utilities::vectorNorm : null vector" );
+    }
     double norm=0;
     for (uint i = 0; i < vec.size(); ++i) {
         norm+=vec[i]*vec[i];
