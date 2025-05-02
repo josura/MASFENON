@@ -1,3 +1,9 @@
+/**
+ * @file   mathUtilities.hxx
+ * @ingroup Core
+ * @brief  This file contains the declaration of the math utilities functions
+ * @details  The functions are used to work on numbers, vectors and matrices
+ */
 #pragma once
 
 #include <random>
