@@ -7,12 +7,27 @@
 #include <armadillo>
 #include <vector>
 
+/**
+ * @brief  convert a Armadillo matrix to a vector of vectors
+ * @param matr the Armadillo matrix
+ * @return the vector of vectors
+ */
 template<typename T>
 std::vector<std::vector<T>> armaMatrixToVector(arma::Mat<T> matr){return arma::conv_to< std::vector<T> >::from(arma::vectorise( matr));}
 
+/**
+ * @brief  convert a Armadillo column vector to a vector
+ * @param matr the Armadillo column vector
+ * @return the vector
+ */
 template<typename T>
 std::vector<T> armaColumnToVector(arma::Col<T> matr){return arma::conv_to< std::vector<T> >::from(matr);}
 
+/**
+ * @brief  convert a Armadillo row vector to a vector
+ * @param matr the Armadillo row vector
+ * @return the vector
+ */
 template<typename T>
 std::vector<T> armaRowToVector(arma::Row<T> matr){return arma::conv_to< std::vector<T> >::from(matr);}
 
