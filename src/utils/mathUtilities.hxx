@@ -18,28 +18,39 @@
 /**
  * @brief   Generate a random integer number between min and max
  * @return  the random number
+ * @param  min : the minimum value
+ * @param  max : the maximum value
 */
 int randomNumber(int min, int max);
 /**
  * @brief   Generate a random real number between min and max
  * @return  the random number
+ * @param  min : the minimum value
+ * @param  max : the maximum value
 */
 double randomRealNumber(double min, double max);
 /**
- * @brief   Generate a random character between A and Z
+ * @brief   Generate a random character between a and z
  * @return  the random character
+ * @details the character is generated using the ASCII code, the function generates a random number between 0 and 25 and adds it to the ASCII code of 'a' (97)
 */
 char generateRandomCharacter();
 
 /**
  * @brief   Generate a random integer vector of length size
  * @return  the random vector
+ * @param  min : the minimum value
+ * @param  max : the maximum value
+ * @param  size : the size of the vector
 */
 std::vector<int> randomVector(int min, int max , int size);
 
 /**
  * @brief   Generate a random Boolean vector of length size
  * @return  the random vector
+ * @param  size : the size of the vector
+ * @details the vector is generated using the random number generator, the values are between 0 and 1, if the value is less than 0.5, it is set to false, otherwise it is set to true
+ * @warning it is a dynamic array, the caller is responsible for deleting it
 */
 bool* randomBooleanArray(int size);
 
@@ -48,6 +59,8 @@ bool* randomBooleanArray(int size);
  * @return  the unique integer
  * @param  x : the first integer
  * @param  y : the second integer
+ * @details the function is used to generate a unique integer from two integers, the function is used to generate a hash value for a pair of integers
+ * @see https://en.wikipedia.org/wiki/Szudzik%27s_function
 */
 long int szudzik(int x, int y);
 
@@ -55,6 +68,8 @@ long int szudzik(int x, int y);
 /**
  * @brief  Generate the intersection of two sets
  * @return  the intersection of the two sets
+ * @param  set1 : the first set
+ * @param  set2 : the second set
 */
 std::unordered_set<int> intersectionSet(std::unordered_set<int> set1,std::unordered_set<int> set2);
 
