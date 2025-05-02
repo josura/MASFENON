@@ -193,13 +193,21 @@ bool definitelyGreaterThan(double a, double b, double epsilon);
 bool definitelyLessThan(double a, double b, double epsilon);
 
 /**
-scale the hyperbolic tangent function, the return value is always < c , the function is also scaled to grow linearly before reaching the transient
+ * @brief  Function that implements the hyperbolic tangent function (scaled with the scale factor)
+ * @return  the scaled hyperbolic tangent value
+ * @param  xInput : the input value
+ * @param  scaleFactor : the scale factor
+ * @details scale the hyperbolic tangent function, the return value is always < c , the function is also scaled to grow linearly before reaching the transient
 */
 double hyperbolicTangentScaled(double xInput, double scaleFactor );
 
 /**
  * @brief  Linear interpolation between two values, a and b, with a parameter t going from 0 to 1
  * @return  the interpolated value
+ * @param  a : the first value
+ * @param  b : the second value
+ * @param  t : the parameter going from 0 to 1
+ * @throws std::invalid_argument if t is not in the range [0, 1]
 */
 
 double lerping(double a, double b, double t);
