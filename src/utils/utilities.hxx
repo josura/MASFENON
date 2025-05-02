@@ -1,3 +1,9 @@
+/**
+ * @file  utilities.hxx
+ * @ingroup Core
+ * @brief  This file contains the declaration of the utilities functions
+ * @details  The functions are used to work on files, strings, vectors and matrices
+ */
 #pragma  once
 
 #include <array>
