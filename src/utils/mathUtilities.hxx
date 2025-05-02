@@ -410,20 +410,38 @@ std::vector<T> vectorsIntersection(std::vector<T> vec1, std::vector<T> vec2){
     return retVec;
 }
 
-
+/**
+ * @brief  Function that implements the normalization of a vector
+ * @return  the normalized vector
+ * @param  vec : the vector to normalize
+ * @details the function is used to normalize a vector.
+ * @warning null vector will throw an exception
+ * @throws std::invalid_argument if the vector is null
+ */
 template<typename T>
 std::vector<T> vectorNormalization(std::vector<T> vec){
     T norm=0;
-    for (int i = 0; i < vec.size(); ++i) {
+    for (uint i = 0; i < vec.size(); ++i) {
         norm+=vec[i]*vec[i];
     }
     norm=sqrt(norm);
-    for (int i = 0; i < vec.size(); ++i) {
+    if(norm==0){
+        throw std::invalid_argument( "utilities::vectorNormalization : null vector" );
+    }
+    for (uint i = 0; i < vec.size(); ++i) {
         vec[i]=vec[i]/norm;
     }
     return vec;
 }
 
+/**
+ * @brief  Function that implements the norm of a vector
+ * @return  the norm of the vector
+ * @param  vec : the vector to use to compute the norm
+ * @details the function is used to normalize a vector.
+ * @warning null vector will throw an exception
+ * @throws std::invalid_argument if the vector is null
+ */
 double vectorNorm(std::vector<double> vec);
 
 template<typename T>
