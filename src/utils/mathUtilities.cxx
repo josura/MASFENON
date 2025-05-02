@@ -1,3 +1,9 @@
+/**
+ * @file mathUtilities.cxx
+ * @ingroup Core
+ * @brief  This file contains the implementation of the math utilities functions that were not implemented in the header file
+ * @details  The functions are used to work on numbers, vectors and matrices
+ */
 #include "utils/mathUtilities.hxx"
 
 
