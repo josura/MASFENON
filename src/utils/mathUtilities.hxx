@@ -444,6 +444,13 @@ std::vector<T> vectorNormalization(std::vector<T> vec){
  */
 double vectorNorm(std::vector<double> vec);
 
+/**
+ * @brief  Function that implements the multiplication of a vector by a scalar
+ * @return  the result of the multiplication
+ * @param  vec : the vector to multiply
+ * @param  scalar : the scalar to multiply by
+ * @details the function is used to multiply a vector by a scalar. The vector can contain any type of value, as long as that type has the operator * defined
+ */
 template<typename T>
 std::vector<T> vectorScalarMultiplication(std::vector<T> vec, T scalar){
     for (uint i = 0; i < vec.size(); ++i) {
@@ -452,6 +459,14 @@ std::vector<T> vectorScalarMultiplication(std::vector<T> vec, T scalar){
     return vec;
 }
 
+/**
+ * @brief  Function that implements the search for an element in a vector
+ * @return  true if the element is found, false otherwise
+ * @param  vec : the vector to search
+ * @param  scalar : the element to search for
+ * @details the function is used to search for an element in a vector. The vector can contain any type of value, as long as that type has the operator == defined
+ * @warning the function is not optimized for large vectors, it is a linear search
+ */
 template<typename T>
 bool vectorContains(std::vector<T> vec, const T element){
     for (uint i = 0; i < vec.size(); ++i) {
@@ -462,6 +477,14 @@ bool vectorContains(std::vector<T> vec, const T element){
     return false;
 }
 
+/**
+ * @brief  Function that implements the search for an element in a vector, and returns its index
+ * @return  the index of the element if found, -1 otherwise
+ * @param  vec : the vector to search
+ * @param  K : the element to search for
+ * @details the function is used to search for an element in a vector. The vector can contain any type of value, as long as that type has the operator == defined
+ * @warning the function is not optimized for large vectors, it is a linear search
+ */
 template<typename T>
 int getIndex(std::vector<T> v, T K)
 {
