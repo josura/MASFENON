@@ -266,20 +266,41 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
  * @note Other columns are ignored
  */
 std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>>> interactionContinuousContactsFileToEdgesListAndNodesByName(std::string filename, std::vector<std::string> subtypes,double maximumIntertypeTime=DBL_MAX, std::string granularity="", std::unordered_map<std::string,std::vector<std::string>> typeToNodeNames = std::unordered_map<std::string,std::vector<std::string>>(), bool undirectedTypeEdges = false, double timestep=1.0);
+/**
+ * @brief Read the saturation file and return the saturation values as a vector of doubles
+ * @param filename the name of the file
+ * @return  the vector of saturation values
+ * @details  The file is read using the ifstream function
+ * @note    The file must contain the following columns: name, saturation
+ * @warning The function is currently not used, TODO add the function to the main program
+ */
 std::vector<double> saturationFileToVector(std::string filename,const std::map<std::string, int>& ensembleToIndexMap);
 /**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
  *         the function will return the vector {"A","B","C","D","E"}
+ * @param folderPath the path of the folder
+ * @return  the vector of types
+ * @details  The files are listed using the directory_iterator function
  */
 std::vector<std::string> getTypesFromFolderFileNames(std::string folderPath);
 /**
  * @brief   Return the types taken from the first line of a file
  *          that is if the first line contains: name, A, B, C, D, E
  *         the function will return the vector {"A","B","C","D","E"}
+ * @param filename the name of the file
+ * @return  the vector of types
+ * @details  The file is read using the ifstream function
+ * @note    The file must contain the following columns: name, <type1>, <type2>, <type3>, ...
  */
 std::vector<std::string> getTypesFromMatrixFile(std::string matrixFilepath);
 
+/**
+ * @brief   Return the vector of values from a file
+ * @param filename the name of the file
+ * @return  the vector of values
+ * @details  The file is read using the ifstream function
+ */
 template<typename T>
 std::vector<T> getVectorFromFile(std::string filename){
     std::vector<T> retVec;
@@ -296,14 +317,34 @@ std::vector<T> getVectorFromFile(std::string filename){
     return retVec;
 }
 
+/**
+ * @brief   Return the full nodes description from a file
+ * @param filename the name of the file
+ * @return  the map of the full nodes description, that is <node name, vector of node attributes>
+ * @details  The file is read using the ifstream function
+ * @throw std::invalid_argument if the file does not exist
+ * @note The file must contain the following columns: Id	Name	Type	Aliases
+ * @warning This function is deprecated and not used anymore
+ */
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename); 
 /**
  * @brief   Return the filenames of all files that have the specified extension
  *          in the specified directory and all subdirectories.
+ * @param root the path of the folder
+ * @return  the vector of filenames
+ * @details  The files are listed using the directory_iterator function
+ * @note    The files are listed using the recursive_directory_iterator function
+ * @note    The files are listed using the path function
  */
 std::vector<std::string> get_all(std::string const & root, std::string const & ext);
 /**
  * @brief   Return map of the vector values from the first vector to the second vector
+ * @param origin the vector to map from
+ * @param toMap the vector to map to
+ * @return  the map of the vector values
+ * @details  The function uses the std::find function to find the values in the first vector
+ * @note    The function throws an exception if the value is not found in the first vector
+ * @warning This function is deprecated and not used anymore
  */
 template<typename T>
 std::vector<int> get_indexmap_vector_values(std::vector<T> const & origin, std::vector<T> const & toMap){
@@ -323,6 +364,12 @@ std::vector<int> get_indexmap_vector_values(std::vector<T> const & origin, std::
 
 /**
  * @brief   Return map of the vector values from the second vector to the first vector, if the value is not found in the first vector the value -1 is added to the map
+ * @param origin the vector to map from
+ * @param toMap the vector to map to
+ * @return  the map of the vector values
+ * @details  The function uses the std::find function to find the values in the first vector
+ * @note    The function throws an exception if all the values are not found in the first vector
+ * @throw std::invalid_argument if all the values are not found in the first vector
  */
 template<typename T>
 std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, std::vector<T> const & toMap){
@@ -353,23 +400,44 @@ std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, 
     return retVec;
 }
 
+/**
+ * @brief   save node values in folder
+ * @param  folderName the folder where the values are saved
+ * @param  iteration the iteration number
+ * @param  cellName the name of the cell
+ * @param  nodeValues the vector of node values
+ * @param  nodeNames the vector of node names
+ * @param  nodesDescriptionFile the file with the nodes description
+ * @return void
+ * @warning This function is deprecated and not used anymore
+ */
 void saveNodeValues(std::string folderName,int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
 /**
  * @brief   save node values in folder
  *         better version of the above function
+ * @warning This function is deprecated and not used anymore
 */
 void saveNodeValues(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
 /**
  * @brief   save node values in folder
  *         add times as an additional feature
+ * @warning This function is deprecated and not used anymore
 */
 void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intraIteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="", double timestep=1.0);
 
 /**
  * @brief   save node values in folder, no info about intra-iteration and inter-iteration is passed
  *         add times as an additional feature
+ * @param  folderName the folder where the values are saved
+ * @param  currentIteration the current iteration number
+ * @param  currentTime the current time
+ * @param  typeName the type name
+ * @param  nodeValues the vector of node values
+ * @param  nodeNames the vector of node names
+ * @param  nodesDescriptionFile the file with the nodes description
+ * @return void
 */
 void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
