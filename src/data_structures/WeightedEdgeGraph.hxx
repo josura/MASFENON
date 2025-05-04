@@ -490,5 +490,11 @@ class WeightedEdgeGraph{
 
 };
 
-
+/**
+ * @brief Operator to print the graph.
+ * @param out The output stream.
+ * @param data The graph to print.
+ * @return A reference to the output stream.
+ * @details This operator prints the graph to the specified output stream. It uses the print function of the graph class.
+ */
 std::ostream& operator<< (std::ostream &out, const WeightedEdgeGraph& data); 
