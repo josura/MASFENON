@@ -88,7 +88,7 @@ arma::Mat<T> normalizeRows(arma::Mat<T> matr);
  * @return the normalized Armadillo matrix
  * @details  The columns are normalized to have a sum of 1
  * @warning  The columns are normalized to have a sum of 1, not a norm of 1
- * @warning  Negative values could lead to a final sum of 0
+ * @warning  Negative values could lead to a final sum of not 1
  */
 template<typename T>
 arma::Mat<T> normalize1Columns(arma::Mat<T> matr);
@@ -99,7 +99,7 @@ arma::Mat<T> normalize1Columns(arma::Mat<T> matr);
  * @return the normalized Armadillo matrix
  * @details  The rows are normalized to have a sum of 1
  * @warning  The rows are normalized to have a sum of 1, not a norm of 1
- * @warning  Negative values could lead to a final sum of 0
+ * @warning  Negative values could lead to a final sum of not 1
  */
 template<typename T>
 arma::Mat<T> normalize1Rows(arma::Mat<T> matr);
