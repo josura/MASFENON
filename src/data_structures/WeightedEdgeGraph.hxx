@@ -470,7 +470,6 @@ class WeightedEdgeGraph{
         std::map<std::string, int> getNodeToIndexMap()const {return nodeToIndex;}
         /**
          * @brief Function to print the graph
-         * @return void
          * @details This function prints the graph to the standard output. It uses the operator<< to print the graph.
          */
         void print()const;

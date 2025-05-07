@@ -27,7 +27,7 @@ class Matrix {
          * @param cols Number of columns.
          * @details Allocates memory for the matrix and initializes all elements to zero.
          */
-        Matrix(int, int);
+        Matrix(int rows, int cols);
         /**
          * @brief Constructor for creating a matrix with specified dimensions and initial values.
          * @param a Pointer to a 2D array of type T.
@@ -37,7 +37,7 @@ class Matrix {
          * @note The caller is responsible for managing the memory of the 2D array.
          * @warning This constructor does not check for memory leaks.
          */
-        Matrix(T**, int, int);
+        Matrix(T**a , int rows, int cols);
         /**
          * @brief Default constructor for creating a 1x1 matrix initialized to zero.
          * @details Allocates memory for the matrix and initializes the single element to zero.
@@ -72,7 +72,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
          */
-        Matrix& operator=(const Matrix&);
+        Matrix& operator=(const Matrix& m);
         /**
          * @brief Selector operator for accessing matrix elements.
          * @param x Row index.
@@ -108,7 +108,7 @@ class Matrix {
          * @return A reference to the current object.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for addition.
          */
-        Matrix& operator+=(const Matrix&);
+        Matrix& operator+=(const Matrix& rhs);
         /**
          * @brief Assignment operator for subtracting a matrix from another matrix.
          * @param rhs The right-hand side matrix to subtract.
@@ -117,7 +117,7 @@ class Matrix {
          * @return A reference to the current object.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for subtraction.
          */
-        Matrix& operator-=(const Matrix&);
+        Matrix& operator-=(const Matrix& rhs);
         /**
          * @brief Assignment operator for multiplying a matrix with another matrix.
          * @param rhs The right-hand side matrix to multiply with.
@@ -126,7 +126,7 @@ class Matrix {
          * @return A reference to the current object.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for multiplication.
          */
-        Matrix& operator*=(const Matrix&);
+        Matrix& operator*=(const Matrix& rhs);
         /**
          * @brief Assignment operator for multiplying a matrix with a scalar.
          * @param rhs The scalar value to multiply with.
@@ -134,7 +134,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
          */
-        Matrix& operator*=(T);
+        Matrix& operator*=(T rhs);
         /**
          * @brief Assignment operator for dividing a matrix by a scalar.
          * @param rhs The scalar value to divide by.
@@ -142,7 +142,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
          */
-        Matrix& operator/=(T);
+        Matrix& operator/=(T rhs);
         /**
          * @brief Addition operator for adding two matrices.
          * @param rhs The right-hand side matrix to add.
@@ -150,7 +150,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A new matrix containing the result of the addition.
          */
-        Matrix operator+(const Matrix<T>&)const;
+        Matrix operator+(const Matrix<T>& rhs)const;
         /**
          * @brief Subtraction operator for subtracting two matrices.
          * @param rhs The right-hand side matrix to subtract.
@@ -159,7 +159,7 @@ class Matrix {
          * @return A new matrix containing the result of the subtraction.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for subtraction.
          */
-        Matrix operator-(const Matrix<T>&)const;
+        Matrix operator-(const Matrix<T>& rhs)const;
         /**
          * @brief Multiplication operator for multiplying two matrices.
          * @param rhs The right-hand side matrix to multiply with.
@@ -168,7 +168,7 @@ class Matrix {
          * @return A new matrix containing the result of the multiplication.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for multiplication.
          */
-        Matrix operator*(const Matrix<T>&)const;
+        Matrix operator*(const Matrix<T>& rhs)const;
         /**
          * @brief Multiplication operator for multiplying a matrix with a vector.
          * @param rhs The right-hand side vector to multiply with.
@@ -177,7 +177,7 @@ class Matrix {
          * @return A new matrix containing the result of the multiplication.
          * @throw std::invalid_argument if the dimensions of the matrix and vector are not compatible for multiplication.
          */
-        Matrix operator*(const std::vector<T>&)const;
+        Matrix operator*(const std::vector<T>& rhs)const;
         /**
          * @brief Multiplication operator for multiplying a matrix with a scalar.
          * @param rhs The scalar value to multiply with.
@@ -185,7 +185,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A new matrix containing the result of the multiplication.
          */
-        Matrix operator*(T)const;
+        Matrix operator*(T rhs)const;
 
         // friend functions
         /**
@@ -195,7 +195,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and multiplies the values from the provided scalar.
          */
         template<typename U>
-        friend Matrix<U> operator*(U, const Matrix<U>&);
+        friend Matrix<U> operator*(U lhs, const Matrix<U>& rhs);
         /**
          * @brief Multiplication operator for multiplying a vector with a matrix.
          * @param lhs The left-hand side vector to multiply with.
@@ -206,7 +206,7 @@ class Matrix {
          * @throw std::invalid_argument if the dimensions of the vector and matrix are not compatible for multiplication.
          */
         template<typename U>
-        friend std::vector<U> operator*(U*,const Matrix<U>&);  //vector multiplication leftwise
+        friend std::vector<U> operator*(U* lhs,const Matrix<U>& rhs);  //vector multiplication leftwise
         /**
          * @brief Multiplication operator for multiplying a vector with a matrix.
          * @param lhs The left-hand side vector to multiply with.
@@ -216,7 +216,7 @@ class Matrix {
          * @details Allocates memory for the new vector and multiplies the values from the provided vector.
          */
         template<typename U>
-        friend std::vector<U> operator*(std::vector<U>&,const Matrix<U>&);
+        friend std::vector<U> operator*(std::vector<U>& lhs,const Matrix<U>& rhs);
         
         /**
          * @brief Output stream operator for printing a matrix.
@@ -226,7 +226,7 @@ class Matrix {
          * @details Prints the matrix in a readable format.
          */
         template<typename U>
-        friend std::ostream& operator<<(std::ostream&, const Matrix<U>&);
+        friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& m);
 
         /**
          * @brief Function to swap two rows in the matrix.
@@ -235,12 +235,10 @@ class Matrix {
          * @details Swaps the values of the two specified rows in the matrix.
          * @warning This function is not implemented yet.
          */
-        void swapRows(int, int);
+        void swapRows(int i, int j);
         /**
-         * @brief Function to swap two columns in the matrix.
-         * @param i The index of the first column.
-         * @param j The index of the second column.
-         * @details Swaps the values of the two specified columns in the matrix.
+         * @brief Function to transpose the matrix.
+         * @details Transposes the matrix by swapping on the diagonal.
          */
         Matrix transpose()const;
 
@@ -249,14 +247,14 @@ class Matrix {
          * @param size The size of the identity matrix.
          * @details Allocates memory for the new matrix and initializes it as an identity matrix.
          */
-        static Matrix createIdentity(int);
+        static Matrix createIdentity(int size);
         /**
          * @brief Static function to create a random matrix of specified size.
          * @param rows The number of rows.
          * @param cols The number of columns.
          * @details Allocates memory for the new matrix and initializes it with random values.
          */
-        static Matrix createRandom(int,int);
+        static Matrix createRandom(int rows, int cols);
         /**
          * @brief Static function to create a zero matrix of specified size.
          * @param rows The number of rows.
@@ -264,7 +262,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and initializes all elements to zero.
          * @warning This function is not implemented yet.
          */
-        static Matrix solve(Matrix, Matrix);
+        static Matrix solve(Matrix rows, Matrix cols);
         /**
          * @brief Static function to create a banded matrix of specified size.
          * @param rows The number of rows.
@@ -273,7 +271,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and initializes it as a banded matrix.
          * @warning This function is not implemented yet.
          */
-        static Matrix bandSolve(Matrix, Matrix, int);
+        static Matrix bandSolve(Matrix rows, Matrix cols, int bandWidth);
 
         // functions on vectors
         /**
@@ -283,7 +281,7 @@ class Matrix {
          * @details Allocates memory for the new matrix and calculates the dot product of the two matrices.
          * @warning This function is not implemented yet.
          */
-        static double dotProduct(Matrix, Matrix);
+        static double dotProduct(Matrix A, Matrix B);
         /**
          * @brief Function to the the minor of a matrix.
          * @param matrix The matrix to get the minor from.
@@ -292,7 +290,7 @@ class Matrix {
          * @param n The size of the matrix.
          * @details Allocates memory for the new matrix and calculates the minor of the specified matrix.
          */
-        static Matrix getMinor(const Matrix<T>&,int, int,int);
+        static Matrix getMinor(const Matrix<T>& matrix,int i, int j,int n);
         /**
          * @brief Static function to calculate the determinant of a matrix.
          * @param A The matrix to calculate the determinant of.
@@ -306,7 +304,7 @@ class Matrix {
          * @warning This operator does not check for memory leaks.
          * @return A reference to the current object.
          */
-        Matrix& operator*=(const std::vector<T>&);
+        Matrix& operator*=(const std::vector<T>& rhs);
         /**
         * @brief   divide the values in column i by the value in vector at the index i
         * @param   normVector : the vector to divide by
@@ -331,7 +329,7 @@ class Matrix {
          * @return A new matrix containing the result of the concatenation.
          * @throw std::invalid_argument if the dimensions of the matrices are not compatible for concatenation.
          */
-        Matrix concatenateRight(const Matrix&)const;
+        Matrix concatenateRight(const Matrix& rhs)const;
         /**
          * @brief Function to calculate the determinant of the matrix.
          * @details Allocates memory for the new matrix and calculates the determinant of the specified matrix.
