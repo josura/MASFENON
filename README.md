@@ -1,5 +1,9 @@
 # MASFENON
-Standalone project for the framework behind [c2c-sepia](https://github.com/josura/c2c-sepia), containing only the most recent version of the MASFENON framework.
+[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://josura.github.io/MASFENON/)
+[![Build Status]( https://travis-ci.org/josura/MASFENON.svg?branch=master)](https://travis-ci.org/josura/MASFENON)
+[![License](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
+
+Standalone project for the framework behind [c2c-sepia](https://github.com/josura/c2c-sepia), containing only the most recent version of the MASFENON framework. The meaning of the acronym is **M**ultiagent **A**daptive **S**imulation **F**ramework for **E**volution in **N**etworks **o**f **N**etworks
 
 ## DEPENDENCIES
 - [armadillo](https://arma.sourceforge.net/)
