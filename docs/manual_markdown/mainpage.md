@@ -1,6 +1,6 @@
-
-@mainpage MASFENON Documentation
-
+// ################################################################################################# // Documentation - ALib C++ Library // // Copyright 2013-2024 A-Worx GmbH, Germany // Published under 'Boost Software License' (a free software license, see LICENSE.txt) // ################################################################################################# 
+/** 
+\mainpage Overview
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://josura.github.io/MASFENON/)
 [![License](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
 [![Language](https://img.shields.io/github/languages/top/josura/MASFENON)](https://github.com/search?q=repo%3Ajosura%2FMASFENON++language%3AC%2B%2B&type=code)
@@ -30,12 +30,8 @@ It was originally developed as part of the [c2c-sepia](https://github.com/josura
 └── scripts/                 # Bash and Python helper scripts
 ```
 
-## 🏗️ Build Instructions
-```bash
-cmake -B build
-cd build
-make
-```
+## Other sections
+- \ref building "Building"
 
 ## 🧪 Usage
 ### Help Message
@@ -54,8 +50,13 @@ make
 ## ⚙️ Parameter Customization
 Custom scaling functions (dissipation, conservation, etc.) can be modified in `src/CustomFunctions`.
 
-## 📄 License
+ 
+\I{################################################################################################}
+\I{################################################################################################}
+\I{########################################   📄 License     ######################################}
+\I{################################################################################################}
+\I{################################################################################################}
 This project is released under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
 If you encounter any issues, feel free to open one on the [GitHub issues page](https://github.com/josura/MASFENON/issues).
- 
+<br><br><br><br><br><br> */
