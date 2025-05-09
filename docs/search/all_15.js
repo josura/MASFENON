@@ -11,7 +11,7 @@ var searchData=
   ['_7edissipationmodelscaled_8',['~DissipationModelScaled',['../classDissipationModelScaled.html#acc442c81dc02780c108eedd49161c99a',1,'DissipationModelScaled']]],
   ['_7edissipationmodelscaledvectorized_9',['~DissipationModelScaledVectorized',['../classDissipationModelScaledVectorized.html#ac9147ac07d0f6614811b28abb5ac90fe',1,'DissipationModelScaledVectorized']]],
   ['_7edissipationmodelvectorized_10',['~DissipationModelVectorized',['../classDissipationModelVectorized.html#ad955be6bbc06b5d6b1f337001019c59e',1,'DissipationModelVectorized']]],
-  ['_7ematrix_11',['~Matrix',['../classMatrix.html#a91aa704de674203e96aece9e1955ccd3',1,'Matrix']]],
+  ['_7ematrix_11',['~Matrix',['../classMatrix.html#a57b949796e0385682b835c4cfba75c08',1,'Matrix']]],
   ['_7epropagationmodel_12',['~PropagationModel',['../classPropagationModel.html#a14837287c62e82d882512f92c6a1b0fc',1,'PropagationModel']]],
   ['_7epropagationmodelcustom_13',['~PropagationModelCustom',['../classPropagationModelCustom.html#a6f1a673c911bcf164925fde4bdeb92d9',1,'PropagationModelCustom']]],
   ['_7epropagationmodelcustomvectorized_14',['~PropagationModelCustomVectorized',['../classPropagationModelCustomVectorized.html#a4f83e2c9e931240208b6209f3754e5ca',1,'PropagationModelCustomVectorized']]],
