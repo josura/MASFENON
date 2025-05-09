@@ -445,12 +445,15 @@ void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, 
 
 /**
  * @brief   save the iteration values passed as matrices in the folder
- * @param  folderName the folder where the values are saved
- * @param  outputMatrices a map (typeName)->(Matrix of values)
- * @param  nodeNames a map (typeName)->(vector of node names)
- * @param  interIteration the inter-iteration number
- * @param  intraIteration the intra-iteration number
- * @param  timestep the timestep of the simulation
+ * @param  outputFolderNameMatrices the folder where the matrices are saved
+ * @param  outputMatrix the matrix to save 
+ * @param  outputMatricesRowNames the names of the rows of the matrix
+ * @param  intertypeIterations the number of intertype iterations
+ * @param  intratypeIterations the number of intratype iterations
+ * @param  timestep the time step of the simulation
+ * @param  typeName the type name
+ * @details the matrices are saved in the folder with the name outputFolderNameMatrices
+ *         the matrices are saved in the format: outputFolderNameMatrices/typeName.tsv
  */
 void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName);
 
