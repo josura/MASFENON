@@ -23,7 +23,7 @@ var searchData=
   ['asarmadillocolumnvector_20',['asArmadilloColumnVector',['../classMatrix.html#a948cdc7927d08a5d1b4b029e8d7c8b4f',1,'Matrix']]],
   ['asarmadillomatrix_21',['asArmadilloMatrix',['../classMatrix.html#ad752325d252a7a1200d46c0709aed699',1,'Matrix']]],
   ['asarmadillorowvector_22',['asArmadilloRowVector',['../classMatrix.html#adae9b8209f5b80c20f61d6af3f494923',1,'Matrix']]],
-  ['assign_23',['assign',['../classWeightedEdgeGraph.html#a0f70226f8c69a024b38012cfa4b75c9f',1,'WeightedEdgeGraph::assign()'],['../classComputation.html#a7954b884a80677be7b0ab6aa62d5ff1e',1,'Computation::assign()']]],
+  ['assign_23',['assign',['../classWeightedEdgeGraph.html#a0f70226f8c69a024b38012cfa4b75c9f',1,'WeightedEdgeGraph::assign()'],['../classComputation.html#aac8e31b1612a0c0ab0a18cb1a6cb1e56',1,'Computation::assign()']]],
   ['asvector_24',['asVector',['../classMatrix.html#a95cfde5e2b68f6a747f23ca63384df10',1,'Matrix']]],
   ['augmentgraph_25',['augmentGraph',['../classComputation.html#ab55dc81ee437f3021f11e756295145a9',1,'Computation']]],
   ['augmentgraphnocomputeinverse_26',['augmentGraphNoComputeInverse',['../classComputation.html#aa4279011bee40a2b5fbfd125e3159359',1,'Computation']]]
