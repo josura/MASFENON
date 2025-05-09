@@ -52,6 +52,10 @@ Matrix<T>::Matrix(T** a, int rows, int cols) : rows_(rows), cols_(cols)
     }
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix constructor with double (with 2D array)
+ */
 template Matrix<double>::Matrix(double** a, int rows, int cols);
 
 template<typename T>
@@ -94,6 +98,10 @@ Matrix<T>::Matrix(const std::vector<T>& vec, uint nrows, uint ncols):rows_(vec.s
     
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix constructor with double (with vector)
+ */
 template Matrix<double>::Matrix(const std::vector<double>& vec,uint nrows, uint ncols);
 
 
@@ -106,6 +114,10 @@ Matrix<T>::~Matrix()
     }
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix destructor with double 
+ */
 template Matrix<double>::~Matrix();
 
 template<typename T>
@@ -119,6 +131,10 @@ Matrix<T>::Matrix(const Matrix<T>& m) : rows_(m.rows_), cols_(m.cols_)
     }
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix copy constructor with double 
+ */
 template Matrix<double>::Matrix(const Matrix<double>& m);
 
 //static methods
@@ -199,6 +215,10 @@ Matrix<T>& Matrix<T>::operator*=(Matrix<T> const& rhs) {
     }
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix operator*= with double 
+ */
 template Matrix<double>& Matrix<double>::operator*=(const Matrix<double>& m);
 
 template<typename T>
@@ -211,6 +231,10 @@ Matrix<T>& Matrix<T>::operator*=(T rhs) {
     return *this;
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix operator*= with double 
+ */
 template Matrix<double>& Matrix<double>::operator*=(double m);
 
 
@@ -260,6 +284,10 @@ Matrix<T>& Matrix<T>::operator/=(T num)
     return *this;
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix operator/= with double 
+ */
 template Matrix<double>& Matrix<double>::operator/=(double m);
 
 
@@ -269,6 +297,10 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T>& rhs)const{
     return result *= rhs;
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix operator* with double 
+ */
 template Matrix<double> Matrix<double>::operator*(const Matrix<double>& rhs)const;
 
 template<typename T>
@@ -303,6 +335,10 @@ Matrix<T> Matrix<T>::operator*(const std::vector<T>& rhs)const{
     } else throw std::invalid_argument("arrayMult vector has not the right size to be multiplied");
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix operator* with double (with vector)
+ */
 template Matrix<double> Matrix<double>::operator*(const std::vector<double>& rhs)const;
 
 
@@ -542,6 +578,10 @@ T Matrix<T>::determinant(const Matrix<T>& A){
     return deter;
 }
 
+/**
+ * @relates Matrix
+ * @brief force instantiation of Matrix determinant with double 
+ */
 template double Matrix<double>::determinant(const Matrix<double>& A);
 
 template<typename T>
