@@ -152,6 +152,8 @@ std::pair<std::vector<std::string>,std::vector<std::pair<std::vector<std::string
 /**
  * @brief Convert a file where there is a matrix of values into a vector of vectors(each vector representing a type)
  * @param filename the name of the file
+ * @param finalNames the names of the nodes
+ * @param subTypes the names of the subtypes
  * @return  the vector of vectors of values
  * @details  The file is read using the ifstream function
  * @note    The file must be a matrix of values, where the first line is the header and contains the names of the types, first column is the names of the nodes
