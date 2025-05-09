@@ -238,6 +238,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
  * @param granularity the granularity of the interactions, can be "type" or "node"
  * @param typeToNodeNames the map of the node names <type, vector of node names>
  * @param undirectedTypeEdges if true, the edges are undirected
+ * @param timestep the time step of the simulation
  * @note The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
  * @note File could also contain the column contactTimes, which is a vector of times
  * @throw std::invalid_argument if the file does not exist
@@ -259,6 +260,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
  * @param granularity the granularity of the interactions, can be "type" or "node"
  * @param typeToNodeNames the map of the node names <type, vector of node names>
  * @param undirectedTypeEdges if true, the edges are undirected
+ * @param timestep the time step of the simulation
  * @note The file must contain the following columns: startType, endType, startNodeName, endNodeName, weight
  * @note File could also contain the column contactTimes, which is a vector of times
  * @throw std::invalid_argument if the file does not exist
@@ -288,10 +290,10 @@ std::vector<std::string> getTypesFromFolderFileNames(std::string folderPath);
  * @brief   Return the types taken from the first line of a file
  *          that is if the first line contains: name, A, B, C, D, E
  *         the function will return the vector {"A","B","C","D","E"}
- * @param filename the name of the file
+ * @param matrixFilepath the path to the file
  * @return  the vector of types
  * @details  The file is read using the ifstream function
- * @note    The file must contain the following columns: name, <type1>, <type2>, <type3>, ...
+ * @note    The file must contain the following columns: name, \<type1\>, \<type2\>, \<type3\>, ...
  */
 std::vector<std::string> getTypesFromMatrixFile(std::string matrixFilepath);
 
