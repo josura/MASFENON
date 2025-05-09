@@ -72,10 +72,10 @@ class Computation{
         Computation(std::string _thisCellType, const std::vector<double>& _input); 
         /**
          * @brief constructor function without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
-         * @param std::string _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
-         * @param const std::vector<double>& _input: input vector of the nodes values, initially the one passed in the input
-         * @param const Matrix<double>& _W: the adjacency matrix along the values of every edge in the graph that it represents
-         * @param const std::vector<std::string>& graphNames: the graph nodes names, in order defined by the adjacency matrix
+         * @param _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
+         * @param _input: input vector of the nodes values, initially the one passed in the input
+         * @param _W: the adjacency matrix along the values of every edge in the graph that it represents
+         * @param graphNames: the graph nodes names, in order defined by the adjacency matrix
          * \return nothing
         */
         Computation(std::string _thisCellType,const std::vector<double>& _input, const Matrix<double>& _W, const std::vector<std::string>& graphNames);
@@ -83,10 +83,10 @@ class Computation{
 
         /**
          * @brief constructor function Computation without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
-         * @param std::string _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
-         * @param const std::vector<double>& _input: input vector of the nodes values, initially the one passed in the input
-         * @param const Matrix<double>& _W: the adjacency matrix along the values of every edge in the graph that it represents
-         * @param const std::vector<std::string>& graphNames: the graph nodes names, in order defined by the adjacency matrix
+         * @param _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
+         * @param _input: input vector of the nodes values, initially the one passed in the input
+         * @param _W: the adjacency matrix along the values of every edge in the graph that it represents
+         * @param graphNames: the graph nodes names, in order defined by the adjacency matrix
         */
         Computation(std::string _thisCellType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames);
         
