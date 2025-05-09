@@ -1,0 +1,6 @@
+/**
+ * @defgroup Experimental Experimental Components
+ * @brief Experimental parts of the MASFENON simulation framework.
+ *
+ * This group includes vectorization and other new features or tweaks to the framework
+ */

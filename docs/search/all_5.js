@@ -7,5 +7,7 @@ var searchData=
   ['enable_4',['enable',['../classLogger.html#af2f7ea41236b2dfa06a7bc88786395bd',1,'Logger']]],
   ['essentiallyequal_5',['essentiallyequal',['../mathUtilities_8cxx.html#a02ea9fe0b68b12076eee6e0ebbda7a14',1,'essentiallyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8cxx.html#ab4fc9ee7fbfa41714f6c056325c027b1',1,'essentiallyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a02ea9fe0b68b12076eee6e0ebbda7a14',1,'essentiallyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#ab4fc9ee7fbfa41714f6c056325c027b1',1,'essentiallyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx']]],
   ['example_20run_6',['Example Run',['../index.html#autotoc_md8',1,'']]],
-  ['exphelper_7',['expHelper',['../classMatrix.html#aac6258b677de44acd92f5f4fa1593b26',1,'Matrix']]]
+  ['experimental_20components_7',['Experimental Components',['../group__Experimental.html',1,'']]],
+  ['experimental_2edox_8',['experimental.dox',['../experimental_8dox.html',1,'']]],
+  ['exphelper_9',['expHelper',['../classMatrix.html#aac6258b677de44acd92f5f4fa1593b26',1,'Matrix']]]
 ];
