@@ -463,7 +463,7 @@ std::vector<T> vectorScalarMultiplication(std::vector<T> vec, T scalar){
  * @brief  Function that implements the search for an element in a vector
  * @return  true if the element is found, false otherwise
  * @param  vec : the vector to search
- * @param  scalar : the element to search for
+ * @param  element : the element to search for
  * @details the function is used to search for an element in a vector. The vector can contain any type of value, as long as that type has the operator == defined
  * @warning the function is not optimized for large vectors, it is a linear search
  */
