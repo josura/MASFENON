@@ -89,12 +89,20 @@ class Computation{
         */
         Computation(std::string _thisCellType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames);
         
-        /*
-        Augment the graph with types and a new set of edges from virtual nodes in the augmented graph to the graph(virtual inputs and virtual outputs) 
-        @param const std::vector<std::string>& _types: the types other than this type, the other agents in the network
-        @param 
-        */
-        void augmentGraph(const std::vector<std::string>&,const std::vector<std::pair<std::string,std::string>>& newEdgesList =std::vector<std::pair<std::string,std::string>>(), const std::vector<double>& newEdgesValue = std::vector<double>(), bool includeSelfVirtual=false);
+        /**
+         * @brief Augment the graph with types and a new set of edges from virtual nodes in the augmented graph to the graph(virtual inputs and virtual outputs) 
+         * @param _types: the types other than this type, the other agents in the network
+         * @param newEdgesList: the list of edges to be added to the graph, in the form of a vector of pairs of strings (default is an empty vector, so no edges are added)
+         * @param newEdgesValue: the list of edges weights to be added to the graph, in the form of a vector of doubles (default is an empty vector, so no values are added)
+         * @param includeSelfVirtual: if true, the graph will be augmented with a virtual node that represents the input of the current agent (default is false)
+         * @details The function will create a new graph with the same sub-structure as the original graph, but with additional edges and nodes. The new edges will be added to the graph, and the new nodes will be added to the graph. 
+         * The new nodes will be added to the graph with different names. 
+         * The new edges will be added to the graph with weights.
+         * The function will also compute the pseudo-inverse of the augmented graph and store it in the pseudoInverseAugmentedArma variable.
+         * @warning function is deprecated, since pseudo inverse is only useful when the propagation function uses the pseudoinverse, otherwise it's wasted space
+         * @note Use the function augmentGraphNoComputeInverse.
+         */
+        void augmentGraph(const std::vector<std::string>& _types,const std::vector<std::pair<std::string,std::string>>& newEdgesList =std::vector<std::pair<std::string,std::string>>(), const std::vector<double>& newEdgesValue = std::vector<double>(), bool includeSelfVirtual=false);
         void augmentGraphNoComputeInverse(const std::vector<std::string>&,const std::vector<std::pair<std::string,std::string>>& newEdgesList =std::vector<std::pair<std::string,std::string>>(), const std::vector<double>& newEdgesValue = std::vector<double>(), bool includeSelfVirtual=false);
         void addEdges(const std::vector<std::pair<std::string,std::string>>& , const std::vector<double>& , bool bothDirections = false, bool inverseComputation = true);
         void addEdges(const std::vector<std::tuple<std::string,std::string,double>>&  , bool bothDirections = false, bool inverseComputation = true);
