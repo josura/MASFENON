@@ -217,14 +217,7 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
             }
         }
 
-        // std::cout << "[LOG + TESTING] normalization factors for augmented graph cell : " + localType << std::endl;
-        // printVector(normalizationFactors);
-        // std::cout << "[LOG + TESTING] augmented graph matrix : " + localType << std::endl;
-        // augmentedGraph->adjMatrix.printMatrix();
-        // std::cout << "[LOG + TESTING] augmented graph matrix transposed : " + localType << std::endl;
-        // augmentedGraph->adjMatrix.transpose().printMatrix();
-        // std::cout << "[LOG + TESTING] augmented graph matrix transposed normalized : " + localType << std::endl;
-        // augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).printMatrix();
+        
         arma::Mat<double> WtransAugmentedArma = augmentedGraph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
         //TODO normalization by previous weight nodes for the matrix
         
@@ -234,10 +227,7 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
             inputAugmented.push_back(0.0);
         }
         InputAugmentedArma = arma::Col<double>(inputAugmented);
-        // std::cout << "[LOG] computing pseudoinverse for augmented graph cell : " + localType << std::endl;
-        // pseudoInverseAugmentedArma = arma::pinv(IdentityAugmentedArma - WtransAugmentedArma);
-        // armaInitializedAugmented = true;
-
+        
         //get nodeToIndex map as well
         nodeToIndex = augmentedGraph->getNodeToIndexMap();
     } catch (...) {
