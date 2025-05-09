@@ -411,7 +411,6 @@ std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, 
  * @param  nodeValues the vector of node values
  * @param  nodeNames the vector of node names
  * @param  nodesDescriptionFile the file with the nodes description
- * @return void
  * @warning This function is deprecated and not used anymore
  */
 void saveNodeValues(std::string folderName,int iteration, std::string cellName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
@@ -440,7 +439,6 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
  * @param  nodeValues the vector of node values
  * @param  nodeNames the vector of node names
  * @param  nodesDescriptionFile the file with the nodes description
- * @return void
 */
 void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, double currentTime, std::string typeName, std::vector<double> nodeValues,std::vector<std::string> nodeNames, std::string nodesDescriptionFile="");
 
@@ -453,7 +451,6 @@ void saveNodeValuesWithTimeSimple(std::string folderName, int currentIteration, 
  * @param  interIteration the inter-iteration number
  * @param  intraIteration the intra-iteration number
  * @param  timestep the timestep of the simulation
- * @return void
  */
 void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outputMatrix, std::vector<std::string> outputMatricesRowNames, int intertypeIterations, int intratypeIterations, double timestep, std::string typeName);
 
