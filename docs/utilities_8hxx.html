@@ -275,9 +275,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9ba2ad6391accb270f2c6af2fdd8251d" id="r_a9ba2ad6391accb270f2c6af2fdd8251d"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::map&lt; std::string, std::vector&lt; std::tuple&lt; std::string, std::string, double &gt; &gt; &gt;, std::vector&lt; std::tuple&lt; std::string, std::string, std::string, std::string, std::set&lt; double &gt;, double &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8hxx.html#a9ba2ad6391accb270f2c6af2fdd8251d">interactionContinuousContactsFileToEdgesListAndNodesByName</a> (std::string filename, std::vector&lt; std::string &gt; subtypes, double maximumIntertypeTime=DBL_MAX, std::string granularity=&quot;&quot;, std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt; typeToNodeNames=std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt;(), bool undirectedTypeEdges=false, double timestep=1.0)</td></tr>
 <tr class="memdesc:a9ba2ad6391accb270f2c6af2fdd8251d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the new virtual nodes associated with a type along the edges in the augmented graph, uses doubles in principle for contacts it also return the graph of the interactions between types(as a tuple of:  <br /></td></tr>
 <tr class="separator:a9ba2ad6391accb270f2c6af2fdd8251d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c0a0653dfc3ff35c5db16d53bcfa067" id="r_a8c0a0653dfc3ff35c5db16d53bcfa067"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8hxx.html#a8c0a0653dfc3ff35c5db16d53bcfa067">saturationFileToVector</a> (std::string filename, const std::map&lt; std::string, int &gt; &amp;ensembleToIndexMap)</td></tr>
-<tr class="memdesc:a8c0a0653dfc3ff35c5db16d53bcfa067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the saturation file and return the saturation values as a vector of doubles.  <br /></td></tr>
-<tr class="separator:a8c0a0653dfc3ff35c5db16d53bcfa067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c3f102fedc23686b955c36f8456d31" id="r_ab6c3f102fedc23686b955c36f8456d31"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8hxx.html#ab6c3f102fedc23686b955c36f8456d31">saturationFileToVector</a> (std::string filename, const std::map&lt; std::string, int &gt; &amp;nodeToIndexMap)</td></tr>
+<tr class="memdesc:ab6c3f102fedc23686b955c36f8456d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the saturation file and return the saturation values as a vector of doubles.  <br /></td></tr>
+<tr class="separator:ab6c3f102fedc23686b955c36f8456d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52184fe7e17a825261fac23c7e7d72a" id="r_ab52184fe7e17a825261fac23c7e7d72a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8hxx.html#ab52184fe7e17a825261fac23c7e7d72a">getTypesFromFolderFileNames</a> (std::string folderPath)</td></tr>
 <tr class="memdesc:ab52184fe7e17a825261fac23c7e7d72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the types taken from the file names in a folder with the extension .tsv that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv the function will return the vector {"A","B","C","D","E"}.  <br /></td></tr>
 <tr class="separator:ab52184fe7e17a825261fac23c7e7d72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1275,8 +1275,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a8c0a0653dfc3ff35c5db16d53bcfa067" name="a8c0a0653dfc3ff35c5db16d53bcfa067"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c0a0653dfc3ff35c5db16d53bcfa067">&#9670;&#160;</a></span>saturationFileToVector()</h2>
+<a id="ab6c3f102fedc23686b955c36f8456d31" name="ab6c3f102fedc23686b955c36f8456d31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c3f102fedc23686b955c36f8456d31">&#9670;&#160;</a></span>saturationFileToVector()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1291,7 +1291,7 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::map&lt; std::string, int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>ensembleToIndexMap</em>&#160;</td>
+          <td class="paramname"><em>nodeToIndexMap</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1305,12 +1305,15 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>the name of the file </td></tr>
+    <tr><td class="paramname">nodeToIndexMap</td><td>the map of the node names to the indices </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the vector of saturation values</dd></dl>
 <p>The file is read using the ifstream function </p><dl class="section note"><dt>Note</dt><dd>The file must contain the following columns: name, saturation </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The function is currently not used, TODO add the function to the main program </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Function is not implemented yet </dd>
+<dd>
+The function is currently not used, TODO add the function to the main program </dd></dl>
 
 </div>
 </div>
