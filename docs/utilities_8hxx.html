@@ -781,7 +781,7 @@ template&lt;typename T &gt; </div>
 <p>Return the types taken from the first line of a file that is if the first line contains: name, A, B, C, D, E the function will return the vector {"A","B","C","D","E"}. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>the name of the file </td></tr>
+    <tr><td class="paramname">matrixFilepath</td><td>the path to the file </td></tr>
   </table>
   </dd>
 </dl>
@@ -971,6 +971,7 @@ File could also contain the column contactTimes, which is a vector of times </dd
     <tr><td class="paramname">granularity</td><td>the granularity of the interactions, can be "type" or "node" </td></tr>
     <tr><td class="paramname">typeToNodeNames</td><td>the map of the node names &lt;type, vector of node names&gt; </td></tr>
     <tr><td class="paramname">undirectedTypeEdges</td><td>if true, the edges are undirected </td></tr>
+    <tr><td class="paramname">timestep</td><td>the time step of the simulation </td></tr>
   </table>
   </dd>
 </dl>
@@ -1059,6 +1060,7 @@ File could also contain the column contactTimes, which is a vector of times </dd
     <tr><td class="paramname">granularity</td><td>the granularity of the interactions, can be "type" or "node" </td></tr>
     <tr><td class="paramname">typeToNodeNames</td><td>the map of the node names &lt;type, vector of node names&gt; </td></tr>
     <tr><td class="paramname">undirectedTypeEdges</td><td>if true, the edges are undirected </td></tr>
+    <tr><td class="paramname">timestep</td><td>the time step of the simulation </td></tr>
   </table>
   </dd>
 </dl>
@@ -1374,7 +1376,6 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function is deprecated and not used anymore </dd></dl>
 
 </div>
@@ -1576,7 +1577,6 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -1639,16 +1639,17 @@ template&lt;typename T &gt; </div>
 <p>save the iteration values passed as matrices in the folder </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">folderName</td><td>the folder where the values are saved </td></tr>
-    <tr><td class="paramname">outputMatrices</td><td>a map (typeName)-&gt;(<a class="el" href="classMatrix.html" title="Generic 2D matrix implementation using flat row-major storage.">Matrix</a> of values) </td></tr>
-    <tr><td class="paramname">nodeNames</td><td>a map (typeName)-&gt;(vector of node names) </td></tr>
-    <tr><td class="paramname">interIteration</td><td>the inter-iteration number </td></tr>
-    <tr><td class="paramname">intraIteration</td><td>the intra-iteration number </td></tr>
-    <tr><td class="paramname">timestep</td><td>the timestep of the simulation </td></tr>
+    <tr><td class="paramname">outputFolderNameMatrices</td><td>the folder where the matrices are saved </td></tr>
+    <tr><td class="paramname">outputMatrix</td><td>the matrix to save </td></tr>
+    <tr><td class="paramname">outputMatricesRowNames</td><td>the names of the rows of the matrix </td></tr>
+    <tr><td class="paramname">intertypeIterations</td><td>the number of intertype iterations </td></tr>
+    <tr><td class="paramname">intratypeIterations</td><td>the number of intratype iterations </td></tr>
+    <tr><td class="paramname">timestep</td><td>the time step of the simulation </td></tr>
+    <tr><td class="paramname">typeName</td><td>the type name</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+<p>the matrices are saved in the folder with the name outputFolderNameMatrices the matrices are saved in the format: outputFolderNameMatrices/typeName.tsv </p>
 
 </div>
 </div>
