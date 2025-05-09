@@ -44,6 +44,7 @@ public:
      * @param type The identifier of the agent type.
      * @param interIteration The inter-iteration index from which to load.
      * @param intraIteration The intra-iteration index from which to load.
+     * @param computation A pointer to the Computation object to load the state into.
      * @return A pointer to the loaded Computation object.
      */
     void loadState(const std::string type, int& interIteration, int& intraIteration, Computation* computation);
