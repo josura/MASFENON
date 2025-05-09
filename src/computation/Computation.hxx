@@ -76,7 +76,6 @@ class Computation{
          * @param _input: input vector of the nodes values, initially the one passed in the input
          * @param _W: the adjacency matrix along the values of every edge in the graph that it represents
          * @param graphNames: the graph nodes names, in order defined by the adjacency matrix
-         * \return nothing
         */
         Computation(std::string _thisCellType,const std::vector<double>& _input, const Matrix<double>& _W, const std::vector<std::string>& graphNames);
 
