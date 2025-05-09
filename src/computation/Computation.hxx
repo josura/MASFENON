@@ -84,7 +84,7 @@ class Computation{
          * @brief constructor function Computation without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation
          * @param _thisCellType: the type of this computation, this information will be used as the unique name for the Agent
          * @param _input: input vector of the nodes values, initially the one passed in the input
-         * @param _W: the adjacency matrix along the values of every edge in the graph that it represents
+         * @param _graph: the graph object that represents the structure of the agent associated with the computation
          * @param graphNames: the graph nodes names, in order defined by the adjacency matrix
         */
         Computation(std::string _thisCellType,const std::vector<double>& _input, WeightedEdgeGraph* _graph, const std::vector<std::string>& graphNames);
