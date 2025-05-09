@@ -486,14 +486,14 @@ bool vectorContains(std::vector<T> vec, const T element){
  * @warning the function is not optimized for large vectors, it is a linear search
  */
 template<typename T>
-int getIndex(std::vector<T> v, T K)
+int getIndex(std::vector<T> vec, T K)
 {
-    auto it = find(v.begin(), v.end(), K);
+    auto it = find(vec.begin(), vec.end(), K);
   
     // If element was found
-    if (it != v.end()) 
+    if (it != vec.end()) 
     {
-        return (it - v.begin());
+        return (it - vec.begin());
     }
     else {
         return -1;
