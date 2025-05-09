@@ -17,7 +17,7 @@ var searchData=
   ['getedgeweight_14',['getedgeweight',['../classWeightedEdgeGraph.html#a750eb82403adfe2ddae8b6ad75b50bec',1,'WeightedEdgeGraph::getEdgeWeight(std::string node1, std::string node2) const'],['../classWeightedEdgeGraph.html#a45d7a47ac0dd1ec17466250a6713a89d',1,'WeightedEdgeGraph::getEdgeWeight(int node1, int node2) const']]],
   ['getfullnodesdescription_15',['getfullnodesdescription',['../utilities_8cxx.html#accafa1168a71e841e54f56d5add4b292',1,'getFullNodesDescription(std::string filename):&#160;utilities.cxx'],['../utilities_8hxx.html#accafa1168a71e841e54f56d5add4b292',1,'getFullNodesDescription(std::string filename):&#160;utilities.cxx']]],
   ['getgraph_16',['getGraph',['../classComputation.html#a7e397de41a5b726867d94e2c000f6436',1,'Computation']]],
-  ['getindex_17',['getIndex',['../mathUtilities_8hxx.html#acfb36b6330384dbc3c0733a83da43a70',1,'mathUtilities.hxx']]],
+  ['getindex_17',['getIndex',['../mathUtilities_8hxx.html#a9833a0c9ae787ed153ee1f0b13011534',1,'mathUtilities.hxx']]],
   ['getindexfromname_18',['getIndexFromName',['../classWeightedEdgeGraph.html#a441ff5c47a1cd44684b7ebc6fb3f2494',1,'WeightedEdgeGraph']]],
   ['getinput_19',['getInput',['../classComputation.html#a5d240f22905698f5771bf19a59b3fbaf',1,'Computation']]],
   ['getinputarma_20',['getInputArma',['../classComputation.html#abb61d54a0071340d95b512e25731cdcf',1,'Computation']]],
