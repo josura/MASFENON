@@ -1,0 +1,33 @@
+<map id="src/computation/ConservationModelVectorized.cxx" name="src/computation/ConservationModelVectorized.cxx">
+<area shape="rect" id="Node000001" title="Implements the ConservationModelVectorized class for vectorized conservation computations." alt="" coords="199,5,417,45"/>
+<area shape="rect" id="Node000002" href="$ConservationModelVectorized_8hxx.html" title=" " alt="" coords="5,93,200,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,48,161,91,159,86,262,43"/>
+<area shape="rect" id="Node000005" href="$armaUtilities_8hxx.html" title="This file contains the declaration of the Armadillo utilities functions." alt="" coords="225,101,391,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="311,46,311,87,305,87,305,46"/>
+<area shape="rect" id="Node000007" href="$mathUtilities_8hxx.html" title="This file contains the declaration of the math utilities functions." alt="" coords="581,101,747,126"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="387,43,604,95,603,100,386,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="169,181,253,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,131,185,171,182,175,127,136"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="58,181,145,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="105,134,104,167,99,167,100,134"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="295,128,237,175,234,171,292,124"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="277,181,339,207"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="311,126,311,167,305,167,305,126"/>
+<area shape="poly" id="edge9_Node000007_Node000006" title=" " alt="" coords="608,129,353,184,352,179,607,123"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="364,181,436,207"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="626,129,450,181,449,176,625,123"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="460,181,575,207"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="644,129,552,177,550,172,641,124"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="599,181,641,207"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="660,127,636,171,631,168,655,125"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="666,181,753,207"/>
+<area shape="poly" id="edge12_Node000007_Node000011" title=" " alt="" coords="673,125,698,168,693,171,668,128"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="777,181,836,207"/>
+<area shape="poly" id="edge13_Node000007_Node000012" title=" " alt="" coords="686,124,775,172,773,177,684,129"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="861,181,923,207"/>
+<area shape="poly" id="edge14_Node000007_Node000013" title=" " alt="" coords="698,123,849,175,847,180,696,129"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="948,181,999,207"/>
+<area shape="poly" id="edge15_Node000007_Node000014" title=" " alt="" coords="714,123,935,179,934,184,713,129"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1023,181,1108,207"/>
+<area shape="poly" id="edge16_Node000007_Node000015" title=" " alt="" coords="725,123,1010,178,1009,184,724,129"/>
+</map>

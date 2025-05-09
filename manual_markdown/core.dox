@@ -1,0 +1,7 @@
+/**
+ * @defgroup Core Core Components
+ * @brief Core logic and data structures of the MASFENON simulation framework.
+ *
+ * This group includes the primary classes used in graph computation, propagation,
+ * checkpointing, and system interaction.
+ */

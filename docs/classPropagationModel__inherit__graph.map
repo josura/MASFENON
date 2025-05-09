@@ -1,0 +1,9 @@
+<map id="PropagationModel" name="PropagationModel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="253,5,393,31"/>
+<area shape="rect" id="Node000002" href="$classPropagationModelCustom.html" title=" " alt="" coords="5,79,196,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="276,37,138,81,136,76,274,32"/>
+<area shape="rect" id="Node000003" href="$classPropagationModelNeighbors.html" title=" " alt="" coords="220,79,427,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="326,44,326,79,321,79,321,44"/>
+<area shape="rect" id="Node000004" href="$classPropagationModelOriginal.html" title=" " alt="" coords="451,79,641,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="373,32,511,76,509,81,371,37"/>
+</map>

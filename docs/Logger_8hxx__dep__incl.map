@@ -1,0 +1,9 @@
+<map id="src/logging/Logger.hxx" name="src/logging/Logger.hxx">
+<area shape="rect" id="Node000001" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="187,5,355,31"/>
+<area shape="rect" id="Node000002" href="$Logger_8cxx.html" title="Implements the Logger class for writing log, error, and warning messages." alt="" coords="5,79,172,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,38,120,81,118,76,228,33"/>
+<area shape="rect" id="Node000003" href="$main_8cxx.html" title=" " alt="" coords="197,79,346,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="274,44,274,79,269,79,269,44"/>
+<area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title=" " alt="" coords="370,79,543,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="315,33,427,76,425,81,313,38"/>
+</map>

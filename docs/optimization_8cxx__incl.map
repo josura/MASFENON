@@ -1,0 +1,22 @@
+<map id="src/utils/optimization.cxx" name="src/utils/optimization.cxx">
+<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,427,31"/>
+<area shape="rect" id="Node000002" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="158,79,355,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="323,33,281,71,278,67,320,29"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,152,92,177"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="278,33,214,52,147,81,105,111,70,144,67,140,101,107,145,76,212,47,277,28"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="379,79,446,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="348,29,392,68,388,71,345,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="471,79,557,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="364,28,473,71,471,76,362,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="117,152,197,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,106,186,146,183,142,239,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="221,152,292,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="259,104,259,138,254,138,254,104"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="224,107,96,150,95,145,222,101"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="316,152,379,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="273,102,323,141,320,145,270,106"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="403,152,487,177"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="288,102,402,144,400,149,286,107"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="511,152,573,177"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="305,102,498,149,496,154,304,107"/>
+</map>
