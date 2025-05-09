@@ -273,12 +273,14 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
 /**
  * @brief Read the saturation file and return the saturation values as a vector of doubles
  * @param filename the name of the file
+ * @param nodeToIndexMap the map of the node names to the indices
  * @return  the vector of saturation values
  * @details  The file is read using the ifstream function
  * @note    The file must contain the following columns: name, saturation
+ * @warning Function is not implemented yet
  * @warning The function is currently not used, TODO add the function to the main program
  */
-std::vector<double> saturationFileToVector(std::string filename,const std::map<std::string, int>& ensembleToIndexMap);
+std::vector<double> saturationFileToVector(std::string filename,const std::map<std::string, int>& nodeToIndexMap);
 /**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
