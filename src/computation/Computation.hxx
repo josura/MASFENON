@@ -313,7 +313,7 @@ class Computation{
         std::function<double(double,double)> getSaturationFunction()const{return saturationFunction;}
         /**
          * @brief set the saturation function
-         * @param std::function<double(double;double)> saturationFunction: the saturation function to set
+         * @param saturationFunction: std::function<double(double;double)> the saturation function to set
          * @details This function sets the saturation function used in the computation.
          * @details The saturation function is a function that takes two double values as input and returns a double value.
          */
@@ -348,7 +348,7 @@ class Computation{
          * @warning This operator does not perform a deep copy of the graph and augmented graph, only the pointers are copied.
          * @warning This operator does not perform a deep copy of the dissipation, conservation and propagation models, only the pointers are copied.
          */
-        Computation& operator=( const Computation& );
+        Computation& operator=( const Computation& rhs);
         /**
          * @brief Copy constructor for Computation class.
          * @param rhs The right-hand side Computation object to copy from.
@@ -364,6 +364,6 @@ class Computation{
          * @details This operator allows for the assignment of one Computation object to another.
          * @return A reference to the current object.
          */
-        void assign(const Computation&);
+        void assign(const Computation& rhs);
         
 };
