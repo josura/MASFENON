@@ -331,6 +331,7 @@ std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::str
  * @brief   Return the filenames of all files that have the specified extension
  *          in the specified directory and all subdirectories.
  * @param root the path of the folder
+ * @param ext the extension of the files
  * @return  the vector of filenames
  * @details  The files are listed using the directory_iterator function
  * @note    The files are listed using the recursive_directory_iterator function
