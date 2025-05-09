@@ -28,6 +28,6 @@ var searchData=
   ['asarmadillorowvector_25',['asArmadilloRowVector',['../classMatrix.html#adae9b8209f5b80c20f61d6af3f494923',1,'Matrix']]],
   ['assign_26',['assign',['../classWeightedEdgeGraph.html#a0f70226f8c69a024b38012cfa4b75c9f',1,'WeightedEdgeGraph::assign()'],['../classComputation.html#aac8e31b1612a0c0ab0a18cb1a6cb1e56',1,'Computation::assign()']]],
   ['asvector_27',['asVector',['../classMatrix.html#a95cfde5e2b68f6a747f23ca63384df10',1,'Matrix']]],
-  ['augmentgraph_28',['augmentGraph',['../classComputation.html#ab55dc81ee437f3021f11e756295145a9',1,'Computation']]],
+  ['augmentgraph_28',['augmentGraph',['../classComputation.html#a758c80f8bd10cc85ad99144f5195132b',1,'Computation']]],
   ['augmentgraphnocomputeinverse_29',['augmentGraphNoComputeInverse',['../classComputation.html#aa4279011bee40a2b5fbfd125e3159359',1,'Computation']]]
 ];

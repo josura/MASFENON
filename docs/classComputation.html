@@ -99,8 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1026b01eca6840ee25cf48b31c0dc5b6" id="r_a1026b01eca6840ee25cf48b31c0dc5b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a1026b01eca6840ee25cf48b31c0dc5b6">Computation</a> (std::string _thisCellType, const std::vector&lt; double &gt; &amp;_input, <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *_graph, const std::vector&lt; std::string &gt; &amp;graphNames)</td></tr>
 <tr class="memdesc:a1026b01eca6840ee25cf48b31c0dc5b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor function <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> without knowledge of the other cell types, this part can be seen as the classical algorithm without additional computation for message passing between cells, only intra-cell propagation  <br /></td></tr>
 <tr class="separator:a1026b01eca6840ee25cf48b31c0dc5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab55dc81ee437f3021f11e756295145a9" id="r_ab55dc81ee437f3021f11e756295145a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#ab55dc81ee437f3021f11e756295145a9">augmentGraph</a> (const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;newEdgesList=std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt;(), const std::vector&lt; double &gt; &amp;newEdgesValue=std::vector&lt; double &gt;(), bool includeSelfVirtual=false)</td></tr>
-<tr class="separator:ab55dc81ee437f3021f11e756295145a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758c80f8bd10cc85ad99144f5195132b" id="r_a758c80f8bd10cc85ad99144f5195132b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a758c80f8bd10cc85ad99144f5195132b">augmentGraph</a> (const std::vector&lt; std::string &gt; &amp;_types, const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;newEdgesList=std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt;(), const std::vector&lt; double &gt; &amp;newEdgesValue=std::vector&lt; double &gt;(), bool includeSelfVirtual=false)</td></tr>
+<tr class="memdesc:a758c80f8bd10cc85ad99144f5195132b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Augment the graph with types and a new set of edges from virtual nodes in the augmented graph to the graph(virtual inputs and virtual outputs)  <br /></td></tr>
+<tr class="separator:a758c80f8bd10cc85ad99144f5195132b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4279011bee40a2b5fbfd125e3159359" id="r_aa4279011bee40a2b5fbfd125e3159359"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#aa4279011bee40a2b5fbfd125e3159359">augmentGraphNoComputeInverse</a> (const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;newEdgesList=std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt;(), const std::vector&lt; double &gt; &amp;newEdgesValue=std::vector&lt; double &gt;(), bool includeSelfVirtual=false)</td></tr>
 <tr class="separator:aa4279011bee40a2b5fbfd125e3159359"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3405a8bd4d3d5eed0571c2f6955469d9" id="r_a3405a8bd4d3d5eed0571c2f6955469d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a3405a8bd4d3d5eed0571c2f6955469d9">addEdges</a> (const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;, const std::vector&lt; double &gt; &amp;, bool bothDirections=false, bool inverseComputation=true)</td></tr>
@@ -633,8 +634,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab55dc81ee437f3021f11e756295145a9" name="ab55dc81ee437f3021f11e756295145a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab55dc81ee437f3021f11e756295145a9">&#9670;&#160;</a></span>augmentGraph()</h2>
+<a id="a758c80f8bd10cc85ad99144f5195132b" name="a758c80f8bd10cc85ad99144f5195132b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a758c80f8bd10cc85ad99144f5195132b">&#9670;&#160;</a></span>augmentGraph()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,6 +671,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Augment the graph with types and a new set of edges from virtual nodes in the augmented graph to the graph(virtual inputs and virtual outputs) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_types</td><td>the types other than this type, the other agents in the network </td></tr>
+    <tr><td class="paramname">newEdgesList</td><td>the list of edges to be added to the graph, in the form of a vector of pairs of strings (default is an empty vector, so no edges are added) </td></tr>
+    <tr><td class="paramname">newEdgesValue</td><td>the list of edges weights to be added to the graph, in the form of a vector of doubles (default is an empty vector, so no values are added) </td></tr>
+    <tr><td class="paramname">includeSelfVirtual</td><td>if true, the graph will be augmented with a virtual node that represents the input of the current agent (default is false)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The function will create a new graph with the same sub-structure as the original graph, but with additional edges and nodes. The new edges will be added to the graph, and the new nodes will be added to the graph. The new nodes will be added to the graph with different names. The new edges will be added to the graph with weights. The function will also compute the pseudo-inverse of the augmented graph and store it in the pseudoInverseAugmentedArma variable. </p><dl class="section warning"><dt>Warning</dt><dd>function is deprecated, since pseudo inverse is only useful when the propagation function uses the pseudoinverse, otherwise it's wasted space </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use the function augmentGraphNoComputeInverse. </dd></dl>
 
 </div>
 </div>
