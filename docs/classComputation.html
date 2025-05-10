@@ -127,10 +127,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a865fc29e9e48087be18c3468d3f60791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph.  <br /></td></tr>
 <tr class="separator:a865fc29e9e48087be18c3468d3f60791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa19b32aabfab0e0850871cfa7ea3e9e7" id="r_aa19b32aabfab0e0850871cfa7ea3e9e7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#aa19b32aabfab0e0850871cfa7ea3e9e7">computeAugmentedPerturbationDissipatedAfterCompute</a> (double timeStep)</td></tr>
+<tr class="memdesc:aa19b32aabfab0e0850871cfa7ea3e9e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation. The dissipation is done after propagation.  <br /></td></tr>
 <tr class="separator:aa19b32aabfab0e0850871cfa7ea3e9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a421c967e68a716a5d8a29d11dc4f7544" id="r_a421c967e68a716a5d8a29d11dc4f7544"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a421c967e68a716a5d8a29d11dc4f7544">computeAugmentedPerturbationDissipatedBeforeCompute</a> (double timeStep)</td></tr>
+<tr class="memdesc:a421c967e68a716a5d8a29d11dc4f7544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation. The dissipation is done before propagation.  <br /></td></tr>
 <tr class="separator:a421c967e68a716a5d8a29d11dc4f7544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e28da70052fe1ee0b88445954c2b57a" id="r_a6e28da70052fe1ee0b88445954c2b57a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a6e28da70052fe1ee0b88445954c2b57a">computeAugmentedPerturbationSaturatedAndDissipatedBeforeCompute</a> (double timeStep, const std::vector&lt; double &gt; &amp;saturationsVector=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:a6e28da70052fe1ee0b88445954c2b57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation and saturation. The dissipation is done before propagation.  <br /></td></tr>
 <tr class="separator:a6e28da70052fe1ee0b88445954c2b57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a782bbf13f2f26f4fbe56d504b7ae8939" id="r_a782bbf13f2f26f4fbe56d504b7ae8939"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a782bbf13f2f26f4fbe56d504b7ae8939">computeAugmentedPerturbationEnhanced2</a> (double timeStep, bool saturation=true, const std::vector&lt; double &gt; &amp;saturationsVector=std::vector&lt; double &gt;(), const std::vector&lt; double &gt; &amp;qVector=std::vector&lt; double &gt;())</td></tr>
 <tr class="separator:a782bbf13f2f26f4fbe56d504b7ae8939"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -842,6 +845,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compute the perturbation of the augmented graph with dissipation. The dissipation is done after propagation. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>the time step for the dissipation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
+
 </div>
 </div>
 <a id="a421c967e68a716a5d8a29d11dc4f7544" name="a421c967e68a716a5d8a29d11dc4f7544"></a>
@@ -859,6 +872,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute the perturbation of the augmented graph with dissipation. The dissipation is done before propagation. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>the time step for the dissipation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
 
 </div>
 </div>
@@ -1013,6 +1036,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute the perturbation of the augmented graph with dissipation and saturation. The dissipation is done before propagation. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>the time step for the dissipation </td></tr>
+    <tr><td class="paramname">saturationsVector</td><td>the saturation vector for the dissipation(default to empty vector) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
 
 </div>
 </div>
