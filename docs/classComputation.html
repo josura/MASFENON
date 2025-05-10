@@ -109,8 +109,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a26e1eb23f946db111c9dedbd055999e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add edges to the graph.  <br /></td></tr>
 <tr class="separator:a26e1eb23f946db111c9dedbd055999e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a953d671676509462b95cd5233c85d8bd" id="r_a953d671676509462b95cd5233c85d8bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a953d671676509462b95cd5233c85d8bd">addEdges</a> (const std::vector&lt; std::tuple&lt; std::string, std::string, double &gt; &gt; &amp;newEdgesList, bool bothDirections=false, bool inverseComputation=true)</td></tr>
+<tr class="memdesc:a953d671676509462b95cd5233c85d8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add edges to the graph.  <br /></td></tr>
 <tr class="separator:a953d671676509462b95cd5233c85d8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d6ae2269013d9faf168fe7475a26eb3" id="r_a5d6ae2269013d9faf168fe7475a26eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a5d6ae2269013d9faf168fe7475a26eb3">addEdges</a> (const std::vector&lt; std::pair&lt; int, int &gt; &gt; &amp;newEdgesList, const std::vector&lt; double &gt; &amp;newEdgesValue, bool bothDirections=false, bool inverseComputation=true)</td></tr>
+<tr class="memdesc:a5d6ae2269013d9faf168fe7475a26eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add edges to the graph.  <br /></td></tr>
 <tr class="separator:a5d6ae2269013d9faf168fe7475a26eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbfaf02984124c77c7b00f5e5511b57b" id="r_abbfaf02984124c77c7b00f5e5511b57b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#abbfaf02984124c77c7b00f5e5511b57b">addEdges</a> (const std::vector&lt; std::tuple&lt; int, int, double &gt; &gt; &amp;newEdgesList, bool bothDirections=false, bool inverseComputation=true)</td></tr>
 <tr class="separator:abbfaf02984124c77c7b00f5e5511b57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -465,6 +467,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Add edges to the graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newEdgesList</td><td>the list of edges to be added to the graph, in the form of a vector of couple of integers, representing the edge(node ids) and its weight </td></tr>
+    <tr><td class="paramname">newEdgesValue</td><td>the list of edges weights to be added to the graph, in the form of a vector of doubles (default is an empty vector, so no values are added) </td></tr>
+    <tr><td class="paramname">bothDirections</td><td>if true, the edges will be added in both directions (default is false) </td></tr>
+    <tr><td class="paramname">inverseComputation</td><td>if true, the pseudo-inverse of the augmented graph will be computed (default is true)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true. </p><dl class="section warning"><dt>Warning</dt><dd>function is not implemented </dd></dl>
+
 </div>
 </div>
 <a id="a26e1eb23f946db111c9dedbd055999e2" name="a26e1eb23f946db111c9dedbd055999e2"></a>
@@ -584,6 +598,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Add edges to the graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newEdgesList</td><td>the list of edges to be added to the graph, in the form of a vector of triples of 2 string and a double, representing the edge and its weight </td></tr>
+    <tr><td class="paramname">bothDirections</td><td>if true, the edges will be added in both directions (default is false) </td></tr>
+    <tr><td class="paramname">inverseComputation</td><td>if true, the pseudo-inverse of the augmented graph will be computed (default is true)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true. </p>
 
 </div>
 </div>
