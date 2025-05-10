@@ -161,7 +161,21 @@ class Computation{
          * @details The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true. The function will also add the nodes present in the edges list to the graph, if the node is not already present in the graph.
          */
         void addEdgesAndNodes(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
+        
+        // computation functions
+        /**
+         * @brief Compute the perturbation of the graph
+         * @details The function will compute the perturbation of the graph using the pseudo-inverse of the graph and the input vector.
+         * @return The perturbation vector.
+         * @warning function is deprecated, left for backward compatibility and testing purposes
+         */
         std::vector<double> computePerturbation();
+        /**
+         * @brief Compute the perturbation of the augmented graph
+         * @details The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector.
+         * @return The perturbation vector.
+         * @warning function is deprecated, left for backward compatibility and testing purposes
+         */
         std::vector<double> computeAugmentedPerturbation(); //taking into account virtual nodes in the augmented graph
         std::vector<double> computeAugmentedPerturbationDissipatedAfterCompute(double timeStep); //taking into account dissipation after every iteration(Dissipation model), dissipation after the computation of the perturbated value
         std::vector<double> computeAugmentedPerturbationDissipatedBeforeCompute(double timeStep); //taking into account dissipation after every iteration (Dissipation model), dissipation before the computation of the perturbated value
