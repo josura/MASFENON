@@ -144,7 +144,22 @@ class Computation{
          * @warning function is not implemented
          */
         void addEdges(const std::vector<std::pair<int,int>>& newEdgesList, const std::vector<double>& newEdgesValue, bool bothDirections = false, bool inverseComputation = true);
+        /**
+         * @brief Add edges to the graph
+         * @param newEdgesList: the list of edges to be added to the graph, in the form of a vector of triples of 2 integers and a double, representing the edge and its weight
+         * @param bothDirections: if true, the edges will be added in both directions (default is false)
+         * @param inverseComputation: if true, the pseudo-inverse of the augmented graph will be computed (default is true)
+         * @details The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true.
+         * @warning function is not implemented
+         */
         void addEdges(const std::vector<std::tuple<int,int,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
+        /**
+         * @brief Add edges and the nodes present in the edges list to the graph
+         * @param newEdgesList: the list of edges to be added to the graph, in the form of a vector of triples of 2 string and a double, representing the edge and its weight
+         * @param bothDirections: if true, the edges will be added in both directions (default is false)
+         * @param inverseComputation: if true, the pseudo-inverse of the augmented graph will be computed (default is true)
+         * @details The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true. The function will also add the nodes present in the edges list to the graph, if the node is not already present in the graph.
+         */
         void addEdgesAndNodes(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
         std::vector<double> computePerturbation();
         std::vector<double> computeAugmentedPerturbation(); //taking into account virtual nodes in the augmented graph
