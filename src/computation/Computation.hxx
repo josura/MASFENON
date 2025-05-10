@@ -126,10 +126,10 @@ class Computation{
          * @warning function is deprecated, since pseudo inverse is only useful when the propagation function uses the pseudoinverse, otherwise it's wasted space
          */
         void addEdges(const std::vector<std::pair<std::string,std::string>>& newEdgesList, const std::vector<double>& newEdgesValues, bool bothDirections = false, bool inverseComputation = true);
-        void addEdges(const std::vector<std::tuple<std::string,std::string,double>>&  , bool bothDirections = false, bool inverseComputation = true);
-        void addEdges(const std::vector<std::pair<int,int>>& , const std::vector<double>& , bool bothDirections = false, bool inverseComputation = true);
-        void addEdges(const std::vector<std::tuple<int,int,double>>&  , bool bothDirections = false, bool inverseComputation = true);
-        void addEdgesAndNodes(const std::vector<std::tuple<std::string,std::string,double>>&  , bool bothDirections = false, bool inverseComputation = true);
+        void addEdges(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
+        void addEdges(const std::vector<std::pair<int,int>>& newEdgesList, const std::vector<double>& newEdgesValue, bool bothDirections = false, bool inverseComputation = true);
+        void addEdges(const std::vector<std::tuple<int,int,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
+        void addEdgesAndNodes(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
         std::vector<double> computePerturbation();
         std::vector<double> computeAugmentedPerturbation(); //taking into account virtual nodes in the augmented graph
         std::vector<double> computeAugmentedPerturbationDissipatedAfterCompute(double timeStep); //taking into account dissipation after every iteration(Dissipation model), dissipation after the computation of the perturbated value
