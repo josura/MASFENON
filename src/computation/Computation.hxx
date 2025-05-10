@@ -126,7 +126,23 @@ class Computation{
          * @warning function is deprecated, since pseudo inverse is only useful when the propagation function uses the pseudoinverse, otherwise it's wasted space
          */
         void addEdges(const std::vector<std::pair<std::string,std::string>>& newEdgesList, const std::vector<double>& newEdgesValues, bool bothDirections = false, bool inverseComputation = true);
+        /**
+         * @brief Add edges to the graph
+         * @param newEdgesList: the list of edges to be added to the graph, in the form of a vector of triples of 2 string and a double, representing the edge and its weight
+         * @param bothDirections: if true, the edges will be added in both directions (default is false)
+         * @param inverseComputation: if true, the pseudo-inverse of the augmented graph will be computed (default is true)
+         * @details The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true.
+         */
         void addEdges(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
+        /**
+         * @brief Add edges to the graph
+         * @param newEdgesList: the list of edges to be added to the graph, in the form of a vector of couple of integers, representing the edge(node ids) and its weight
+         * @param newEdgesValue: the list of edges weights to be added to the graph, in the form of a vector of doubles (default is an empty vector, so no values are added)
+         * @param bothDirections: if true, the edges will be added in both directions (default is false)
+         * @param inverseComputation: if true, the pseudo-inverse of the augmented graph will be computed (default is true)
+         * @details The function will add the edges to the graph and compute the pseudo-inverse of the augmented graph if inverseComputation is true.
+         * @warning function is not implemented
+         */
         void addEdges(const std::vector<std::pair<int,int>>& newEdgesList, const std::vector<double>& newEdgesValue, bool bothDirections = false, bool inverseComputation = true);
         void addEdges(const std::vector<std::tuple<int,int,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
         void addEdgesAndNodes(const std::vector<std::tuple<std::string,std::string,double>>& newEdgesList, bool bothDirections = false, bool inverseComputation = true);
