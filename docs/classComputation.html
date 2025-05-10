@@ -121,8 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9dcda698a5efecc40030252b47ebd3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add edges and the nodes present in the edges list to the graph.  <br /></td></tr>
 <tr class="separator:a9dcda698a5efecc40030252b47ebd3ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a096722d47b13a9936bf14c7e1b4ba721" id="r_a096722d47b13a9936bf14c7e1b4ba721"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a096722d47b13a9936bf14c7e1b4ba721">computePerturbation</a> ()</td></tr>
+<tr class="memdesc:a096722d47b13a9936bf14c7e1b4ba721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the graph.  <br /></td></tr>
 <tr class="separator:a096722d47b13a9936bf14c7e1b4ba721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a865fc29e9e48087be18c3468d3f60791" id="r_a865fc29e9e48087be18c3468d3f60791"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a865fc29e9e48087be18c3468d3f60791">computeAugmentedPerturbation</a> ()</td></tr>
+<tr class="memdesc:a865fc29e9e48087be18c3468d3f60791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph.  <br /></td></tr>
 <tr class="separator:a865fc29e9e48087be18c3468d3f60791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa19b32aabfab0e0850871cfa7ea3e9e7" id="r_aa19b32aabfab0e0850871cfa7ea3e9e7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#aa19b32aabfab0e0850871cfa7ea3e9e7">computeAugmentedPerturbationDissipatedAfterCompute</a> (double timeStep)</td></tr>
 <tr class="separator:aa19b32aabfab0e0850871cfa7ea3e9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -818,6 +820,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compute the perturbation of the augmented graph. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
+
 </div>
 </div>
 <a id="aa19b32aabfab0e0850871cfa7ea3e9e7" name="aa19b32aabfab0e0850871cfa7ea3e9e7"></a>
@@ -1024,6 +1030,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute the perturbation of the graph. </p>
+<p>The function will compute the perturbation of the graph using the pseudo-inverse of the graph and the input vector. </p><dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
 
 </div>
 </div>
