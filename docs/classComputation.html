@@ -136,6 +136,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6e28da70052fe1ee0b88445954c2b57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation and saturation. The dissipation is done before propagation.  <br /></td></tr>
 <tr class="separator:a6e28da70052fe1ee0b88445954c2b57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a782bbf13f2f26f4fbe56d504b7ae8939" id="r_a782bbf13f2f26f4fbe56d504b7ae8939"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a782bbf13f2f26f4fbe56d504b7ae8939">computeAugmentedPerturbationEnhanced2</a> (double timeStep, bool saturation=true, const std::vector&lt; double &gt; &amp;saturationsVector=std::vector&lt; double &gt;(), const std::vector&lt; double &gt; &amp;qVector=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:a782bbf13f2f26f4fbe56d504b7ae8939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation, conservation and saturation. The dissipation is done before propagation.  <br /></td></tr>
 <tr class="separator:a782bbf13f2f26f4fbe56d504b7ae8939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9397bdd6ee7e02561b33436691e6e63" id="r_ae9397bdd6ee7e02561b33436691e6e63"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#ae9397bdd6ee7e02561b33436691e6e63">computeAugmentedPerturbationEnhanced3</a> (double timeStep, bool saturation=true, const std::vector&lt; double &gt; &amp;saturationsVector=std::vector&lt; double &gt;(), const std::vector&lt; double &gt; &amp;qVector=std::vector&lt; double &gt;(), std::function&lt; double(double)&gt; propagationScaleFunction=[](double time) -&gt; double{return 1.0;})</td></tr>
 <tr class="separator:ae9397bdd6ee7e02561b33436691e6e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -923,6 +924,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compute the perturbation of the augmented graph with dissipation, conservation and saturation. The dissipation is done before propagation. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>the time step for the dissipation </td></tr>
+    <tr><td class="paramname">saturationsVector</td><td>the saturation vector for the dissipation(default to empty vector) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>function is deprecated, left for backward compatibility and testing purposes </dd></dl>
+
 </div>
 </div>
 <a id="ae9397bdd6ee7e02561b33436691e6e63" name="ae9397bdd6ee7e02561b33436691e6e63"></a>
@@ -1110,7 +1122,7 @@ This constructor does not perform a deep copy of the dissipation, conservation a
 </div><div class="memdoc">
 
 <p>free the Augmented graph </p>
-<p>This function frees the memory used by the augmented graph. </p>
+<p>This function frees the memory used by the augmented graph. </p><dl class="section warning"><dt>Warning</dt><dd>This function is unstable for now, it's only used for having a clean memory </dd></dl>
 
 </div>
 </div>
