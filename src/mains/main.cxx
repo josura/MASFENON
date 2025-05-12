@@ -1,3 +1,11 @@
+/**
+ * @file main.cxx
+ * @ingroup Mains
+ * @brief Main function for the MASFENON simulation framework. Without the use of MPI
+ * @details This file contains the main function for running the MASFENON simulation framework without MPI. It handles command-line arguments, initializes the computation, and executes the simulation.
+ * @note This version of the main function is designed non-MPI platforms.
+ * @warning This version is deprecated and behind the MPI version. It is kept for backward compatibility and testing purposes.
+ */
 #include <iostream>
 #include <vector>
 #include <string>
