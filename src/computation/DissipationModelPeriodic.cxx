@@ -1,3 +1,10 @@
+/**
+ * @file DissipationModelPeriodic.cxx
+ * @ingroup Core
+ * @brief Implements the DissipationModelPeriodic class used for managing periodic dissipation dynamics for the computation of the perturbation in MASFENON.
+ * @details The DissipationModelPeriodic class inherits from the DissipationModel class and implements periodic dissipation logic.
+ * @details The periodic dissipation model uses a set of phases, periods, and amplitudes to compute the dissipation term.
+ */
 #include "computation/DissipationModelPeriodic.hxx"
 #include <cstddef>
 
