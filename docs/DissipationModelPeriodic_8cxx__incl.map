@@ -1,5 +1,5 @@
 <map id="src/computation/DissipationModelPeriodic.cxx" name="src/computation/DissipationModelPeriodic.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="99,5,303,45"/>
+<area shape="rect" id="Node000001" title="Implements the DissipationModelPeriodic class used for managing periodic dissipation dynamics for the..." alt="" coords="99,5,303,45"/>
 <area shape="rect" id="Node000002" href="$DissipationModelPeriodic_8hxx.html" title="Defines the DissipationModelPeriodic class used for managing periodic dissipation dynamics for the co..." alt="" coords="5,93,227,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,47,146,85,143,82,181,44"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="251,101,322,126"/>
