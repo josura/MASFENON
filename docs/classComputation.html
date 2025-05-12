@@ -142,6 +142,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae9397bdd6ee7e02561b33436691e6e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation, conservation and saturation, taking into account scaling of the propagation function. The dissipation is done before propagation.  <br /></td></tr>
 <tr class="separator:ae9397bdd6ee7e02561b33436691e6e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abab6c6ce22620ff4ba0bf2fe9758c5cc" id="r_abab6c6ce22620ff4ba0bf2fe9758c5cc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#abab6c6ce22620ff4ba0bf2fe9758c5cc">computeAugmentedPerturbationEnhanced4</a> (double timeStep, bool saturation=true, const std::vector&lt; double &gt; &amp;saturationsVector=std::vector&lt; double &gt;(), const std::vector&lt; double &gt; &amp;qVector=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:abab6c6ce22620ff4ba0bf2fe9758c5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation, conservation and saturation, using all the customizable models.  <br /></td></tr>
 <tr class="separator:abab6c6ce22620ff4ba0bf2fe9758c5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad01d8efe55d4bb61c06919b5329a4130" id="r_ad01d8efe55d4bb61c06919b5329a4130"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#ad01d8efe55d4bb61c06919b5329a4130">getMapVirtualOutputsToCellInputs</a> ()</td></tr>
 <tr class="separator:ad01d8efe55d4bb61c06919b5329a4130"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1034,6 +1035,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute the perturbation of the augmented graph with dissipation, conservation and saturation, using all the customizable models. </p>
+<p>The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>the time step for the dissipation </td></tr>
+    <tr><td class="paramname">saturation</td><td>if true, the saturation will be applied (default to true) </td></tr>
+    <tr><td class="paramname">saturationsVector</td><td>the saturation vector for the dissipation (default to empty vector) </td></tr>
+    <tr><td class="paramname">qVector</td><td>the q vector for the conservation model (default to empty vector) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The perturbation vector. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is the most general one, allowing for the use of all the models and functions defined in the class. </dd></dl>
 
 </div>
 </div>
