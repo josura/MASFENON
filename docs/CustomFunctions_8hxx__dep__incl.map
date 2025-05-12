@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,38,129,81,128,76,244,33"/>
 <area shape="rect" id="Node000003" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="213,79,363,104"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="291,44,291,79,285,79,285,44"/>
-<area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title=" " alt="" coords="387,79,560,104"/>
+<area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="387,79,560,104"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="331,33,444,76,442,81,329,38"/>
 </map>

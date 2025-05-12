@@ -1,5 +1,5 @@
 <map id="src/utils/optimization.cxx" name="src/utils/optimization.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,427,31"/>
+<area shape="rect" id="Node000001" title="Implements matrix multiplication and related operations." alt="" coords="241,5,427,31"/>
 <area shape="rect" id="Node000002" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="158,79,355,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="323,33,281,71,278,67,320,29"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="5,152,92,177"/>

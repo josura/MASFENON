@@ -2,5 +2,5 @@
  * @defgroup Mains Mains
  * @brief Main functions of the MASFENON framework
  *
- * This groups include the man files that are used for the MASFENON framework, and that will be available after computation
+ * This groups include the main files that are used for the MASFENON framework, and that will be generating some executables that will be available after compilation.
  */
