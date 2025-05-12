@@ -1,3 +1,10 @@
+/**
+ * @file DissipationModelRandom.cxx
+ * @ingroup Core
+ * @brief Implements the DissipationModelRandom class used for managing random dissipation dynamics for the computation of the perturbation in MASFENON.
+ * @details The DissipationModelRandom class inherits from the DissipationModel class and implements random dissipation logic.
+ * @details The random dissipation model uses a range of values to compute the dissipation term.
+ */
 #include "computation/DissipationModelRandom.hxx"
 #include <cstddef>
 
