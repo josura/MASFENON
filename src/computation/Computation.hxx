@@ -222,6 +222,16 @@ class Computation{
          * @warning function is deprecated, left for backward compatibility and testing purposes
          */
         std::vector<double> computeAugmentedPerturbationEnhanced3(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>(), std::function<double(double)> propagationScaleFunction = [](double time)-> double{return 1.0;}); //taking into account scaling
+        /**
+         * @brief Compute the perturbation of the augmented graph with dissipation, conservation and saturation, using all the customizable models.
+         * @details The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector.
+         * @param timeStep: the time step for the dissipation
+         * @param saturation: if true, the saturation will be applied (default to true)
+         * @param saturationsVector: the saturation vector for the dissipation (default to empty vector)
+         * @param qVector: the q vector for the conservation model (default to empty vector)
+         * @return The perturbation vector.
+         * @note This function is the most general one, allowing for the use of all the models and functions defined in the class.
+         */
         std::vector<double> computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>()); //all the models
         std::pair<std::string,double> getMapVirtualOutputsToCellInputs(); //TODO
         void updateInput(const std::vector<double>& newInp = std::vector<double>(), bool augmented = false);
