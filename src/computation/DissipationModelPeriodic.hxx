@@ -53,9 +53,38 @@ class DissipationModelPeriodic : public DissipationModel
          * @details Cleans up any resources used by the class.
          */
         ~DissipationModelPeriodic();
+        /**
+         * @brief Applies the periodic dissipation model to the input vector.
+         * @param input The input vector to be processed.
+         * @param time The current time.
+         * @return The output vector after applying the periodic dissipation model.
+         * @details This function is used to compute the final output of the periodic dissipation model.
+         */
         arma::Col<double> dissipate(arma::Col<double> input, double time)override;
+        /**
+         * @brief Computes the dissipation term of the input vector.
+         * @param input The input vector to be processed.
+         * @param time The current time.
+         * @return The dissipation term vector.
+         * @details This function is used to compute the dissipation term of the input vector.
+         */
         arma::Col<double> dissipationTerm(arma::Col<double> input, double time)override;
+        /**
+         * @brief Gets the phases of the periodic dissipation model.
+         * @return The phases of the periodic dissipation model.
+         * @details This function returns the phases of the periodic dissipation model.
+         */
         arma::Col<double> getPhases(){return this->phases;}
+        /**
+         * @brief Gets the periods of the periodic dissipation model.
+         * @return The periods of the periodic dissipation model.
+         * @details This function returns the periods of the periodic dissipation model.
+         */
         arma::Col<double> getPeriods(){return this->periods;}
+        /**
+         * @brief Gets the amplitudes of the periodic dissipation model.
+         * @return The amplitudes of the periodic dissipation model.
+         * @details This function returns the amplitudes of the periodic dissipation model.
+         */
         arma::Col<double> getAmplitudes(){return this->amplitudes;}
 };
