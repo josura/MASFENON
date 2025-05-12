@@ -35,7 +35,7 @@
 <area shape="poly" id="edge42_Node000011_Node000007" title=" " alt="" coords="809,147,747,365,742,364,804,146"/>
 <area shape="poly" id="edge43_Node000011_Node000008" title=" " alt="" coords="841,143,904,219,986,307,1050,362,1047,366,982,311,900,223,837,146"/>
 <area shape="poly" id="edge41_Node000011_Node000010" title=" " alt="" coords="742,140,596,184,594,179,740,135"/>
-<area shape="rect" id="Node000012" href="$PropagationModel_8hxx.html" title=" " alt="" coords="955,181,1165,221"/>
+<area shape="rect" id="Node000012" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="955,181,1165,221"/>
 <area shape="poly" id="edge16_Node000011_Node000012" title=" " alt="" coords="883,135,1007,179,1006,184,881,140"/>
 <area shape="rect" id="Node000020" href="$PropagationModelVectorized_8hxx.html" title=" " alt="" coords="1563,181,1773,221"/>
 <area shape="poly" id="edge33_Node000011_Node000020" title=" " alt="" coords="923,123,1564,187,1563,192,923,128"/>

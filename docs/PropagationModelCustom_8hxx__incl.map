@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title=" " alt="" coords="109,5,319,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,328,89,353"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,47,62,317,58,314,201,45"/>
-<area shape="rect" id="Node000003" href="$PropagationModel_8hxx.html" title=" " alt="" coords="239,93,493,119"/>
+<area shape="rect" id="Node000003" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="239,93,493,119"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,43,332,84,330,89,249,48"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="344,121,247,175,186,213,128,257,95,288,67,319,63,315,91,284,124,253,183,209,244,170,342,116"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="323,174,409,199"/>

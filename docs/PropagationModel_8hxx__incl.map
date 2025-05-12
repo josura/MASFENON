@@ -1,5 +1,5 @@
 <map id="src/computation/PropagationModel.hxx" name="src/computation/PropagationModel.hxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="696,5,905,45"/>
+<area shape="rect" id="Node000001" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="696,5,905,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="47,255,131,280"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="696,34,518,47,416,58,312,73,214,93,127,117,58,147,32,164,13,183,9,191,8,199,16,216,33,232,54,246,51,250,30,236,12,219,3,200,4,190,9,180,29,160,55,143,125,112,213,88,311,68,415,53,518,41,695,28"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="1091,101,1177,126"/>

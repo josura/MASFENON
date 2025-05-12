@@ -6,7 +6,7 @@
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="772,33,381,81,376,82,375,77,380,76,772,28"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="329,174,416,199"/>
 <area shape="poly" id="edge34_Node000001_Node000005" title=" " alt="" coords="756,25,663,31,567,41,483,58,450,68,426,81,409,98,396,119,380,161,375,159,391,116,405,94,423,77,448,63,481,52,566,36,663,26,756,20"/>
-<area shape="rect" id="Node000006" href="$PropagationModel_8hxx.html" title=" " alt="" coords="437,86,692,111"/>
+<area shape="rect" id="Node000006" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="437,86,692,111"/>
 <area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="833,33,624,85,623,80,832,28"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="721,328,784,353"/>
 <area shape="poly" id="edge33_Node000001_Node000007" title=" " alt="" coords="861,33,796,75,711,135,631,200,601,230,583,256,579,273,584,287,595,300,613,310,660,325,708,333,707,338,658,330,611,315,592,304,579,290,574,273,578,254,597,227,627,196,707,131,793,71,858,29"/>

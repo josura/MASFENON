@@ -1,5 +1,5 @@
 <map id="PropagationModel" name="PropagationModel">
-<area shape="rect" id="Node000001" title=" " alt="" coords="253,5,393,31"/>
+<area shape="rect" id="Node000001" title="Abstract class for managing propagation dynamics in MASFENON." alt="" coords="253,5,393,31"/>
 <area shape="rect" id="Node000002" href="$classPropagationModelCustom.html" title=" " alt="" coords="5,79,196,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="276,37,138,81,136,76,274,32"/>
 <area shape="rect" id="Node000003" href="$classPropagationModelNeighbors.html" title=" " alt="" coords="220,79,427,104"/>

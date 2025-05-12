@@ -76,9 +76,12 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">PropagationModel.hxx File Reference</div></div>
+  <div class="headertitle"><div class="title">PropagationModel.hxx File Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Components</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Defines the <a class="el" href="classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON.">PropagationModel</a> class used for managing propagation dynamics for the computation of the perturbation in MASFENON.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;armadillo&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -88,7 +91,7 @@ Include dependency graph for PropagationModel.hxx:</div>
 <div class="dyncontent">
 <div class="center"><img src="PropagationModel_8hxx__incl.png" border="0" usemap="#asrc_2computation_2PropagationModel_8hxx" alt=""/></div>
 <map name="asrc_2computation_2PropagationModel_8hxx" id="asrc_2computation_2PropagationModel_8hxx">
-<area shape="rect" title=" " alt="" coords="696,5,905,45"/>
+<area shape="rect" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="696,5,905,45"/>
 <area shape="rect" title=" " alt="" coords="47,255,131,280"/>
 <area shape="poly" title=" " alt="" coords="696,34,518,47,416,58,312,73,214,93,127,117,58,147,32,164,13,183,9,191,8,199,16,216,33,232,54,246,51,250,30,236,12,219,3,200,4,190,9,180,29,160,55,143,125,112,213,88,311,68,415,53,518,41,695,28"/>
 <area shape="rect" title=" " alt="" coords="1091,101,1177,126"/>
@@ -133,7 +136,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="PropagationModel_8hxx__dep__incl.png" border="0" usemap="#asrc_2computation_2PropagationModel_8hxxdep" alt=""/></div>
 <map name="asrc_2computation_2PropagationModel_8hxxdep" id="asrc_2computation_2PropagationModel_8hxxdep">
-<area shape="rect" title=" " alt="" coords="1165,5,1375,45"/>
+<area shape="rect" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="1165,5,1375,45"/>
 <area shape="rect" href="Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="571,101,814,126"/>
 <area shape="poly" title=" " alt="" coords="1152,47,770,103,769,98,1151,41"/>
 <area shape="rect" href="mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="1045,269,1218,295"/>
@@ -180,9 +183,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html">PropagationModel</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for managing propagation dynamics in MASFENON.  <a href="classPropagationModel.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Defines the <a class="el" href="classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON.">PropagationModel</a> class used for managing propagation dynamics for the computation of the perturbation in MASFENON. </p>
+<p>The <a class="el" href="classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON.">PropagationModel</a> class provides methods for applying propagation logic to the perturbation computation.</p>
+<p>The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific propagation models. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Make it stateful. Related to issue #28 </dd></dl>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

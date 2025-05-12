@@ -14,7 +14,7 @@
 <area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="894,101,1065,146,1063,151,892,107"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="1107,247,1194,273"/>
 <area shape="poly" id="edge37_Node000004_Node000008" title=" " alt="" coords="884,102,935,122,991,150,1017,169,1042,190,1119,238,1116,242,1038,194,1013,173,988,154,933,127,882,107"/>
-<area shape="rect" id="Node000009" href="$PropagationModel_8hxx.html" title=" " alt="" coords="722,159,977,185"/>
+<area shape="rect" id="Node000009" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="722,159,977,185"/>
 <area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="852,104,852,145,847,145,847,104"/>
 <area shape="rect" id="Node000010" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="667,240,855,280"/>
 <area shape="poly" id="edge32_Node000004_Node000010" title=" " alt="" coords="785,107,745,124,727,137,713,153,707,172,710,191,720,210,734,228,729,231,716,213,705,193,702,171,708,151,723,133,742,119,783,102"/>

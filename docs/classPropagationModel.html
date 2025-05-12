@@ -78,13 +78,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Abstract class for managing propagation dynamics in MASFENON.  
+ <a href="classPropagationModel.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="PropagationModel_8hxx_source.html">PropagationModel.hxx</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for PropagationModel:</div>
 <div class="dyncontent">
 <div class="center"><img src="classPropagationModel__inherit__graph.png" border="0" usemap="#aPropagationModel_inherit__map" alt="Inheritance graph"/></div>
 <map name="aPropagationModel_inherit__map" id="aPropagationModel_inherit__map">
-<area shape="rect" title=" " alt="" coords="253,5,393,31"/>
+<area shape="rect" title="Abstract class for managing propagation dynamics in MASFENON." alt="" coords="253,5,393,31"/>
 <area shape="rect" href="classPropagationModelCustom.html" title=" " alt="" coords="5,79,196,104"/>
 <area shape="poly" title=" " alt="" coords="276,37,138,81,136,76,274,32"/>
 <area shape="rect" href="classPropagationModelNeighbors.html" title=" " alt="" coords="220,79,427,104"/>
@@ -97,22 +100,34 @@ Inheritance diagram for PropagationModel:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a14837287c62e82d882512f92c6a1b0fc" id="r_a14837287c62e82d882512f92c6a1b0fc"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#a14837287c62e82d882512f92c6a1b0fc">~PropagationModel</a> ()</td></tr>
+<tr class="memdesc:a14837287c62e82d882512f92c6a1b0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON.">PropagationModel</a> class. (needed even if the class is abstract)  <br /></td></tr>
 <tr class="separator:a14837287c62e82d882512f92c6a1b0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8484972e195575197f2991f9e1b8cbeb" id="r_a8484972e195575197f2991f9e1b8cbeb"><td class="memItemLeft" align="right" valign="top">virtual arma::Col&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#a8484972e195575197f2991f9e1b8cbeb">propagate</a> (arma::Col&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:a8484972e195575197f2991f9e1b8cbeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagate the input vector.  <br /></td></tr>
 <tr class="separator:a8484972e195575197f2991f9e1b8cbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6a9e350e724d6181ef76f0ad9d2eaa0" id="r_af6a9e350e724d6181ef76f0ad9d2eaa0"><td class="memItemLeft" align="right" valign="top">virtual arma::Col&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#af6a9e350e724d6181ef76f0ad9d2eaa0">propagationTerm</a> (arma::Col&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:af6a9e350e724d6181ef76f0ad9d2eaa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagation term of the input vector.  <br /></td></tr>
 <tr class="separator:af6a9e350e724d6181ef76f0ad9d2eaa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaef64fdf7cf22c0995a20810237bb4a5" id="r_aaef64fdf7cf22c0995a20810237bb4a5"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#aaef64fdf7cf22c0995a20810237bb4a5">getScaleFunction</a> ()</td></tr>
+<tr class="memdesc:aaef64fdf7cf22c0995a20810237bb4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scale function used in the propagation model.  <br /></td></tr>
 <tr class="separator:aaef64fdf7cf22c0995a20810237bb4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2282d0c70474e6dd99bc7cdb198a927" id="r_ad2282d0c70474e6dd99bc7cdb198a927"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#ad2282d0c70474e6dd99bc7cdb198a927">setScaleFunction</a> (std::function&lt; double(double)&gt; <a class="el" href="classPropagationModel.html#a74e008eb2019c72dbbbbe7482a394074">scaleFunction</a>)</td></tr>
+<tr class="memdesc:ad2282d0c70474e6dd99bc7cdb198a927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scale function used in the propagation model.  <br /></td></tr>
 <tr class="separator:ad2282d0c70474e6dd99bc7cdb198a927"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a74e008eb2019c72dbbbbe7482a394074" id="r_a74e008eb2019c72dbbbbe7482a394074"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModel.html#a74e008eb2019c72dbbbbe7482a394074">scaleFunction</a></td></tr>
+<tr class="memdesc:a74e008eb2019c72dbbbbe7482a394074"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to scale the propagation term. It takes a double value (time) and returns a double value.  <br /></td></tr>
 <tr class="separator:a74e008eb2019c72dbbbbe7482a394074"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Abstract class for managing propagation dynamics in MASFENON. </p>
+<p>This class provides methods for applying propagation logic to the perturbation computation. </p><dl class="section warning"><dt>Warning</dt><dd>This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific propagation models.</dd></dl>
+<p>The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Make it stateful. Related to issue #28 </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a14837287c62e82d882512f92c6a1b0fc" name="a14837287c62e82d882512f92c6a1b0fc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14837287c62e82d882512f92c6a1b0fc">&#9670;&#160;</a></span>~PropagationModel()</h2>
 
@@ -135,6 +150,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default destructor for the <a class="el" href="classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON.">PropagationModel</a> class. (needed even if the class is abstract) </p>
+<p>Initializes the propagation model with a default scale function. </p>
 
 </div>
 </div>
@@ -161,6 +179,10 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the scale function used in the propagation model. </p>
+<dl class="section return"><dt>Returns</dt><dd>The scale function used in the propagation model.</dd></dl>
+<p>This function is used to get the scale function used in the propagation model. </p>
 
 </div>
 </div>
@@ -197,6 +219,17 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Propagate the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output vector after applying the propagation model.</dd></dl>
+<p>This function is used to compute the final output of the propagation model. </p>
 
 <p>Implemented in <a class="el" href="classPropagationModelCustom.html#a79a7cb564ed9c070f29c5e219192f8ad">PropagationModelCustom</a>, <a class="el" href="classPropagationModelNeighbors.html#a6275ec89a7be22e215d46369a861aebb">PropagationModelNeighbors</a>, and <a class="el" href="classPropagationModelOriginal.html#a66fcd18fc9a9922c74b01b51399457de">PropagationModelOriginal</a>.</p>
 
@@ -236,6 +269,17 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Propagation term of the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The propagation term vector.</dd></dl>
+<p>This function is used to compute the propagation term of the input vector. </p>
+
 <p>Implemented in <a class="el" href="classPropagationModelCustom.html#ad5207efab39f9463a7902a58287f74f1">PropagationModelCustom</a>, <a class="el" href="classPropagationModelNeighbors.html#a5ba6978f20c7c4ba779aee601bec8c86">PropagationModelNeighbors</a>, and <a class="el" href="classPropagationModelOriginal.html#aa002a676ffc106460455bc417c7b6557">PropagationModelOriginal</a>.</p>
 
 </div>
@@ -264,6 +308,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the scale function used in the propagation model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleFunction</td><td>The scale function to be set.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to set the scale function used in the propagation model. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -286,6 +339,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The function to scale the propagation term. It takes a double value (time) and returns a double value. </p>
 
 </div>
 </div>
