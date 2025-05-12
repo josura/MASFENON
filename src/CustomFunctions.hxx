@@ -4,6 +4,7 @@
  * @brief Contains utility functions for generating scaling and saturation functions used in MASFENON propagation logic.
  * @details The functions are used to create scaling and saturation functions for dissipation, conservation, and propagation.
  * The scaling functions are used to adjust the values of the nodes in the augmented graph based on the current state of the system.
+ * @todo Make the compilation of the scaling functions dynamic and easily flexible for non-developer use, so that they can be changed before the simulation.
 */
 #pragma once
 #include <functional>
