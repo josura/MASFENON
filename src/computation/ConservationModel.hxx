@@ -57,6 +57,16 @@ class ConservationModel{
         virtual arma::Col<double> conservationTerm(arma::Col<double> input,arma::Mat<double> Wstar, double time, std::vector<double> q = std::vector<double>());
 
         //getters and setters
+        /**
+         * @brief Gets the scale function.
+         * @return The scale function.
+         * @details This function returns the scale function used in the conservation model.
+         */
         std::function<double(double)> getScaleFunction(){return this->scaleFunction;}
+        /**
+         * @brief Sets the scale function.
+         * @param scaleFunction The scale function to be set.
+         * @details This function sets the scale function used in the conservation model.
+         */
         void setScaleFunction(std::function<double(double)> scaleFunction){this->scaleFunction = scaleFunction;}
 };
