@@ -1,22 +1,10 @@
+/**
+ * @file PropagationModel.cxx 
+ * @ingroup Core
+ * @brief Implements the PropagationModel class used for managing propagation dynamics for the computation of the perturbation in MASFENON.
+ * @details The PropagationModel class provides methods for applying propagation logic to the perturbation computation.
+ * @details The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.
+ */
 #include "computation/PropagationModel.hxx"
-
-
-// PropagationModel::PropagationModel(){
-//     this->scaleFunction = [](double time)-> double{return 1;};
-// }
-
-// PropagationModel::PropagationModel(std::function<double(double)> scaleFunction){
-//     this->scaleFunction = scaleFunction;
-// }
-
-// PropagationModel::~PropagationModel(){}
-
-// arma::Col<double> PropagationModel::propagate(arma::Col<double> input, const WeightedEdgeGraph& graph, double time){
-    
-// }
-
-// arma::Col<double> PropagationModel::propagationTerm(arma::Col<double> input, const WeightedEdgeGraph& graph, double time){
-    
-// }
 
 
