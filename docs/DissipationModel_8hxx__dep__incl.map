@@ -1,5 +1,5 @@
 <map id="src/computation/DissipationModel.hxx" name="src/computation/DissipationModel.hxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1271,5,1475,45"/>
+<area shape="rect" id="Node000001" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="1271,5,1475,45"/>
 <area shape="rect" id="Node000002" href="$Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="595,101,838,126"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1257,44,804,103,804,98,1257,39"/>
 <area shape="rect" id="Node000005" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="979,269,1153,295"/>

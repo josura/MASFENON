@@ -1,6 +1,6 @@
 <map id="src/computation/Computation.hxx" name="src/computation/Computation.hxx">
 <area shape="rect" id="Node000001" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="757,5,999,31"/>
-<area shape="rect" id="Node000002" href="$DissipationModel_8hxx.html" title=" " alt="" coords="5,174,255,199"/>
+<area shape="rect" id="Node000002" href="$DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="5,174,255,199"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="757,24,587,30,400,40,241,57,187,68,157,81,144,98,136,118,131,161,126,160,130,117,139,95,154,77,185,63,240,52,400,35,587,25,756,19"/>
 <area shape="rect" id="Node000004" href="$ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="167,79,362,119"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="772,33,381,81,376,82,375,77,380,76,772,28"/>

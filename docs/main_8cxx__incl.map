@@ -18,7 +18,7 @@
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="2989,21,2871,24,2733,32,2667,40,2607,50,2557,64,2521,81,2493,107,2477,135,2474,167,2480,206,2492,241,2507,275,2541,330,2536,333,2503,278,2487,243,2475,207,2468,167,2472,133,2489,103,2519,76,2555,59,2605,45,2666,34,2733,27,2871,18,2989,16"/>
 <area shape="rect" id="Node000010" href="$Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="2755,86,2975,111"/>
 <area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="3036,33,2908,83,2906,78,3034,28"/>
-<area shape="rect" id="Node000011" href="$DissipationModel_8hxx.html" title=" " alt="" coords="4169,174,4418,199"/>
+<area shape="rect" id="Node000011" href="$DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="4169,174,4418,199"/>
 <area shape="poly" id="edge55_Node000001_Node000011" title=" " alt="" coords="3139,17,3453,20,3874,30,4078,37,4252,47,4377,60,4415,68,4435,77,4444,92,4444,107,4437,120,4423,133,4386,155,4345,172,4343,167,4384,150,4420,129,4433,117,4439,105,4439,93,4432,81,4414,73,4376,65,4251,53,4077,43,3874,35,3453,26,3139,22"/>
 <area shape="rect" id="Node000013" href="$ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="3121,167,3316,207"/>
 <area shape="poly" id="edge54_Node000001_Node000013" title=" " alt="" coords="3059,32,3042,73,3040,96,3048,117,3075,144,3110,163,3107,168,3072,149,3043,120,3035,97,3037,71,3054,30"/>
