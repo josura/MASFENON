@@ -1,5 +1,6 @@
 <map id="DissipationModelPeriodic" name="DissipationModelPeriodic">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,192,104"/>
+<area shape="rect" id="Node000001" title="Class for managing periodic dissipation dynamics in MASFENON." alt="" coords="5,79,192,104"/>
 <area shape="rect" id="Node000002" href="$classDissipationModel.html" title="Abstract class for managing dissipation dynamics in MASFENON." alt="" coords="31,5,166,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,44,101,79,96,79,96,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,44,94,78,89,79,87,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="110,45,108,79,103,78,105,44"/>
 </map>

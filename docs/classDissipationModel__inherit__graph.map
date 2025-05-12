@@ -1,11 +1,12 @@
 <map id="DissipationModel" name="DissipationModel">
-<area shape="rect" id="Node000001" title="Abstract class for managing dissipation dynamics in MASFENON." alt="" coords="5,80,140,105"/>
-<area shape="rect" id="Node000002" href="$classDissipationModelPeriodic.html" title=" " alt="" coords="189,5,376,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,72,187,39,225,28,226,33,189,45,112,77"/>
+<area shape="rect" id="Node000001" title="Abstract class for managing dissipation dynamics in MASFENON." alt="" coords="5,55,140,80"/>
+<area shape="rect" id="Node000002" href="$classDissipationModelPeriodic.html" title="Class for managing periodic dissipation dynamics in MASFENON." alt="" coords="189,5,376,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,55,254,28,255,33,154,60"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="114,48,190,28,191,33,115,53"/>
 <area shape="rect" id="Node000003" href="$classDissipationModelPow.html" title=" " alt="" coords="201,55,364,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,80,201,74,202,80,154,86"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="154,65,201,65,201,70,154,70"/>
 <area shape="rect" id="Node000004" href="$classDissipationModelRandom.html" title=" " alt="" coords="188,104,377,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="154,99,188,103,188,108,153,105"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="141,81,228,101,227,107,140,86"/>
 <area shape="rect" id="Node000005" href="$classDissipationModelScaled.html" title=" " alt="" coords="193,153,372,179"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="115,109,189,138,230,151,229,156,187,143,113,113"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="103,86,143,113,189,138,225,151,223,156,187,143,140,118,100,91"/>
 </map>
