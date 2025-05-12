@@ -15,8 +15,21 @@ class ConservationModel{
     protected:
         std::function<double(double)> scaleFunction; ///< The function to scale the conservation term. It takes a double value (time) and returns a double value.>
     public:
+        /**
+         * @brief Default constructor for the ConservationModel class.
+         * @details Initializes the scale function to a default constant function that returns the value of 0.5.
+         */
         ConservationModel();
+        /**
+         * @brief Constructor for the ConservationModel class.
+         * @param scaleFunction The function to scale the conservation term. It takes a double value (time) and returns a double value.
+         * @details Initializes the scale function to the provided value.
+         */
         ConservationModel(std::function<double(double)> scaleFunction);
+        /**
+         * @brief Destructor for the ConservationModel class.
+         * @details Cleans up any resources used by the class.
+         */
         virtual ~ConservationModel();
         //using the scale function as a parameter itself, dependency injection
         virtual arma::Col<double> conservate(arma::Col<double> input, arma::Col<double> inputDissipated,arma::Mat<double> Wstar, double time, std::vector<double> q = std::vector<double>());
