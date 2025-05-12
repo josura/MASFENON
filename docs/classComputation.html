@@ -145,8 +145,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abab6c6ce22620ff4ba0bf2fe9758c5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the perturbation of the augmented graph with dissipation, conservation and saturation, using all the customizable models.  <br /></td></tr>
 <tr class="separator:abab6c6ce22620ff4ba0bf2fe9758c5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad01d8efe55d4bb61c06919b5329a4130" id="r_ad01d8efe55d4bb61c06919b5329a4130"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#ad01d8efe55d4bb61c06919b5329a4130">getMapVirtualOutputsToCellInputs</a> ()</td></tr>
+<tr class="memdesc:ad01d8efe55d4bb61c06919b5329a4130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the map of virtual outputs to cell inputs.  <br /></td></tr>
 <tr class="separator:ad01d8efe55d4bb61c06919b5329a4130"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66f6d8c0c753b383aedf0565173d930a" id="r_a66f6d8c0c753b383aedf0565173d930a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a66f6d8c0c753b383aedf0565173d930a">updateInput</a> (const std::vector&lt; double &gt; &amp;newInp=std::vector&lt; double &gt;(), bool augmented=false)</td></tr>
+<tr class="memdesc:a66f6d8c0c753b383aedf0565173d930a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the input vector of the <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> object.  <br /></td></tr>
 <tr class="separator:a66f6d8c0c753b383aedf0565173d930a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d240f22905698f5771bf19a59b3fbaf" id="r_a5d240f22905698f5771bf19a59b3fbaf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classComputation.html#a5d240f22905698f5771bf19a59b3fbaf">getInput</a> () const</td></tr>
 <tr class="memdesc:a5d240f22905698f5771bf19a59b3fbaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getting input of the <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> object.  <br /></td></tr>
@@ -1456,6 +1458,10 @@ This constructor does not perform a deep copy of the dissipation, conservation a
       </table>
 </div><div class="memdoc">
 
+<p>Returns the map of virtual outputs to cell inputs. </p>
+<p>The function will return the map of virtual outputs to cell inputs. </p><dl class="section return"><dt>Returns</dt><dd>A pair of string and double representing the name of the target node and the value of the target node. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function is not implemented yet, but it is planned to be implemented in the future. </dd></dl>
+
 </div>
 </div>
 <a id="ab713de47f4535d7a651e5f5d1cdb683f" name="ab713de47f4535d7a651e5f5d1cdb683f"></a>
@@ -2183,6 +2189,16 @@ This operator does not perform a deep copy of the dissipation, conservation and 
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Update the input vector of the <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newInp</td><td>The new input vector to be set. If empty, the current input is used. default is an empty vector. </td></tr>
+    <tr><td class="paramname">augmented</td><td>If true, the input vector is updated for the augmented graph. If false, the input vector is updated for the core graph.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function updates the input vector of the <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> object. If the new input vector is empty, the current input vector is used. </p><dl class="section note"><dt>Note</dt><dd>This function is used to update the input vector of the <a class="el" href="classComputation.html" title="Core class for executing propagation, dissipation, and conservation over a network in MASFENON.">Computation</a> object. It is useful when the input vector needs to be changed during the execution of the program. </dd></dl>
 
 </div>
 </div>
