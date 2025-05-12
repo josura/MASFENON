@@ -1,3 +1,9 @@
+/**
+ * @file DissipationModelPow.cxx
+ * @ingroup Core
+ * @brief Implements the DissipationModelPow class used for managing power dissipation dynamics for the computation of the perturbation in MASFENON.
+ * @details The DissipationModelPow class inherits from the DissipationModel class and implements power dissipation logic.
+ */
 #include "computation/DissipationModelPow.hxx"
 
 DissipationModelPow::DissipationModelPow(){
