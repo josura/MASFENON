@@ -211,6 +211,16 @@ class Computation{
          * @warning function is deprecated, left for backward compatibility and testing purposes
          */
         std::vector<double> computeAugmentedPerturbationEnhanced2(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>()); //taking into account saturation(hyperbolic tangent and scaling), dissipation and conservation after every iteration
+        /**
+         * @brief Compute the perturbation of the augmented graph with dissipation, conservation and saturation, taking into account scaling of the propagation function. The dissipation is done before propagation.
+         * @details The function will compute the perturbation of the augmented graph using the pseudo-inverse of the augmented graph and the input vector.
+         * @param timeStep: the time step for the dissipation
+         * @param saturationsVector: the saturation vector for the dissipation(default to empty vector)
+         * @param qVector: the q vector for the conservation model (default to empty vector)
+         * @param propagationScaleFunction: the function to scale the propagation (default to identity function)
+         * @return The perturbation vector.
+         * @warning function is deprecated, left for backward compatibility and testing purposes
+         */
         std::vector<double> computeAugmentedPerturbationEnhanced3(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>(), std::function<double(double)> propagationScaleFunction = [](double time)-> double{return 1.0;}); //taking into account scaling
         std::vector<double> computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>()); //all the models
         std::pair<std::string,double> getMapVirtualOutputsToCellInputs(); //TODO
