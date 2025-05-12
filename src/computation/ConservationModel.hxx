@@ -5,12 +5,19 @@
  * @details The ConservationModel class provides methods for applying conservation logic to the perturbation computation. The class is not designed as an abstract class, but rather as a base class for specific conservation models.
  * @details The conservation class uses a scale function to determine the scaling of the conservation term. The scale function can be set and modified as needed.
  * @details To set the scale function, @see CustomFunctions.hxx
- * @todo Make it stateful. Related to issue #28 @link https://github.com/josura/MASFENON/issues/28 @endlink
  */
 #pragma once
 #include <armadillo>
 #include <functional>
 
+/**
+ * @class ConservationModel
+ * @brief Class for managing conservation dynamics in MASFENON.
+ * @details This class provides methods for applying conservation logic to the perturbation computation.
+ * @details The conservation class uses a scale function to determine the scaling of the conservation term. The scale function can be set and modified as needed.* 
+ * @details To set the scale function, @see CustomFunctions.hxx
+ * @todo Make it stateful. Related to issue #28 @link https://github.com/josura/MASFENON/issues/28 @endlink
+ */
 class ConservationModel{
     protected:
         std::function<double(double)> scaleFunction; ///< The function to scale the conservation term. It takes a double value (time) and returns a double value.>

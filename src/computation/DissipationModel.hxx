@@ -3,11 +3,22 @@
  * @ingroup Core
  * @brief Defines the DissipationModel class used for managing dissipation dynamics for the computation of the perturbation in MASFENON. This class is an abstract class.
  * @warning This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific dissipation models.
- * @details The DissipationModel class provides methods for applying dissipation logic to the perturbation computation 
+ * @details The DissipationModel class provides methods for applying dissipation logic to the perturbation computation
+ * @details The dissipation class uses a scale function to determine the scaling of the dissipation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
  */
 #pragma once
 #include <armadillo>
 
+/**
+ * @class DissipationModel
+ * @brief Abstract class for managing dissipation dynamics in MASFENON.
+ * @details This class provides methods for applying dissipation logic to the perturbation computation.
+ * @warning This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific dissipation models.
+ * @details The dissipation class uses a scale function to determine the scaling of the dissipation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
+ * @todo Make it stateful. Related to issue #28 @link
+ */
 class DissipationModel{
     protected:
         int numEl;
