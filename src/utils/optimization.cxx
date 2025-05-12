@@ -1,3 +1,10 @@
+/**
+ * @file optimization.cxx
+ * @ingroup Core
+ * @brief Implements matrix multiplication and related operations.
+ * @details This file contains functions for matrix multiplication, vector multiplication, and array multiplication, with a focus on optimization.
+ * @warning This module is deprecated and will be removed in the future.
+ */
 #include "data_structures/Matrix.hxx"
 #include <chrono>
 #include <functional>
