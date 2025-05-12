@@ -36,9 +36,9 @@
 <area shape="poly" id="edge51_Node000001_Node000027" title=" " alt="" coords="3557,28,3914,159,3913,164,3555,33"/>
 <area shape="rect" id="Node000028" href="$DissipationModelPow_8hxx.html" title="Defines the DissipationModelPow class used for managing power dissipation dynamics for the computatio..." alt="" coords="4467,167,4688,207"/>
 <area shape="poly" id="edge56_Node000001_Node000028" title=" " alt="" coords="3612,19,4082,39,4316,55,4399,65,4449,76,4480,92,4509,112,4554,155,4551,159,4505,116,4477,97,4447,81,4399,70,4315,61,4082,44,3612,25"/>
-<area shape="rect" id="Node000029" href="$DissipationModelRandom_8hxx.html" title=" " alt="" coords="4763,167,4984,207"/>
+<area shape="rect" id="Node000029" href="$DissipationModelRandom_8hxx.html" title="Defines the DissipationModelRandom class used for managing random dissipation dynamics for the comput..." alt="" coords="4763,167,4984,207"/>
 <area shape="poly" id="edge59_Node000001_Node000029" title=" " alt="" coords="3612,18,3884,23,4237,33,4560,50,4676,62,4745,76,4766,88,4793,109,4846,155,4842,159,4789,113,4763,93,4743,81,4676,67,4560,56,4237,38,3884,28,3612,23"/>
-<area shape="rect" id="Node000030" href="$DissipationModelScaled_8hxx.html" title=" " alt="" coords="5008,167,5229,207"/>
+<area shape="rect" id="Node000030" href="$DissipationModelScaled_8hxx.html" title="Defines the DissipationModelScaled class used for managing scaled dissipation dynamics for the comput..." alt="" coords="5008,167,5229,207"/>
 <area shape="poly" id="edge62_Node000001_Node000030" title=" " alt="" coords="3612,18,3893,24,4259,36,4596,53,4718,64,4790,76,4810,85,4823,95,4836,106,4854,116,4927,142,4999,161,4998,166,4925,147,4852,121,4833,110,4820,100,4807,90,4789,81,4717,69,4596,58,4259,41,3893,30,3612,24"/>
 <area shape="rect" id="Node000031" href="$utilities_8hxx.html" title="This file contains the declaration of the utilities functions." alt="" coords="1499,350,1629,375"/>
 <area shape="poly" id="edge66_Node000001_Node000031" title=" " alt="" coords="3439,24,2727,42,2352,59,2215,70,2135,81,2051,107,1968,139,1887,175,1811,214,1681,288,1594,344,1591,340,1678,284,1808,209,1885,171,1966,134,2050,102,2134,76,2215,65,2351,54,2727,37,3438,18"/>

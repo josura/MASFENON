@@ -1,5 +1,5 @@
 <map id="src/computation/DissipationModelScaled.hxx" name="src/computation/DissipationModelScaled.hxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,209,45"/>
+<area shape="rect" id="Node000001" title="Defines the DissipationModelScaled class used for managing scaled dissipation dynamics for the comput..." alt="" coords="5,5,209,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="65,167,149,192"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,47,69,68,55,94,54,111,59,127,83,156,79,160,55,130,48,112,50,93,65,65,84,44"/>
 <area shape="rect" id="Node000003" href="$DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="64,93,313,119"/>

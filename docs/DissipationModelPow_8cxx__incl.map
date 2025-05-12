@@ -1,5 +1,5 @@
 <map id="src/computation/DissipationModelPow.cxx" name="src/computation/DissipationModelPow.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="14,5,218,45"/>
+<area shape="rect" id="Node000001" title="Implements the DissipationModelPow class used for managing power dissipation dynamics for the computa..." alt="" coords="14,5,218,45"/>
 <area shape="rect" id="Node000002" href="$DissipationModelPow_8hxx.html" title="Defines the DissipationModelPow class used for managing power dissipation dynamics for the computatio..." alt="" coords="5,93,227,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,46,119,79,113,79,113,46"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="74,255,158,280"/>

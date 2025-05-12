@@ -34,9 +34,9 @@
 <area shape="poly" id="edge51_Node000001_Node000026" title=" " alt="" coords="3139,24,3589,76,3589,81,3138,30"/>
 <area shape="rect" id="Node000027" href="$DissipationModelPow_8hxx.html" title="Defines the DissipationModelPow class used for managing power dissipation dynamics for the computatio..." alt="" coords="3955,79,4176,119"/>
 <area shape="poly" id="edge56_Node000001_Node000027" title=" " alt="" coords="3139,20,3484,39,3709,55,3936,76,3941,77,3941,82,3936,81,3708,60,3484,44,3139,25"/>
-<area shape="rect" id="Node000028" href="$DissipationModelRandom_8hxx.html" title=" " alt="" coords="4200,79,4421,119"/>
+<area shape="rect" id="Node000028" href="$DissipationModelRandom_8hxx.html" title="Defines the DissipationModelRandom class used for managing random dissipation dynamics for the comput..." alt="" coords="4200,79,4421,119"/>
 <area shape="poly" id="edge59_Node000001_Node000028" title=" " alt="" coords="3139,18,3579,33,3878,50,4186,76,4186,81,3878,56,3578,39,3139,23"/>
-<area shape="rect" id="Node000029" href="$DissipationModelScaled_8hxx.html" title=" " alt="" coords="4496,79,4717,119"/>
+<area shape="rect" id="Node000029" href="$DissipationModelScaled_8hxx.html" title="Defines the DissipationModelScaled class used for managing scaled dissipation dynamics for the comput..." alt="" coords="4496,79,4717,119"/>
 <area shape="poly" id="edge62_Node000001_Node000029" title=" " alt="" coords="3139,17,3365,20,3696,30,4083,47,4478,76,4483,77,4482,82,4477,81,4082,52,3696,35,3365,26,3139,22"/>
 <area shape="rect" id="Node000030" href="$utilities_8hxx.html" title="This file contains the declaration of the utilities functions." alt="" coords="1400,262,1531,287"/>
 <area shape="poly" id="edge66_Node000001_Node000030" title=" " alt="" coords="2989,24,2532,43,2278,60,2173,70,2094,81,1920,121,1753,171,1609,221,1507,259,1505,254,1607,216,1751,166,1919,116,2093,76,2173,65,2278,55,2532,38,2989,19"/>

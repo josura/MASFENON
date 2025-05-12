@@ -76,9 +76,12 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">DissipationModelRandom.hxx File Reference</div></div>
+  <div class="headertitle"><div class="title">DissipationModelRandom.hxx File Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Components</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Defines the <a class="el" href="classDissipationModelRandom.html" title="Class for managing random dissipation dynamics in MASFENON.">DissipationModelRandom</a> class used for managing random dissipation dynamics for the computation of the perturbation in MASFENON.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;armadillo&gt;</code><br />
 <code>#include &quot;<a class="el" href="DissipationModel_8hxx_source.html">computation/DissipationModel.hxx</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -86,7 +89,7 @@ Include dependency graph for DissipationModelRandom.hxx:</div>
 <div class="dyncontent">
 <div class="center"><img src="DissipationModelRandom_8hxx__incl.png" border="0" usemap="#asrc_2computation_2DissipationModelRandom_8hxx" alt=""/></div>
 <map name="asrc_2computation_2DissipationModelRandom_8hxx" id="asrc_2computation_2DissipationModelRandom_8hxx">
-<area shape="rect" title=" " alt="" coords="5,5,209,45"/>
+<area shape="rect" title="Defines the DissipationModelRandom class used for managing random dissipation dynamics for the comput..." alt="" coords="5,5,209,45"/>
 <area shape="rect" title=" " alt="" coords="65,167,149,192"/>
 <area shape="poly" title=" " alt="" coords="88,47,69,68,55,94,54,111,59,127,83,156,79,160,55,130,48,112,50,93,65,65,84,44"/>
 <area shape="rect" href="DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="64,93,313,119"/>
@@ -99,8 +102,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="DissipationModelRandom_8hxx__dep__incl.png" border="0" usemap="#asrc_2computation_2DissipationModelRandom_8hxxdep" alt=""/></div>
 <map name="asrc_2computation_2DissipationModelRandom_8hxxdep" id="asrc_2computation_2DissipationModelRandom_8hxxdep">
-<area shape="rect" title=" " alt="" coords="207,5,411,45"/>
-<area shape="rect" href="DissipationModelRandom_8cxx.html" title=" " alt="" coords="5,93,209,133"/>
+<area shape="rect" title="Defines the DissipationModelRandom class used for managing random dissipation dynamics for the comput..." alt="" coords="207,5,411,45"/>
+<area shape="rect" href="DissipationModelRandom_8cxx.html" title="Implements the DissipationModelRandom class used for managing random dissipation dynamics for the com..." alt="" coords="5,93,209,133"/>
 <area shape="poly" title=" " alt="" coords="253,53,152,96,150,91,251,48"/>
 <area shape="rect" href="main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="234,101,383,126"/>
 <area shape="poly" title=" " alt="" coords="311,59,311,100,306,100,306,59"/>
@@ -114,9 +117,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelRandom.html">DissipationModelRandom</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for managing random dissipation dynamics in MASFENON.  <a href="classDissipationModelRandom.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Defines the <a class="el" href="classDissipationModelRandom.html" title="Class for managing random dissipation dynamics in MASFENON.">DissipationModelRandom</a> class used for managing random dissipation dynamics for the computation of the perturbation in MASFENON. </p>
+<p>The <a class="el" href="classDissipationModelRandom.html" title="Class for managing random dissipation dynamics in MASFENON.">DissipationModelRandom</a> class inherits from the <a class="el" href="classDissipationModel.html" title="Abstract class for managing dissipation dynamics in MASFENON.">DissipationModel</a> class and implements random dissipation logic.</p>
+<p>The random dissipation model uses a range of values to compute the dissipation term.</p>
+<p>The dissipation term is computed as a random value between the given range, for every single element. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

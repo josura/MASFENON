@@ -1,6 +1,6 @@
 <map id="src/computation/DissipationModelRandom.cxx" name="src/computation/DissipationModelRandom.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="99,5,303,45"/>
-<area shape="rect" id="Node000002" href="$DissipationModelRandom_8hxx.html" title=" " alt="" coords="5,93,227,133"/>
+<area shape="rect" id="Node000001" title="Implements the DissipationModelRandom class used for managing random dissipation dynamics for the com..." alt="" coords="99,5,303,45"/>
+<area shape="rect" id="Node000002" href="$DissipationModelRandom_8hxx.html" title="Defines the DissipationModelRandom class used for managing random dissipation dynamics for the comput..." alt="" coords="5,93,227,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,47,146,85,143,82,181,44"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="251,101,322,126"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="222,44,267,89,263,92,218,47"/>
