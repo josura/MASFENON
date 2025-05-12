@@ -21,20 +21,39 @@
  */
 class DissipationModel{
     protected:
-        int numEl;
+        int numEl; ///< The number of elements in the dissipation model. This is used to determine the size of the input and output vectors.
     public:
-        //DissipationModel();
+        /**
+         * @brief Default destructor for the DissipationModel class. (needed even if the class is abstract)
+         * @details Initializes the dissipation model with a default number of elements.
+         */
         virtual ~DissipationModel(){}
+        /**
+         * @brief Dissipate the input vector.
+         * @param input The input vector to be processed.
+         * @param time The current time.
+         * @return The output vector after applying the dissipation model.
+         * @details This function is used to compute the final output of the dissipation model.
+         */
         virtual arma::Col<double> dissipate(arma::Col<double> input,double time) = 0;
+        /**
+         * @brief Dissipation term of the input vector.
+         * @param input The input vector to be processed.
+         * @param time The current time.
+         * @return The dissipation term vector.
+         * @details This function is used to compute the dissipation term of the input vector.
+         */
         virtual arma::Col<double> dissipationTerm(arma::Col<double> input, double time) = 0;
-        // arma::Col<double> dissipatePow2Self(arma::Col<double> input);
-        // arma::Col<double> dissipateSelfScaled(arma::Col<double> input, double scale);
-        // arma::Col<double> dissipateSelfScaled(arma::Col<double> input, arma::Col<double> scales);
-        // arma::Col<double> dissipateSelfPeriodic(arma::Col<double> input, double period, double amplitude, double phase);
-        // arma::Col<double> dissipateSelfPeriodic(arma::Col<double> input, arma::Col<double> periods, arma::Col<double> amplitudes, arma::Col<double> phases);
-        // arma::Col<double> dissipateSelfPeriodicShift(arma::Col<double> input, double shiftY, double period, double amplitude, double phase);
-        // arma::Col<double> dissipateSelfPeriodicShift(arma::Col<double> input, arma::Col<double> shiftY, arma::Col<double> periods, arma::Col<double> amplitudes, arma::Col<double> phases);
-        // arma::Col<double> dissipateSelfRandom(arma::Col<double> input, double min, double max);
+        /**
+         * @brief Get the number of elements in the dissipation model.
+         * @return The number of elements in the dissipation model.
+         * @details This function is used to get the number of elements in the dissipation model.
+         */
         int getNumEl(){return this->numEl;}
+        /**
+         * @brief Set the number of elements in the dissipation model.
+         * @param numEl The number of elements to be set.
+         * @details This function is used to set the number of elements in the dissipation model.
+         */
         void setNumEl(int numEl){this->numEl = numEl;}
 };
