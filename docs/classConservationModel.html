@@ -92,8 +92,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab184b9813ef2a169af0ca5e9bc061e23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for the <a class="el" href="classConservationModel.html">ConservationModel</a> class.  <br /></td></tr>
 <tr class="separator:ab184b9813ef2a169af0ca5e9bc061e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd5097bf8661098a8873bf98300585a" id="r_a7fd5097bf8661098a8873bf98300585a"><td class="memItemLeft" align="right" valign="top">virtual arma::Col&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModel.html#a7fd5097bf8661098a8873bf98300585a">conservate</a> (arma::Col&lt; double &gt; input, arma::Col&lt; double &gt; inputDissipated, arma::Mat&lt; double &gt; Wstar, double time, std::vector&lt; double &gt; q=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:a7fd5097bf8661098a8873bf98300585a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the conservation model to the input vector.  <br /></td></tr>
 <tr class="separator:a7fd5097bf8661098a8873bf98300585a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3c52844c8763afbc4697e9e9a2838f8" id="r_ad3c52844c8763afbc4697e9e9a2838f8"><td class="memItemLeft" align="right" valign="top">virtual arma::Col&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModel.html#ad3c52844c8763afbc4697e9e9a2838f8">conservationTerm</a> (arma::Col&lt; double &gt; input, arma::Mat&lt; double &gt; Wstar, double time, std::vector&lt; double &gt; q=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:ad3c52844c8763afbc4697e9e9a2838f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the conservation to the input vector and returns the conservation term.  <br /></td></tr>
 <tr class="separator:ad3c52844c8763afbc4697e9e9a2838f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bfae175d0ee99f83813c6097923d034" id="r_a6bfae175d0ee99f83813c6097923d034"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModel.html#a6bfae175d0ee99f83813c6097923d034">getScaleFunction</a> ()</td></tr>
 <tr class="separator:a6bfae175d0ee99f83813c6097923d034"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +237,21 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Applies the conservation model to the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">inputDissipated</td><td>The dissipated input vector. </td></tr>
+    <tr><td class="paramname">Wstar</td><td>The matrix representing the conservation model. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+    <tr><td class="paramname">q</td><td>A vector of weights for the edges (default is an empty vector). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output vector after applying the conservation model.</dd></dl>
+<p>This function is used to compute the final output of the conservation model.</p>
+<p>The output is computed as the product of the scale function, the matrix Wstar, and the input vector, taking into account the dissipated input. </p>
+
 </div>
 </div>
 <a id="ad3c52844c8763afbc4697e9e9a2838f8" name="ad3c52844c8763afbc4697e9e9a2838f8"></a>
@@ -282,6 +299,20 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Applies the conservation to the input vector and returns the conservation term. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">Wstar</td><td>The matrix representing the conservation model. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+    <tr><td class="paramname">q</td><td>A vector of weights for the edges (default is an empty vector). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The conservation term vector.</dd></dl>
+<p>This function is used to compute the conservation term for the input vector.</p>
+<p>The conservation term is computed as the product of the scale function, the matrix Wstar, and the input vector. </p>
 
 </div>
 </div>
