@@ -1,3 +1,10 @@
+/**
+ * @file DissipationModel.hxx
+ * @ingroup Core
+ * @brief Defines the DissipationModel class used for managing dissipation dynamics for the computation of the perturbation in MASFENON. This class is an abstract class.
+ * @warning This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific dissipation models.
+ * @details The DissipationModel class provides methods for applying dissipation logic to the perturbation computation 
+ */
 #pragma once
 #include <armadillo>
 
