@@ -1,0 +1,6 @@
+/**
+ * @defgroup Mains Mains
+ * @brief Main functions of the MASFENON framework
+ *
+ * This groups include the man files that are used for the MASFENON framework, and that will be available after computation
+ */

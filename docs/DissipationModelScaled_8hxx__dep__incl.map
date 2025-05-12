@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title=" " alt="" coords="207,5,411,45"/>
 <area shape="rect" id="Node000002" href="$DissipationModelScaled_8cxx.html" title=" " alt="" coords="5,93,209,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,53,152,96,150,91,251,48"/>
-<area shape="rect" id="Node000003" href="$main_8cxx.html" title=" " alt="" coords="234,101,383,126"/>
+<area shape="rect" id="Node000003" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="234,101,383,126"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="311,59,311,100,306,100,306,59"/>
 <area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title=" " alt="" coords="407,101,581,126"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="363,49,470,98,468,103,361,54"/>

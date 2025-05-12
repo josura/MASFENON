@@ -25,7 +25,7 @@
 <area shape="poly" id="edge10_Node000003_Node000006" title=" " alt="" coords="601,315,595,357,599,378,609,395,625,405,658,414,754,429,977,449,977,454,753,434,656,419,623,410,605,399,594,379,590,357,596,315"/>
 <area shape="rect" id="Node000007" href="$ComputationTesting_8cxx.html" title=" " alt="" coords="618,365,865,390"/>
 <area shape="poly" id="edge8_Node000003_Node000007" title=" " alt="" coords="638,307,724,362,722,367,635,312"/>
-<area shape="rect" id="Node000008" href="$main_8cxx.html" title=" " alt="" coords="989,365,1139,390"/>
+<area shape="rect" id="Node000008" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="989,365,1139,390"/>
 <area shape="poly" id="edge9_Node000003_Node000008" title=" " alt="" coords="682,302,1004,362,1003,367,681,307"/>
 <area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="436,404,436,445,431,445,431,404"/>
 <area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="524,389,563,395,977,444,977,450,562,400,523,395"/>

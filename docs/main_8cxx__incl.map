@@ -1,5 +1,5 @@
 <map id="src/mains/main.cxx" name="src/mains/main.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="2989,5,3139,31"/>
+<area shape="rect" id="Node000001" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="2989,5,3139,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="2631,416,2711,441"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2989,25,2917,30,2840,40,2773,57,2749,68,2733,80,2718,106,2719,131,2729,154,2745,179,2763,204,2777,231,2785,262,2780,296,2766,320,2744,350,2693,408,2689,404,2739,346,2762,317,2775,294,2779,262,2772,233,2758,207,2740,182,2724,157,2713,132,2713,105,2729,77,2746,63,2771,52,2839,35,2916,25,2989,19"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="2987,416,3050,441"/>
