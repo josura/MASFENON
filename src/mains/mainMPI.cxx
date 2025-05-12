@@ -1,3 +1,12 @@
+/**
+ * @file mainMPI.cxx
+ * @ingroup Mains
+ * @brief Main function for the MASFENON simulation framework. With the use of MPI
+ * @details This file contains the main function for running the MASFENON simulation framework with MPI. It handles command-line arguments, initializes the computation, and executes the simulation.
+ * @note This version of the main function is designed for MPI platforms.
+ * @note This version is the  most up to date and is the one that should be used for the simulations.
+ * @todo Move the Agent related code and logic to separate files and classes.
+ */
 #include <mpi.h>
 #include <iostream>
 #include <vector>
