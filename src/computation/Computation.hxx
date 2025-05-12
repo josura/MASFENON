@@ -233,7 +233,20 @@ class Computation{
          * @note This function is the most general one, allowing for the use of all the models and functions defined in the class.
          */
         std::vector<double> computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>()); //all the models
+        /**
+         * @brief Returns the map of virtual outputs to cell inputs
+         * @details The function will return the map of virtual outputs to cell inputs.
+         * @return A pair of string and double representing the name of the target node and the value of the target node.
+         * @warning This function is not implemented yet, but it is planned to be implemented in the future.
+         */
         std::pair<std::string,double> getMapVirtualOutputsToCellInputs(); //TODO
+        /**
+         * @brief Update the input vector of the Computation object
+         * @param newInp: The new input vector to be set. If empty, the current input is used. default is an empty vector.
+         * @param augmented: If true, the input vector is updated for the augmented graph. If false, the input vector is updated for the core graph.
+         * @details This function updates the input vector of the Computation object. If the new input vector is empty, the current input vector is used.
+         * @note This function is used to update the input vector of the Computation object. It is useful when the input vector needs to be changed during the execution of the program.
+         */
         void updateInput(const std::vector<double>& newInp = std::vector<double>(), bool augmented = false);
 
         // get sets
