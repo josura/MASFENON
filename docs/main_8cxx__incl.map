@@ -32,7 +32,7 @@
 <area shape="poly" id="edge48_Node000001_Node000025" title=" " alt="" coords="3123,28,3356,73,3355,79,3122,33"/>
 <area shape="rect" id="Node000026" href="$PropagationModelCustom_8hxx.html" title=" " alt="" coords="3603,79,3829,119"/>
 <area shape="poly" id="edge51_Node000001_Node000026" title=" " alt="" coords="3139,24,3589,76,3589,81,3138,30"/>
-<area shape="rect" id="Node000027" href="$DissipationModelPow_8hxx.html" title=" " alt="" coords="3955,79,4176,119"/>
+<area shape="rect" id="Node000027" href="$DissipationModelPow_8hxx.html" title="Defines the DissipationModelPow class used for managing power dissipation dynamics for the computatio..." alt="" coords="3955,79,4176,119"/>
 <area shape="poly" id="edge56_Node000001_Node000027" title=" " alt="" coords="3139,20,3484,39,3709,55,3936,76,3941,77,3941,82,3936,81,3708,60,3484,44,3139,25"/>
 <area shape="rect" id="Node000028" href="$DissipationModelRandom_8hxx.html" title=" " alt="" coords="4200,79,4421,119"/>
 <area shape="poly" id="edge59_Node000001_Node000028" title=" " alt="" coords="3139,18,3579,33,3878,50,4186,76,4186,81,3878,56,3578,39,3139,23"/>
