@@ -1,3 +1,11 @@
+/**
+ * @file ConservationModel.hxx
+ * @ingroup Core
+ * @brief Defines the ConservationModel class used for managing conservation dynamics for the computation of the perturbation in MASFENON.
+ * @details The ConservationModel class provides methods for applying conservation logic to the perturbation computation. The class is not designed as an abstract class, but rather as a base class for specific conservation models.
+ * @details The conservation class uses a scale function to determine the scaling of the conservation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
+ */
 #pragma once
 #include <armadillo>
 #include <functional>
