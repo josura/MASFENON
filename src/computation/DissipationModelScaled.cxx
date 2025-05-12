@@ -1,3 +1,10 @@
+/**
+ * @file DissipationModelScaled.cxx
+ * @ingroup Core
+ * @brief Implements the DissipationModelScaled class used for managing scaled dissipation dynamics for the computation of the perturbation in MASFENON.
+ * @details The DissipationModelScaled class inherits from the DissipationModel class and implements scaled dissipation logic.
+ * @details The scaled dissipation model uses a scale function to compute the dissipation term.
+ */
 #include "computation/DissipationModelScaled.hxx"
 #include <iostream>
 
