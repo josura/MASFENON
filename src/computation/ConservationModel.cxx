@@ -1,3 +1,8 @@
+/**
+ * @file ConservationModel.cxx
+ * @ingroup Core
+ * @brief Implements the ConservationModel class used for managing conservation dynamics for the computation of the perturbation in MASFENON.
+ */
 #include "computation/ConservationModel.hxx"
 #include "utils/armaUtilities.hxx"
 #include "utils/mathUtilities.hxx"
