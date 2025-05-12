@@ -1,29 +1,8 @@
+/**
+ * @file DissipationModel.cxx
+ * @ingroup Core
+ * @brief Implements the DissipationModel class used for managing dissipation dynamics for the computation of the perturbation in MASFENON.
+ * @details The DissipationModel class provides methods for applying dissipation logic to the perturbation computation.
+ * @details This file is empty because the DissipationModel class is an abstract class and should not be used directly. 
+ */
 #include "computation/DissipationModel.hxx"
-
-// DissipationModel::DissipationModel(){
-//     this->numEl = 0;
-// }
-
-// arma::Col<double> DissipationModel::dissipatePow2Self(arma::Col<double> input){
-//     return input - pow(input,2);
-// }
-
-// arma::Col<double> DissipationModel::dissipateSelfScaled(arma::Col<double> input, double scale){
-//     return input - scale*input;
-// }
-
-// arma::Col<double> DissipationModel::dissipateSelfScaled(arma::Col<double> input, arma::Col<double> scales){
-//     return input - scales%input;
-// }
-
-// arma::Col<double> DissipationModel::dissipateSelfPeriodic(arma::Col<double> input, double period, double amplitude, double phase){
-//     return input;
-// }
-
-// arma::Col<double> DissipationModel::dissipateSelfPeriodic(arma::Col<double> input, arma::Col<double> periods, arma::Col<double> amplitudes, arma::Col<double> phases){
-//     return input;
-// }
-
-// arma::Col<double> DissipationModel::dissipateSelfRandom(arma::Col<double> input, double min, double max){
-//     return input;
-// }
