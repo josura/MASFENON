@@ -32,7 +32,28 @@ class ConservationModel{
          */
         virtual ~ConservationModel();
         //using the scale function as a parameter itself, dependency injection
+        /**
+         * @brief Applies the conservation model to the input vector.
+         * @param input The input vector to be processed.
+         * @param inputDissipated The dissipated input vector.
+         * @param Wstar The matrix representing the conservation model.
+         * @param time The current time.
+         * @param q A vector of weights for the edges (default is an empty vector).
+         * @return The output vector after applying the conservation model.
+         * @details This function is used to compute the final output of the conservation model.
+         * @details The output is computed as the product of the scale function, the matrix Wstar, and the input vector, taking into account the dissipated input.
+         */
         virtual arma::Col<double> conservate(arma::Col<double> input, arma::Col<double> inputDissipated,arma::Mat<double> Wstar, double time, std::vector<double> q = std::vector<double>());
+        /**
+         * @brief Applies the conservation to the input vector and returns the conservation term.
+         * @param input The input vector to be processed.
+         * @param Wstar The matrix representing the conservation model.
+         * @param time The current time.
+         * @param q A vector of weights for the edges (default is an empty vector).
+         * @return The conservation term vector.
+         * @details This function is used to compute the conservation term for the input vector.
+         * @details The conservation term is computed as the product of the scale function, the matrix Wstar, and the input vector.
+         */
         virtual arma::Col<double> conservationTerm(arma::Col<double> input,arma::Mat<double> Wstar, double time, std::vector<double> q = std::vector<double>());
 
         //getters and setters
