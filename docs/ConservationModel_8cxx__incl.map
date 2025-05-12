@@ -1,5 +1,5 @@
 <map id="src/computation/ConservationModel.cxx" name="src/computation/ConservationModel.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="199,5,417,45"/>
+<area shape="rect" id="Node000001" title="Implements the ConservationModel class used for managing conservation dynamics for the computation of..." alt="" coords="199,5,417,45"/>
 <area shape="rect" id="Node000002" href="$ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="5,93,200,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,48,161,91,159,86,262,43"/>
 <area shape="rect" id="Node000005" href="$armaUtilities_8hxx.html" title="This file contains the declaration of the Armadillo utilities functions." alt="" coords="225,101,391,126"/>
