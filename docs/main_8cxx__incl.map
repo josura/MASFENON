@@ -20,7 +20,7 @@
 <area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="3036,33,2908,83,2906,78,3034,28"/>
 <area shape="rect" id="Node000011" href="$DissipationModel_8hxx.html" title=" " alt="" coords="4169,174,4418,199"/>
 <area shape="poly" id="edge55_Node000001_Node000011" title=" " alt="" coords="3139,17,3453,20,3874,30,4078,37,4252,47,4377,60,4415,68,4435,77,4444,92,4444,107,4437,120,4423,133,4386,155,4345,172,4343,167,4384,150,4420,129,4433,117,4439,105,4439,93,4432,81,4414,73,4376,65,4251,53,4077,43,3874,35,3453,26,3139,22"/>
-<area shape="rect" id="Node000013" href="$ConservationModel_8hxx.html" title=" " alt="" coords="3121,167,3316,207"/>
+<area shape="rect" id="Node000013" href="$ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="3121,167,3316,207"/>
 <area shape="poly" id="edge54_Node000001_Node000013" title=" " alt="" coords="3059,32,3042,73,3040,96,3048,117,3075,144,3110,163,3107,168,3072,149,3043,120,3035,97,3037,71,3054,30"/>
 <area shape="rect" id="Node000015" href="$PropagationModel_8hxx.html" title=" " alt="" coords="3341,174,3595,199"/>
 <area shape="poly" id="edge44_Node000001_Node000015" title=" " alt="" coords="3066,31,3069,73,3077,97,3091,116,3124,126,3197,140,3378,169,3377,175,3196,145,3123,131,3088,121,3072,99,3064,74,3061,31"/>
