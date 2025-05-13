@@ -1,3 +1,11 @@
+/**
+ * @file PropagationModelNeighbors.cxx
+ * @ingroup Core
+ * @brief Implements the PropagationModelNeighbors class used for managing propagation dynamics for the computation of the perturbation in MASFENON.
+ * @details The PropagationModelNeighbors class provides methods for applying propagation logic to the perturbation computation.
+ * @details The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.
+ * @details The propagation model is based on the neighbors of the nodes in the graph, and it uses a weighted adjacency matrix to compute the propagation term.
+ */
 #include "computation/PropagationModelNeighbors.hxx"
 #include <armadillo>
 #include <iostream>
