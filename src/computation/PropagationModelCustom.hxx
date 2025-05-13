@@ -61,9 +61,9 @@ class PropagationModelCustom : public PropagationModel
          */
         arma::Col<double> propagationTerm(arma::Col<double> input, double time)override;
         /**
-         * @brief Get the scale function used in the propagation model.
-         * @return The scale function used in the propagation model.
-         * @details This function is used to get the scale function used in the propagation model.
+         * @brief Get the scale function value at a certain time.
+         * @return The value of the scale function.
+         * @details This function is used to get the scale function value at a certain time.
          */
         double getScale(double time){return scaleFunction(time);}
 };
