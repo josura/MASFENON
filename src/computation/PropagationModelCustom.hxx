@@ -1,3 +1,12 @@
+/**
+ * @file PropagationModelCustom.hxx
+ * @ingroup Core
+ * @brief Defines the PropagationModelCustom class used for managing custom propagation dynamics for the computation of the perturbation in MASFENON.
+ * @details The PropagationModelCustom class provides methods for applying custom propagation logic to the perturbation computation.
+ * @details The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
+ * @note This class is a concrete implementation of the PropagationModel class and should be used directly.
+ */
 #pragma once
 #include <armadillo>
 #include "computation/PropagationModel.hxx"
