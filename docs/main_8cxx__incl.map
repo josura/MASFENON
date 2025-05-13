@@ -26,7 +26,7 @@
 <area shape="poly" id="edge44_Node000001_Node000015" title=" " alt="" coords="3066,31,3069,73,3077,97,3091,116,3124,126,3197,140,3378,169,3377,175,3196,145,3123,131,3088,121,3072,99,3064,74,3061,31"/>
 <area shape="rect" id="Node000016" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="2577,255,2765,295"/>
 <area shape="poly" id="edge65_Node000001_Node000016" title=" " alt="" coords="2989,27,2781,47,2679,62,2606,81,2567,97,2537,112,2513,134,2492,168,2485,187,2492,205,2506,222,2524,235,2565,255,2562,260,2521,240,2502,226,2487,208,2480,187,2487,166,2509,130,2534,108,2565,92,2604,76,2678,57,2780,42,2989,22"/>
-<area shape="rect" id="Node000024" href="$PropagationModelOriginal_8hxx.html" title=" " alt="" coords="3101,79,3328,119"/>
+<area shape="rect" id="Node000024" href="$PropagationModelOriginal_8hxx.html" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="3101,79,3328,119"/>
 <area shape="poly" id="edge45_Node000001_Node000024" title=" " alt="" coords="3087,28,3168,70,3165,75,3085,33"/>
 <area shape="rect" id="Node000025" href="$PropagationModelNeighbors_8hxx.html" title="Defines the PropagationModelNeighbors class used for managing propagation dynamics for the computatio..." alt="" coords="3352,79,3579,119"/>
 <area shape="poly" id="edge48_Node000001_Node000025" title=" " alt="" coords="3123,28,3356,73,3355,79,3122,33"/>

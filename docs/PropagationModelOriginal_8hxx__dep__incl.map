@@ -1,6 +1,6 @@
 <map id="src/computation/PropagationModelOriginal.hxx" name="src/computation/PropagationModelOriginal.hxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="209,5,419,45"/>
-<area shape="rect" id="Node000002" href="$PropagationModelOriginal_8cxx.html" title=" " alt="" coords="5,93,215,133"/>
+<area shape="rect" id="Node000001" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="209,5,419,45"/>
+<area shape="rect" id="Node000002" href="$PropagationModelOriginal_8cxx.html" title="Implements the methods of the PropagationModelOriginal class used for managing propagation dynamics f..." alt="" coords="5,93,215,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="258,53,156,96,154,91,256,48"/>
 <area shape="rect" id="Node000003" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="239,101,389,126"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="317,59,317,100,311,100,311,59"/>
