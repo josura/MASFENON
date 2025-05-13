@@ -1,10 +1,11 @@
 <map id="PropagationModel" name="PropagationModel">
-<area shape="rect" id="Node000001" title="Abstract class for managing propagation dynamics in MASFENON." alt="" coords="141,5,281,31"/>
+<area shape="rect" id="Node000001" title="Abstract class for managing propagation dynamics in MASFENON." alt="" coords="253,5,393,31"/>
 <area shape="rect" id="Node000002" href="$classPropagationModelCustom.html" title="Class for managing custom propagation dynamics in MASFENON." alt="" coords="5,79,196,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,40,113,81,110,76,174,35"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="191,41,127,81,124,76,188,36"/>
-<area shape="rect" id="Node000003" href="$classPropagationModelNeighbors.html" title=" " alt="" coords="220,79,427,104"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="243,36,306,76,304,81,240,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="269,37,131,81,129,76,267,32"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="282,38,144,81,143,76,280,33"/>
+<area shape="rect" id="Node000003" href="$classPropagationModelNeighbors.html" title="Class for managing propagation dynamics in MASFENON." alt="" coords="220,79,427,104"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="317,44,319,78,314,79,312,45"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="335,45,333,79,328,78,329,44"/>
 <area shape="rect" id="Node000004" href="$classPropagationModelOriginal.html" title=" " alt="" coords="451,79,641,104"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="279,31,492,76,491,81,278,36"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="373,32,511,76,509,81,371,37"/>
 </map>

@@ -47,7 +47,7 @@
 <area shape="poly" id="edge18_Node000012_Node000013" title=" " alt="" coords="1081,232,1102,268,1097,270,1076,235"/>
 <area shape="rect" id="Node000014" href="$PropagationModelCustom_8hxx.html" title="Defines the PropagationModelCustom class used for managing custom propagation dynamics for the comput..." alt="" coords="1239,269,1449,309"/>
 <area shape="poly" id="edge19_Node000012_Node000014" title=" " alt="" coords="1136,223,1283,267,1281,272,1135,228"/>
-<area shape="rect" id="Node000016" href="$PropagationModelNeighbors_8hxx.html" title=" " alt="" coords="1473,269,1682,309"/>
+<area shape="rect" id="Node000016" href="$PropagationModelNeighbors_8hxx.html" title="Defines the PropagationModelNeighbors class used for managing propagation dynamics for the computatio..." alt="" coords="1473,269,1682,309"/>
 <area shape="poly" id="edge23_Node000012_Node000016" title=" " alt="" coords="1179,220,1473,268,1472,273,1178,225"/>
 <area shape="rect" id="Node000018" href="$PropagationModelOriginal_8hxx.html" title=" " alt="" coords="1706,269,1915,309"/>
 <area shape="poly" id="edge27_Node000012_Node000018" title=" " alt="" coords="1179,211,1418,234,1695,267,1706,268,1705,273,1694,272,1417,239,1179,216"/>
@@ -57,7 +57,7 @@
 <area shape="poly" id="edge20_Node000014_Node000015" title=" " alt="" coords="1337,323,1327,358,1322,356,1332,322"/>
 <area shape="poly" id="edge26_Node000016_Node000006" title=" " alt="" coords="1543,320,1490,359,1465,382,1437,400,1364,425,1288,442,1215,452,1151,458,1151,452,1215,447,1287,437,1363,420,1435,395,1462,377,1486,355,1540,315"/>
 <area shape="poly" id="edge25_Node000016_Node000008" title=" " alt="" coords="1459,313,1133,367,1132,362,1458,308"/>
-<area shape="rect" id="Node000017" href="$PropagationModelNeighbors_8cxx.html" title=" " alt="" coords="1499,357,1709,397"/>
+<area shape="rect" id="Node000017" href="$PropagationModelNeighbors_8cxx.html" title="Implements the PropagationModelNeighbors class used for managing propagation dynamics for the computa..." alt="" coords="1499,357,1709,397"/>
 <area shape="poly" id="edge24_Node000016_Node000017" title=" " alt="" coords="1590,322,1601,356,1596,358,1585,323"/>
 <area shape="poly" id="edge30_Node000018_Node000006" title=" " alt="" coords="1796,323,1766,364,1746,384,1723,400,1676,417,1614,431,1458,448,1292,457,1151,460,1151,454,1292,452,1458,443,1613,425,1675,412,1720,395,1742,380,1762,361,1792,320"/>
 <area shape="poly" id="edge29_Node000018_Node000008" title=" " alt="" coords="1692,312,1554,328,1446,337,1203,360,1139,368,1138,363,1202,355,1446,332,1553,323,1692,307"/>
