@@ -1,3 +1,12 @@
+/**
+ * @file ComputationTesting.cxx
+ * @ingroup Mains
+ * @brief Main function for testing the Computation class and related functionalities.
+ * @details This file contains the main function for testing the Computation class and its methods.
+ * @warning This file is intended for testing purposes only and should not be used in production code.
+ * @warning This file is deprecated and should be removed in the future.
+ * @todo This file should be removed in the future.
+ */
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "utils/mathUtilities.hxx"
 #include "computation/Computation.hxx"
