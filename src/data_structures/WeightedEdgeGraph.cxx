@@ -1,3 +1,9 @@
+/**
+ * @file WeightedEdgeGraph.cxx
+ * @ingroup Core
+ * @brief Implements the WeightedEdgeGraph class used for managing weighted edge graphs.
+ * @details The WeightedEdgeGraph class provides methods for creating and manipulating weighted edge graphs.
+ */ 
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "data_structures/Matrix.hxx"
 #include "utils/mathUtilities.hxx"
