@@ -1,3 +1,12 @@
+/**
+ * @file testingPerformance.cxx
+ * @ingroup Mains
+ * @brief Main function for testing the performance of matrix multiplication and vector multiplication.
+ * @details This file contains the main function for testing the performance of matrix multiplication and vector multiplication.
+ * @warning This file is intended for testing purposes only and should not be used in production code.
+ * @warning This file is deprecated and should be updated or removed in the future.
+ * @todo This file should be updated or removed in the future.
+ */
 #include <iostream>
 #include <vector>
 #include "data_structures/WeightedEdgeGraph.hxx"
