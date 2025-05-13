@@ -1,5 +1,5 @@
 <map id="src/data_structures/WeightedEdgeGraph.cxx" name="src/data_structures/WeightedEdgeGraph.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="731,5,916,45"/>
+<area shape="rect" id="Node000001" title="Implements the WeightedEdgeGraph class used for managing weighted edge graphs." alt="" coords="731,5,916,45"/>
 <area shape="rect" id="Node000002" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="571,93,759,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="790,48,713,89,710,85,787,43"/>
 <area shape="rect" id="Node000003" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="390,181,587,207"/>
