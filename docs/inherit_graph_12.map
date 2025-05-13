@@ -1,6 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$classPropagationModel.html" title="Abstract class for managing propagation dynamics in MASFENON." alt="" coords="5,55,145,80"/>
-<area shape="rect" id="Node000001" href="$classPropagationModelCustom.html" title=" " alt="" coords="201,5,392,31"/>
+<area shape="rect" id="Node000001" href="$classPropagationModelCustom.html" title="Class for managing custom propagation dynamics in MASFENON." alt="" coords="201,5,392,31"/>
 <area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="146,49,238,28,239,33,147,54"/>
 <area shape="rect" id="Node000002" href="$classPropagationModelNeighbors.html" title=" " alt="" coords="193,55,400,80"/>
 <area shape="poly" id="edge7_Node000000_Node000002" title=" " alt="" coords="160,65,193,65,193,70,160,70"/>
