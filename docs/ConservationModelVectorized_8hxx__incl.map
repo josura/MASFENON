@@ -1,5 +1,5 @@
 <map id="src/computation/ConservationModelVectorized.hxx" name="src/computation/ConservationModelVectorized.hxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,223,45"/>
+<area shape="rect" id="Node000001" title="Defines the ConservationModelVectorized class for vectorized conservation computations." alt="" coords="5,5,223,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="17,93,101,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,47,77,84,73,80,99,44"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="125,93,212,119"/>

@@ -1,6 +1,6 @@
 <map id="src/computation/ConservationModelVectorized.cxx" name="src/computation/ConservationModelVectorized.cxx">
 <area shape="rect" id="Node000001" title="Implements the ConservationModelVectorized class for vectorized conservation computations." alt="" coords="199,5,417,45"/>
-<area shape="rect" id="Node000002" href="$ConservationModelVectorized_8hxx.html" title=" " alt="" coords="5,93,200,133"/>
+<area shape="rect" id="Node000002" href="$ConservationModelVectorized_8hxx.html" title="Defines the ConservationModelVectorized class for vectorized conservation computations." alt="" coords="5,93,200,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,48,161,91,159,86,262,43"/>
 <area shape="rect" id="Node000005" href="$armaUtilities_8hxx.html" title="This file contains the declaration of the Armadillo utilities functions." alt="" coords="225,101,391,126"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="311,46,311,87,305,87,305,46"/>
