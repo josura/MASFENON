@@ -1,3 +1,9 @@
+/**
+ * @file PropagationModelOriginal.cxx
+ * @ingroup Core
+ * @brief Implements the methods of the PropagationModelOriginal class used for managing propagation dynamics for the computation of the perturbation in MASFENON.
+ * @details The PropagationModelOriginal class provides methods for applying propagation logic to the perturbation computation.
+ */
 #include "computation/PropagationModelOriginal.hxx"
 #include <armadillo>
 #include <iostream>
