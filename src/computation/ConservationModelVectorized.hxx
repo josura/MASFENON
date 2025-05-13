@@ -1,3 +1,11 @@
+/**
+ * @file ConservationModelVectorized.hxx
+ * @ingroup Experimental
+ * @brief Defines the ConservationModelVectorized class for vectorized conservation computations.
+ * @details The ConservationModelVectorized class provides methods for applying conservation logic to the perturbation computation.
+ * @details The conservation class uses a scale function to determine the scaling of the conservation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
+ */
 #pragma once
 #include <armadillo>
 #include <functional>
