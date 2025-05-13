@@ -1,5 +1,5 @@
 <map id="src/mains/ComputationTesting.cxx" name="src/mains/ComputationTesting.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="730,5,977,31"/>
+<area shape="rect" id="Node000001" title="Main function for testing the Computation class and related functionalities." alt="" coords="730,5,977,31"/>
 <area shape="rect" id="Node000002" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="1066,240,1254,280"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="870,29,1126,229,1123,233,866,33"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="785,401,865,427"/>

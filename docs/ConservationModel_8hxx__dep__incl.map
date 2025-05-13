@@ -15,7 +15,7 @@
 <area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="479,133,437,153,418,167,401,183,391,200,383,220,377,255,372,254,378,218,386,198,397,180,415,163,434,149,476,128"/>
 <area shape="rect" id="Node000006" href="$Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="411,181,654,207"/>
 <area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="535,140,535,181,530,181,530,140"/>
-<area shape="rect" id="Node000007" href="$ComputationTesting_8cxx.html" title=" " alt="" coords="679,181,925,207"/>
+<area shape="rect" id="Node000007" href="$ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="679,181,925,207"/>
 <area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="586,127,764,179,762,184,584,132"/>
 <area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="618,126,952,179,951,184,617,131"/>
 <area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="198,216,135,257,132,252,195,212"/>
