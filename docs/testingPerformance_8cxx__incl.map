@@ -1,5 +1,5 @@
 <map id="src/mains/testingPerformance.cxx" name="src/mains/testingPerformance.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="826,5,1070,31"/>
+<area shape="rect" id="Node000001" title="Main function for testing the performance of matrix multiplication and vector multiplication." alt="" coords="826,5,1070,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="1343,240,1423,265"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1070,19,1260,29,1368,39,1478,53,1581,72,1672,96,1745,127,1773,145,1794,165,1800,179,1794,194,1769,212,1732,226,1686,237,1635,244,1528,252,1436,255,1436,249,1528,247,1634,239,1685,231,1730,221,1766,207,1790,190,1795,179,1790,168,1770,149,1743,132,1671,101,1580,77,1477,58,1368,44,1259,35,1070,24"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="270,240,333,265"/>
