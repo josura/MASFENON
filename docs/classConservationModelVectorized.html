@@ -78,31 +78,48 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for the single nodes.  
+ <a href="classConservationModelVectorized.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="ConservationModelVectorized_8hxx_source.html">ConservationModelVectorized.hxx</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4c952b6b426b58e04b47678fddc6b94a" id="r_a4c952b6b426b58e04b47678fddc6b94a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a4c952b6b426b58e04b47678fddc6b94a">ConservationModelVectorized</a> ()</td></tr>
+<tr class="memdesc:a4c952b6b426b58e04b47678fddc6b94a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class.  <br /></td></tr>
 <tr class="separator:a4c952b6b426b58e04b47678fddc6b94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61a802b2a67e4b1127b13ae29264a476" id="r_a61a802b2a67e4b1127b13ae29264a476"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a61a802b2a67e4b1127b13ae29264a476">ConservationModelVectorized</a> (std::function&lt; double(double)&gt; <a class="el" href="classConservationModelVectorized.html#a36358fa4a28658facd4cf5a4895c1019">scaleFunction</a>)</td></tr>
+<tr class="memdesc:a61a802b2a67e4b1127b13ae29264a476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class.  <br /></td></tr>
 <tr class="separator:a61a802b2a67e4b1127b13ae29264a476"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac21282f1608522d9e6a0428a8f421536" id="r_ac21282f1608522d9e6a0428a8f421536"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#ac21282f1608522d9e6a0428a8f421536">~ConservationModelVectorized</a> ()</td></tr>
+<tr class="memdesc:ac21282f1608522d9e6a0428a8f421536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class.  <br /></td></tr>
 <tr class="separator:ac21282f1608522d9e6a0428a8f421536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a396f96d9c62585abbb8049a893487b" id="r_a1a396f96d9c62585abbb8049a893487b"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a1a396f96d9c62585abbb8049a893487b">conservate</a> (arma::Mat&lt; double &gt; input, arma::Mat&lt; double &gt; inputDissipated, arma::Mat&lt; double &gt; Wstar, double time, std::vector&lt; double &gt; q=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:a1a396f96d9c62585abbb8049a893487b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the conservation model to the input matrix. (representing a vector of values for the single nodes)  <br /></td></tr>
 <tr class="separator:a1a396f96d9c62585abbb8049a893487b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae446a6ea9eec042963249e79f7cc956e" id="r_ae446a6ea9eec042963249e79f7cc956e"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#ae446a6ea9eec042963249e79f7cc956e">conservationTerm</a> (arma::Mat&lt; double &gt; input, arma::Mat&lt; double &gt; Wstar, double time, std::vector&lt; double &gt; q=std::vector&lt; double &gt;())</td></tr>
+<tr class="memdesc:ae446a6ea9eec042963249e79f7cc956e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the conservation to the input matrix and returns the conservation term.  <br /></td></tr>
 <tr class="separator:ae446a6ea9eec042963249e79f7cc956e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a871a9fc760b47f6331de0484a9326f95" id="r_a871a9fc760b47f6331de0484a9326f95"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a871a9fc760b47f6331de0484a9326f95">getScaleFunction</a> ()</td></tr>
+<tr class="memdesc:a871a9fc760b47f6331de0484a9326f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scale function used in the conservation model.  <br /></td></tr>
 <tr class="separator:a871a9fc760b47f6331de0484a9326f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d974b674ab3c3afd5464441a8de9928" id="r_a6d974b674ab3c3afd5464441a8de9928"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a6d974b674ab3c3afd5464441a8de9928">setScaleFunction</a> (std::function&lt; double(double)&gt; <a class="el" href="classConservationModelVectorized.html#a36358fa4a28658facd4cf5a4895c1019">scaleFunction</a>)</td></tr>
+<tr class="memdesc:a6d974b674ab3c3afd5464441a8de9928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scale function used in the conservation model.  <br /></td></tr>
 <tr class="separator:a6d974b674ab3c3afd5464441a8de9928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a36358fa4a28658facd4cf5a4895c1019" id="r_a36358fa4a28658facd4cf5a4895c1019"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConservationModelVectorized.html#a36358fa4a28658facd4cf5a4895c1019">scaleFunction</a></td></tr>
+<tr class="memdesc:a36358fa4a28658facd4cf5a4895c1019"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to scale the conservation term. It takes a double value (time) and returns a double value.  <br /></td></tr>
 <tr class="separator:a36358fa4a28658facd4cf5a4895c1019"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for the single nodes. </p>
+<p>This class provides methods for applying vectorized conservation logic to the perturbation computation.</p>
+<p>The conservation class uses a scale function to determine the scaling of the conservation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a></dd></dl>
+<p>The conservation model is based on the vectorized approach, allowing for efficient computations with large datasets. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4c952b6b426b58e04b47678fddc6b94a" name="a4c952b6b426b58e04b47678fddc6b94a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4c952b6b426b58e04b47678fddc6b94a">&#9670;&#160;</a></span>ConservationModelVectorized() <span class="overload">[1/2]</span></h2>
 
@@ -117,6 +134,9 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Default constructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class. </p>
+<p>Initializes the scale function to a default constant function that returns the value of 0.5. </p>
 
 </div>
 </div>
@@ -135,6 +155,15 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleFunction</td><td>The function to scale the conservation term. It takes a double value (time) and returns a double value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Initializes the scale function to the provided value. </p>
 
 </div>
 </div>
@@ -160,6 +189,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Destructor for the <a class="el" href="classConservationModelVectorized.html" title="Class for managing vectorized conservation dynamics in MASFENON, working with vectors of values for t...">ConservationModelVectorized</a> class. </p>
+<p>Cleans up any resources used by the class. </p>
 
 </div>
 </div>
@@ -216,6 +248,21 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Applies the conservation model to the input matrix. (representing a vector of values for the single nodes) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input matrix to be processed. </td></tr>
+    <tr><td class="paramname">inputDissipated</td><td>The dissipated input matrix. </td></tr>
+    <tr><td class="paramname">Wstar</td><td>The matrix representing the conservation model. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+    <tr><td class="paramname">q</td><td>A vector of weights for the edges (default is an empty vector). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output matrix after applying the conservation model.</dd></dl>
+<p>This function is used to compute the final output of the conservation model.</p>
+<p>The output is computed as the product of the scale function, the matrix Wstar, and the input matrix, taking into account the dissipated input. </p>
+
 </div>
 </div>
 <a id="ae446a6ea9eec042963249e79f7cc956e" name="ae446a6ea9eec042963249e79f7cc956e"></a>
@@ -264,6 +311,20 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Applies the conservation to the input matrix and returns the conservation term. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input matrix to be processed. </td></tr>
+    <tr><td class="paramname">Wstar</td><td>The matrix representing the conservation model. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+    <tr><td class="paramname">q</td><td>A vector of weights for the edges (default is an empty vector). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The conservation term matrix.</dd></dl>
+<p>This function is used to compute the conservation term for the input matrix.</p>
+<p>The conservation term is computed as the product of the scale function, the matrix Wstar, and the input matrix. </p>
+
 </div>
 </div>
 <a id="a871a9fc760b47f6331de0484a9326f95" name="a871a9fc760b47f6331de0484a9326f95"></a>
@@ -288,6 +349,10 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the scale function used in the conservation model. </p>
+<dl class="section return"><dt>Returns</dt><dd>The scale function used in the conservation model.</dd></dl>
+<p>This function is used to get the scale function used in the conservation model. </p>
 
 </div>
 </div>
@@ -315,6 +380,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the scale function used in the conservation model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleFunction</td><td>The scale function to be set.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to set the scale function used in the conservation model. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -337,6 +411,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The function to scale the conservation term. It takes a double value (time) and returns a double value. </p>
 
 </div>
 </div>
