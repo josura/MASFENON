@@ -78,13 +78,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Abstract class for managing vectorized dissipation dynamics in MASFENON.  
+ <a href="classDissipationModelVectorized.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="DissipationModelVectorized_8hxx_source.html">DissipationModelVectorized.hxx</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for DissipationModelVectorized:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDissipationModelVectorized__inherit__graph.png" border="0" usemap="#aDissipationModelVectorized_inherit__map" alt="Inheritance graph"/></div>
 <map name="aDissipationModelVectorized_inherit__map" id="aDissipationModelVectorized_inherit__map">
-<area shape="rect" title=" " alt="" coords="27,5,230,31"/>
+<area shape="rect" title="Abstract class for managing vectorized dissipation dynamics in MASFENON." alt="" coords="27,5,230,31"/>
 <area shape="rect" href="classDissipationModelScaledVectorized.html" title=" " alt="" coords="5,79,252,104"/>
 <area shape="poly" title=" " alt="" coords="131,44,131,79,126,79,126,44"/>
 </map>
@@ -93,22 +96,34 @@ Inheritance diagram for DissipationModelVectorized:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad955be6bbc06b5d6b1f337001019c59e" id="r_ad955be6bbc06b5d6b1f337001019c59e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#ad955be6bbc06b5d6b1f337001019c59e">~DissipationModelVectorized</a> ()</td></tr>
+<tr class="memdesc:ad955be6bbc06b5d6b1f337001019c59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classDissipationModelVectorized.html" title="Abstract class for managing vectorized dissipation dynamics in MASFENON.">DissipationModelVectorized</a> class. (needed even if the class is abstract)  <br /></td></tr>
 <tr class="separator:ad955be6bbc06b5d6b1f337001019c59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4454567622e3ba7db63ff3cacae73a8" id="r_ac4454567622e3ba7db63ff3cacae73a8"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#ac4454567622e3ba7db63ff3cacae73a8">dissipate</a> (arma::Mat&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:ac4454567622e3ba7db63ff3cacae73a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dissipate the input vector.  <br /></td></tr>
 <tr class="separator:ac4454567622e3ba7db63ff3cacae73a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91d10d3810570e4dd9d1ea288e1f6675" id="r_a91d10d3810570e4dd9d1ea288e1f6675"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#a91d10d3810570e4dd9d1ea288e1f6675">dissipationTerm</a> (arma::Mat&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:a91d10d3810570e4dd9d1ea288e1f6675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dissipation term of the input vector.  <br /></td></tr>
 <tr class="separator:a91d10d3810570e4dd9d1ea288e1f6675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6d5268cb89ff53481d63bfec8d14586" id="r_af6d5268cb89ff53481d63bfec8d14586"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#af6d5268cb89ff53481d63bfec8d14586">getNumEl</a> ()</td></tr>
+<tr class="memdesc:af6d5268cb89ff53481d63bfec8d14586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of elements in the dissipation model.  <br /></td></tr>
 <tr class="separator:af6d5268cb89ff53481d63bfec8d14586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac972b36940610027bd1be0afaf2652a8" id="r_ac972b36940610027bd1be0afaf2652a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#ac972b36940610027bd1be0afaf2652a8">setNumEl</a> (int <a class="el" href="classDissipationModelVectorized.html#ae7c418329c6e3e56051cae8133c50abf">numEl</a>)</td></tr>
+<tr class="memdesc:ac972b36940610027bd1be0afaf2652a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of elements in the dissipation model.  <br /></td></tr>
 <tr class="separator:ac972b36940610027bd1be0afaf2652a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ae7c418329c6e3e56051cae8133c50abf" id="r_ae7c418329c6e3e56051cae8133c50abf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#ae7c418329c6e3e56051cae8133c50abf">numEl</a></td></tr>
+<tr class="memdesc:ae7c418329c6e3e56051cae8133c50abf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of elements in the dissipation model(in this case number of nodes that have different vectors). This is used to determine the size of the input and output vectors.  <br /></td></tr>
 <tr class="separator:ae7c418329c6e3e56051cae8133c50abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Abstract class for managing vectorized dissipation dynamics in MASFENON. </p>
+<p>This class provides methods for applying vectorized dissipation logic to the perturbation computation. </p><dl class="section warning"><dt>Warning</dt><dd>This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific dissipation models.</dd></dl>
+<p>The dissipation class uses a scale function to determine the scaling of the dissipation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Make it stateful. Related to issue #28 </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad955be6bbc06b5d6b1f337001019c59e" name="ad955be6bbc06b5d6b1f337001019c59e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad955be6bbc06b5d6b1f337001019c59e">&#9670;&#160;</a></span>~DissipationModelVectorized()</h2>
 
@@ -131,6 +146,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default destructor for the <a class="el" href="classDissipationModelVectorized.html" title="Abstract class for managing vectorized dissipation dynamics in MASFENON.">DissipationModelVectorized</a> class. (needed even if the class is abstract) </p>
+<p>Cleans up the resources used by the <a class="el" href="classDissipationModelVectorized.html" title="Abstract class for managing vectorized dissipation dynamics in MASFENON.">DissipationModelVectorized</a> class. </p>
 
 </div>
 </div>
@@ -168,6 +186,17 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Dissipate the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output vector after applying the dissipation model.</dd></dl>
+<p>This function is used to compute the final output of the dissipation model. </p>
 
 <p>Implemented in <a class="el" href="classDissipationModelScaledVectorized.html#a8116c39aa18fbdd829f938d72b90c130">DissipationModelScaledVectorized</a>.</p>
 
@@ -207,6 +236,17 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Dissipation term of the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The dissipation term vector.</dd></dl>
+<p>This function is used to compute the dissipation term of the input vector. </p>
+
 <p>Implemented in <a class="el" href="classDissipationModelScaledVectorized.html#a7ad86f8b2930e9dc3403f686f46073db">DissipationModelScaledVectorized</a>.</p>
 
 </div>
@@ -234,6 +274,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the number of elements in the dissipation model. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of elements in the dissipation model.</dd></dl>
+<p>This function is used to get the number of elements in the dissipation model. </p>
+
 </div>
 </div>
 <a id="ac972b36940610027bd1be0afaf2652a8" name="ac972b36940610027bd1be0afaf2652a8"></a>
@@ -260,6 +304,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the number of elements in the dissipation model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">numEl</td><td>The number of elements to be set.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to set the number of elements in the dissipation model. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -282,6 +335,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The number of elements in the dissipation model(in this case number of nodes that have different vectors). This is used to determine the size of the input and output vectors. </p>
 
 </div>
 </div>
