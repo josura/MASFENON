@@ -78,13 +78,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Abstract class for managing vectorized propagation dynamics in MASFENON.  
+ <a href="classPropagationModelVectorized.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="PropagationModelVectorized_8hxx_source.html">PropagationModelVectorized.hxx</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for PropagationModelVectorized:</div>
 <div class="dyncontent">
 <div class="center"><img src="classPropagationModelVectorized__inherit__graph.png" border="0" usemap="#aPropagationModelVectorized_inherit__map" alt="Inheritance graph"/></div>
 <map name="aPropagationModelVectorized_inherit__map" id="aPropagationModelVectorized_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,63,213,88"/>
+<area shape="rect" title="Abstract class for managing vectorized propagation dynamics in MASFENON." alt="" coords="5,63,213,88"/>
 <area shape="rect" href="classPropagationModelCustomVectorized.html" title=" " alt="" coords="261,5,520,31"/>
 <area shape="poly" title=" " alt="" coords="182,57,261,41,324,28,325,33,262,46,183,62"/>
 <area shape="rect" href="classPropagationModelNeighborsVectorized.html" title=" " alt="" coords="287,55,494,95"/>
@@ -97,22 +100,34 @@ Inheritance diagram for PropagationModelVectorized:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0cbed120177fdd664723bf5b6d9b4048" id="r_a0cbed120177fdd664723bf5b6d9b4048"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#a0cbed120177fdd664723bf5b6d9b4048">~PropagationModelVectorized</a> ()</td></tr>
+<tr class="memdesc:a0cbed120177fdd664723bf5b6d9b4048"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classPropagationModelVectorized.html" title="Abstract class for managing vectorized propagation dynamics in MASFENON.">PropagationModelVectorized</a> class. (needed even if the class is abstract)  <br /></td></tr>
 <tr class="separator:a0cbed120177fdd664723bf5b6d9b4048"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28f93bc6275ddc2dcdb0ca6c2f6288de" id="r_a28f93bc6275ddc2dcdb0ca6c2f6288de"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#a28f93bc6275ddc2dcdb0ca6c2f6288de">propagate</a> (arma::Mat&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:a28f93bc6275ddc2dcdb0ca6c2f6288de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagate the input vector.  <br /></td></tr>
 <tr class="separator:a28f93bc6275ddc2dcdb0ca6c2f6288de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0d0e83c84b8fcb275553294a6317167" id="r_ac0d0e83c84b8fcb275553294a6317167"><td class="memItemLeft" align="right" valign="top">virtual arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#ac0d0e83c84b8fcb275553294a6317167">propagationTerm</a> (arma::Mat&lt; double &gt; input, double time)=0</td></tr>
+<tr class="memdesc:ac0d0e83c84b8fcb275553294a6317167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagation term of the input vector.  <br /></td></tr>
 <tr class="separator:ac0d0e83c84b8fcb275553294a6317167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04592c497c12a8e913cab7cdaa080f70" id="r_a04592c497c12a8e913cab7cdaa080f70"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#a04592c497c12a8e913cab7cdaa080f70">getScaleFunction</a> ()</td></tr>
+<tr class="memdesc:a04592c497c12a8e913cab7cdaa080f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scale function used in the propagation model.  <br /></td></tr>
 <tr class="separator:a04592c497c12a8e913cab7cdaa080f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6995fa2c8ac0129f01939f17d12b7b2d" id="r_a6995fa2c8ac0129f01939f17d12b7b2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#a6995fa2c8ac0129f01939f17d12b7b2d">setScaleFunction</a> (std::function&lt; double(double)&gt; <a class="el" href="classPropagationModelVectorized.html#aa4410f9430263fbc68583880195a0f2c">scaleFunction</a>)</td></tr>
+<tr class="memdesc:a6995fa2c8ac0129f01939f17d12b7b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scale function used in the propagation model.  <br /></td></tr>
 <tr class="separator:a6995fa2c8ac0129f01939f17d12b7b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:aa4410f9430263fbc68583880195a0f2c" id="r_aa4410f9430263fbc68583880195a0f2c"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelVectorized.html#aa4410f9430263fbc68583880195a0f2c">scaleFunction</a></td></tr>
+<tr class="memdesc:aa4410f9430263fbc68583880195a0f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale function used to determine the scaling of the propagation term. This function can be set and modified as needed.  <br /></td></tr>
 <tr class="separator:aa4410f9430263fbc68583880195a0f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Abstract class for managing vectorized propagation dynamics in MASFENON. </p>
+<p>This class provides methods for applying vectorized propagation logic to the perturbation computation. </p><dl class="section warning"><dt>Warning</dt><dd>This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific propagation models.</dd></dl>
+<p>The propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Make it stateful. Related to issue #28 </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0cbed120177fdd664723bf5b6d9b4048" name="a0cbed120177fdd664723bf5b6d9b4048"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0cbed120177fdd664723bf5b6d9b4048">&#9670;&#160;</a></span>~PropagationModelVectorized()</h2>
 
@@ -135,6 +150,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default destructor for the <a class="el" href="classPropagationModelVectorized.html" title="Abstract class for managing vectorized propagation dynamics in MASFENON.">PropagationModelVectorized</a> class. (needed even if the class is abstract) </p>
+<p>Cleans up the resources used by the <a class="el" href="classPropagationModelVectorized.html" title="Abstract class for managing vectorized propagation dynamics in MASFENON.">PropagationModelVectorized</a> class. </p>
 
 </div>
 </div>
@@ -161,6 +179,10 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the scale function used in the propagation model. </p>
+<dl class="section return"><dt>Returns</dt><dd>The scale function used in the propagation model.</dd></dl>
+<p>This function is used to get the scale function used in the propagation model. </p>
 
 </div>
 </div>
@@ -197,6 +219,17 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Propagate the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output vector after applying the propagation model.</dd></dl>
+<p>This function is used to compute the final output of the propagation model. </p>
 
 <p>Implemented in <a class="el" href="classPropagationModelCustomVectorized.html#adf62b87fcb27290385d2df41d4463454">PropagationModelCustomVectorized</a>, <a class="el" href="classPropagationModelNeighborsVectorized.html#a7e6f291f092b0c02617e5429abfa60d9">PropagationModelNeighborsVectorized</a>, and <a class="el" href="classPropagationModelOriginalVectorized.html#a8405d0b238a9282fabef0b475b057dcb">PropagationModelOriginalVectorized</a>.</p>
 
@@ -236,6 +269,17 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Propagation term of the input vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The input vector to be processed. </td></tr>
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The propagation term vector.</dd></dl>
+<p>This function is used to compute the propagation term of the input vector. </p>
+
 <p>Implemented in <a class="el" href="classPropagationModelCustomVectorized.html#ac4598e9bc186e526d16c0a8319cc239b">PropagationModelCustomVectorized</a>, <a class="el" href="classPropagationModelNeighborsVectorized.html#abdfed96a4954e1cf9317a44407014fcd">PropagationModelNeighborsVectorized</a>, and <a class="el" href="classPropagationModelOriginalVectorized.html#af0cafc2bd2321a307020fb2459de75e6">PropagationModelOriginalVectorized</a>.</p>
 
 </div>
@@ -264,6 +308,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the scale function used in the propagation model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleFunction</td><td>The scale function to be set.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to set the scale function used in the propagation model. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -286,6 +339,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The scale function used to determine the scaling of the propagation term. This function can be set and modified as needed. </p>
 
 </div>
 </div>

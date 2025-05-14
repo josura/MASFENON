@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title=" " alt="" coords="109,5,319,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,343,89,368"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,47,62,331,57,329,202,44"/>
-<area shape="rect" id="Node000003" href="$PropagationModelVectorized_8hxx.html" title=" " alt="" coords="253,93,479,133"/>
+<area shape="rect" id="Node000003" href="$PropagationModelVectorized_8hxx.html" title="Defines the PropagationModelVectorized class used for managing vectorized propagation dynamics for th..." alt="" coords="253,93,479,133"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="249,43,322,84,320,89,246,48"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="333,136,237,193,181,230,128,271,95,303,67,333,63,330,91,299,124,267,178,226,234,188,330,131"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="323,189,409,214"/>

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classPropagationModelVectorized.html" title=" " alt="" coords="5,63,213,88"/>
+<area shape="rect" id="Node000000" href="$classPropagationModelVectorized.html" title="Abstract class for managing vectorized propagation dynamics in MASFENON." alt="" coords="5,63,213,88"/>
 <area shape="rect" id="Node000001" href="$classPropagationModelCustomVectorized.html" title=" " alt="" coords="261,5,520,31"/>
 <area shape="poly" id="edge9_Node000000_Node000001" title=" " alt="" coords="182,57,261,41,324,28,325,33,262,46,183,62"/>
 <area shape="rect" id="Node000002" href="$classPropagationModelNeighborsVectorized.html" title=" " alt="" coords="287,55,494,95"/>
