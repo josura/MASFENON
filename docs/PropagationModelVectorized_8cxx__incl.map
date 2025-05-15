@@ -1,5 +1,5 @@
 <map id="src/computation/PropagationModelVectorized.cxx" name="src/computation/PropagationModelVectorized.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="696,5,905,45"/>
+<area shape="rect" id="Node000001" title="Implements the PropagationModelVectorized class used for managing vectorized propagation dynamics for..." alt="" coords="696,5,905,45"/>
 <area shape="rect" id="Node000002" href="$PropagationModelVectorized_8hxx.html" title="Defines the PropagationModelVectorized class used for managing vectorized propagation dynamics for th..." alt="" coords="687,93,914,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="803,46,803,79,798,79,798,46"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="47,343,131,368"/>
