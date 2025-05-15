@@ -25,7 +25,7 @@ class DissipationModel{
     public:
         /**
          * @brief Default destructor for the DissipationModel class. (needed even if the class is abstract)
-         * @details Initializes the dissipation model with a default number of elements.
+         * @details Cleans up the resources used by the DissipationModel class.
          */
         virtual ~DissipationModel(){}
         /**
