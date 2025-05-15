@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,56,134,95,131,91,183,52"/>
 <area shape="rect" id="Node000004" href="$DissipationModelVectorized_8cxx.html" title="Implements the DissipationModelVectorized class used for managing vectorized dissipation dynamics for..." alt="" coords="233,93,437,133"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="259,52,312,91,308,95,255,56"/>
-<area shape="rect" id="Node000003" href="$DissipationModelScaledVectorized_8cxx.html" title=" " alt="" coords="5,181,209,221"/>
+<area shape="rect" id="Node000003" href="$DissipationModelScaledVectorized_8cxx.html" title="Implements the DissipationModelScaledVectorized class used for managing vectorized scaled dissipation..." alt="" coords="5,181,209,221"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,147,110,181,105,181,105,147"/>
 </map>
