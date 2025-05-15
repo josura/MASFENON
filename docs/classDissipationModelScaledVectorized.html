@@ -77,13 +77,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Dissipation model implementation for scaled vectorized dissipation dynamics.  
+ <a href="classDissipationModelScaledVectorized.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="DissipationModelScaledVectorized_8hxx_source.html">DissipationModelScaledVectorized.hxx</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for DissipationModelScaledVectorized:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDissipationModelScaledVectorized__inherit__graph.png" border="0" usemap="#aDissipationModelScaledVectorized_inherit__map" alt="Inheritance graph"/></div>
 <map name="aDissipationModelScaledVectorized_inherit__map" id="aDissipationModelScaledVectorized_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,79,252,104"/>
+<area shape="rect" title="Dissipation model implementation for scaled vectorized dissipation dynamics." alt="" coords="5,79,252,104"/>
 <area shape="rect" href="classDissipationModelVectorized.html" title="Abstract class for managing vectorized dissipation dynamics in MASFENON." alt="" coords="27,5,230,31"/>
 <area shape="poly" title=" " alt="" coords="131,44,131,79,126,79,126,44"/>
 </map>
@@ -93,7 +96,7 @@ Collaboration diagram for DissipationModelScaledVectorized:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDissipationModelScaledVectorized__coll__graph.png" border="0" usemap="#aDissipationModelScaledVectorized_coll__map" alt="Collaboration graph"/></div>
 <map name="aDissipationModelScaledVectorized_coll__map" id="aDissipationModelScaledVectorized_coll__map">
-<area shape="rect" title=" " alt="" coords="5,79,252,104"/>
+<area shape="rect" title="Dissipation model implementation for scaled vectorized dissipation dynamics." alt="" coords="5,79,252,104"/>
 <area shape="rect" href="classDissipationModelVectorized.html" title="Abstract class for managing vectorized dissipation dynamics in MASFENON." alt="" coords="27,5,230,31"/>
 <area shape="poly" title=" " alt="" coords="131,44,131,79,126,79,126,44"/>
 </map>
@@ -102,10 +105,13 @@ Collaboration diagram for DissipationModelScaledVectorized:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab61f9d4ad921bf50bf62001b348e0170" id="r_ab61f9d4ad921bf50bf62001b348e0170"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelScaledVectorized.html#ab61f9d4ad921bf50bf62001b348e0170">DissipationModelScaledVectorized</a> ()</td></tr>
+<tr class="memdesc:ab61f9d4ad921bf50bf62001b348e0170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class.  <br /></td></tr>
 <tr class="separator:ab61f9d4ad921bf50bf62001b348e0170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fa90a887b0295f1590b181c7fbe3875" id="r_a2fa90a887b0295f1590b181c7fbe3875"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelScaledVectorized.html#a2fa90a887b0295f1590b181c7fbe3875">DissipationModelScaledVectorized</a> (std::function&lt; double(double)&gt; scaleFunc)</td></tr>
+<tr class="memdesc:a2fa90a887b0295f1590b181c7fbe3875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class with a custom scale function.  <br /></td></tr>
 <tr class="separator:a2fa90a887b0295f1590b181c7fbe3875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9147ac07d0f6614811b28abb5ac90fe" id="r_ac9147ac07d0f6614811b28abb5ac90fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelScaledVectorized.html#ac9147ac07d0f6614811b28abb5ac90fe">~DissipationModelScaledVectorized</a> () override</td></tr>
+<tr class="memdesc:ac9147ac07d0f6614811b28abb5ac90fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class.  <br /></td></tr>
 <tr class="separator:ac9147ac07d0f6614811b28abb5ac90fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8116c39aa18fbdd829f938d72b90c130" id="r_a8116c39aa18fbdd829f938d72b90c130"><td class="memItemLeft" align="right" valign="top">arma::Mat&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelScaledVectorized.html#a8116c39aa18fbdd829f938d72b90c130">dissipate</a> (arma::Mat&lt; double &gt; input, double time) override</td></tr>
 <tr class="memdesc:a8116c39aa18fbdd829f938d72b90c130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dissipate the input vector.  <br /></td></tr>
@@ -114,6 +120,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7ad86f8b2930e9dc3403f686f46073db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dissipation term of the input vector.  <br /></td></tr>
 <tr class="separator:a7ad86f8b2930e9dc3403f686f46073db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bbbfbd735420b01052c97e2f559baed" id="r_a3bbbfbd735420b01052c97e2f559baed"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelScaledVectorized.html#a3bbbfbd735420b01052c97e2f559baed">getScale</a> (double time)</td></tr>
+<tr class="memdesc:a3bbbfbd735420b01052c97e2f559baed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scale value at a given time.  <br /></td></tr>
 <tr class="separator:a3bbbfbd735420b01052c97e2f559baed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classDissipationModelVectorized"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classDissipationModelVectorized')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classDissipationModelVectorized.html">DissipationModelVectorized</a></td></tr>
 <tr class="memitem:ad955be6bbc06b5d6b1f337001019c59e inherit pub_methods_classDissipationModelVectorized" id="r_ad955be6bbc06b5d6b1f337001019c59e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDissipationModelVectorized.html#ad955be6bbc06b5d6b1f337001019c59e">~DissipationModelVectorized</a> ()</td></tr>
@@ -133,7 +140,15 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ae7c418329c6e3e56051cae8133c50abf inherit pro_attribs_classDissipationModelVectorized"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of elements in the dissipation model(in this case number of nodes that have different vectors). This is used to determine the size of the input and output vectors.  <br /></td></tr>
 <tr class="separator:ae7c418329c6e3e56051cae8133c50abf inherit pro_attribs_classDissipationModelVectorized"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Dissipation model implementation for scaled vectorized dissipation dynamics. </p>
+<p>This class provides methods for applying scaled vectorized dissipation logic to the perturbation computation. </p><dl class="section warning"><dt>Warning</dt><dd>This class is not yet implemented.</dd></dl>
+<p>The scaled dissipation class uses a scale function to determine the scaling of the dissipation term. The scale function can be set and modified as needed.</p>
+<p>To set the scale function, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="CustomFunctions_8hxx.html" title="Contains utility functions for generating scaling and saturation functions used in MASFENON propagati...">CustomFunctions.hxx</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd><p class="startdd">Make it stateful. Related to issue #28 </p>
+<p class="enddd">Implement the dissipation model logic and vectorization. Related to issue #5 </p>
+</dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab61f9d4ad921bf50bf62001b348e0170" name="ab61f9d4ad921bf50bf62001b348e0170"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab61f9d4ad921bf50bf62001b348e0170">&#9670;&#160;</a></span>DissipationModelScaledVectorized() <span class="overload">[1/2]</span></h2>
 
@@ -148,6 +163,9 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Default constructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class. </p>
+<p>This constructor initializes the scale function to a default value of 0.5. </p>
 
 </div>
 </div>
@@ -166,6 +184,15 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class with a custom scale function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleFunc</td><td>The custom scale function to be used in the dissipation model.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This constructor initializes the scale function to the provided custom value. </p>
 
 </div>
 </div>
@@ -191,6 +218,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default destructor for the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class. </p>
+<p>Cleans up the resources used by the <a class="el" href="classDissipationModelScaledVectorized.html" title="Dissipation model implementation for scaled vectorized dissipation dynamics.">DissipationModelScaledVectorized</a> class. </p>
 
 </div>
 </div>
@@ -316,6 +346,16 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the scale value at a given time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>The current time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The scale value at the given time.</dd></dl>
+<p>This function is used to get the scale value at a given time. </p>
 
 </div>
 </div>
