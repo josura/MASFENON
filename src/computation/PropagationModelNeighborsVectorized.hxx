@@ -1,3 +1,11 @@
+/**
+ * @file PropagationModelNeighborsVectorized.hxx
+ * @ingroup Experimental
+ * @brief Defines the PropagationModelNeighborsVectorized class used for managing vectorized propagation dynamics for the computation of the perturbation in MASFENON. This class is an implemntation of the PropagationModelVectorized class.
+ * @warning This class is not yet implemented.
+ * @details The neighbors propagation class uses a scale function to determine the scaling of the propagation term. The scale function can be set and modified as needed.
+ * @details To set the scale function, @see CustomFunctions.hxx
+ */
 #pragma once
 #include <armadillo>
 #include "computation/PropagationModelVectorized.hxx"
