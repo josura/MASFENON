@@ -1,3 +1,8 @@
+/**
+ * @file PropagationModelOriginalVectorized.hxx
+ * @ingroup Experimental
+ * @brief Defines the PropagationModelOriginalVectorized class used for managing vectorized propagation dynamics for the computation of the perturbation in MASFENON. This class is an implemntation of the PropagationModelVectorized class.
+ */
 #pragma once
 #include <armadillo>
 #include "computation/PropagationModelVectorized.hxx"
