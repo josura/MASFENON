@@ -53,10 +53,10 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                         --intratypeIterations 5 \
                         --timestep 1 \
                         --virtualNodesGranularity typeAndNode \
-                        --saturation \
-                        --saturationTerm 0.05 \
                         --outputFormat iterationMatrix \
                         --outputFolder $outputFolder
+                        # --saturation \
+                        # --saturationTerm 0.05 \
         done
     done
 done
