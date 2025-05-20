@@ -1,4 +1,5 @@
 #!  /bin/bash
+# Look into the simulation.conf file in this folder to see the environment variables used for the simulation.
 if [ "$#" -ne 9 ]; then
     echo "Usage: $0 dissipationMin dissipationMax dissipationSteps propagationMin propagationMax propagationSteps conservationMin conservationMax conservationSteps"
     exit 1
@@ -9,8 +10,15 @@ dissMin=$1; dissMax=$2; dissSteps=($3*1.0)
 propMin=$4; propMax=$5; propSteps=($6*1.0)
 consMin=$7; consMax=$8; consSteps=($9*1.0)
 
-# read environment variables from config file
+# read environment variables from config file, 
+# WARNING: to change according to the target system
 source /home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation.conf
+
+echo "graphsFolder set to $graphsFolder"
+echo "initialPerturbationFolder set to $initialPerturbationFolder"
+echo "typeInteractionsFolder set to $typeInteractionsFolder"
+echo "nodesFolder set to $nodesFolder"
+echo "allOutputsFolder set to $allOutputsFolder"
 
 # Compute step sizes with awk
 dissStep=$(awk -v min="$dissMin" -v max="$dissMax" -v steps="$dissSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
