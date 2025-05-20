@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parameter_20customization_0',['⚙️ Parameter Customization',['../index.html#autotoc_md9',1,'']]],
+  ['parameter_20customization_0',['⚙️ Parameter Customization',['../index.html#autotoc_md10',1,'']]],
   ['print_1',['print',['../classWeightedEdgeGraph.html#a38b65bf523d429fa5547929e50f26c19',1,'WeightedEdgeGraph']]],
   ['print_5fmat_2',['print_mat',['../armaUtilities_8hxx.html#a7a2757b90b8ed06a4a52196ca933d200',1,'print_mat(arma::mat my_matrix):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a7a2757b90b8ed06a4a52196ca933d200',1,'print_mat(arma::mat my_matrix):&#160;armaUtilities.cxx']]],
   ['printerror_3',['printError',['../classLogger.html#a88360170297b1b3f6e7ad03c7550e95c',1,'Logger']]],

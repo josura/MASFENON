@@ -7,5 +7,5 @@ var searchData=
   ['resetvirtualoutputs_4',['resetVirtualOutputs',['../classComputation.html#ab813459d7172f3192249ea6d28e21a99',1,'Computation']]],
   ['rowreducegaussian_5',['rowReduceGaussian',['../classMatrix.html#a26da670506296e091a068d7d49793cf3',1,'Matrix']]],
   ['rows_5f_6',['rows_',['../classMatrix.html#afb06909dde9fadca52d4f6afacc9b644',1,'Matrix']]],
-  ['run_7',['run',['../index.html#autotoc_md8',1,'Example Run'],['../optimization_8cxx.html#ad6db996856b894d43455d2618a593f3c',1,'run():&#160;optimization.cxx']]]
+  ['run_7',['run',['../index.html#autotoc_md9',1,'Example Run'],['../optimization_8cxx.html#ad6db996856b894d43455d2618a593f3c',1,'run():&#160;optimization.cxx']]]
 ];

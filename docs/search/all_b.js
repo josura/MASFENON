@@ -16,5 +16,5 @@ var searchData=
   ['matrix_2ehxx_13',['Matrix.hxx',['../Matrix_8hxx.html',1,'']]],
   ['matrix_3c_20double_20_3e_14',['Matrix&lt; double &gt;',['../classMatrix.html',1,'']]],
   ['matrixmultiplyvector_15',['matrixMultiplyVector',['../optimization_8cxx.html#a145f6520b4dc93f24ab962e5f76a3955',1,'optimization.cxx']]],
-  ['message_16',['Help Message',['../index.html#autotoc_md7',1,'']]]
+  ['message_16',['Help Message',['../index.html#autotoc_md8',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['masfenon_20documentation_0',['MASFENON documentation',['../index.html',1,'']]]
+  ['experiments_0',['Fitting of single cell experiments',['../FittingSingleCell.html',1,'']]]
 ];
