@@ -6,9 +6,9 @@ if [ "$#" -ne 9 ]; then
 fi
 
 # Read command-line arguments
-dissMin=$1; dissMax=$2; dissSteps=($3*1.0)
-propMin=$4; propMax=$5; propSteps=($6*1.0)
-consMin=$7; consMax=$8; consSteps=($9*1.0)
+dissMin=$1; dissMax=$2; dissSteps=$3
+propMin=$4; propMax=$5; propSteps=$6
+consMin=$7; consMax=$8; consSteps=$9
 
 # read environment variables from config file, 
 # WARNING: to change according to the target system
