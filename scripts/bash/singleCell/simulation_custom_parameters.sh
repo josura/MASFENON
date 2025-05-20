@@ -9,11 +9,8 @@ dissMin=$1; dissMax=$2; dissSteps=($3*1.0)
 propMin=$4; propMax=$5; propSteps=($6*1.0)
 consMin=$7; consMax=$8; consSteps=($9*1.0)
 
-graphsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR"
-initialPerturbationFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR"
-typeInteractionsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/interactionsWithLR"
-nodesFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR"
-allOutputsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR"
+# read environment variables from config file
+source /home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation.conf
 
 # Compute step sizes with awk
 dissStep=$(awk -v min="$dissMin" -v max="$dissMax" -v steps="$dissSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
