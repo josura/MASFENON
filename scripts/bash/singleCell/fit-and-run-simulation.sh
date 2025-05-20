@@ -1,5 +1,6 @@
 #! /bin/bash
 # This bash script will fit the framework with the data that is used for the single cell experiments. In this case, it will fit the simulation to better represent a single type of cell metabolite layer (AT1) in our scRNA-seq data.
+# From the MSE table, the fitting will 
 # The script takes the following command line parameters:
 ## - The number of epochs:
 ## - The MSE output folder where to save the MSE results:
@@ -17,7 +18,20 @@
 ## This bash script run the masfenon simulation with the selected parameters on the data defined in the configuration section, the parameter used are the following:
 ## dissipationMin dissipationMax dissipationSteps propagationMin propagationMax propagationSteps conservationMin conservationMax conservationStep
 
+# Input parameters
 if [ "$#" -ne 5 ]; then
     echo "Usage: $0 <epochs> <MSEfolder> <minScaleParameter> <maxScaleParameter> <intervalParameter>"
     exit 1
 fi
+
+epochs=$1
+MSEfolder=$2
+minParam=$3
+maxParam=$4
+intervals=$5
+
+# Paths to scripts
+SIMULATION_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation_custom_parameters.sh"
+COMPUTE_MSE_SCRIPT="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/compute-MSE-metabolites.py"
+
+
