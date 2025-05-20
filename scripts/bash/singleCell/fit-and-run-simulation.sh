@@ -16,3 +16,8 @@
 # - for running the simulation with custom parameters: /home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation_custom_parameters.sh
 ## This bash script run the masfenon simulation with the selected parameters on the data defined in the configuration section, the parameter used are the following:
 ## dissipationMin dissipationMax dissipationSteps propagationMin propagationMax propagationSteps conservationMin conservationMax conservationStep
+
+if [ "$#" -ne 5 ]; then
+    echo "Usage: $0 <epochs> <MSEfolder> <minScaleParameter> <maxScaleParameter> <intervalParameter>"
+    exit 1
+fi
