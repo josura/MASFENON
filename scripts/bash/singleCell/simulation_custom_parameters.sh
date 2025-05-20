@@ -1,13 +1,30 @@
 #!  /bin/bash
+if [ "$#" -ne 9 ]; then
+    echo "Usage: $0 dissipationMin dissipationMax dissipationSteps propagationMin propagationMax propagationSteps conservationMin conservationMax conservationSteps"
+    exit 1
+fi
+
+# Read command-line arguments
+dissMin=$1; dissMax=$2; dissSteps=($3*1.0)
+propMin=$4; propMax=$5; propSteps=($6*1.0)
+consMin=$7; consMax=$8; consSteps=($9*1.0)
+
 graphsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/graphsWithLR"
 initialPerturbationFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR"
 typeInteractionsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/interactionsWithLR"
 nodesFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodesWithLR"
-
 allOutputsFolder="/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR"
-dissipationScaleFactors=(0 0.1 0.2 0.3)
-propagationScaleFactors=(0 0.1 0.2 0.3)
-conservationScaleFactors=(0 0.1 0.2 0.3)
+
+# Compute step sizes with awk
+dissStep=$(awk -v min="$dissMin" -v max="$dissMax" -v steps="$dissSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
+propStep=$(awk -v min="$propMin" -v max="$propMax" -v steps="$propSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
+consStep=$(awk -v min="$consMin" -v max="$consMax" -v steps="$consSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
+
+# Generate the value ranges
+dissipationScaleFactors=($(seq -f "%.6f" $dissMin $dissStep $dissMax))
+propagationScaleFactors=($(seq -f "%.6f" $propMin $propStep $propMax))
+conservationScaleFactors=($(seq -f "%.6f" $consMin $consStep $consMax))
+
 
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
