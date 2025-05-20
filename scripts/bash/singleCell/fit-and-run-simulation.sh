@@ -35,3 +35,14 @@ SIMULATION_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/si
 COMPUTE_MSE_SCRIPT="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/compute-MSE-metabolites.py"
 
 
+# propagation, dissipation, conservation parameters
+minPropagationParam=$minParam
+maxPropagationParam=$maxParam
+propagationIntervals=$intervals
+minDissipationParam=$minParam
+maxDissipationParam=$maxParam
+dissipationIntervals=$intervals
+minConservationParam=$minParam
+maxConservationParam=$maxParam
+conservationIntervals=$intervals
+
