@@ -46,3 +46,27 @@ minConservationParam=$minParam
 maxConservationParam=$maxParam
 conservationIntervals=$intervals
 
+
+# Epoch loop
+for ((epoch=1; epoch<=epochs; epoch++)); do
+    echo "=== Epoch $epoch / $epochs ==="
+
+    # Create a subfolder for this epoch's outputs
+    epochOutput="$MSEfolder/epoch_$epoch"
+    mkdir -p "$epochOutput"
+
+    echo "[INFO] Running simulation (epoch $epoch)..."
+    bash "$SIMULATION_SCRIPT" \
+        "$minDissipationParam" "$maxDissipationParam" "$dissipationIntervals" \
+        "$minPropagationParam" "$maxPropagationParam" "$propagationIntervals" \
+        "$minConservationParam" "$maxConservationParam" "$conservationIntervals"
+
+    echo "[INFO] Computing MSE for epoch $epoch..."
+    python3 "$COMPUTE_MSE_SCRIPT" --outputFolder "$epochOutput"
+
+    echo "[DONE] Epoch $epoch completed."
+    echo
+    # TODO update the parameters based on the MSE table generated, or use another script that generates the new parameters from the MSE table.
+done
+
+echo "=== All epochs completed. MSE results saved in: $MSEfolder ==="
