@@ -14,7 +14,7 @@
  * @warning This class is an abstract class and should not be used directly. It is intended to be inherited by other classes that implement specific dissipation models.
  * @details The dissipation class uses a scale function to determine the scaling of the dissipation term. The scale function can be set and modified as needed.
  * @details To set the scale function, @see CustomFunctions.hxx
- * @todo Make it stateful. Related to issue #28 @link
+ * @todo Make it stateful. Related to issue #28 @link https://github.com/josura/MASFENON/issues/28 @endlink
  */
 class DissipationModelVectorized{
     protected:
