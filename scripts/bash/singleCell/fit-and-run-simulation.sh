@@ -79,7 +79,31 @@ for ((epoch=1; epoch<=epochs; epoch++)); do
         5 \
         "$intervals" \
         "$epochOutput/newParams_mse_$timepointToFit.txt"
-    # TODO read the new params from the newParams file
+    # Read updated parameters
+    while IFS= read -r line; do
+        key=$(echo "$line" | cut -d':' -f1)
+        min=$(echo "$line" | grep -o 'min=[^,]*' | cut -d'=' -f2)
+        max=$(echo "$line" | grep -o 'max=[^,]*' | cut -d'=' -f2)
+        steps=$(echo "$line" | grep -o 'intervals=[^ ]*' | cut -d'=' -f2)
+
+        case "$key" in
+            dissipation)
+                minDissipationParam="$min"
+                maxDissipationParam="$max"
+                dissipationIntervals="$steps"
+                ;;
+            propagation)
+                minPropagationParam="$min"
+                maxPropagationParam="$max"
+                propagationIntervals="$steps"
+                ;;
+            conservation)
+                minConservationParam="$min"
+                maxConservationParam="$max"
+                conservationIntervals="$steps"
+                ;;
+        esac
+    done < "$epochOutput/newParams_mse_${timepointToFit}.txt"
 done
 
 echo "=== All epochs completed. MSE results saved in: $MSEfolder ==="
