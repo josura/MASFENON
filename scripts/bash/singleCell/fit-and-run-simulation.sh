@@ -21,14 +21,15 @@
 
 # Input parameters
 if [ "$#" -ne 5 ]; then
-    echo "Usage: $0 <epochs> <MSEfolder> <minScaleParameter> <maxScaleParameter> <intervalParameter>"
+    echo "Usage: $0 <epochs> <OutputFolder> <minScaleParameter> <maxScaleParameter> <intervalParameter>"
     exit 1
 fi
 
 timepointToFit="6h"
+echo "[INFO] Timepoint to fit set to $timepointToFit"
 
 epochs=$1
-MSEfolder=$2
+OutputFolder=$2
 minParam=$3
 maxParam=$4
 intervals=$5
@@ -57,9 +58,13 @@ source "$VENV_FOLDER/bin/activate"
 # Epoch loop
 for ((epoch=1; epoch<=epochs; epoch++)); do
     echo "=== Epoch $epoch / $epochs ==="
+    echo "=== [EPOCH] Parameters: ==="
+    echo "=== [EPOCH] Dissipation: [$minDissipationParam,$maxDissipationParam] $dissipationIntervals intervals ==="
+    echo "=== [EPOCH] Propagation: [$minPropagationParam,$maxPropagationParam] $propagationIntervals intervals ==="
+    echo "=== [EPOCH] Conservation: [$minConservationParam,$maxConservationParam] $conservationIntervals intervals ==="
 
     # Create a subfolder for this epoch's outputs
-    epochOutput="$MSEfolder/epoch_$epoch"
+    epochOutput="$OutputFolder/epoch_$epoch"
     mkdir -p "$epochOutput"
 
     echo "[INFO] Running simulation (epoch $epoch)..."
@@ -106,4 +111,4 @@ for ((epoch=1; epoch<=epochs; epoch++)); do
     done < "$epochOutput/newParams_mse_${timepointToFit}.txt"
 done
 
-echo "=== All epochs completed. MSE results saved in: $MSEfolder ==="
+echo "=== All epochs completed. MSE results saved in: $OutputFolder ==="
