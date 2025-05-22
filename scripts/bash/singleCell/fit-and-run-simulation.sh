@@ -25,6 +25,8 @@ if [ "$#" -ne 5 ]; then
     exit 1
 fi
 
+timepointToFit="6h"
+
 epochs=$1
 MSEfolder=$2
 minParam=$3
@@ -71,7 +73,13 @@ for ((epoch=1; epoch<=epochs; epoch++)); do
 
     echo "[DONE] Epoch $epoch completed."
     echo
-    # TODO update the parameters based on the MSE table generated, or use another script that generates the new parameters from the MSE table.
+    # update the parameters by running the generation of the new parameters script
+    bash "$GENERATE_NEW_PARAMS_SCRIPT" \
+        "$epochOutput/mse_$timepointToFit.tsv" \
+        5 \
+        "$intervals" \
+        "$epochOutput/newParams_mse_$timepointToFit.txt"
+    # TODO read the new params from the newParams file
 done
 
 echo "=== All epochs completed. MSE results saved in: $MSEfolder ==="
