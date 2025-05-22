@@ -50,7 +50,8 @@ minConservationParam=$minParam
 maxConservationParam=$maxParam
 conservationIntervals=$intervals
 
-
+# Sourcing python environment for the python code generating the MSE tables
+source "$VENV_FOLDER/bin/activate"
 # Epoch loop
 for ((epoch=1; epoch<=epochs; epoch++)); do
     echo "=== Epoch $epoch / $epochs ==="
