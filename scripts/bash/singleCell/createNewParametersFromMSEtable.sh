@@ -64,6 +64,6 @@ echo "dissipation: min=$diss_min, max=$diss_max, intervals=$intervals"
 echo "propagation: min=$prop_min, max=$prop_max, intervals=$intervals"
 echo "conservation: min=$cons_min, max=$cons_max, intervals=$intervals"
 
-echo "$diss_min $diss_max $intervals
-$prop_min $prop_max $intervals
-$cons_min $cons_max $intervals" > $output_file
+echo "dissipation: min=$diss_min, max=$diss_max, intervals=$intervals
+propagation: min=$prop_min, max=$prop_max, intervals=$intervals
+conservation: min=$cons_min, max=$cons_max, intervals=$intervals" > $output_file
