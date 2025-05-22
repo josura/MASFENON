@@ -7,15 +7,17 @@
 # - The MSE file
 # - The number of records to use for the generation of the new parameters(top n MSE)
 # - The number of intervals
+# - The file where the new parameters will be saved
 
-if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <mse_file> <top_n> <intervals>"
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 <mse_file> <top_n> <intervals> <output_file>"
     exit 1
 fi
 
 mse_file="$1"
 top_n="$2"
 intervals="$3"
+output_file="$4"
 
 diss_vals=()
 prop_vals=()
@@ -61,3 +63,7 @@ read cons_min cons_max <<< $(compute_range "${cons_vals[@]}")
 echo "dissipation: min=$diss_min, max=$diss_max, intervals=$intervals"
 echo "propagation: min=$prop_min, max=$prop_max, intervals=$intervals"
 echo "conservation: min=$cons_min, max=$cons_max, intervals=$intervals"
+
+echo "$diss_min $diss_max $intervals
+$prop_min $prop_max $intervals
+$cons_min $cons_max $intervals" > $output_file
