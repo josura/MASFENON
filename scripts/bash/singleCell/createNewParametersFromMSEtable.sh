@@ -28,9 +28,9 @@ while read -r line; do
     # Extract the parameter string
     experiment=$(echo "$line" | cut -f2)
     # Parse dissipation, propagation, conservation
-    diss=$(echo "$experiment" | sed -n 's/.*dissipation_\([0-9.]*\)-.*/\1/p')
-    prop=$(echo "$experiment" | sed -n 's/.*propagation_\([0-9.]*\)-.*/\1/p')
-    cons=$(echo "$experiment" | sed -n 's/.*conservation_\([0-9.]*\)/\1/p')
+    diss=$(echo "$experiment" | sed -n 's/.*dissipation_\(-\?[0-9.]*\)-.*/\1/p')
+    prop=$(echo "$experiment" | sed -n 's/.*propagation_\(-\?[0-9.]*\)-.*/\1/p')
+    cons=$(echo "$experiment" | sed -n 's/.*conservation_\(-\?[0-9.]*\)/\1/p')
     
     diss_vals+=("$diss")
     prop_vals+=("$prop")
