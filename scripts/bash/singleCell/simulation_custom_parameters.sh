@@ -36,6 +36,9 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
         for conservationScaleFactor in "${conservationScaleFactors[@]}"; do
                 outputFolder="$allOutputsFolder/dissipation_$dissipationScaleFactor-propagation_$propagationScaleFactor-conservation_$conservationScaleFactor"
                 mkdir -p $outputFolder
+                # also generating the currentPerturbations folder and the iterationMatrices folder, to account for issue #38
+                mkdir -p $outputFolder/currentPerturbations
+                mkdir -p $outputFolder/iterationMatrices
 
                 echo "Running simulation with dissipation: $dissipationScaleFactor, propagation: $propagationScaleFactor, conservation: $conservationScaleFactor"
                 mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 8 ./build/masfenon-MPI \
