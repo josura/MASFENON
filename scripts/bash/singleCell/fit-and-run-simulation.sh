@@ -34,6 +34,9 @@ intervals=$5
 # Paths to scripts
 SIMULATION_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation_custom_parameters.sh"
 COMPUTE_MSE_SCRIPT="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/compute-MSE-metabolites.py"
+GENERATE_NEW_PARAMS_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/createNewParametersFromMSEtable.sh"
+
+VENV_FOLDER="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/venv"
 
 
 # propagation, dissipation, conservation parameters
