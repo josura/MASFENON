@@ -43,6 +43,7 @@ echo "top 5 propagation values: ${prop_vals[@]}"
 echo "top 5 conservation values: ${cons_vals[@]}"
 
 # Function to compute min and max in Bash using awk
+# TODO fix problem with negative parameters values
 compute_range() {
     local vals=("$@")
     local min=$(printf "%s\n" "${vals[@]}" | awk 'NR == 1 { min = $1 } $1 < min { min = $1 } END { print min }')
