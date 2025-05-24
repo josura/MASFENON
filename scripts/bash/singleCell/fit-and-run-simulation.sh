@@ -66,6 +66,12 @@ minConservationParam=""
 maxConservationParam=""
 conservationIntervals=""
 
+# Paths to scripts
+SIMULATION_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation_custom_parameters.sh"
+COMPUTE_MSE_SCRIPT="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/compute-MSE-metabolites.py"
+GENERATE_NEW_PARAMS_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/createNewParametersFromMSEtable.sh"
+
+
 
 # ------------------------------
 # Input Argument Parsing Section
@@ -157,10 +163,6 @@ if [ "$#" -ne 5 ]; then
     exit 1
 fi
 
-# Paths to scripts
-SIMULATION_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/simulation_custom_parameters.sh"
-COMPUTE_MSE_SCRIPT="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCell/compute-MSE-metabolites.py"
-GENERATE_NEW_PARAMS_SCRIPT="/home/josura/Projects/ccc/MASFENON/scripts/bash/singleCell/createNewParametersFromMSEtable.sh"
 
 # Epoch loop
 for ((epoch=1; epoch<=epochs; epoch++)); do
