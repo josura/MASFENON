@@ -112,7 +112,7 @@ elif [ "$#" -eq 2 ]; then
     # TODO also make the intervals be passed as command line argument
     python3 $COMPUTE_MSE_SCRIPT $epochOutput
 
-    echo "[DONE] Epoch $epoch completed."
+    echo "[DONE] Computed MSE for initial parameters."
     echo
     # update the parameters by running the generation of the new parameters script
     bash "$GENERATE_NEW_PARAMS_SCRIPT" \
@@ -145,6 +145,7 @@ elif [ "$#" -eq 2 ]; then
                 ;;
         esac
     done < "$epochOutput/newParams_mse_${timepointToFit}.txt"
+    echo "[DONE] Computed initial parameters"
     
 else
     echo "Usage:"
@@ -153,15 +154,6 @@ else
     exit 1
 fi
 
-
-# Input parameters
-## TODO if 2 parameters are specified, compute the new parameters from the simulation output folder
-## TODO else if 5 parameters are specified, start from the specified minimum scale parameter and max scale parameter
-## else print usage and exit
-if [ "$#" -ne 5 ]; then
-    echo "Usage: $0 <epochs> <OutputFolder> <minScaleParameter> <maxScaleParameter> <intervalParameter>"
-    exit 1
-fi
 
 
 # Epoch loop
