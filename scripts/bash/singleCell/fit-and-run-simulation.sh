@@ -170,10 +170,10 @@ for ((epoch=1; epoch<=epochs; epoch++)); do
 
     echo "[INFO] Running simulation (epoch $epoch)..."
     # TODO make the simulation output folder be passed via command argument in case
-    # bash "$SIMULATION_SCRIPT" \
-    #     "$minDissipationParam" "$maxDissipationParam" "$dissipationIntervals" \
-    #     "$minPropagationParam" "$maxPropagationParam" "$propagationIntervals" \
-    #     "$minConservationParam" "$maxConservationParam" "$conservationIntervals"
+    bash "$SIMULATION_SCRIPT" \
+        "$minDissipationParam" "$maxDissipationParam" "$dissipationIntervals" \
+        "$minPropagationParam" "$maxPropagationParam" "$propagationIntervals" \
+        "$minConservationParam" "$maxConservationParam" "$conservationIntervals"
 
     echo "[INFO] Computing MSE for epoch $epoch..."
     # TODO also make the intervals be passed as command line argument
