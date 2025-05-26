@@ -1,7 +1,9 @@
 <map id="src/logging/Logger.hxx" name="src/logging/Logger.hxx">
-<area shape="rect" id="Node000001" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="15,5,183,31"/>
+<area shape="rect" id="Node000001" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="69,5,237,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,85,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,33,64,69,60,66,88,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,33,76,73,73,69,135,28"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="110,79,197,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="110,29,138,66,134,69,106,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,31,156,65,151,65,151,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="221,79,285,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="171,29,227,68,224,73,168,33"/>
 </map>

@@ -87,6 +87,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac01c3d2b667062b0d412714ab760265a" id="r_ac01c3d2b667062b0d412714ab760265a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#ac01c3d2b667062b0d412714ab760265a">Logger</a> (std::ostream &amp;os)</td></tr>
 <tr class="memdesc:ac01c3d2b667062b0d412714ab760265a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> with the given output stream.  <br /></td></tr>
 <tr class="separator:ac01c3d2b667062b0d412714ab760265a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0f34d4c753c86af8074840a72366b3" id="r_add0f34d4c753c86af8074840a72366b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#add0f34d4c753c86af8074840a72366b3">Logger</a> (const <a class="el" href="classLogger.html">Logger</a> &amp;)=delete</td></tr>
+<tr class="memdesc:add0f34d4c753c86af8074840a72366b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete copy constructor and assignment operator to prevent copying.  <br /></td></tr>
+<tr class="separator:add0f34d4c753c86af8074840a72366b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c0ca770cdc91ca9fc3015286568e1ea" id="r_a8c0ca770cdc91ca9fc3015286568e1ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a8c0ca770cdc91ca9fc3015286568e1ea">operator=</a> (const <a class="el" href="classLogger.html">Logger</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a8c0ca770cdc91ca9fc3015286568e1ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete assignment operator to prevent assignment.  <br /></td></tr>
+<tr class="separator:a8c0ca770cdc91ca9fc3015286568e1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add520a40898ed744222b7ef781d75894" id="r_add520a40898ed744222b7ef781d75894"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:add520a40898ed744222b7ef781d75894"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classLogger.html#add520a40898ed744222b7ef781d75894">operator&lt;&lt;</a> (const T &amp;t)</td></tr>
 <tr class="memdesc:add520a40898ed744222b7ef781d75894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloaded stream insertion operator for generic types.  <br /></td></tr>
@@ -125,7 +131,7 @@ Public Member Functions</h2></td></tr>
 <p>The <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> class allows writing generic log messages, warnings, and errors to a provided output stream. Logging can be toggled on or off. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac01c3d2b667062b0d412714ab760265a" name="ac01c3d2b667062b0d412714ab760265a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac01c3d2b667062b0d412714ab760265a">&#9670;&#160;</a></span>Logger()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac01c3d2b667062b0d412714ab760265a">&#9670;&#160;</a></span>Logger() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,6 +161,35 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="add0f34d4c753c86af8074840a72366b3" name="add0f34d4c753c86af8074840a72366b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add0f34d4c753c86af8074840a72366b3">&#9670;&#160;</a></span>Logger() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Logger::Logger </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Delete copy constructor and assignment operator to prevent copying. </p>
+<p>This ensures that the <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance is unique and cannot be copied, which is important for thread safety and resource management. </p><dl class="section note"><dt>Note</dt><dd>Copying a <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance could lead to issues with concurrent access to the same output stream. </dd></dl>
 
 </div>
 </div>
@@ -314,6 +349,35 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the current <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance. </dd></dl>
+
+</div>
+</div>
+<a id="a8c0ca770cdc91ca9fc3015286568e1ea" name="a8c0ca770cdc91ca9fc3015286568e1ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c0ca770cdc91ca9fc3015286568e1ea">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLogger.html">Logger</a> &amp; Logger::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Delete assignment operator to prevent assignment. </p>
+<p>This ensures that the <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance is unique and cannot be assigned, which is important for thread safety and resource management. </p><dl class="section note"><dt>Note</dt><dd>Assignment of a <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance could lead to issues with concurrent access to the same output stream. </dd></dl>
 
 </div>
 </div>
