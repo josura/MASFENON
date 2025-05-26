@@ -3,7 +3,7 @@ var searchData=
   ['print_0',['print',['../classWeightedEdgeGraph.html#a38b65bf523d429fa5547929e50f26c19',1,'WeightedEdgeGraph']]],
   ['print_5fmat_1',['print_mat',['../armaUtilities_8hxx.html#a7a2757b90b8ed06a4a52196ca933d200',1,'print_mat(arma::mat my_matrix):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a7a2757b90b8ed06a4a52196ca933d200',1,'print_mat(arma::mat my_matrix):&#160;armaUtilities.cxx']]],
   ['printerror_2',['printError',['../classLogger.html#a88360170297b1b3f6e7ad03c7550e95c',1,'Logger']]],
-  ['printlog_3',['printLog',['../classLogger.html#a0197f8588bb73769c236d342a7c25377',1,'Logger']]],
+  ['printlog_3',['printlog',['../classLogger.html#a772229a5a59314cd38468a6746f524bc',1,'Logger::printLog(const std::string &amp;msg, bool isVerbose=false)'],['../classLogger.html#aceb4909c7e9a23446cf23542dce1fcdf',1,'Logger::printLog(bool isVerbose, Args &amp;&amp;... args)']]],
   ['printmatrix_4',['printMatrix',['../classMatrix.html#a3dbf76133223c5c9e9f06cb57441a2a4',1,'Matrix']]],
   ['printvector_5',['printVector',['../utilities_8hxx.html#a477bc9749fa74d5d4442089a098cdd84',1,'utilities.hxx']]],
   ['printwarning_6',['printWarning',['../classLogger.html#a97e2f7d3e2d4e0ae8132777ece48dd5c',1,'Logger']]],

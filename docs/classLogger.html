@@ -94,9 +94,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a94a9fe5f87ad95362da7c3213f729703" id="r_a94a9fe5f87ad95362da7c3213f729703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a94a9fe5f87ad95362da7c3213f729703">operator&lt;&lt;</a> (std::ostream &amp;(*pf)(std::ostream &amp;))</td></tr>
 <tr class="memdesc:a94a9fe5f87ad95362da7c3213f729703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloaded stream insertion operator for manipulators (e.g., std::endl).  <br /></td></tr>
 <tr class="separator:a94a9fe5f87ad95362da7c3213f729703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0197f8588bb73769c236d342a7c25377" id="r_a0197f8588bb73769c236d342a7c25377"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a0197f8588bb73769c236d342a7c25377">printLog</a> (const std::string &amp;msg)</td></tr>
-<tr class="memdesc:a0197f8588bb73769c236d342a7c25377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a standard log message.  <br /></td></tr>
-<tr class="separator:a0197f8588bb73769c236d342a7c25377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a772229a5a59314cd38468a6746f524bc" id="r_a772229a5a59314cd38468a6746f524bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a772229a5a59314cd38468a6746f524bc">printLog</a> (const std::string &amp;msg, bool isVerbose=false)</td></tr>
+<tr class="memdesc:a772229a5a59314cd38468a6746f524bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a standard log message.  <br /></td></tr>
+<tr class="separator:a772229a5a59314cd38468a6746f524bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceb4909c7e9a23446cf23542dce1fcdf" id="r_aceb4909c7e9a23446cf23542dce1fcdf"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:aceb4909c7e9a23446cf23542dce1fcdf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classLogger.html#aceb4909c7e9a23446cf23542dce1fcdf">printLog</a> (bool isVerbose, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:aceb4909c7e9a23446cf23542dce1fcdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a standard log message. Using variadic templates for flexibility.  <br /></td></tr>
+<tr class="separator:aceb4909c7e9a23446cf23542dce1fcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88360170297b1b3f6e7ad03c7550e95c" id="r_a88360170297b1b3f6e7ad03c7550e95c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a88360170297b1b3f6e7ad03c7550e95c">printError</a> (const std::string &amp;msg)</td></tr>
 <tr class="memdesc:a88360170297b1b3f6e7ad03c7550e95c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints an error message.  <br /></td></tr>
 <tr class="separator:a88360170297b1b3f6e7ad03c7550e95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,6 +113,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab74d4d6243af381ad0a185a5e7a0f010" id="r_ab74d4d6243af381ad0a185a5e7a0f010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#ab74d4d6243af381ad0a185a5e7a0f010">disable</a> ()</td></tr>
 <tr class="memdesc:ab74d4d6243af381ad0a185a5e7a0f010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the logger.  <br /></td></tr>
 <tr class="separator:ab74d4d6243af381ad0a185a5e7a0f010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad54864fb4d89c07a0eb071dcf5b0df60" id="r_ad54864fb4d89c07a0eb071dcf5b0df60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#ad54864fb4d89c07a0eb071dcf5b0df60">enableVerbose</a> ()</td></tr>
+<tr class="memdesc:ad54864fb4d89c07a0eb071dcf5b0df60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables verbose logging mode.  <br /></td></tr>
+<tr class="separator:ad54864fb4d89c07a0eb071dcf5b0df60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c4733fc487a52979455c6a76dc4c4a" id="r_a13c4733fc487a52979455c6a76dc4c4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a13c4733fc487a52979455c6a76dc4c4a">disableVerbose</a> ()</td></tr>
+<tr class="memdesc:a13c4733fc487a52979455c6a76dc4c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables verbose logging mode.  <br /></td></tr>
+<tr class="separator:a13c4733fc487a52979455c6a76dc4c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple logging utility for writing formatted messages to an output stream. </p>
@@ -169,6 +179,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a13c4733fc487a52979455c6a76dc4c4a" name="a13c4733fc487a52979455c6a76dc4c4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13c4733fc487a52979455c6a76dc4c4a">&#9670;&#160;</a></span>disableVerbose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::disableVerbose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables verbose logging mode. </p>
+<p>In non-verbose mode, only standard log messages will be printed. </p>
+
+</div>
+</div>
 <a id="af2f7ea41236b2dfa06a7bc88786395bd" name="af2f7ea41236b2dfa06a7bc88786395bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af2f7ea41236b2dfa06a7bc88786395bd">&#9670;&#160;</a></span>enable()</h2>
 
@@ -186,6 +216,26 @@ Public Member Functions</h2></td></tr>
 
 <p>Enables the logger. </p>
 <p>Once enabled, log output will be written to the configured stream. </p>
+
+</div>
+</div>
+<a id="ad54864fb4d89c07a0eb071dcf5b0df60" name="ad54864fb4d89c07a0eb071dcf5b0df60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad54864fb4d89c07a0eb071dcf5b0df60">&#9670;&#160;</a></span>enableVerbose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::enableVerbose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables verbose logging mode. </p>
+<p>In verbose mode, additional detailed messages can be printed. </p>
 
 </div>
 </div>
@@ -294,8 +344,61 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a0197f8588bb73769c236d342a7c25377" name="a0197f8588bb73769c236d342a7c25377"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0197f8588bb73769c236d342a7c25377">&#9670;&#160;</a></span>printLog()</h2>
+<a id="aceb4909c7e9a23446cf23542dce1fcdf" name="aceb4909c7e9a23446cf23542dce1fcdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceb4909c7e9a23446cf23542dce1fcdf">&#9670;&#160;</a></span>printLog() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLogger.html">Logger</a> &amp; Logger::printLog </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isVerbose</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prints a standard log message. Using variadic templates for flexibility. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">isVerbose</td><td>If true, the message will only be printed if verbose mode is enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Args</td><td>Types of the arguments to format into the message. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the current <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance. </dd></dl>
+
+</div>
+</div>
+<a id="a772229a5a59314cd38468a6746f524bc" name="a772229a5a59314cd38468a6746f524bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a772229a5a59314cd38468a6746f524bc">&#9670;&#160;</a></span>printLog() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,8 +407,18 @@ template&lt;typename T &gt; </div>
           <td class="memname"><a class="el" href="classLogger.html">Logger</a> &amp; Logger::printLog </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isVerbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -314,6 +427,7 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">msg</td><td>The message to print. </td></tr>
+    <tr><td class="paramname">isVerbose</td><td>If true, the message will only be printed if verbose mode is enabled. </td></tr>
   </table>
   </dd>
 </dl>
