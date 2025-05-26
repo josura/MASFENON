@@ -33,6 +33,7 @@ public:
      */
     template<typename T>
     Logger& operator<<(const T& t) {
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         if(enabled_) os_ << t;
         return *this;
     }
@@ -43,6 +44,7 @@ public:
      * @return Reference to the current Logger instance.
      */
     Logger& operator<<(std::ostream& (*pf)(std::ostream&)) {
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         if(enabled_) os_ << pf;
         return *this;
     }
@@ -67,6 +69,7 @@ public:
             if (isVerbose && !verbose_) {
                 return *this; // Skip verbose messages if not enabled
             }
+            std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
             os_ << "[LOG] ";
             ((os_ << ' ' << std::forward<Args>(args)), ...);
             // flush the stream to ensure immediate output
