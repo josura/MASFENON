@@ -55,6 +55,24 @@ public:
     Logger& printLog(const std::string& msg, bool isVerbose = false);
 
     /**
+     * @brief Prints a standard log message. Using variadic templates for flexibility.
+     * @param isVerbose If true, the message will only be printed if verbose mode is enabled.
+     * @tparam Args Types of the arguments to format into the message.
+     * @return Reference to the current Logger instance.
+     */
+    template<typename... Args>
+    Logger& printLog(bool isVerbose, Args&&... args) {
+        if (enabled_) {
+            if (isVerbose && !verbose_) {
+                return *this; // Skip verbose messages if not enabled
+            }
+            os_ << "[LOG] ";
+            (os_ << ... << std::forward<Args>(args)); // Fold expression for variadic arguments
+        }
+        return *this;
+    }
+
+    /**
      * @brief Prints an error message.
      * @param msg The error message to print.
      * @return Reference to the current Logger instance.
