@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <mutex>
 
 /**
  * @class Logger
@@ -117,5 +118,6 @@ private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
     bool verbose_ = false; ///< Flag for verbose logging mode
+    mutable std::mutex mtx_; ///< Mutex to synchronize concurrent log access
 };
  
