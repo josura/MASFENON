@@ -148,48 +148,55 @@ int main(int argc, char** argv) {
         std::cout << "[LOG] logging options set to default (all)"<<std::endl;
         logger.enable();
     }
+    if(verbose){
+        logger.enableVerbose();
+        logger << "[LOG] verbose mode enabled"<<std::endl;
+    } else {
+        logger.disableVerbose();
+        logger << "[LOG] verbose mode disabled"<<std::endl;
+    }
 
 
     //controls over impossible configurations
     if(vm.count("fUniqueGraph") == 0 && vm.count("graphsFilesFolder") == 0){
         //no unique graph of folder of the graphs was set
-        std::cerr << "[ERROR] no unique graph filename or folder was set to get the graphs, set one. abort "<<std::endl;
+        logger.printError("no unique graph filename or folder was set to get the graphs, set one. abort ") <<std::endl;
         return 1;
     }
 
     if(vm.count("fInitialPerturbationPerType") == 0 && vm.count("initialPerturbationPerTypeFolder") == 0){
         //no way of getting the initial perturbation values
-        std::cerr << "[ERROR] no matrix for the initial values was passed as filename or single vector in files contained in the folder specified was set, set one "<<std::endl;
+        logger.printError("no matrix for the initial values was passed as filename or single vector in files contained in the folder specified was set, set one ")<<std::endl;
         return 1;
     }
 
     if(vm.count("fInitialPerturbationPerType") && vm.count("graphsFilesFolder")){
         //unstable configuration of different graphs and single matrix with the same nodes
-        logger << "[WARNING] unstable configuration of different graphs and a single matrix with the initial perturbations"<<std::endl;
+        logger.printWarning("unstable configuration of different graphs and a single matrix with the initial perturbations") <<std::endl;
     }
 
     if(saturation && conservateInitialNorm){
-        std::cerr << "[ERROR] saturation and conservateInitialNorm cannot be both true, aborting"<<std::endl;
+        logger.printError("saturation and conservateInitialNorm cannot be both true, aborting")<<std::endl;
         return 1;
     }
 
 
     if(vm.count("graphsFilesFolder") && vm.count("fUniqueGraph")){
-        std::cerr << "[ERROR] fUniqueGraph and graphsFilesFolder were both set. Aborting\n";
+        logger.printError("fUniqueGraph and graphsFilesFolder were both set. Aborting\n");
         return 1;
     }
     if(vm.count("initialPerturbationPerTypeFolder") && vm.count("fInitialPerturbationPerType")){
-        std::cerr << "[ERROR] fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting\n";
+        logger.printError("fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting\n");
         return 1;
     }
 
     if(!saturation){
         if (vm.count("saturationTerm")){
-            std::cerr << "[ERROR] saturationTerm was set but saturation was not set, impossible configuration, aborting"<<std::endl;
+            logger.printError("saturationTerm was set but saturation was not set, impossible configuration, aborting")<<std::endl;
             return 1;
         }
         if (customSaturation){
-            std::cerr << "[ERROR] customSaturation was set but saturation was not set, impossible configuration, aborting"<<std::endl;
+            logger.printError("customSaturation was set but saturation was not set, impossible configuration, aborting")<<std::endl;
             return 1;
         }
     } 
@@ -221,7 +228,7 @@ int main(int argc, char** argv) {
         } else if(vm["quantizationMethod"].as<std::string>() == "multiple"){
             quantizationMethod = "multiple";
         } else {
-            std::cerr << "[ERROR], quantizationMethod set to a not available option, aborting";
+            logger.printError("quantizationMethod set to a not available option, aborting\n");
             return 1;            
         }
     }
@@ -232,11 +239,11 @@ int main(int argc, char** argv) {
         logger << "[LOG] virtual nodes granularity set to " << virtualNodesGranularity << std::endl;
         // controls over the value
         if(virtualNodesGranularity != "type" && virtualNodesGranularity != "node" && virtualNodesGranularity != "typeAndNode"){
-            std::cerr << "[ERROR] virtual nodes granularity must be one of the following: 'type', 'node' or 'typeAndNode': aborting"<<std::endl;
+            logger.printError("virtual nodes granularity must be one of the following: 'type', 'node' or 'typeAndNode': aborting")<<std::endl;
             return 1;
         }
         if(virtualNodesGranularity == "node"){
-            std::cerr << "[WARNING] virtual nodes granularity set to 'node', this option is unstable and not fully implemented: aborting"<<std::endl;
+            logger.printWarning("virtual nodes granularity set to 'node', this option is unstable and not fully implemented: aborting")<<std::endl;
             return 1;
         }
     } else {
@@ -248,7 +255,7 @@ int main(int argc, char** argv) {
     if(vm.count("virtualNodesGranularityParameters")){
         std::vector<std::string> virtualNodesGranularityParameters = vm["virtualNodesGranularityParameters"].as<std::vector<std::string>>();
         logger << "[LOG] virtual nodes granularity parameters set "<< std::endl;
-        logger << "[WARNING] virtual nodes granularity parameters are not used for now"<<std::endl;
+        logger.printWarning("virtual nodes granularity parameters are not used for now")<<std::endl;
     } else {
         // logger << "[LOG] virtual nodes granularity parameters not set, set to default: empty vector \n";  // not used for now
     }
@@ -288,7 +295,7 @@ int main(int argc, char** argv) {
     if(vm.count("outputFormat")){
         outputFormat = vm["outputFormat"].as<std::string>();
         if(outputFormat != "singleIteration" && outputFormat != "iterationMatrix"){
-            std::cerr << "[ERROR] outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting"<<std::endl;
+            logger.printError("outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting")<<std::endl;
             return 1;
         }
     }
@@ -299,7 +306,7 @@ int main(int argc, char** argv) {
     << vm["fUniqueGraph"].as<std::string>() << ".\n";
         uniqueGraphFilename = vm["fUniqueGraph"].as<std::string>();
         if(!fileExistsPath(uniqueGraphFilename)){
-            std::cerr << "[ERROR] file "<< uniqueGraphFilename <<" for the graph do not exist: aborting"<<std::endl;
+            logger.printError("file ")<< uniqueGraphFilename <<" for the graph do not exist: aborting"<<std::endl;
             return 1;
         }
     } else if(vm.count("graphsFilesFolder")){
@@ -307,7 +314,7 @@ int main(int argc, char** argv) {
     << vm["graphsFilesFolder"].as<std::string>() << ".\n";
         graphsFilesFolder = vm["graphsFilesFolder"].as<std::string>();
         if(!folderExists(graphsFilesFolder)){
-            std::cerr << "[ERROR] folder "<< graphsFilesFolder << " for the graphs do not exist: aborting"<<std::endl;
+            logger.printError("folder ")<< graphsFilesFolder << " for the graphs do not exist: aborting"<<std::endl;
             return 1;
         }
     }
@@ -316,7 +323,7 @@ int main(int argc, char** argv) {
     << vm["fInitialPerturbationPerType"].as<std::string>() << ".\n";
         typesInitialPerturbationMatrixFilename = vm["fInitialPerturbationPerType"].as<std::string>();
         if(!fileExistsPath(typesInitialPerturbationMatrixFilename)){
-            std::cerr << "[ERROR] file "<< typesInitialPerturbationMatrixFilename << " for the initialPerturbationPerType does not exist: aborting"<<std::endl;
+            logger.printError("file ")<< typesInitialPerturbationMatrixFilename << " for the initialPerturbationPerType does not exist: aborting"<<std::endl;
             return 1;
         }
     } else if (vm.count("initialPerturbationPerTypeFolder")) {
@@ -324,7 +331,7 @@ int main(int argc, char** argv) {
     << vm["initialPerturbationPerTypeFolder"].as<std::string>() << ".\n";
         typeInitialPerturbationFolderFilename = vm["initialPerturbationPerTypeFolder"].as<std::string>();
         if(!folderExists(typeInitialPerturbationFolderFilename)){
-            std::cerr << "[ERROR] folder "<< typeInitialPerturbationFolderFilename << " for the initialPerturbationPerType do not exist: aborting"<<std::endl;
+            logger.printError("folder ")<< typeInitialPerturbationFolderFilename << " for the initialPerturbationPerType do not exist: aborting"<<std::endl;
             return 1;
         }
     }
@@ -334,7 +341,7 @@ int main(int argc, char** argv) {
     << vm["typeInteractionFolder"].as<std::string>() << ".\n";
         typesInteractionFoldername = vm["typeInteractionFolder"].as<std::string>();
         if(!folderExists(typesInteractionFoldername)){
-            std::cerr << "[ERROR] folder"<< typesInteractionFoldername << " for the type interactions do not exist: aborting"<<std::endl;
+            logger.printError("folder ")<< typesInteractionFoldername << " for the type interactions do not exist: aborting"<<std::endl;
             return 1;
         }
     } else {
@@ -345,23 +352,23 @@ int main(int argc, char** argv) {
     << vm["outputFolder"].as<std::string>() << ".\n";
         outputFoldername = vm["outputFolder"].as<std::string>();
         if(!folderExists(outputFoldername)){
-            std::cerr << "[WARNING] folder for the output do not exist: creating the folder"<<std::endl;
+            logger.printWarning("folder for the output do not exist: creating the folder")<<std::endl;
             if(!createFolder(outputFoldername)){
-                std::cerr << "[ERROR] folder for the output could not be created: aborting"<<std::endl;
+                logger.printError("folder for the output could not be created: aborting")<<std::endl;
                 return 1;
             }
         }
     } else {
-        std::cerr << "[ERROR] output folder was not set. aborting\n";
+        logger.printError("output folder was not set. aborting\n");
         return 1;
     }
 
     // create output folder for the current perturbations
     std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
     if(!folderExists(outputFolderNameSingular)){
-        std::cerr << "[WARNING] folder for the output of singular perturbance values do not exist: creating the folder"<<std::endl;
+        logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
         if(!createFolder(outputFolderNameSingular)){
-            std::cerr << "[ERROR] folder for the output of singular perturbance values could not be created: aborting"<<std::endl;
+            logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
             return 1;
         }
     }
@@ -370,9 +377,9 @@ int main(int argc, char** argv) {
     if(outputFormat == "iterationMatrix"){
         std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrices";
         if(!folderExists(outputFolderNameIterationMatrix)){
-            std::cerr << "[WARNING] folder for the output of iteration matrix do not exist: creating the folder"<<std::endl;
+            logger.printWarning("folder for the output of iteration matrix do not exist: creating the folder")<<std::endl;
             if(!createFolder(outputFolderNameIterationMatrix)){
-                std::cerr << "[ERROR] folder for the output of iteration matrix could not be created: aborting"<<std::endl;
+                logger.printError("folder for the output of iteration matrix could not be created: aborting")<<std::endl;
                 return 1;
             }
         }
@@ -392,11 +399,11 @@ int main(int argc, char** argv) {
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelPow(dissipationModelParameters[0]);
                 } else {
-                    std::cerr << "[ERROR] dissipation model parameters for power dissipation must be one: aborting"<<std::endl;
+                    logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] dissipation model parameters for power dissipation was not set: setting to default (2)"<<std::endl;
+                logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
                 dissipationModel = new DissipationModelPow(2);
             }
         } else if(dissipationModelName == "random"){
@@ -407,11 +414,11 @@ int main(int argc, char** argv) {
                 if(dissipationModelParameters.size() == 2){
                     dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
                 } else {
-                    std::cerr << "[ERROR] dissipation model parameters for random dissipation must be two: aborting"<<std::endl;
+                    logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] dissipation model parameters for random dissipation was not set: aborting"<<std::endl;
+                logger.printError("dissipation model parameters for random dissipation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(dissipationModelName == "scaled"){
@@ -422,11 +429,11 @@ int main(int argc, char** argv) {
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];});
                 } else {
-                    std::cerr << "[ERROR] dissipation model parameters for scaled dissipation must be one: aborting"<<std::endl;
+                    logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant"<<std::endl;
+                logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
                 dissipationModel = new DissipationModelScaled();
             }
         } else if(dissipationModelName == "periodic"){
@@ -437,13 +444,13 @@ int main(int argc, char** argv) {
                     << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << ".\n";
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
                 } else {
-                    std::cerr << "[ERROR] dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting"<<std::endl;
+                    logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
                     return 1;
                 }
                 
                 
             } else {
-                std::cerr << "[ERROR] dissipation model parameters for periodic dissipation was not set: aborting"<<std::endl;
+                logger.printError("dissipation model parameters for periodic dissipation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(dissipationModelName == "custom"){
@@ -451,7 +458,7 @@ int main(int argc, char** argv) {
             logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors\n " << std::endl;
             dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
         } else {
-            std::cerr << "[ERROR] dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n";
+            logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n");
             return 1;
         }
     } else { //dissipation model set to default (none)
@@ -475,11 +482,11 @@ int main(int argc, char** argv) {
                 if(conservationModelParameters.size() == 1){
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
                 } else {
-                    std::cerr << "[ERROR] conservation model parameters for scaled conservation must be one parameter: aborting"<<std::endl;
+                    logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] conservation model parameters for scaled conservation was not set: setting to default 0.5 costant"<<std::endl;
+                logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
                 conservationModel = new ConservationModel();
             }
         } else if (conservationModelName == "random"){
@@ -490,16 +497,16 @@ int main(int argc, char** argv) {
                 if(conservationModelParameters.size() == 2){
                     //control if lower and upper limits of the random values are within 0 and 1
                     if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
-                        std::cerr << "[ERROR] conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting"<<std::endl;
+                        logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
                         return 1;
                     }
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
                 } else {
-                    std::cerr << "[ERROR] conservation model parameters for random conservation must be two: aborting"<<std::endl;
+                    logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] conservation model parameters for random conservation was not set: aborting"<<std::endl;
+                logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(conservationModelName == "custom"){
@@ -507,7 +514,7 @@ int main(int argc, char** argv) {
             logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors\n " << std::endl;
             conservationModel = new ConservationModel(getConservationScalingFunction());
         } else {
-            std::cerr << "[ERROR] conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n";
+            logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n");
             return 1;
         }
     } else {
@@ -523,7 +530,7 @@ int main(int argc, char** argv) {
             double saturationTerm = vm["saturationTerm"].as<double>();
             logger << "[LOG] saturation term specified, using the interval [-" << saturationTerm << "," << saturationTerm << "]"<<std::endl;
         } else {
-            std::cerr << "[ERROR] saturation term specified more than once, possibility of using more values not yet implemented: aborting"<<std::endl;
+            logger.printError("saturation term specified more than once, possibility of using more values not yet implemented: aborting")<<std::endl;
             return 1;
         }
     }
@@ -542,7 +549,7 @@ int main(int argc, char** argv) {
 
     // if both homogenousGraphNodesFile and nodeDescriptionFolder are set, exit
     if(vm.count("homogenousGraphNodesFile") && vm.count("nodeDescriptionFolder")){
-        std::cerr << "[ERROR] homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting\n";
+        logger.printError("homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting\n");
         return 1;
     }
     std::string nodesDescriptionFolder="";
@@ -563,13 +570,13 @@ int main(int argc, char** argv) {
         } else if (vm.count("initialPerturbationPerTypeFolder")){
             types = getTypesFromFolderFileNames(typeInitialPerturbationFolderFilename);
         } else {
-            std::cerr << "[ERROR] no initial perturbation file or folder specified: aborting"<<std::endl;
+            logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
             return 1;
         }
     } else if (vm.count("graphsFilesFolder")) {
         types = getTypesFromFolderFileNames(graphsFilesFolder);
     } else {
-        std::cerr << "[ERROR] no graph file or folder specified: aborting"<<std::endl;
+        logger.printError("no graph file or folder specified: aborting")<<std::endl;
         return 1;
     }
 
@@ -593,7 +600,7 @@ int main(int argc, char** argv) {
     //filter types with the subtypesresetVirtualOutputs
     types = vectorsIntersection(types, subtypes);
     if (types.size() == 0) {
-        std::cerr << "[ERROR] no types in common between the types and subtypes: aborting"<<std::endl;
+        logger.printError("no types in common between the types and subtypes: aborting")<<std::endl;
         return 1;
     }
     logger << "[LOG] final types used for the computation: " << std::endl;
@@ -617,9 +624,9 @@ int main(int argc, char** argv) {
 
     // control if the number of processes is greater than the number of types, exit if true (useless process are not accepted)
     if (numProcesses > SizeToInt(types.size())) {
-        std::cerr << "[ERROR] number of processes is greater than the number of types: aborting"<<std::endl;
-        std::cerr << "[ERROR] number of processes: " << numProcesses << std::endl;
-        std::cerr << "[ERROR] number of types: " << types.size() << std::endl;
+        logger.printError("number of processes is greater than the number of types: aborting")<<std::endl;
+        logger.printError("number of processes: ") << numProcesses << std::endl;
+        logger.printError("number of types: ") << types.size() << std::endl;
         return 1;
     }
 
@@ -676,12 +683,12 @@ int main(int argc, char** argv) {
         typesFromFolder = allGraphs.first;
         auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
         if(typesFromFolderFiltered.size() != types.size()){
-            std::cerr << "[ERROR] types from folder (filtered with subtypes) and types from values do not have the same length: aborting" << std::endl;
+            logger.printError("types from folder (filtered with subtypes) and types from values do not have the same length: aborting") << std::endl;
             return 1;
         }
         for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
             if(typesFromFolderFiltered[i] != types[i]){  // TODO this control can be faulty, since the order of the types is not guaranteed when reading the files
-                std::cerr << "[ERROR] types from folder(filtered with subtypes) and types from file do not match: aborting" << std::endl;
+                logger.printError("types from folder(filtered with subtypes) and types from file do not match: aborting") << std::endl;
                 return 1;
             }
         }
@@ -693,13 +700,13 @@ int main(int argc, char** argv) {
             auto typesFromNames = getKeys<std::string,std::vector<std::string>>(namesFromFolder);
             auto typesFromNamesFiltered = vectorsIntersection(typesFromNames, subtypes);
             if(typesFromNamesFiltered.size() != types.size()){ //TODO change the control over the types read from the graph, since the values can be not expressed for some graphs
-                std::cerr << "[ERROR] types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting" << std::endl;
+                logger.printError("types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting") << std::endl;
                 return 1;
             }
             // control over the values and the order is useless since the map is unordered and doesn't guarantee the order of reading the files
             // for(uint i = 0; i < typesFromNames.size(); i++){
             //     if(typesFromNames[i] != types[i]){
-            //         std::cerr << "[ERROR] types from values(inital perturbation) and types from file do not match: aborting"<<std::endl;
+            //         logger.printError("types from values(inital perturbation) and types from file do not match: aborting"<<std::endl;
             //         return 1;
             //     }
             // }
@@ -763,7 +770,7 @@ int main(int argc, char** argv) {
         logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
         initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes); // TODO change the function to return only the values for the types in the workload
     } else {
-        std::cerr << "[ERROR] no initial perturbation file or folder specified: aborting"<<std::endl;
+        logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
         return 1;
     }
     logger << "[LOG] initial perturbation values successfully read for rank "<< rank << std::endl;
@@ -772,16 +779,16 @@ int main(int argc, char** argv) {
     std::vector<std::string> typesFromValues = std::get<1>(initialValues);
     //this condition should take into account the intersection of the types and the subtypes
     if(typesFromValues.size() == 0){
-        std::cerr << "[ERROR] types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting"<<std::endl;
-        std::cerr << "[ERROR] types specified(subtypes): ";
+        logger.printError("types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting")<<std::endl;
+        logger.printError("types specified(subtypes): ");
         for(auto type: subtypes)
-            std::cerr << type << " ";
+            std::cerr << type << " "; //TODO handle logger with these
         std::cerr << std::endl;
-        std::cerr << "[ERROR] types from file(from graphs folder or from matrix): ";
+        logger.printError("types from file(from graphs folder or from matrix): ");
         for(auto type: types)
             std::cerr << type << " ";
         std::cerr << std::endl;
-        std::cerr << "[ERROR] types from values(from initial values folder or from values matrix) intersected with subtypes: ";
+        logger.printError("types from values(from initial values folder or from values matrix) intersected with subtypes: ");
         for(auto type: typesFromValues)
             std::cerr << type << " ";
         std::cerr << std::endl;
@@ -789,7 +796,7 @@ int main(int argc, char** argv) {
     }
     auto indexMapGraphTypesToValuesTypes = get_indexmap_vector_values_full(types, typesFromValues);
     if(indexMapGraphTypesToValuesTypes.size() == 0){
-        std::cerr << "[ERROR] types from folder and types from file do not match even on one instance: aborting"<<std::endl;
+        logger.printError("types from folder and types from file do not match even on one instance: aborting")<<std::endl;
         return 1;
     }
 
@@ -1029,11 +1036,11 @@ int main(int argc, char** argv) {
                         typeComputations[i]->setPropagationModel(tmpPropagationModel);
                     }
                 } else {
-                    std::cerr << "[ERROR] propagation model parameters for scaled propagation must be one parameter: aborting"<<std::endl;
+                    logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] propagation model parameters for scaled propagation was not set: setting to default 1 costant"<<std::endl;
+                logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
                 for(int i = 0; i < finalWorkload ;i++ ){
                     PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                     typeComputations[i]->setPropagationModel(tmpPropagationModel);
@@ -1052,11 +1059,11 @@ int main(int argc, char** argv) {
                         typeComputations[i]->setPropagationModel(tmpPropagationModel);
                     }
                 } else {
-                    std::cerr << "[ERROR] propagation model parameters for scaled propagation must be one parameter: aborting"<<std::endl;
+                    logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                std::cerr << "[ERROR] propagation model parameters for scaled propagation was not set: setting to default 1 costant"<<std::endl;
+                logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
                 for(int i = 0; i < finalWorkload;i++ ){
                     PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                     typeComputations[i]->setPropagationModel(tmpPropagationModel);
@@ -1096,7 +1103,7 @@ int main(int argc, char** argv) {
             }
         
         } else {
-            std::cerr << "[ERROR] propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom \n";
+            logger.printError("propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom \n");
             return 1;
         }
     } else {
@@ -1167,7 +1174,7 @@ int main(int argc, char** argv) {
                 virtualOutputs.push_back(new double[rankVirtualOutputsSizes[targetRank]]);                        
             }
         } else {
-            std::cerr << "[ERROR] virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n";
+            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n");
             return 1;
         }
 
@@ -1297,13 +1304,13 @@ int main(int argc, char** argv) {
                                 }
                             }
                             if(sourceTypePosition == -1){
-                                std::cerr << "[ERROR] source type not found in the types vector: aborting" << std::endl;
+                                logger.printError("source type not found in the types vector: aborting") << std::endl;
                                 return 1;
                             }
                             double virtualOutputValue = typeComputations[sourceTypePosition]->getOutputNodeValue(virtualNode.first);
                             virtualOutputs[targetRank][i] = virtualOutputValue;
                         } else {
-                            std::cerr << "[ERROR] virtual node string is not in the correct format: aborting" << std::endl;
+                            logger.printError("virtual node string is not in the correct format: aborting") << std::endl;
                             return 1;
                         }
                     }
@@ -1311,7 +1318,7 @@ int main(int argc, char** argv) {
                         
             }
         } else {
-            std::cerr << "[ERROR] virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n";
+            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n");
             return 1;
         }
 
@@ -1366,7 +1373,7 @@ int main(int argc, char** argv) {
                     catch(const std::exception& e)
                     {
                         std::cerr << e.what() << std::endl;
-                        std::cerr << "[ERROR] error in sending virtual outputs from process " << rank << " to process " << targetRank << std::endl;
+                        logger.printError("error in sending virtual outputs from process ") << rank << " to process " << targetRank << std::endl;
                         return 1;
                     }
                     logger << "[LOG] sent virtual outputs from process " << rank << " to process " << targetRank  << std::endl;
@@ -1385,7 +1392,7 @@ int main(int argc, char** argv) {
                     MPI_Wait(&request[sourceRank], MPI_STATUS_IGNORE);
                 } catch(const std::exception& e){
                     std::cerr << e.what() << std::endl;
-                    std::cerr << "[ERROR] error in waiting for virtual outputs from process " << sourceRank << " to process " << rank << std::endl;
+                    logger.printError("error in waiting for virtual outputs from process ") << sourceRank << " to process " << rank << std::endl;
                     return 1;
                 }
                 logger << "[LOG] received virtual outputs from process " << sourceRank << " to process " << rank << std::endl;
@@ -1429,7 +1436,7 @@ int main(int argc, char** argv) {
                                 }
                             }
                         } else {
-                            std::cerr << "[ERROR] quantization method is not any of the types. quantization method available are single and multiple \n";
+                            logger.printError("quantization method is not any of the types. quantization method available are single and multiple \n");
                             return 1;
                         }
                     }
@@ -1484,7 +1491,7 @@ int main(int argc, char** argv) {
                                         }
                                     } catch(const std::exception& e){
                                         std::cerr << e.what() << std::endl;
-                                        std::cerr << "[ERROR] error in setting input for virtual nodes from process "<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
+                                        logger.printError("error in setting input for virtual nodes from process ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
                                         return 1;
                                     }
                                 } else {
@@ -1504,7 +1511,7 @@ int main(int argc, char** argv) {
                                         }
                                     } catch(const std::exception& e){
                                         std::cerr << e.what() << std::endl;
-                                        std::cerr << "[ERROR] error in setting input for virtual nodes from process "<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
+                                        logger.printError("error in setting input for virtual nodes from process ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
                                         return 1;
                                     }
                                 } else {
@@ -1513,12 +1520,12 @@ int main(int argc, char** argv) {
                                     // // TESTING
                                 }
                             } else {
-                                std::cerr << "[ERROR] quantization method is not any of the types. quantization method available are single and multiple \n";
+                                logger.printError("quantization method is not any of the types. quantization method available are single and multiple \n");
                                 return 1;
                             }
                         } else {
-                            std::cerr << "[ERROR] interaction between nodes " << sourceNodeName << " and " << targetNodeName << " for types " << sourceType << " and " << targetType << " is not present in the interactionBetweenTypesFinerMap" << std::endl;
-                            std::cerr << "[ERROR] aborting" << std::endl;
+                            logger.printError("interaction between nodes ") << sourceNodeName << " and " << targetNodeName << " for types " << sourceType << " and " << targetType << " is not present in the interactionBetweenTypesFinerMap" << std::endl;
+                            logger.printError("aborting") << std::endl;
                             return 1;
                         }
 
