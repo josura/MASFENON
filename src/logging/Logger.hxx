@@ -68,6 +68,8 @@ public:
             }
             os_ << "[LOG] ";
             ((os_ << ' ' << std::forward<Args>(args)), ...);
+            // flush the stream to ensure immediate output
+            os_ << std::endl;
         }
         return *this;
     }
