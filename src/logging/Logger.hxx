@@ -25,10 +25,11 @@ public:
      * @return Reference to the Logger instance.
      * @note This method is thread-safe and can be called from multiple threads without issues.
      */
-    static Logger& getInstance(std::ostream& os){
-        static Logger instance(os); // Default output stream is std::cout
+    static Logger& getInstance(){
+        static Logger instance; // default to std::cout
         return instance;
     }
+
 
     /**
      * @brief Delete copy constructor and assignment operator to prevent copying.
@@ -143,6 +144,11 @@ public:
 
 private:
 
+    /**
+     * @brief Private constructor for the Logger, defaulting to std::cout.
+     * @details This constructor initializes the Logger with a default output stream (std::cout).
+     */
+    Logger() :os_(std::cout){}
     /**
      * @brief Private constructor for the Logger with the given output stream.
      * @param os Reference to the output stream (e.g., std::cout, std::cerr).

@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
     }
 
     //logging options
-    Logger logger(std::cout); ///< logger object to log the messages
+    auto& logger = Logger::getInstance(); ///< logger object to log the messages
     if(vm.count("loggingOptions")){
         if(logMode == "all"){
             std::cout << "[LOG] logging options set to all"<<std::endl;
