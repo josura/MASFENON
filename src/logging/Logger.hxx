@@ -130,10 +130,17 @@ public:
      */
     void disableVerbose();
 
+    /**
+     * @brief Sets whether warnings should be treated as errors.
+     * @param treatWarningsAsErrors If true, warnings will be treated as errors.
+     */
+    void setTreatWarningsAsErrors(bool treatWarningsAsErrors);
+
 private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
     bool verbose_ = false; ///< Flag for verbose logging mode
     mutable std::mutex mtx_; ///< Mutex to synchronize concurrent log access
+    bool treatWarningsAsErrors_ = false; ///< Flag to treat warnings as errors
 };
  
