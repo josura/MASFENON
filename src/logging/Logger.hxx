@@ -20,10 +20,15 @@
 class Logger {
 public:
     /**
-     * @brief Constructs a Logger with the given output stream.
-     * @param os Reference to the output stream (e.g., std::cout, std::cerr).
+     * @brief Singleton instance accessor for the Logger.
+     * @details This method returns a reference to the singleton Logger instance. It ensures that only one Logger instance exists throughout the application.
+     * @return Reference to the Logger instance.
+     * @note This method is thread-safe and can be called from multiple threads without issues.
      */
-    Logger(std::ostream& os) : os_(os) {}
+    static Logger& getInstance(std::ostream& os){
+        static Logger instance(os); // Default output stream is std::cout
+        return instance;
+    }
 
     /**
      * @brief Delete copy constructor and assignment operator to prevent copying.
@@ -137,6 +142,13 @@ public:
     void setTreatWarningsAsErrors(bool treatWarningsAsErrors);
 
 private:
+
+    /**
+     * @brief Private constructor for the Logger with the given output stream.
+     * @param os Reference to the output stream (e.g., std::cout, std::cerr).
+     */
+    Logger(std::ostream& os) : os_(os) {}
+
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
     bool verbose_ = false; ///< Flag for verbose logging mode
