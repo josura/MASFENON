@@ -49,6 +49,7 @@ int main(int argc, char** argv) {
     bool saveAugmentedNetworks = false; ///< boolean variable to indicate if the augmented networks should be saved
     std::string logMode=""; ///< string variable to indicate the logging mode
     bool verbose = false; ///< boolean variable to indicate if verbose mode is used
+    bool treatWarningAsError = false; ///< boolean variable to indicate if warnings should be treated as errors
     std::string quantizationMethod = "single"; ///< string variable to indicate the quantization method
     std::string virtualNodesGranularity = "type"; ///< string variable to indicate the virtual nodes granularity
     std::string performanceFilename = ""; ///< string variable to indicate the performance filename where the performance times are saved
@@ -88,6 +89,7 @@ int main(int argc, char** argv) {
         ("quantizationMethod",po::value<std::string>(), "(string) define the quantization method used to quantize the contact times for the edges between different types, available options are: 'single' and 'multiple'") // aggiungere documentazione
         ("loggingOptions",po::value<std::string>(&logMode),"(string) logging options, available options are: 'all','none'. Default to all")
         ("verbose",po::bool_switch(&verbose), "verbose mode, if set, the program will print more information during the execution(MPI information, communication information)")
+        ("treatWarningAsError",po::bool_switch(&treatWarningAsError), "treat warnings as errors, if set, the program will throw an exception if a warning is encountered")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
         ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'")
