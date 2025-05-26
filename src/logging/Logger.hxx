@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <mutex>
 
 /**
  * @class Logger
@@ -25,6 +26,19 @@ public:
     Logger(std::ostream& os) : os_(os) {}
 
     /**
+     * @brief Delete copy constructor and assignment operator to prevent copying.
+     * @details This ensures that the Logger instance is unique and cannot be copied, which is important for thread safety and resource management.
+     * @note Copying a Logger instance could lead to issues with concurrent access to the same output stream.
+     */
+    Logger(const Logger&) = delete;
+    /**
+     * @brief Delete assignment operator to prevent assignment.
+     * @details This ensures that the Logger instance is unique and cannot be assigned, which is important for thread safety and resource management.
+     * @note Assignment of a Logger instance could lead to issues with concurrent access to the same output stream.
+     */
+    Logger& operator=(const Logger&) = delete;
+
+    /**
      * @brief Overloaded stream insertion operator for generic types.
      * @tparam T The type of the object to stream.
      * @param t The object to write to the stream.
@@ -32,6 +46,7 @@ public:
      */
     template<typename T>
     Logger& operator<<(const T& t) {
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         if(enabled_) os_ << t;
         return *this;
     }
@@ -42,6 +57,7 @@ public:
      * @return Reference to the current Logger instance.
      */
     Logger& operator<<(std::ostream& (*pf)(std::ostream&)) {
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         if(enabled_) os_ << pf;
         return *this;
     }
@@ -66,6 +82,7 @@ public:
             if (isVerbose && !verbose_) {
                 return *this; // Skip verbose messages if not enabled
             }
+            std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
             os_ << "[LOG] ";
             ((os_ << ' ' << std::forward<Args>(args)), ...);
             // flush the stream to ensure immediate output
@@ -117,5 +134,6 @@ private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
     bool verbose_ = false; ///< Flag for verbose logging mode
+    mutable std::mutex mtx_; ///< Mutex to synchronize concurrent log access
 };
  

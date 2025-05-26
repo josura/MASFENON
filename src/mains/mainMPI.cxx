@@ -182,11 +182,11 @@ int main(int argc, char** argv) {
 
 
     if(vm.count("graphsFilesFolder") && vm.count("fUniqueGraph")){
-        logger.printError("fUniqueGraph and graphsFilesFolder were both set. Aborting\n");
+        logger.printError("fUniqueGraph and graphsFilesFolder were both set. Aborting");
         return 1;
     }
     if(vm.count("initialPerturbationPerTypeFolder") && vm.count("fInitialPerturbationPerType")){
-        logger.printError("fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting\n");
+        logger.printError("fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting");
         return 1;
     }
 
@@ -228,7 +228,7 @@ int main(int argc, char** argv) {
         } else if(vm["quantizationMethod"].as<std::string>() == "multiple"){
             quantizationMethod = "multiple";
         } else {
-            logger.printError("quantizationMethod set to a not available option, aborting\n");
+            logger.printError("quantizationMethod set to a not available option, aborting");
             return 1;            
         }
     }
@@ -359,7 +359,7 @@ int main(int argc, char** argv) {
             }
         }
     } else {
-        logger.printError("output folder was not set. aborting\n");
+        logger.printError("output folder was not set. aborting");
         return 1;
     }
 
@@ -458,7 +458,7 @@ int main(int argc, char** argv) {
             logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors\n " << std::endl;
             dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
         } else {
-            logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n");
+            logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
         }
     } else { //dissipation model set to default (none)
@@ -511,14 +511,14 @@ int main(int argc, char** argv) {
             }
         } else if(conservationModelName == "custom"){
             //control if custom function for conservation returns double and takes a single parameter as double
-            logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors\n " << std::endl;
+            logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
             conservationModel = new ConservationModel(getConservationScalingFunction());
         } else {
-            logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom \n");
+            logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
         }
     } else {
-        logger << "[LOG] conservation model was not set. set to default (none)\n";
+        logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
         conservationModel = new ConservationModel([](double time)->double{return 0;});
     }
 
@@ -549,7 +549,7 @@ int main(int argc, char** argv) {
 
     // if both homogenousGraphNodesFile and nodeDescriptionFolder are set, exit
     if(vm.count("homogenousGraphNodesFile") && vm.count("nodeDescriptionFolder")){
-        logger.printError("homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting\n");
+        logger.printError("homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting");
         return 1;
     }
     std::string nodesDescriptionFolder="";
@@ -1103,11 +1103,11 @@ int main(int argc, char** argv) {
             }
         
         } else {
-            logger.printError("propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom \n");
+            logger.printError("propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom");
             return 1;
         }
     } else {
-        logger << "[LOG] propagation model was not set. set to default (pseudoInverse)\n";
+        logger << "[LOG] propagation model was not set. set to default (pseudoInverse)" << std::endl;
         for(int i = 0; i < finalWorkload;i++ ){
             PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
             typeComputations[i]->setPropagationModel(tmpPropagationModel);
@@ -1174,7 +1174,7 @@ int main(int argc, char** argv) {
                 virtualOutputs.push_back(new double[rankVirtualOutputsSizes[targetRank]]);                        
             }
         } else {
-            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n");
+            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
             return 1;
         }
 
@@ -1318,7 +1318,7 @@ int main(int argc, char** argv) {
                         
             }
         } else {
-            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode \n");
+            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
             return 1;
         }
 
@@ -1376,7 +1376,7 @@ int main(int argc, char** argv) {
                         logger.printError("error in sending virtual outputs from process ") << rank << " to process " << targetRank << std::endl;
                         return 1;
                     }
-                    logger.printLog(true,"sent virtual outputs from process ", rank, " to process ", targetRank, "\n");
+                    logger.printLog(true,"sent virtual outputs from process ", rank, " to process ", targetRank);
                 }
             } else {
                 // send only the virtual outputs for the types granularity (v-out for each type
@@ -1387,7 +1387,7 @@ int main(int argc, char** argv) {
         for(int sourceRank = 0; sourceRank < numProcesses; sourceRank++){
             std::pair<int, int> ranksPair = std::make_pair(sourceRank, rank);
             if(ranksPairMappedVirtualNodesVectors.contains(ranksPair)){
-                logger.printLog(true,"receiving virtuals outputs from process ", sourceRank, " to process ", rank, "\n");
+                logger.printLog(true,"receiving virtuals outputs from process ", sourceRank, " to process ", rank);
                 try{
                     MPI_Wait(&request[sourceRank], MPI_STATUS_IGNORE);
                 } catch(const std::exception& e){
@@ -1395,7 +1395,7 @@ int main(int argc, char** argv) {
                     logger.printError("error in waiting for virtual outputs from process ") << sourceRank << " to process " << rank << std::endl;
                     return 1;
                 }
-                logger.printLog(true,"received virtual outputs from process ", sourceRank, " to process ", rank, "\n");
+                logger.printLog(true,"received virtual outputs from process ", sourceRank, " to process ", rank);
             }
             // source workload and virtual outputs decomposition on the target
 
@@ -1436,7 +1436,7 @@ int main(int argc, char** argv) {
                                 }
                             }
                         } else {
-                            logger.printError("quantization method is not any of the types. quantization method available are single and multiple \n");
+                            logger.printError("quantization method is not any of the types. quantization method available are single and multiple");
                             return 1;
                         }
                     }
@@ -1491,7 +1491,7 @@ int main(int argc, char** argv) {
                                         }
                                     } catch(const std::exception& e){
                                         std::cerr << e.what() << std::endl;
-                                        logger.printError("error in setting input for virtual nodes from process ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
+                                        logger.printError("error in setting input for virtual nodes from process: ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
                                         return 1;
                                     }
                                 } else {
@@ -1511,7 +1511,7 @@ int main(int argc, char** argv) {
                                         }
                                     } catch(const std::exception& e){
                                         std::cerr << e.what() << std::endl;
-                                        logger.printError("error in setting input for virtual nodes from process ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
+                                        logger.printError("error in setting input for virtual nodes from process: ")<< sourceRank<< " to process "<< targetRank << " for virtual nodes: " << virtualInputNodeName << " and " << virtualOutputNodeName << std::endl;
                                         return 1;
                                     }
                                 } else {
@@ -1520,11 +1520,11 @@ int main(int argc, char** argv) {
                                     // // TESTING
                                 }
                             } else {
-                                logger.printError("quantization method is not any of the types. quantization method available are single and multiple \n");
+                                logger.printError("quantization method is not any of the types. quantization method available are single and multiple");
                                 return 1;
                             }
                         } else {
-                            logger.printError("interaction between nodes ") << sourceNodeName << " and " << targetNodeName << " for types " << sourceType << " and " << targetType << " is not present in the interactionBetweenTypesFinerMap" << std::endl;
+                            logger.printError("interaction between nodes: ") << sourceNodeName << " and " << targetNodeName << " for types " << sourceType << " and " << targetType << " is not present in the interactionBetweenTypesFinerMap" << std::endl;
                             logger.printError("aborting") << std::endl;
                             return 1;
                         }

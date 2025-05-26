@@ -13,21 +13,27 @@ Logger& Logger::printLog(const std::string& msg, bool isVerbose){
         if(isVerbose && !verbose_){
             return *this; // Skip verbose messages if not enabled
         }
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[LOG] "<< msg;
+        os_ << std::endl; // Ensure log messages end with a newline
     }
     return *this;
 }
 
 Logger& Logger::printError(const std::string& msg){
     if(enabled_){
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[ERROR] "<< msg;
+        os_ << std::endl; // Ensure error messages end with a newline
     }
     return *this;
 }
 
 Logger& Logger::printWarning(const std::string& msg){
     if(enabled_){
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[WARNING] "<< msg;
+        os_ << std::endl; // Ensure warning messages end with a newline
     }
     return *this;
 }

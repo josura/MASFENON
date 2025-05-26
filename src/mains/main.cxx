@@ -94,7 +94,7 @@ int main(int argc, char** argv ) {
     }
 
     //logging options
-    Logger logger(logger);
+    Logger logger(std::cout);
     if(vm.count("loggingOptions")){
         if(logMode == "all"){
             std::cout << "[LOG] logging options set to all"<<std::endl;
