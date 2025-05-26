@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "computation/Computation.hxx"
+#include "logging/Logger.hxx"
 
 /**
  * @class Checkpoint

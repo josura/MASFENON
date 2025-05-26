@@ -5,8 +5,6 @@
  * @details Includes logic for saving, loading, and cleaning checkpoint data during MASFENON simulations.
  */
 #include "checkpoint/Checkpoint.hxx"
-#include "computation/Computation.hxx"
-#include "logging/Logger.hxx"
 #include <string>
 #include "utils/utilities.hxx"
 
