@@ -1641,6 +1641,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    std::cout << "Execution ended for rank " << rank << " with no errors" << std::endl;
+    logger << "[LOG] Execution ended for rank " << rank << " with no errors" << std::endl;
     return 0;
 }
