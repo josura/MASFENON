@@ -32,7 +32,7 @@ public:
      */
     template<typename T>
     Logger& operator<<(const T& t) {
-        os_ << t;
+        if(enabled_) os_ << t;
         return *this;
     }
 
@@ -42,7 +42,7 @@ public:
      * @return Reference to the current Logger instance.
      */
     Logger& operator<<(std::ostream& (*pf)(std::ostream&)) {
-        os_ << pf;
+        if(enabled_) os_ << pf;
         return *this;
     }
 
