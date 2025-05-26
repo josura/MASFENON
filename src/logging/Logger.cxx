@@ -13,6 +13,7 @@ Logger& Logger::printLog(const std::string& msg, bool isVerbose){
         if(isVerbose && !verbose_){
             return *this; // Skip verbose messages if not enabled
         }
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[LOG] "<< msg;
     }
     return *this;
@@ -20,6 +21,7 @@ Logger& Logger::printLog(const std::string& msg, bool isVerbose){
 
 Logger& Logger::printError(const std::string& msg){
     if(enabled_){
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[ERROR] "<< msg;
     }
     return *this;
@@ -27,6 +29,7 @@ Logger& Logger::printError(const std::string& msg){
 
 Logger& Logger::printWarning(const std::string& msg){
     if(enabled_){
+        std::lock_guard<std::mutex> lock(mtx_); // Lock the mutex
         os_ << "[WARNING] "<< msg;
     }
     return *this;
