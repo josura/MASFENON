@@ -32,7 +32,7 @@ public:
      */
     template<typename T>
     Logger& operator<<(const T& t) {
-        os_ << t;
+        if(enabled_) os_ << t;
         return *this;
     }
 
@@ -42,16 +42,37 @@ public:
      * @return Reference to the current Logger instance.
      */
     Logger& operator<<(std::ostream& (*pf)(std::ostream&)) {
-        os_ << pf;
+        if(enabled_) os_ << pf;
         return *this;
     }
 
     /**
      * @brief Prints a standard log message.
      * @param msg The message to print.
+     * @param isVerbose If true, the message will only be printed if verbose mode is enabled.
      * @return Reference to the current Logger instance.
      */
-    Logger& printLog(const std::string& msg);
+    Logger& printLog(const std::string& msg, bool isVerbose = false);
+
+    /**
+     * @brief Prints a standard log message. Using variadic templates for flexibility.
+     * @param isVerbose If true, the message will only be printed if verbose mode is enabled.
+     * @tparam Args Types of the arguments to format into the message.
+     * @return Reference to the current Logger instance.
+     */
+    template<typename... Args>
+    Logger& printLog(bool isVerbose, Args&&... args) {
+        if (enabled_) {
+            if (isVerbose && !verbose_) {
+                return *this; // Skip verbose messages if not enabled
+            }
+            os_ << "[LOG] ";
+            ((os_ << ' ' << std::forward<Args>(args)), ...);
+            // flush the stream to ensure immediate output
+            os_ << std::endl;
+        }
+        return *this;
+    }
 
     /**
      * @brief Prints an error message.
@@ -80,8 +101,21 @@ public:
      */
     void disable();
 
+    /**
+     * @brief Enables verbose logging mode.
+     * @details In verbose mode, additional detailed messages can be printed.
+     */
+    void enableVerbose();
+    
+    /**
+     * @brief Disables verbose logging mode.
+     * @details In non-verbose mode, only standard log messages will be printed.
+     */
+    void disableVerbose();
+
 private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
+    bool verbose_ = false; ///< Flag for verbose logging mode
 };
  

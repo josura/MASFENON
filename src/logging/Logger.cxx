@@ -8,8 +8,11 @@
 #include "logging/Logger.hxx"
 
 
-Logger& Logger::printLog(const std::string& msg){
+Logger& Logger::printLog(const std::string& msg, bool isVerbose){
     if(enabled_){
+        if(isVerbose && !verbose_){
+            return *this; // Skip verbose messages if not enabled
+        }
         os_ << "[LOG] "<< msg;
     }
     return *this;
@@ -35,4 +38,12 @@ void Logger::enable(){
 
 void Logger::disable(){
     enabled_ = false;
+}
+
+void Logger::enableVerbose(){
+    verbose_ = true;
+}
+
+void Logger::disableVerbose(){
+    verbose_ = false;
 }
