@@ -35,6 +35,12 @@ Logger& Logger::printWarning(const std::string& msg){
         os_ << "[WARNING] "<< msg;
         os_ << std::endl; // Ensure warning messages end with a newline
     }
+    if(treatWarningsAsErrors_){
+        // If warnings are treated as errors, we print them as warnings but also throw an exception
+        os_ << "[WARNING-AS-ERROR] " << msg;
+        throw std::runtime_error("[WARNING-AS-ERROR] " + msg);
+    }
+        
     return *this;
 }
 
@@ -52,4 +58,8 @@ void Logger::enableVerbose(){
 
 void Logger::disableVerbose(){
     verbose_ = false;
+}
+
+void Logger::setTreatWarningsAsErrors(bool treatWarningsAsErrors){
+    treatWarningsAsErrors_ = treatWarningsAsErrors;
 }
