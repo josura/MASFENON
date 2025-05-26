@@ -134,9 +134,7 @@ public:
      * @brief Sets whether warnings should be treated as errors.
      * @param treatWarningsAsErrors If true, warnings will be treated as errors.
      */
-    void setTreatWarningsAsErrors(bool treatWarningsAsErrors) {
-        treatWarningsAsErrors_ = treatWarningsAsErrors;
-    }
+    void setTreatWarningsAsErrors(bool treatWarningsAsErrors);
 
 private:
     std::ostream& os_; ///< Output stream reference
