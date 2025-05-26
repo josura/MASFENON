@@ -176,7 +176,7 @@ void Computation::augmentGraph(const std::vector<std::string>& _types,const std:
         //get nodeToIndex map as well
         nodeToIndex = augmentedGraph->getNodeToIndexMap();
     } catch (...) {
-        std::cerr<< "[ERROR] Computation::augmentGraph: catch section";
+        Logger::getInstance().printError("Computation::augmentGraph: catch section");
         return;
     }
 }
@@ -231,7 +231,7 @@ void Computation::augmentGraphNoComputeInverse(const std::vector<std::string>& _
         //get nodeToIndex map as well
         nodeToIndex = augmentedGraph->getNodeToIndexMap();
     } catch (...) {
-        std::cerr<< "[ERROR] Computation::augmentGraph: catch section";
+        Logger::getInstance().printError("Computation::augmentGraph: catch section");
         return;
     }
 }
@@ -491,7 +491,7 @@ std::vector<double> Computation::computeAugmentedPerturbationEnhanced4(double ti
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            Logger::getInstance().printError(e.what());
             throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: error during the computation of dissipation");
         }
         arma::Col<double> outputArma = propagationModel->propagate(dissipatedPerturbationArma,timeStep) - conservationModel->conservationTerm(dissipatedPerturbationArma, normalize1Rows(augmentedGraph->adjMatrix.asArmadilloMatrix()) , timeStep, qVectorVar);

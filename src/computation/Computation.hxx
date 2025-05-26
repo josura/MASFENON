@@ -12,6 +12,7 @@
 #include "computation/PropagationModel.hxx"
 #include "data_structures/Matrix.hxx"
 #include "data_structures/WeightedEdgeGraph.hxx"
+#include "logging/Logger.hxx"
 #include <map>
 #include <string>
 #include <tuple>
