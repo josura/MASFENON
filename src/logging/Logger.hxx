@@ -26,6 +26,19 @@ public:
     Logger(std::ostream& os) : os_(os) {}
 
     /**
+     * @brief Delete copy constructor and assignment operator to prevent copying.
+     * @details This ensures that the Logger instance is unique and cannot be copied, which is important for thread safety and resource management.
+     * @note Copying a Logger instance could lead to issues with concurrent access to the same output stream.
+     */
+    Logger(const Logger&) = delete;
+    /**
+     * @brief Delete assignment operator to prevent assignment.
+     * @details This ensures that the Logger instance is unique and cannot be assigned, which is important for thread safety and resource management.
+     * @note Assignment of a Logger instance could lead to issues with concurrent access to the same output stream.
+     */
+    Logger& operator=(const Logger&) = delete;
+
+    /**
      * @brief Overloaded stream insertion operator for generic types.
      * @tparam T The type of the object to stream.
      * @param t The object to write to the stream.
