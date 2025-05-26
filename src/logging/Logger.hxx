@@ -49,9 +49,10 @@ public:
     /**
      * @brief Prints a standard log message.
      * @param msg The message to print.
+     * @param isVerbose If true, the message will only be printed if verbose mode is enabled.
      * @return Reference to the current Logger instance.
      */
-    Logger& printLog(const std::string& msg);
+    Logger& printLog(const std::string& msg, bool isVerbose = false);
 
     /**
      * @brief Prints an error message.
@@ -83,5 +84,6 @@ public:
 private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled
+    bool verbose_ = false; ///< Flag for verbose logging mode
 };
  

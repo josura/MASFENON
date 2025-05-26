@@ -8,7 +8,7 @@
 #include "logging/Logger.hxx"
 
 
-Logger& Logger::printLog(const std::string& msg){
+Logger& Logger::printLog(const std::string& msg, bool isVerbose){
     if(enabled_){
         os_ << "[LOG] "<< msg;
     }
