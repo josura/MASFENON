@@ -10,6 +10,9 @@
 
 Logger& Logger::printLog(const std::string& msg, bool isVerbose){
     if(enabled_){
+        if(isVerbose && !verbose_){
+            return *this; // Skip verbose messages if not enabled
+        }
         os_ << "[LOG] "<< msg;
     }
     return *this;
