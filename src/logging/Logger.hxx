@@ -67,7 +67,7 @@ public:
                 return *this; // Skip verbose messages if not enabled
             }
             os_ << "[LOG] ";
-            (os_ << ... << std::forward<Args>(args)); // Fold expression for variadic arguments
+            ((os_ << ' ' << std::forward<Args>(args)), ...);
         }
         return *this;
     }
