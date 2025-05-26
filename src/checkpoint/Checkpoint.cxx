@@ -6,6 +6,7 @@
  */
 #include "checkpoint/Checkpoint.hxx"
 #include "computation/Computation.hxx"
+#include "logging/Logger.hxx"
 #include <string>
 #include "utils/utilities.hxx"
 
@@ -18,7 +19,7 @@ Checkpoint::Checkpoint() {
         bool success = createFolder(this->checkPointFolder);
         if (!success)
         {
-            std::cerr << "[ERROR] Checkpoint::Checkpoint: Unable to create folder " << this->checkPointFolder << std::endl;
+            Logger::getInstance().printError("Checkpoint::Checkpoint: Unable to create folder " + std::string(this->checkPointFolder));
             throw std::runtime_error("[ERROR] Checkpoint::Checkpoint: Unable to create folder " + this->checkPointFolder);
         }
     }
@@ -49,7 +50,7 @@ void Checkpoint::saveState(const std::string type, const int interIteration, con
     }
     else
     {
-        std::cerr << "[ERROR] Checkpoint::saveState: Unable to open file " << fileName << std::endl;
+        Logger::getInstance().printError("Checkpoint::saveState: Unable to open file " + fileName);
     }
 }
 
@@ -63,7 +64,7 @@ void Checkpoint::cleanCheckpoints(std::string type) {
             // std::string fileName = folder + file;
             if (remove(file.c_str()))
             {
-                std::cerr << "[ERROR] Checkpoint::cleanCheckpoints: Unable to delete file " << file << std::endl;
+                Logger::getInstance().printError("Checkpoint::cleanCheckpoints: Unable to delete file " + file);
             }
         }
     }
@@ -87,7 +88,7 @@ void Checkpoint::loadState(const std::string type, int& interIteration, int& int
 
     if (!checkPointExists)
     {
-        std::cerr << "[ERROR] Checkpoint::loadState: Checkpoint file not found" << std::endl;
+        Logger::getInstance().printError("Checkpoint::loadState: Checkpoint file not found");
         throw std::runtime_error("[ERROR] Checkpoint::loadState: Checkpoint file not found");
     }
     
@@ -115,7 +116,7 @@ void Checkpoint::loadState(const std::string type, int& interIteration, int& int
     }
     else
     {
-        std::cerr << "[ERROR] Checkpoint::loadState: Unable to open file " << fileName << std::endl;
+        Logger::getInstance().printError("Checkpoint::loadState: Unable to open file " + fileName);
         throw std::runtime_error("[ERROR] Checkpoint::loadState: Unable to open file " + fileName);
     }
 }
