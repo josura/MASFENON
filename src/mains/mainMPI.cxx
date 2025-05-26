@@ -157,6 +157,13 @@ int main(int argc, char** argv) {
         logger.disableVerbose();
         logger.printLog(false,"verbose mode disabled");
     }
+    if(treatWarningAsError){
+        logger.printLog(false,"treat warnings as errors enabled");
+        logger.setTreatWarningsAsErrors(true);
+    } else {
+        logger.printLog(false,"treat warnings as errors disabled");
+        logger.setTreatWarningsAsErrors(false);
+    }
 
 
     //controls over impossible configurations
