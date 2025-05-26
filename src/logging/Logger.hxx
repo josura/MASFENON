@@ -81,6 +81,18 @@ public:
      */
     void disable();
 
+    /**
+     * @brief Enables verbose logging mode.
+     * @details In verbose mode, additional detailed messages can be printed.
+     */
+    void enableVerbose();
+    
+    /**
+     * @brief Disables verbose logging mode.
+     * @details In non-verbose mode, only standard log messages will be printed.
+     */
+    void disableVerbose();
+
 private:
     std::ostream& os_; ///< Output stream reference
     bool enabled_ = true; ///< Flag indicating if logging is currently enabled

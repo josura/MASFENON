@@ -39,3 +39,11 @@ void Logger::enable(){
 void Logger::disable(){
     enabled_ = false;
 }
+
+void Logger::enableVerbose(){
+    verbose_ = true;
+}
+
+void Logger::disableVerbose(){
+    verbose_ = false;
+}
