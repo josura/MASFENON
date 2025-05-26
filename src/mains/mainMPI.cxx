@@ -150,10 +150,10 @@ int main(int argc, char** argv) {
     }
     if(verbose){
         logger.enableVerbose();
-        logger << "[LOG] verbose mode enabled"<<std::endl;
+        logger.printLog(false,"verbose mode enabled");
     } else {
         logger.disableVerbose();
-        logger << "[LOG] verbose mode disabled"<<std::endl;
+        logger.printLog(false,"verbose mode disabled");
     }
 
 
@@ -773,7 +773,7 @@ int main(int argc, char** argv) {
         logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
         return 1;
     }
-    logger << "[LOG] initial perturbation values successfully read for rank "<< rank << std::endl;
+    logger.printLog(true, "perturbation values successfully read for rank ", rank );
     std::vector<std::string> initialNames = std::get<0>(initialValues);
     inputInitials = std::get<2>(initialValues);
     std::vector<std::string> typesFromValues = std::get<1>(initialValues);
@@ -807,7 +807,7 @@ int main(int argc, char** argv) {
     std::vector<int> invertedTypesIndexes = std::vector<int>(finalWorkload,-1); 
     for(int i = 0; i < finalWorkload; i++){
         if(indexMapGraphTypesToValuesTypes[i+startIdx] == -1){
-            logger << "[LOG] type "<<types[i+startIdx]<<" not found in the initial perturbation files, using zero vector as input"<<std::endl;
+            logger.printLog(true, "type ", types[i+startIdx], " not found in the initial perturbation files, using zero vector as input");
             std::vector<double> input = std::vector<double>(graphsNodes[i].size(),0);
             Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]);   
             tmpCompPointer->setDissipationModel(dissipationModel);
@@ -1198,7 +1198,7 @@ int main(int argc, char** argv) {
             // computation of perturbation
             #pragma omp parallel for
             for(int i = 0; i < finalWorkload; i++){
-                logger << "[LOG] computation of perturbation for iteration intertype-intratype ("+ std::to_string(iterationInterType) + "<->"+ std::to_string(iterationIntraType) + ") for type (" + types[i+startIdx]<<std::endl; 
+                logger.printLog(true,"computation of perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")"); 
                 // TODO use stateful scaling function to consider previous times
                 try
                 {
@@ -1253,10 +1253,10 @@ int main(int argc, char** argv) {
                     double outputNorm = vectorNorm(typeComputations[i]->getOutputAugmented());
                     double normRatio = initialNorm/outputNorm;
                     std::vector<double> newInput = vectorScalarMultiplication(typeComputations[i]->getOutputAugmented(),normRatio);
-                    logger << "[LOG] update input with conservation of the initial perturbation for iteration intertype-intratype ("+ std::to_string(iterationInterType) + "<->"+ std::to_string(iterationIntraType) + ") for type (" + types[i+startIdx]<<std::endl;
+                    logger.printLog(true,"update input with conservation of the initial perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")");
                     typeComputations[i]->updateInput(newInput,true);
                 } else {
-                    logger << "[LOG] update input for iteration intertype-intratype ("+ std::to_string(iterationInterType) + "<->"+ std::to_string(iterationIntraType) + ") for type (" + types[i+startIdx]<<std::endl;
+                    logger.printLog(true,"update input for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")");
                     typeComputations[i]->updateInput(std::vector<double>(),true);
                 }
                 
@@ -1376,7 +1376,7 @@ int main(int argc, char** argv) {
                         logger.printError("error in sending virtual outputs from process ") << rank << " to process " << targetRank << std::endl;
                         return 1;
                     }
-                    logger << "[LOG] sent virtual outputs from process " << rank << " to process " << targetRank  << std::endl;
+                    logger.printLog(true,"sent virtual outputs from process ", rank, " to process ", targetRank, "\n");
                 }
             } else {
                 // send only the virtual outputs for the types granularity (v-out for each type
@@ -1387,7 +1387,7 @@ int main(int argc, char** argv) {
         for(int sourceRank = 0; sourceRank < numProcesses; sourceRank++){
             std::pair<int, int> ranksPair = std::make_pair(sourceRank, rank);
             if(ranksPairMappedVirtualNodesVectors.contains(ranksPair)){
-                logger << "[LOG] receiving virtuals outputs from process " << sourceRank << " to process " << rank << std::endl;
+                logger.printLog(true,"receiving virtuals outputs from process ", sourceRank, " to process ", rank, "\n");
                 try{
                     MPI_Wait(&request[sourceRank], MPI_STATUS_IGNORE);
                 } catch(const std::exception& e){
@@ -1395,7 +1395,7 @@ int main(int argc, char** argv) {
                     logger.printError("error in waiting for virtual outputs from process ") << sourceRank << " to process " << rank << std::endl;
                     return 1;
                 }
-                logger << "[LOG] received virtual outputs from process " << sourceRank << " to process " << rank << std::endl;
+                logger.printLog(true,"received virtual outputs from process ", sourceRank, " to process ", rank, "\n");
             }
             // source workload and virtual outputs decomposition on the target
 
@@ -1618,10 +1618,10 @@ int main(int argc, char** argv) {
         }
     }
 
-    logger << "[LOG] computation ended for rank "<< rank << std::endl;
+    logger.printLog(true,"computation ended for rank ", rank, " with no errors");
     MPI_Finalize();
 
-    logger << "[LOG] MPI finalized for rank "<< rank << std::endl;
+    logger.printLog(true,"MPI finalized for rank ", rank);
 
     // take ending time after the computation
     auto end = std::chrono::steady_clock::now();
@@ -1641,6 +1641,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    logger << "[LOG] Execution ended for rank " << rank << " with no errors" << std::endl;
+    logger.printLog(true,"Execution ended for rank ", rank, " with no errors");
+    logger << "[LOG] Execution ended" << std::endl;
     return 0;
 }
