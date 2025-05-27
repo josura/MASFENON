@@ -1,17 +1,16 @@
 <map id="src/computation/Computation.hxx" name="src/computation/Computation.hxx">
-<area shape="rect" id="Node000001" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="331,5,574,31"/>
-<area shape="rect" id="Node000002" href="$Checkpoint_8cxx.html" title="Implements the Checkpoint class for managing simulation states." alt="" coords="5,152,225,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="318,27,252,34,189,45,137,60,118,69,105,80,98,97,99,116,111,151,106,153,93,117,93,96,101,77,115,65,135,55,188,39,251,29,317,22"/>
-<area shape="rect" id="Node000003" href="$Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="115,79,337,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="404,37,263,81,262,76,402,32"/>
-<area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="269,152,442,177"/>
-<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="433,42,402,80,378,119,363,153,358,151,374,117,397,77,429,39"/>
-<area shape="rect" id="Node000005" href="$Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="411,79,654,104"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="477,38,521,76,518,80,474,42"/>
-<area shape="rect" id="Node000006" href="$ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="679,79,925,104"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="523,31,746,76,745,81,522,36"/>
-<area shape="rect" id="Node000007" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="949,79,1098,104"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="562,30,938,76,949,77,948,83,938,81,561,35"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="198,114,135,154,132,150,195,109"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="260,108,335,149,333,154,258,113"/>
+<area shape="rect" id="Node000001" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="374,5,617,31"/>
+<area shape="rect" id="Node000002" href="$Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="78,79,299,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="433,36,239,81,238,76,432,31"/>
+<area shape="rect" id="Node000004" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="250,152,423,177"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="433,37,396,55,364,80,353,98,346,117,340,152,335,151,341,116,348,95,360,77,393,50,431,33"/>
+<area shape="rect" id="Node000005" href="$Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="374,79,617,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="498,44,498,79,493,79,493,44"/>
+<area shape="rect" id="Node000006" href="$ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="641,79,888,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="552,32,722,76,720,81,551,37"/>
+<area shape="rect" id="Node000007" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="911,79,1061,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="588,30,911,77,911,82,587,35"/>
+<area shape="rect" id="Node000003" href="$Checkpoint_8cxx.html" title="Implements the Checkpoint class for managing simulation states." alt="" coords="5,152,225,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="169,116,129,154,125,150,165,112"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="226,107,314,149,311,154,223,112"/>
 </map>

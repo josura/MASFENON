@@ -87,6 +87,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="PropagationModel_8hxx_source.html">computation/PropagationModel.hxx</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Matrix_8hxx_source.html">data_structures/Matrix.hxx</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="WeightedEdgeGraph_8hxx_source.html">data_structures/WeightedEdgeGraph.hxx</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Logger_8hxx_source.html">logging/Logger.hxx</a>&quot;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;tuple&gt;</code><br />
@@ -97,60 +98,68 @@ Include dependency graph for Computation.hxx:</div>
 <div class="dyncontent">
 <div class="center"><img src="Computation_8hxx__incl.png" border="0" usemap="#asrc_2computation_2Computation_8hxx" alt=""/></div>
 <map name="asrc_2computation_2Computation_8hxx" id="asrc_2computation_2Computation_8hxx">
-<area shape="rect" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="757,5,999,31"/>
+<area shape="rect" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="886,5,1129,31"/>
 <area shape="rect" href="DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="5,174,255,199"/>
-<area shape="poly" title=" " alt="" coords="757,24,587,30,400,40,241,57,187,68,157,81,144,98,136,118,131,161,126,160,130,117,139,95,154,77,185,63,240,52,400,35,587,25,756,19"/>
+<area shape="poly" title=" " alt="" coords="886,23,686,26,458,36,352,43,262,53,194,66,171,73,157,81,144,98,136,118,131,160,126,160,130,117,139,95,154,77,169,68,193,60,261,48,351,38,457,30,685,21,886,17"/>
 <area shape="rect" href="ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="167,79,362,119"/>
-<area shape="poly" title=" " alt="" coords="772,33,381,81,376,82,375,77,380,76,772,28"/>
+<area shape="poly" title=" " alt="" coords="886,31,652,52,381,81,376,82,375,77,380,76,651,46,886,26"/>
 <area shape="rect" title=" " alt="" coords="329,174,416,199"/>
-<area shape="poly" title=" " alt="" coords="756,25,663,31,567,41,483,58,450,68,426,81,409,98,396,119,380,161,375,159,391,116,405,94,423,77,448,63,481,52,566,36,663,26,756,20"/>
+<area shape="poly" title=" " alt="" coords="885,21,761,24,627,33,507,51,460,64,426,81,409,98,395,119,380,162,375,160,391,116,404,94,423,76,458,59,506,46,626,27,761,18,885,15"/>
 <area shape="rect" href="PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="437,86,692,111"/>
-<area shape="poly" title=" " alt="" coords="833,33,624,85,623,80,832,28"/>
-<area shape="rect" title=" " alt="" coords="721,328,784,353"/>
-<area shape="poly" title=" " alt="" coords="861,33,796,75,711,135,631,200,601,230,583,256,579,273,584,287,595,300,613,310,660,325,708,333,707,338,658,330,611,315,592,304,579,290,574,273,578,254,597,227,627,196,707,131,793,71,858,29"/>
-<area shape="rect" href="WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="932,167,1120,207"/>
-<area shape="poly" title=" " alt="" coords="890,29,1002,154,998,158,886,33"/>
-<area shape="rect" href="Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="1139,255,1337,280"/>
-<area shape="poly" title=" " alt="" coords="903,28,1005,83,1070,122,1133,165,1180,204,1219,242,1215,246,1177,208,1130,169,1067,126,1003,88,900,33"/>
-<area shape="rect" title=" " alt="" coords="1411,255,1462,280"/>
-<area shape="poly" title=" " alt="" coords="915,28,1047,76,1251,169,1404,246,1402,251,1249,174,1045,81,913,33"/>
-<area shape="rect" title=" " alt="" coords="1486,255,1545,280"/>
-<area shape="poly" title=" " alt="" coords="934,28,1017,48,1110,76,1219,119,1325,167,1484,246,1481,251,1323,171,1217,124,1108,81,1016,53,933,33"/>
-<area shape="rect" title=" " alt="" coords="1569,255,1624,280"/>
-<area shape="poly" title=" " alt="" coords="960,28,1065,47,1177,76,1236,97,1280,116,1379,164,1560,246,1558,251,1377,169,1278,121,1234,102,1176,81,1063,52,959,33"/>
+<area shape="poly" title=" " alt="" coords="943,33,643,86,642,81,943,28"/>
+<area shape="rect" title=" " alt="" coords="652,328,715,353"/>
+<area shape="poly" title=" " alt="" coords="954,33,867,59,816,78,763,102,711,131,662,167,618,208,583,256,579,266,580,276,592,294,614,309,640,322,638,327,611,314,588,297,575,277,574,265,578,253,614,205,658,163,708,127,760,97,814,73,865,53,952,28"/>
+<area shape="rect" href="WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="913,167,1101,207"/>
+<area shape="poly" title=" " alt="" coords="1010,31,1010,153,1005,153,1005,31"/>
+<area shape="rect" href="Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="1190,255,1387,280"/>
+<area shape="poly" title=" " alt="" coords="1022,29,1267,243,1263,247,1019,33"/>
+<area shape="rect" href="Logger_8hxx.html" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="1348,328,1493,353"/>
+<area shape="poly" title=" " alt="" coords="1092,28,1197,47,1311,76,1374,93,1430,105,1529,126,1573,142,1614,166,1652,202,1690,253,1695,268,1690,282,1678,292,1660,301,1615,316,1508,334,1507,329,1614,311,1658,296,1674,288,1685,278,1690,268,1685,256,1648,206,1611,171,1571,147,1528,131,1429,110,1372,98,1309,81,1196,52,1091,33"/>
+<area shape="rect" title=" " alt="" coords="1462,255,1513,280"/>
+<area shape="poly" title=" " alt="" coords="1031,29,1454,246,1452,251,1029,33"/>
+<area shape="rect" title=" " alt="" coords="1537,255,1595,280"/>
+<area shape="poly" title=" " alt="" coords="1046,28,1183,76,1285,121,1384,168,1534,246,1532,250,1381,173,1283,126,1181,81,1044,33"/>
+<area shape="rect" title=" " alt="" coords="1620,255,1675,280"/>
+<area shape="poly" title=" " alt="" coords="1066,28,1151,48,1244,76,1353,119,1458,166,1616,246,1613,251,1456,171,1351,124,1242,81,1149,53,1064,33"/>
 <area shape="rect" title=" " alt="" coords="331,328,415,353"/>
 <area shape="poly" title=" " alt="" coords="149,197,274,278,342,319,340,323,271,282,146,202"/>
 <area shape="poly" title=" " alt="" coords="276,118,364,314,360,317,271,120"/>
 <area shape="poly" title=" " alt="" coords="290,117,349,163,345,167,287,121"/>
 <area shape="poly" title=" " alt="" coords="557,113,392,319,388,316,553,110"/>
 <area shape="poly" title=" " alt="" coords="540,114,412,171,410,166,538,109"/>
-<area shape="poly" title=" " alt="" coords="560,113,544,145,528,188,524,212,523,236,528,258,539,278,549,288,565,296,609,311,708,331,707,336,608,316,563,301,546,292,535,282,523,260,518,236,518,212,523,187,539,142,555,110"/>
-<area shape="poly" title=" " alt="" coords="627,109,919,163,918,168,626,114"/>
-<area shape="poly" title=" " alt="" coords="1011,209,974,246,925,282,860,312,799,331,797,326,858,307,922,278,970,242,1007,205"/>
-<area shape="poly" title=" " alt="" coords="1078,204,1195,247,1193,252,1076,209"/>
-<area shape="rect" title=" " alt="" coords="1342,328,1422,353"/>
-<area shape="poly" title=" " alt="" coords="1120,195,1253,216,1311,233,1350,253,1362,266,1371,282,1381,313,1376,315,1366,284,1358,269,1347,257,1309,238,1252,222,1120,200"/>
-<area shape="rect" title=" " alt="" coords="1049,328,1136,353"/>
-<area shape="poly" title=" " alt="" coords="1046,205,1063,227,1078,254,1088,285,1093,314,1088,315,1083,286,1073,256,1058,230,1041,209"/>
-<area shape="poly" title=" " alt="" coords="1121,201,1250,223,1393,252,1398,253,1397,258,1392,257,1249,229,1120,206"/>
-<area shape="rect" title=" " alt="" coords="988,255,1064,280"/>
-<area shape="poly" title=" " alt="" coords="1029,207,1029,241,1023,241,1023,207"/>
-<area shape="poly" title=" " alt="" coords="1120,196,1281,218,1473,252,1472,257,1281,223,1120,201"/>
-<area shape="rect" title=" " alt="" coords="593,255,689,280"/>
-<area shape="poly" title=" " alt="" coords="934,209,702,256,701,251,933,204"/>
-<area shape="poly" title=" " alt="" coords="1120,193,1317,214,1435,231,1556,252,1555,258,1434,236,1316,219,1120,198"/>
-<area shape="rect" title=" " alt="" coords="713,255,827,280"/>
-<area shape="poly" title=" " alt="" coords="965,209,821,253,819,248,964,204"/>
-<area shape="rect" title=" " alt="" coords="852,255,912,280"/>
-<area shape="poly" title=" " alt="" coords="993,209,916,250,914,246,990,204"/>
-<area shape="poly" title=" " alt="" coords="1139,279,428,337,428,332,1139,274"/>
-<area shape="poly" title=" " alt="" coords="1160,283,798,335,797,330,1160,277"/>
-<area shape="poly" title=" " alt="" coords="1262,278,1347,319,1345,324,1260,282"/>
-<area shape="rect" title=" " alt="" coords="1160,328,1231,353"/>
-<area shape="poly" title=" " alt="" coords="1233,282,1211,318,1207,315,1229,279"/>
-<area shape="poly" title=" " alt="" coords="1216,282,1130,324,1127,320,1213,278"/>
-<area shape="rect" title=" " alt="" coords="1255,328,1317,353"/>
-<area shape="poly" title=" " alt="" coords="1248,279,1273,315,1268,318,1244,282"/>
+<area shape="poly" title=" " alt="" coords="560,113,545,144,530,188,525,211,525,235,529,258,539,278,559,300,584,315,612,325,639,332,638,337,610,330,582,320,556,304,534,282,524,259,520,235,520,211,525,186,540,142,555,111"/>
+<area shape="poly" title=" " alt="" coords="624,109,901,162,900,167,623,114"/>
+<area shape="poly" title=" " alt="" coords="967,209,863,257,721,324,719,319,861,252,965,204"/>
+<area shape="poly" title=" " alt="" coords="1075,204,1235,248,1234,254,1074,209"/>
+<area shape="rect" title=" " alt="" coords="891,401,971,427"/>
+<area shape="poly" title=" " alt="" coords="966,209,937,229,915,256,905,290,906,325,913,359,923,388,918,390,908,361,901,326,900,289,910,253,933,225,962,205"/>
+<area shape="rect" title=" " alt="" coords="1180,401,1267,427"/>
+<area shape="poly" title=" " alt="" coords="986,209,972,225,960,242,954,261,959,279,978,304,1001,326,1056,361,1114,385,1167,400,1166,405,1112,390,1053,366,998,330,974,308,954,281,949,261,955,240,968,221,983,205"/>
+<area shape="poly" title=" " alt="" coords="1102,190,1185,197,1273,209,1350,227,1380,239,1401,253,1412,266,1419,282,1424,313,1419,314,1413,283,1407,269,1398,257,1377,243,1349,232,1272,214,1185,202,1101,195"/>
+<area shape="poly" title=" " alt="" coords="1102,197,1262,220,1444,252,1449,253,1448,258,1443,257,1261,225,1101,202"/>
+<area shape="rect" title=" " alt="" coords="969,255,1045,280"/>
+<area shape="poly" title=" " alt="" coords="1010,207,1010,241,1005,241,1005,207"/>
+<area shape="poly" title=" " alt="" coords="1102,193,1293,215,1407,231,1523,252,1522,257,1406,237,1292,220,1101,199"/>
+<area shape="rect" title=" " alt="" coords="1070,255,1166,280"/>
+<area shape="poly" title=" " alt="" coords="1036,205,1092,244,1089,249,1033,209"/>
+<area shape="poly" title=" " alt="" coords="1102,191,1328,211,1466,229,1607,252,1606,258,1465,234,1328,217,1101,196"/>
+<area shape="rect" title=" " alt="" coords="593,255,707,280"/>
+<area shape="poly" title=" " alt="" coords="922,209,716,254,715,249,921,204"/>
+<area shape="rect" title=" " alt="" coords="732,255,792,280"/>
+<area shape="poly" title=" " alt="" coords="949,209,806,255,805,250,948,204"/>
+<area shape="poly" title=" " alt="" coords="1190,282,1178,283,747,317,429,338,428,333,747,311,1178,277,1189,276"/>
+<area shape="poly" title=" " alt="" coords="1192,283,729,337,728,331,1191,277"/>
+<area shape="poly" title=" " alt="" coords="1247,283,1179,303,1103,330,1028,364,965,397,963,392,1026,360,1101,326,1177,298,1246,278"/>
+<area shape="rect" title=" " alt="" coords="1115,328,1185,353"/>
+<area shape="poly" title=" " alt="" coords="1268,282,1186,324,1184,319,1265,278"/>
+<area shape="poly" title=" " alt="" coords="1282,282,1251,329,1231,389,1226,387,1246,327,1277,279"/>
+<area shape="rect" title=" " alt="" coords="1261,328,1324,353"/>
+<area shape="poly" title=" " alt="" coords="1292,280,1294,314,1289,315,1287,280"/>
+<area shape="poly" title=" " alt="" coords="1311,278,1388,319,1386,324,1309,282"/>
+<area shape="poly" title=" " alt="" coords="1348,355,985,408,984,402,1348,350"/>
+<area shape="poly" title=" " alt="" coords="1390,356,1269,399,1268,394,1388,351"/>
+<area shape="rect" title=" " alt="" coords="1389,401,1453,427"/>
+<area shape="poly" title=" " alt="" coords="1423,354,1423,388,1418,388,1418,354"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -158,21 +167,20 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Computation_8hxx__dep__incl.png" border="0" usemap="#asrc_2computation_2Computation_8hxxdep" alt=""/></div>
 <map name="asrc_2computation_2Computation_8hxxdep" id="asrc_2computation_2Computation_8hxxdep">
-<area shape="rect" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="331,5,574,31"/>
+<area shape="rect" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="374,5,617,31"/>
+<area shape="rect" href="Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="78,79,299,104"/>
+<area shape="poly" title=" " alt="" coords="433,36,239,81,238,76,432,31"/>
+<area shape="rect" href="mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="250,152,423,177"/>
+<area shape="poly" title=" " alt="" coords="433,37,396,55,364,80,353,98,346,117,340,152,335,151,341,116,348,95,360,77,393,50,431,33"/>
+<area shape="rect" href="Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="374,79,617,104"/>
+<area shape="poly" title=" " alt="" coords="498,44,498,79,493,79,493,44"/>
+<area shape="rect" href="ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="641,79,888,104"/>
+<area shape="poly" title=" " alt="" coords="552,32,722,76,720,81,551,37"/>
+<area shape="rect" href="main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="911,79,1061,104"/>
+<area shape="poly" title=" " alt="" coords="588,30,911,77,911,82,587,35"/>
 <area shape="rect" href="Checkpoint_8cxx.html" title="Implements the Checkpoint class for managing simulation states." alt="" coords="5,152,225,177"/>
-<area shape="poly" title=" " alt="" coords="318,27,252,34,189,45,137,60,118,69,105,80,98,97,99,116,111,151,106,153,93,117,93,96,101,77,115,65,135,55,188,39,251,29,317,22"/>
-<area shape="rect" href="Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="115,79,337,104"/>
-<area shape="poly" title=" " alt="" coords="404,37,263,81,262,76,402,32"/>
-<area shape="rect" href="mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="269,152,442,177"/>
-<area shape="poly" title=" " alt="" coords="433,42,402,80,378,119,363,153,358,151,374,117,397,77,429,39"/>
-<area shape="rect" href="Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="411,79,654,104"/>
-<area shape="poly" title=" " alt="" coords="477,38,521,76,518,80,474,42"/>
-<area shape="rect" href="ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="679,79,925,104"/>
-<area shape="poly" title=" " alt="" coords="523,31,746,76,745,81,522,36"/>
-<area shape="rect" href="main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="949,79,1098,104"/>
-<area shape="poly" title=" " alt="" coords="562,30,938,76,949,77,948,83,938,81,561,35"/>
-<area shape="poly" title=" " alt="" coords="198,114,135,154,132,150,195,109"/>
-<area shape="poly" title=" " alt="" coords="260,108,335,149,333,154,258,113"/>
+<area shape="poly" title=" " alt="" coords="169,116,129,154,125,150,165,112"/>
+<area shape="poly" title=" " alt="" coords="226,107,314,149,311,154,223,112"/>
 </map>
 </div>
 </div>

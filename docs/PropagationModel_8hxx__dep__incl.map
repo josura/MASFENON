@@ -1,41 +1,40 @@
 <map id="src/computation/PropagationModel.hxx" name="src/computation/PropagationModel.hxx">
-<area shape="rect" id="Node000001" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="1165,5,1375,45"/>
-<area shape="rect" id="Node000002" href="$Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="571,101,814,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1152,47,770,103,769,98,1151,41"/>
-<area shape="rect" id="Node000005" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="1045,269,1218,295"/>
-<area shape="poly" id="edge24_Node000001_Node000005" title=" " alt="" coords="1389,30,1524,40,1669,53,1790,70,1832,80,1856,91,1884,122,1899,155,1901,172,1898,189,1891,207,1879,223,1865,232,1844,240,1782,253,1699,263,1601,271,1394,280,1218,283,1218,278,1394,274,1601,265,1698,258,1781,248,1843,235,1863,227,1875,219,1886,204,1893,188,1896,172,1894,156,1879,125,1852,95,1830,85,1789,75,1668,58,1524,45,1388,36"/>
-<area shape="rect" id="Node000008" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="1174,189,1323,214"/>
-<area shape="poly" id="edge23_Node000001_Node000008" title=" " alt="" coords="1202,54,1176,71,1156,95,1150,113,1156,132,1169,150,1185,165,1221,186,1218,191,1182,169,1165,153,1152,135,1145,113,1152,92,1172,67,1199,49"/>
-<area shape="rect" id="Node000009" href="$PropagationModel_8cxx.html" title="Implements the PropagationModel class used for managing propagation dynamics for the computation of t..." alt="" coords="1165,93,1375,133"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="1273,59,1273,93,1267,93,1267,59"/>
-<area shape="rect" id="Node000010" href="$PropagationModelCustom_8hxx.html" title="Defines the PropagationModelCustom class used for managing custom propagation dynamics for the comput..." alt="" coords="1399,93,1608,133"/>
-<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="1335,48,1453,91,1451,96,1333,53"/>
-<area shape="rect" id="Node000012" href="$PropagationModelNeighbors_8hxx.html" title="Defines the PropagationModelNeighbors class used for managing propagation dynamics for the computatio..." alt="" coords="1632,93,1841,133"/>
-<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="1386,45,1635,91,1634,96,1385,50"/>
-<area shape="rect" id="Node000014" href="$PropagationModelOriginal_8hxx.html" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="880,93,1089,133"/>
-<area shape="poly" id="edge19_Node000001_Node000014" title=" " alt="" coords="1195,52,1048,96,1046,91,1193,47"/>
-<area shape="rect" id="Node000003" href="$Checkpoint_8cxx.html" title="Implements the Checkpoint class for managing simulation states." alt="" coords="253,269,473,295"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="558,123,484,131,412,142,353,160,331,171,316,183,311,193,309,204,317,227,334,249,352,267,348,271,330,253,313,230,304,204,305,191,312,180,328,166,351,155,411,137,483,125,558,118"/>
-<area shape="rect" id="Node000004" href="$Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="326,189,547,214"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="646,133,472,191,470,186,644,128"/>
-<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="729,130,829,179,916,219,1002,247,1081,267,1079,272,1001,252,914,224,826,184,727,135"/>
-<area shape="rect" id="Node000006" href="$Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="571,189,814,214"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="695,140,695,188,690,188,690,140"/>
-<area shape="rect" id="Node000007" href="$ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="5,189,252,214"/>
-<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="604,131,204,191,203,186,603,125"/>
-<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="801,125,971,148,1162,179,1199,186,1198,191,1162,184,970,153,800,130"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="418,226,376,271,372,267,414,222"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="521,213,560,219,824,249,1045,270,1044,276,824,254,559,224,520,219"/>
-<area shape="poly" id="edge14_Node000010_Node000005" title=" " alt="" coords="1457,143,1389,184,1364,205,1337,224,1263,253,1193,272,1191,267,1261,248,1334,219,1360,200,1386,179,1454,138"/>
-<area shape="poly" id="edge13_Node000010_Node000008" title=" " alt="" coords="1435,140,1283,191,1282,186,1434,135"/>
-<area shape="rect" id="Node000011" href="$PropagationModelCustom_8cxx.html" title="Implements the PropagationModelCustom class used for managing custom propagation dynamics for the com..." alt="" coords="1399,181,1608,221"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="1506,147,1506,181,1501,181,1501,147"/>
-<area shape="poly" id="edge18_Node000012_Node000005" title=" " alt="" coords="1797,137,1828,154,1853,175,1861,186,1865,198,1864,211,1856,223,1843,232,1823,240,1763,252,1683,262,1589,270,1389,279,1218,283,1218,277,1389,274,1589,264,1682,257,1762,247,1821,234,1841,227,1852,219,1859,209,1860,199,1856,189,1849,179,1825,159,1794,142"/>
-<area shape="poly" id="edge17_Node000012_Node000008" title=" " alt="" coords="1619,138,1314,191,1313,186,1618,133"/>
-<area shape="rect" id="Node000013" href="$PropagationModelNeighbors_8cxx.html" title="Implements the PropagationModelNeighbors class used for managing propagation dynamics for the computa..." alt="" coords="1632,181,1841,221"/>
-<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="1739,147,1739,181,1734,181,1734,147"/>
-<area shape="poly" id="edge22_Node000014_Node000005" title=" " alt="" coords="955,145,939,163,928,182,924,202,931,220,950,234,982,247,1062,267,1061,272,981,252,948,239,927,223,919,202,923,180,935,160,951,141"/>
-<area shape="poly" id="edge21_Node000014_Node000008" title=" " alt="" coords="1057,135,1214,186,1213,191,1055,140"/>
-<area shape="rect" id="Node000015" href="$PropagationModelOriginal_8cxx.html" title="Implements the methods of the PropagationModelOriginal class used for managing propagation dynamics f..." alt="" coords="940,181,1149,221"/>
-<area shape="poly" id="edge20_Node000014_Node000015" title=" " alt="" coords="1008,143,1034,180,1029,183,1004,146"/>
+<area shape="rect" id="Node000001" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="1143,5,1353,45"/>
+<area shape="rect" id="Node000002" href="$Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="544,101,787,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1130,47,743,103,742,98,1129,41"/>
+<area shape="rect" id="Node000005" href="$mainMPI_8cxx.html" title="Main function for the MASFENON simulation framework. With the use of MPI." alt="" coords="1112,269,1285,295"/>
+<area shape="poly" id="edge23_Node000001_Node000005" title=" " alt="" coords="1367,30,1647,53,1768,70,1810,80,1834,91,1862,122,1878,155,1880,172,1877,189,1870,206,1858,223,1829,238,1775,250,1621,267,1441,277,1286,282,1286,277,1441,272,1620,262,1774,245,1827,233,1854,219,1866,204,1872,188,1874,172,1873,156,1858,125,1830,95,1808,85,1767,75,1646,58,1366,36"/>
+<area shape="rect" id="Node000008" href="$main_8cxx.html" title="Main function for the MASFENON simulation framework. Without the use of MPI." alt="" coords="1124,189,1273,214"/>
+<area shape="poly" id="edge22_Node000001_Node000008" title=" " alt="" coords="1178,54,1153,71,1133,95,1129,107,1129,120,1141,146,1162,169,1184,187,1180,191,1158,173,1137,149,1124,121,1123,106,1128,92,1149,67,1175,49"/>
+<area shape="rect" id="Node000009" href="$PropagationModel_8cxx.html" title="Implements the PropagationModel class used for managing propagation dynamics for the computation of t..." alt="" coords="1143,93,1353,133"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1251,59,1251,93,1245,93,1245,59"/>
+<area shape="rect" id="Node000010" href="$PropagationModelCustom_8hxx.html" title="Defines the PropagationModelCustom class used for managing custom propagation dynamics for the comput..." alt="" coords="1610,93,1819,133"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="1364,45,1613,91,1612,96,1363,50"/>
+<area shape="rect" id="Node000012" href="$PropagationModelNeighbors_8hxx.html" title="Defines the PropagationModelNeighbors class used for managing propagation dynamics for the computatio..." alt="" coords="858,93,1067,133"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="1173,52,1026,96,1024,91,1171,47"/>
+<area shape="rect" id="Node000014" href="$PropagationModelOriginal_8hxx.html" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="1377,93,1586,133"/>
+<area shape="poly" id="edge18_Node000001_Node000014" title=" " alt="" coords="1313,48,1431,91,1429,96,1311,53"/>
+<area shape="rect" id="Node000003" href="$Checkpoint_8hxx.html" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="5,189,227,214"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="579,131,189,191,189,186,578,126"/>
+<area shape="poly" id="edge8_Node000002_Node000005" title=" " alt="" coords="698,131,787,181,866,219,929,237,994,252,1112,270,1111,275,993,257,928,243,864,224,785,185,695,135"/>
+<area shape="rect" id="Node000006" href="$Computation_8cxx.html" title="Implements the Computation class for simulation dynamics in MASFENON." alt="" coords="251,189,493,214"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="614,132,412,191,411,186,612,127"/>
+<area shape="rect" id="Node000007" href="$ComputationTesting_8cxx.html" title="Main function for testing the Computation class and related functionalities." alt="" coords="518,189,765,214"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="661,140,647,189,642,187,656,139"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="766,125,928,149,1111,179,1148,186,1147,191,1110,184,927,154,765,131"/>
+<area shape="rect" id="Node000004" href="$Checkpoint_8cxx.html" title="Implements the Checkpoint class for managing simulation states." alt="" coords="6,269,226,295"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,228,119,269,113,269,113,228"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="197,213,239,219,487,241,732,258,1112,275,1112,281,732,263,487,246,238,224,196,219"/>
+<area shape="poly" id="edge13_Node000010_Node000005" title=" " alt="" coords="1678,143,1605,190,1544,224,1478,245,1410,260,1286,278,1285,272,1409,255,1476,240,1542,219,1603,185,1675,139"/>
+<area shape="poly" id="edge12_Node000010_Node000008" title=" " alt="" coords="1597,136,1439,159,1286,184,1250,191,1248,186,1285,179,1438,154,1596,131"/>
+<area shape="rect" id="Node000011" href="$PropagationModelCustom_8cxx.html" title="Implements the PropagationModelCustom class used for managing custom propagation dynamics for the com..." alt="" coords="1634,181,1843,221"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="1726,146,1736,180,1731,182,1721,147"/>
+<area shape="poly" id="edge17_Node000012_Node000005" title=" " alt="" coords="920,143,897,161,880,180,872,201,874,210,879,220,894,231,915,242,974,257,1044,268,1112,274,1111,279,1043,273,973,263,913,247,891,236,875,223,869,212,867,200,875,178,894,157,917,139"/>
+<area shape="poly" id="edge16_Node000012_Node000008" title=" " alt="" coords="1028,136,1168,186,1166,191,1027,141"/>
+<area shape="rect" id="Node000013" href="$PropagationModelNeighbors_8cxx.html" title="Implements the PropagationModelNeighbors class used for managing propagation dynamics for the computa..." alt="" coords="890,181,1099,221"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="977,145,990,180,985,182,972,147"/>
+<area shape="poly" id="edge21_Node000014_Node000005" title=" " alt="" coords="1509,143,1520,162,1528,183,1529,204,1521,223,1505,236,1483,246,1423,263,1354,273,1286,279,1285,274,1353,268,1422,257,1481,241,1502,231,1517,220,1524,203,1523,184,1515,165,1504,146"/>
+<area shape="poly" id="edge20_Node000014_Node000008" title=" " alt="" coords="1407,140,1237,191,1236,186,1406,135"/>
+<area shape="rect" id="Node000015" href="$PropagationModelOriginal_8cxx.html" title="Implements the methods of the PropagationModelOriginal class used for managing propagation dynamics f..." alt="" coords="1298,181,1507,221"/>
+<area shape="poly" id="edge19_Node000014_Node000015" title=" " alt="" coords="1457,145,1422,183,1418,179,1453,142"/>
 </map>

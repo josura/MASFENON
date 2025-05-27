@@ -5,7 +5,7 @@ var searchData=
   ['list_2',['Todo List',['../todo.html',1,'']]],
   ['listfiles_3',['listfiles',['../utilities_8cxx.html#a2d7147d4204a3e905d0232f5ad6f3761',1,'listFiles(const std::string &amp;folderPath, bool noHiddenFiles, bool noFolders):&#160;utilities.cxx'],['../utilities_8hxx.html#a138dc4d0ce74d503f4c911f2a913c54e',1,'listFiles(const std::string &amp;folderPath, bool noHiddenFiles=true, bool noFolders=true):&#160;utilities.cxx']]],
   ['loadstate_4',['loadState',['../classCheckpoint.html#ac0e349427d5614a5bf3a0237e90da2cb',1,'Checkpoint']]],
-  ['logger_5',['logger',['../classLogger.html',1,'Logger'],['../classLogger.html#ac01c3d2b667062b0d412714ab760265a',1,'Logger::Logger(std::ostream &amp;os)'],['../classLogger.html#add0f34d4c753c86af8074840a72366b3',1,'Logger::Logger(const Logger &amp;)=delete']]],
+  ['logger_5',['logger',['../classLogger.html',1,'Logger'],['../classLogger.html#add0f34d4c753c86af8074840a72366b3',1,'Logger::Logger()']]],
   ['logger_2ecxx_6',['Logger.cxx',['../Logger_8cxx.html',1,'']]],
   ['logger_2ehxx_7',['Logger.hxx',['../Logger_8hxx.html',1,'']]]
 ];

@@ -72,6 +72,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classLogger-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Logger Class Reference</div></div>
 </div><!--header-->
@@ -84,9 +85,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac01c3d2b667062b0d412714ab760265a" id="r_ac01c3d2b667062b0d412714ab760265a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#ac01c3d2b667062b0d412714ab760265a">Logger</a> (std::ostream &amp;os)</td></tr>
-<tr class="memdesc:ac01c3d2b667062b0d412714ab760265a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> with the given output stream.  <br /></td></tr>
-<tr class="separator:ac01c3d2b667062b0d412714ab760265a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add0f34d4c753c86af8074840a72366b3" id="r_add0f34d4c753c86af8074840a72366b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#add0f34d4c753c86af8074840a72366b3">Logger</a> (const <a class="el" href="classLogger.html">Logger</a> &amp;)=delete</td></tr>
 <tr class="memdesc:add0f34d4c753c86af8074840a72366b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete copy constructor and assignment operator to prevent copying.  <br /></td></tr>
 <tr class="separator:add0f34d4c753c86af8074840a72366b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,47 +126,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc79c11bd3f13dfe8331aea163e43aad" id="r_adc79c11bd3f13dfe8331aea163e43aad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#adc79c11bd3f13dfe8331aea163e43aad">setTreatWarningsAsErrors</a> (bool treatWarningsAsErrors)</td></tr>
 <tr class="memdesc:adc79c11bd3f13dfe8331aea163e43aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether warnings should be treated as errors.  <br /></td></tr>
 <tr class="separator:adc79c11bd3f13dfe8331aea163e43aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a56defd0fd628ce6263d25d02296e48ce" id="r_a56defd0fd628ce6263d25d02296e48ce"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classLogger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a56defd0fd628ce6263d25d02296e48ce">getInstance</a> ()</td></tr>
+<tr class="memdesc:a56defd0fd628ce6263d25d02296e48ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton instance accessor for the <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a>.  <br /></td></tr>
+<tr class="separator:a56defd0fd628ce6263d25d02296e48ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple logging utility for writing formatted messages to an output stream. </p>
 <p>The <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> class allows writing generic log messages, warnings, and errors to a provided output stream. Logging can be toggled on or off. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac01c3d2b667062b0d412714ab760265a" name="ac01c3d2b667062b0d412714ab760265a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac01c3d2b667062b0d412714ab760265a">&#9670;&#160;</a></span>Logger() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Logger::Logger </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructs a <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> with the given output stream. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">os</td><td>Reference to the output stream (e.g., std::cout, std::cerr). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="add0f34d4c753c86af8074840a72366b3" name="add0f34d4c753c86af8074840a72366b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add0f34d4c753c86af8074840a72366b3">&#9670;&#160;</a></span>Logger() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#add0f34d4c753c86af8074840a72366b3">&#9670;&#160;</a></span>Logger()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,6 +244,35 @@ Public Member Functions</h2></td></tr>
 
 <p>Enables verbose logging mode. </p>
 <p>In verbose mode, additional detailed messages can be printed. </p>
+
+</div>
+</div>
+<a id="a56defd0fd628ce6263d25d02296e48ce" name="a56defd0fd628ce6263d25d02296e48ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56defd0fd628ce6263d25d02296e48ce">&#9670;&#160;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classLogger.html">Logger</a> &amp; Logger::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Singleton instance accessor for the <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a>. </p>
+<p>This method returns a reference to the singleton <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance. It ensures that only one <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance exists throughout the application. </p><dl class="section return"><dt>Returns</dt><dd>Reference to the <a class="el" href="classLogger.html" title="Simple logging utility for writing formatted messages to an output stream.">Logger</a> instance. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is thread-safe and can be called from multiple threads without issues. </dd></dl>
 
 </div>
 </div>

@@ -1,47 +1,54 @@
 <map id="src/computation/PropagationModelCustomVectorized.cxx" name="src/computation/PropagationModelCustomVectorized.cxx">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1095,5,1305,45"/>
-<area shape="rect" id="Node000002" href="$PropagationModelCustomVectorized_8hxx.html" title=" " alt="" coords="1087,93,1313,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1203,46,1203,79,1197,79,1197,46"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="1258,431,1342,456"/>
-<area shape="poly" id="edge25_Node000001_Node000003" title=" " alt="" coords="1254,43,1292,63,1327,91,1351,117,1367,140,1376,166,1379,200,1379,291,1373,329,1359,365,1340,396,1322,421,1317,418,1335,394,1354,363,1368,327,1373,290,1373,200,1371,167,1362,142,1346,120,1324,95,1289,68,1251,48"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="16,431,96,456"/>
-<area shape="poly" id="edge26_Node000001_Node000009" title=" " alt="" coords="1095,34,802,50,622,64,441,82,274,104,135,132,82,147,41,164,16,182,10,191,8,200,8,291,12,326,21,361,45,418,40,420,16,362,6,327,3,291,3,200,5,189,12,178,39,159,80,142,134,127,273,99,441,77,622,59,802,45,1095,28"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1247,131,1278,151,1302,180,1316,211,1324,243,1327,310,1320,372,1310,418,1305,417,1315,371,1322,310,1319,244,1311,212,1298,183,1274,155,1244,136"/>
-<area shape="rect" id="Node000004" href="$PropagationModelVectorized_8hxx.html" title="Defines the PropagationModelVectorized class used for managing vectorized propagation dynamics for th..." alt="" coords="1061,181,1288,221"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1197,134,1187,169,1182,167,1192,133"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="1204,219,1229,241,1252,268,1271,306,1285,347,1300,417,1294,418,1280,348,1266,308,1247,271,1225,245,1201,223"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="1150,277,1237,302"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="1181,221,1190,262,1185,263,1176,222"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="862,431,925,456"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="1166,223,1141,270,1129,304,1122,332,1111,358,1088,385,1053,408,1014,425,974,435,939,441,938,436,973,430,1012,420,1051,404,1085,381,1107,355,1116,330,1123,302,1136,268,1162,220"/>
-<area shape="rect" id="Node000007" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="486,269,674,309"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="1061,222,688,275,687,270,1061,216"/>
-<area shape="poly" id="edge23_Node000007_Node000006" title=" " alt="" coords="675,301,784,323,830,338,862,355,874,369,882,384,892,416,887,417,877,387,869,372,858,359,828,343,782,328,674,306"/>
-<area shape="rect" id="Node000008" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="651,357,848,383"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="622,307,713,349,711,354,619,312"/>
-<area shape="poly" id="edge22_Node000007_Node000009" title=" " alt="" coords="486,294,377,299,258,309,152,329,112,343,83,359,73,372,66,386,59,417,54,416,61,385,68,369,80,355,109,338,151,324,258,304,377,293,486,289"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="570,431,657,456"/>
-<area shape="poly" id="edge17_Node000007_Node000011" title=" " alt="" coords="587,309,610,416,605,418,582,310"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="923,357,973,383"/>
-<area shape="poly" id="edge15_Node000007_Node000013" title=" " alt="" coords="675,306,905,355,910,356,909,361,903,360,674,311"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="998,357,1074,383"/>
-<area shape="poly" id="edge16_Node000007_Node000014" title=" " alt="" coords="674,302,985,355,984,360,674,307"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="93,357,152,383"/>
-<area shape="poly" id="edge18_Node000007_Node000015" title=" " alt="" coords="486,305,339,327,166,360,165,355,339,322,485,300"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="176,357,272,383"/>
-<area shape="poly" id="edge19_Node000007_Node000016" title=" " alt="" coords="495,312,286,358,285,353,494,307"/>
-<area shape="rect" id="Node000017" title=" " alt="" coords="297,357,351,383"/>
-<area shape="poly" id="edge20_Node000007_Node000017" title=" " alt="" coords="519,312,365,359,364,354,518,307"/>
-<area shape="rect" id="Node000018" title=" " alt="" coords="376,357,491,383"/>
-<area shape="poly" id="edge21_Node000007_Node000018" title=" " alt="" coords="546,312,468,353,466,348,544,307"/>
-<area shape="rect" id="Node000019" title=" " alt="" coords="515,357,575,383"/>
-<area shape="poly" id="edge24_Node000007_Node000019" title=" " alt="" coords="574,311,559,346,554,343,569,308"/>
-<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="838,380,1245,432,1244,438,837,385"/>
-<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="774,380,859,422,856,427,771,385"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="651,384,110,439,109,434,650,379"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="681,431,751,456"/>
-<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="746,384,730,419,725,417,741,382"/>
-<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="729,385,649,427,646,422,726,380"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="775,431,838,456"/>
-<area shape="poly" id="edge14_Node000008_Node000012" title=" " alt="" coords="761,381,791,418,787,422,757,385"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="217,5,426,45"/>
+<area shape="rect" id="Node000002" href="$PropagationModelCustomVectorized_8hxx.html" title=" " alt="" coords="208,93,435,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="324,46,324,79,319,79,319,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="25,431,109,456"/>
+<area shape="poly" id="edge30_Node000001_Node000003" title=" " alt="" coords="217,43,146,62,110,75,78,92,50,113,28,138,13,166,8,200,8,291,12,327,24,361,53,418,48,420,19,363,7,328,3,291,3,200,8,165,23,135,46,109,75,88,108,71,144,57,216,38"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="995,504,1075,529"/>
+<area shape="poly" id="edge31_Node000001_Node000009" title=" " alt="" coords="426,31,673,53,967,88,1101,111,1212,136,1256,151,1288,166,1310,182,1317,199,1317,372,1311,407,1293,436,1266,460,1233,478,1196,492,1158,503,1089,514,1088,509,1157,497,1195,487,1231,473,1263,455,1289,433,1306,405,1312,371,1312,201,1305,185,1286,170,1254,156,1211,142,1100,116,966,93,672,58,426,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="308,135,133,359,86,421,81,418,129,356,304,132"/>
+<area shape="rect" id="Node000004" href="$PropagationModelVectorized_8hxx.html" title="Defines the PropagationModelVectorized class used for managing vectorized propagation dynamics for th..." alt="" coords="291,181,517,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="342,132,378,169,374,173,338,135"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="374,224,279,282,167,359,91,423,88,419,164,355,277,278,371,219"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="361,277,447,302"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="407,222,407,263,401,263,401,222"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="843,431,906,456"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="518,205,694,219,794,231,896,246,992,266,1077,290,1145,320,1171,337,1190,356,1196,370,1190,384,1171,399,1144,411,1071,428,991,438,920,443,920,438,990,433,1070,422,1142,406,1169,394,1186,381,1191,370,1186,359,1167,341,1142,324,1075,295,990,271,895,251,794,236,693,225,517,211"/>
+<area shape="rect" id="Node000007" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="554,269,742,309"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="458,219,583,262,581,267,457,224"/>
+<area shape="poly" id="edge28_Node000007_Node000006" title=" " alt="" coords="682,307,760,355,851,420,847,424,757,360,680,312"/>
+<area shape="rect" id="Node000008" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="549,357,747,383"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="651,310,651,343,645,343,645,310"/>
+<area shape="poly" id="edge27_Node000007_Node000009" title=" " alt="" coords="742,293,870,302,1010,315,1127,332,1168,343,1190,355,1202,377,1201,398,1190,419,1172,439,1125,474,1075,501,1072,496,1122,469,1169,435,1186,416,1196,397,1196,378,1186,359,1166,348,1126,338,1009,320,870,307,742,298"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="359,504,446,529"/>
+<area shape="poly" id="edge22_Node000007_Node000011" title=" " alt="" coords="554,304,323,332,228,347,184,359,173,382,175,403,190,423,214,442,279,474,347,498,345,503,277,479,211,446,186,426,170,405,167,381,181,355,227,342,323,327,553,298"/>
+<area shape="rect" id="Node000013" href="$Logger_8hxx.html" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="441,431,586,456"/>
+<area shape="poly" id="edge19_Node000007_Node000013" title=" " alt="" coords="602,312,568,332,539,359,525,388,518,418,513,416,520,386,535,356,565,328,599,307"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="821,357,872,383"/>
+<area shape="poly" id="edge20_Node000007_Node000015" title=" " alt="" coords="697,307,810,351,808,356,695,312"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="897,357,973,383"/>
+<area shape="poly" id="edge21_Node000007_Node000016" title=" " alt="" coords="717,307,884,352,883,357,716,312"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="997,357,1056,383"/>
+<area shape="poly" id="edge23_Node000007_Node000017" title=" " alt="" coords="743,305,984,355,983,360,742,310"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="1080,357,1176,383"/>
+<area shape="poly" id="edge24_Node000007_Node000018" title=" " alt="" coords="743,302,1067,354,1066,360,742,307"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="195,357,250,383"/>
+<area shape="poly" id="edge25_Node000007_Node000019" title=" " alt="" coords="554,307,421,329,264,360,263,355,420,323,553,302"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="275,357,389,383"/>
+<area shape="poly" id="edge26_Node000007_Node000020" title=" " alt="" coords="573,312,392,357,391,351,572,307"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="414,357,474,383"/>
+<area shape="poly" id="edge29_Node000007_Node000021" title=" " alt="" coords="600,312,488,355,486,350,598,307"/>
+<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="555,385,122,438,122,433,554,380"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="685,380,831,426,829,431,684,385"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="675,380,781,428,833,454,910,480,982,500,980,505,909,485,831,458,779,433,673,385"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="610,431,681,456"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="650,383,649,417,644,417,645,383"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="550,380,486,398,457,413,431,433,421,445,414,460,407,491,402,490,409,458,417,442,427,429,454,408,485,393,548,375"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="705,431,767,456"/>
+<area shape="poly" id="edge14_Node000008_Node000012" title=" " alt="" coords="664,381,713,420,709,424,660,385"/>
+<area shape="poly" id="edge15_Node000008_Node000013" title=" " alt="" coords="628,385,549,426,546,422,625,380"/>
+<area shape="poly" id="edge16_Node000013_Node000009" title=" " alt="" coords="587,452,981,505,980,511,586,457"/>
+<area shape="poly" id="edge17_Node000013_Node000011" title=" " alt="" coords="497,458,434,499,431,494,494,454"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="481,504,545,529"/>
+<area shape="poly" id="edge18_Node000013_Node000014" title=" " alt="" coords="516,456,516,490,511,490,511,456"/>
 </map>

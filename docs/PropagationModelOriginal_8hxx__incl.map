@@ -1,43 +1,50 @@
 <map id="src/computation/PropagationModelOriginal.hxx" name="src/computation/PropagationModelOriginal.hxx">
-<area shape="rect" id="Node000001" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="109,5,319,45"/>
+<area shape="rect" id="Node000001" title="Defines the PropagationModelOriginal class used for managing propagation dynamics for the computation..." alt="" coords="148,5,357,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,328,89,353"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,47,62,317,58,314,201,45"/>
-<area shape="rect" id="Node000003" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="239,93,493,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,43,332,84,330,89,249,48"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="344,121,247,175,186,213,128,257,95,288,67,319,63,315,91,284,124,253,183,209,244,170,342,116"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="323,174,409,199"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="369,119,369,160,363,160,363,119"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="1088,328,1151,353"/>
-<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="494,114,654,131,833,159,917,177,993,199,1054,224,1097,253,1108,266,1115,282,1121,314,1116,315,1110,284,1103,269,1094,257,1052,228,991,204,916,182,832,164,654,136,493,119"/>
-<area shape="rect" id="Node000006" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="535,167,723,207"/>
-<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="405,116,553,160,551,165,403,121"/>
-<area shape="poly" id="edge22_Node000006_Node000005" title=" " alt="" coords="723,191,816,199,915,211,1004,229,1040,240,1066,252,1082,265,1095,281,1113,314,1108,316,1090,284,1078,269,1063,257,1038,245,1003,234,914,216,815,204,723,196"/>
-<area shape="rect" id="Node000007" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="151,255,349,280"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="539,209,319,254,318,249,537,204"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="114,328,194,353"/>
-<area shape="poly" id="edge21_Node000006_Node000008" title=" " alt="" coords="535,200,290,229,188,244,155,251,141,257,135,269,134,284,143,315,138,317,129,285,130,268,138,253,154,246,187,239,289,223,534,195"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="689,328,776,353"/>
-<area shape="poly" id="edge16_Node000006_Node000010" title=" " alt="" coords="723,187,814,192,910,203,993,223,1024,236,1045,253,1051,267,1045,282,1028,295,1003,307,935,324,859,334,790,340,789,334,858,329,934,318,1001,302,1025,291,1041,278,1046,267,1041,256,1021,241,991,228,909,208,813,197,723,192"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="373,255,423,280"/>
-<area shape="poly" id="edge14_Node000006_Node000012" title=" " alt="" coords="574,209,437,255,436,250,573,204"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="448,255,524,280"/>
-<area shape="poly" id="edge15_Node000006_Node000013" title=" " alt="" coords="596,209,520,250,518,246,593,204"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="549,255,607,280"/>
-<area shape="poly" id="edge17_Node000006_Node000014" title=" " alt="" coords="619,208,595,244,591,242,614,205"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="631,255,727,280"/>
-<area shape="poly" id="edge18_Node000006_Node000015" title=" " alt="" coords="643,205,667,242,662,244,639,208"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="752,255,807,280"/>
-<area shape="poly" id="edge19_Node000006_Node000016" title=" " alt="" coords="666,204,746,246,743,250,664,209"/>
-<area shape="rect" id="Node000017" title=" " alt="" coords="831,255,946,280"/>
-<area shape="poly" id="edge20_Node000006_Node000017" title=" " alt="" coords="692,204,838,248,837,253,690,209"/>
-<area shape="rect" id="Node000018" title=" " alt="" coords="971,255,1031,280"/>
-<area shape="poly" id="edge23_Node000006_Node000018" title=" " alt="" coords="723,203,958,252,956,257,722,208"/>
-<area shape="poly" id="edge12_Node000007_Node000002" title=" " alt="" coords="218,283,94,326,92,321,217,278"/>
-<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="349,276,361,277,775,311,1074,334,1074,339,775,317,360,283,349,282"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="236,282,182,322,179,317,233,278"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="305,328,376,353"/>
-<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="266,278,317,317,313,321,263,282"/>
-<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="328,277,676,328,675,334,327,283"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="219,328,281,353"/>
-<area shape="poly" id="edge13_Node000007_Node000011" title=" " alt="" coords="253,280,253,314,247,314,247,280"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,47,166,135,124,194,84,256,58,316,53,314,80,253,119,191,162,131,234,44"/>
+<area shape="rect" id="Node000003" href="$PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="240,93,495,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="282,43,341,83,338,88,279,48"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="340,121,233,172,170,211,110,257,83,287,63,317,58,314,79,283,107,253,167,207,231,168,338,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="324,174,411,199"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="370,119,370,160,365,160,365,119"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="1171,328,1233,353"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="495,111,675,125,879,151,977,170,1064,193,1134,220,1162,236,1184,253,1194,266,1201,282,1205,314,1200,314,1195,284,1189,269,1180,257,1159,240,1132,225,1062,198,976,175,879,156,675,130,495,116"/>
+<area shape="rect" id="Node000006" href="$WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="548,167,736,207"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="408,116,563,160,562,165,407,121"/>
+<area shape="poly" id="edge27_Node000006_Node000005" title=" " alt="" coords="736,188,846,194,967,206,1077,224,1121,237,1153,252,1168,265,1180,281,1197,314,1192,316,1176,284,1164,269,1150,257,1119,242,1076,230,966,211,845,199,736,193"/>
+<area shape="rect" id="Node000007" href="$Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="165,255,362,280"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="552,209,333,254,332,249,551,204"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="138,401,218,427"/>
+<area shape="poly" id="edge26_Node000006_Node000008" title=" " alt="" coords="548,200,304,229,201,244,168,251,154,257,145,271,141,287,142,323,152,358,166,388,162,390,147,360,136,324,135,286,141,269,151,253,167,246,200,239,303,223,548,195"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="537,401,624,427"/>
+<area shape="poly" id="edge21_Node000006_Node000010" title=" " alt="" coords="736,189,864,197,996,213,1051,225,1091,239,1105,248,1114,258,1115,269,1109,282,1077,308,1028,332,967,352,898,369,756,394,638,410,637,404,755,389,897,364,965,347,1026,327,1074,304,1105,278,1110,269,1109,260,1102,252,1089,244,1049,230,995,218,863,202,736,194"/>
+<area shape="rect" id="Node000012" href="$Logger_8hxx.html" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="397,328,543,353"/>
+<area shape="poly" id="edge18_Node000006_Node000012" title=" " alt="" coords="548,195,514,202,481,214,451,232,427,256,422,271,425,286,448,317,443,320,421,288,417,270,422,253,448,228,479,209,513,197,547,190"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="437,255,487,280"/>
+<area shape="poly" id="edge19_Node000006_Node000014" title=" " alt="" coords="600,209,501,252,499,247,598,204"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="512,255,588,280"/>
+<area shape="poly" id="edge20_Node000006_Node000015" title=" " alt="" coords="621,209,576,248,572,243,618,205"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="613,255,671,280"/>
+<area shape="poly" id="edge22_Node000006_Node000016" title=" " alt="" coords="645,207,645,241,639,241,639,207"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="695,255,791,280"/>
+<area shape="poly" id="edge23_Node000006_Node000017" title=" " alt="" coords="668,205,719,244,716,248,665,209"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="816,255,871,280"/>
+<area shape="poly" id="edge24_Node000006_Node000018" title=" " alt="" coords="691,204,804,248,802,253,689,209"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="895,255,1010,280"/>
+<area shape="poly" id="edge25_Node000006_Node000019" title=" " alt="" coords="717,204,894,249,893,254,716,209"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="1035,255,1095,280"/>
+<area shape="poly" id="edge28_Node000006_Node000020" title=" " alt="" coords="737,200,867,222,1022,252,1020,257,866,227,736,205"/>
+<area shape="poly" id="edge12_Node000007_Node000002" title=" " alt="" coords="229,283,96,326,94,321,228,277"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="362,273,1157,333,1157,339,362,279"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="250,282,227,303,206,329,192,359,185,389,179,387,187,357,201,327,223,299,246,278"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="216,328,287,353"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="264,281,258,315,253,314,259,280"/>
+<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="363,275,476,294,525,308,557,326,568,340,575,355,582,387,577,388,570,357,564,342,554,330,523,313,475,299,362,281"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="311,328,373,353"/>
+<area shape="poly" id="edge13_Node000007_Node000011" title=" " alt="" coords="278,278,321,317,317,321,274,282"/>
+<area shape="poly" id="edge14_Node000007_Node000012" title=" " alt="" coords="297,277,424,321,423,326,296,283"/>
+<area shape="poly" id="edge15_Node000012_Node000008" title=" " alt="" coords="424,356,232,402,231,397,422,351"/>
+<area shape="poly" id="edge16_Node000012_Node000010" title=" " alt="" coords="489,351,552,391,549,396,486,356"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="438,401,502,427"/>
+<area shape="poly" id="edge17_Node000012_Node000013" title=" " alt="" coords="473,354,473,388,467,388,467,354"/>
 </map>

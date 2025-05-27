@@ -85,69 +85,79 @@ $(function() {
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &quot;<a class="el" href="Computation_8hxx_source.html">computation/Computation.hxx</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Logger_8hxx_source.html">logging/Logger.hxx</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Checkpoint.hxx:</div>
 <div class="dyncontent">
 <div class="center"><img src="Checkpoint_8hxx__incl.png" border="0" usemap="#asrc_2checkpoint_2Checkpoint_8hxx" alt=""/></div>
 <map name="asrc_2checkpoint_2Checkpoint_8hxx" id="asrc_2checkpoint_2Checkpoint_8hxx">
-<area shape="rect" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="5,5,227,31"/>
-<area shape="rect" title=" " alt="" coords="153,328,212,353"/>
-<area shape="poly" title=" " alt="" coords="121,30,180,314,175,315,116,31"/>
-<area shape="rect" title=" " alt="" coords="218,401,281,427"/>
-<area shape="poly" title=" " alt="" coords="112,32,85,90,73,130,68,171,68,261,72,286,82,309,97,329,116,347,161,376,206,396,204,401,159,381,113,351,93,333,77,312,67,288,63,262,63,171,68,129,80,88,107,30"/>
-<area shape="rect" href="Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="739,79,959,104"/>
-<area shape="poly" title=" " alt="" coords="227,27,726,75,725,81,227,33"/>
-<area shape="poly" title=" " alt="" coords="797,107,601,157,480,196,360,242,279,284,213,323,210,318,276,279,358,238,478,191,600,152,796,101"/>
-<area shape="poly" title=" " alt="" coords="740,106,617,125,486,155,379,191,277,242,234,262,199,275,170,294,144,329,140,340,141,350,154,369,178,384,206,397,204,402,176,389,151,373,136,352,135,340,139,327,166,290,197,271,232,257,275,238,377,186,485,149,616,120,739,101"/>
-<area shape="rect" href="DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="1371,247,1621,273"/>
-<area shape="poly" title=" " alt="" coords="960,96,1178,116,1281,131,1354,150,1391,168,1425,191,1477,235,1474,240,1421,195,1388,172,1352,154,1280,136,1178,121,960,102"/>
-<area shape="rect" href="ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="1052,152,1247,192"/>
-<area shape="poly" title=" " alt="" coords="894,101,1065,146,1063,151,892,107"/>
-<area shape="rect" title=" " alt="" coords="1107,247,1194,273"/>
-<area shape="poly" title=" " alt="" coords="884,102,935,122,991,150,1017,169,1042,190,1119,238,1116,242,1038,194,1013,173,988,154,933,127,882,107"/>
-<area shape="rect" href="PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="722,159,977,185"/>
-<area shape="poly" title=" " alt="" coords="852,104,852,145,847,145,847,104"/>
-<area shape="rect" href="WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="667,240,855,280"/>
-<area shape="poly" title=" " alt="" coords="785,107,745,124,727,137,713,153,707,172,710,191,720,210,734,228,729,231,716,213,705,193,702,171,708,151,723,133,742,119,783,102"/>
-<area shape="rect" href="Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="337,328,535,353"/>
-<area shape="poly" title=" " alt="" coords="814,107,759,127,700,154,629,197,562,243,462,321,458,317,559,239,627,192,697,150,757,122,812,102"/>
-<area shape="rect" title=" " alt="" coords="1155,328,1205,353"/>
-<area shape="poly" title=" " alt="" coords="960,90,1047,95,1136,105,1212,122,1241,135,1261,150,1273,171,1276,194,1272,218,1263,241,1235,285,1204,320,1200,316,1230,282,1258,239,1267,216,1271,194,1268,173,1257,154,1238,139,1210,127,1135,110,1046,100,959,96"/>
-<area shape="rect" title=" " alt="" coords="1298,328,1353,353"/>
-<area shape="poly" title=" " alt="" coords="960,91,1052,96,1147,106,1231,123,1263,135,1286,150,1301,168,1313,188,1327,233,1331,278,1331,315,1325,314,1326,278,1322,234,1308,190,1297,171,1282,154,1260,140,1229,128,1147,111,1051,101,959,96"/>
-<area shape="rect" title=" " alt="" coords="1138,401,1222,427"/>
-<area shape="poly" title=" " alt="" coords="1484,275,1434,314,1367,356,1300,383,1236,402,1235,397,1298,378,1364,351,1431,309,1481,271"/>
-<area shape="poly" title=" " alt="" coords="1173,190,1193,212,1209,239,1221,270,1228,296,1227,322,1220,354,1212,374,1201,392,1196,389,1207,372,1215,353,1222,321,1222,296,1216,271,1204,241,1188,215,1169,194"/>
-<area shape="poly" title=" " alt="" coords="1152,192,1153,233,1148,234,1147,192"/>
-<area shape="poly" title=" " alt="" coords="722,181,620,195,506,221,449,241,392,265,340,295,291,330,270,358,257,389,253,387,265,355,287,326,337,290,390,260,447,236,505,216,619,190,722,176"/>
-<area shape="poly" title=" " alt="" coords="872,183,970,240,1033,281,1094,326,1162,389,1158,393,1090,330,1029,286,967,245,869,187"/>
-<area shape="poly" title=" " alt="" coords="892,182,1089,237,1101,241,1099,246,1087,243,890,187"/>
-<area shape="poly" title=" " alt="" coords="839,187,793,232,789,228,836,183"/>
-<area shape="poly" title=" " alt="" coords="667,277,226,336,225,331,667,271"/>
-<area shape="poly" title=" " alt="" coords="667,271,477,293,388,309,353,319,327,330,308,343,291,358,266,391,261,388,288,355,305,339,324,326,351,314,387,304,476,287,667,266"/>
-<area shape="poly" title=" " alt="" coords="684,283,497,327,496,322,683,277"/>
-<area shape="rect" title=" " alt="" coords="672,401,752,427"/>
-<area shape="poly" title=" " alt="" coords="759,281,739,354,725,389,720,387,733,352,754,279"/>
-<area shape="rect" title=" " alt="" coords="510,401,597,427"/>
-<area shape="poly" title=" " alt="" coords="686,282,640,302,599,330,577,359,563,390,558,387,573,356,595,326,638,297,684,278"/>
-<area shape="poly" title=" " alt="" coords="856,276,1142,329,1141,335,855,282"/>
-<area shape="rect" title=" " alt="" coords="883,328,959,353"/>
-<area shape="poly" title=" " alt="" coords="801,278,887,320,884,324,798,282"/>
-<area shape="rect" title=" " alt="" coords="984,328,1080,353"/>
-<area shape="poly" title=" " alt="" coords="827,277,980,322,979,327,825,283"/>
-<area shape="poly" title=" " alt="" coords="856,272,1285,331,1284,336,855,277"/>
-<area shape="rect" title=" " alt="" coords="609,328,724,353"/>
-<area shape="poly" title=" " alt="" coords="740,282,693,321,690,317,737,278"/>
-<area shape="rect" title=" " alt="" coords="799,328,859,353"/>
-<area shape="poly" title=" " alt="" coords="780,278,812,316,808,319,776,282"/>
-<area shape="poly" title=" " alt="" coords="407,356,293,399,292,394,405,351"/>
-<area shape="poly" title=" " alt="" coords="535,349,1125,405,1124,410,535,354"/>
-<area shape="poly" title=" " alt="" coords="481,351,659,396,658,402,480,356"/>
-<area shape="rect" title=" " alt="" coords="319,401,390,427"/>
-<area shape="poly" title=" " alt="" coords="425,355,380,394,376,390,421,351"/>
-<area shape="poly" title=" " alt="" coords="456,351,524,392,521,396,453,356"/>
-<area shape="rect" title=" " alt="" coords="414,401,477,427"/>
-<area shape="poly" title=" " alt="" coords="440,353,445,387,439,388,435,354"/>
+<area shape="rect" title="Defines the Checkpoint class used for saving and restoring computation states in the MASFENON framewo..." alt="" coords="1425,5,1647,31"/>
+<area shape="rect" title=" " alt="" coords="1653,328,1712,353"/>
+<area shape="poly" title=" " alt="" coords="1544,30,1674,314,1669,317,1539,32"/>
+<area shape="rect" title=" " alt="" coords="561,401,623,427"/>
+<area shape="poly" title=" " alt="" coords="1425,21,1055,25,822,32,584,44,362,62,264,75,178,89,107,106,53,126,19,147,11,159,8,171,8,261,12,270,24,280,72,302,141,323,225,344,405,380,547,403,546,409,404,385,224,349,140,329,70,307,22,285,8,274,3,262,3,170,6,157,16,143,51,121,105,101,177,84,263,69,362,57,583,38,821,26,1055,19,1425,16"/>
+<area shape="rect" href="Computation_8hxx.html" title="Defines the Computation class used for managing the logic of intra&#45; and inter&#45;network dynamics in MAS..." alt="" coords="1150,79,1370,104"/>
+<area shape="poly" title=" " alt="" coords="1492,33,1319,78,1317,73,1491,28"/>
+<area shape="rect" href="Logger_8hxx.html" title="Defines a lightweight Logger class for formatted output and log&#45;level control in the MASFENON framewo..." alt="" coords="1511,401,1657,427"/>
+<area shape="poly" title=" " alt="" coords="1616,28,1678,45,1738,72,1764,91,1784,113,1798,140,1803,170,1803,261,1799,292,1788,315,1770,335,1746,355,1702,382,1655,400,1653,395,1700,378,1742,351,1766,331,1784,312,1794,291,1797,261,1797,171,1793,141,1780,116,1760,95,1736,77,1676,50,1615,33"/>
+<area shape="poly" title=" " alt="" coords="1296,102,1351,122,1411,150,1484,193,1554,239,1660,318,1656,322,1551,244,1481,197,1408,154,1348,127,1294,107"/>
+<area shape="poly" title=" " alt="" coords="1181,107,1064,131,994,150,921,173,846,203,772,238,702,281,638,330,616,359,602,389,597,387,611,356,634,326,699,276,769,234,844,198,919,168,993,144,1063,126,1180,101"/>
+<area shape="rect" href="DissipationModel_8hxx.html" title="Defines the DissipationModel class used for managing dissipation dynamics for the computation of the ..." alt="" coords="42,247,291,273"/>
+<area shape="poly" title=" " alt="" coords="1150,98,585,117,320,134,233,144,193,154,180,171,172,191,167,234,162,233,167,190,176,168,191,150,232,139,319,129,585,112,1150,93"/>
+<area shape="rect" href="ConservationModel_8hxx.html" title="Defines the ConservationModel class used for managing conservation dynamics for the computation of th..." alt="" coords="204,152,399,192"/>
+<area shape="poly" title=" " alt="" coords="1150,100,822,119,620,134,418,155,412,155,412,150,417,149,619,129,821,113,1150,95"/>
+<area shape="rect" title=" " alt="" coords="366,247,453,273"/>
+<area shape="poly" title=" " alt="" coords="1150,97,964,103,750,114,564,130,499,141,463,154,445,171,432,192,416,235,411,233,427,190,441,168,460,150,498,136,563,125,749,108,963,98,1150,92"/>
+<area shape="rect" href="PropagationModel_8hxx.html" title="Defines the PropagationModel class used for managing propagation dynamics for the computation of the ..." alt="" coords="474,159,729,185"/>
+<area shape="poly" title=" " alt="" coords="1159,107,748,155,703,160,702,155,748,149,1159,101"/>
+<area shape="rect" href="WeightedEdgeGraph_8hxx.html" title="Class for representing a weighted edge graph." alt="" coords="1045,240,1233,280"/>
+<area shape="poly" title=" " alt="" coords="1254,106,1163,230,1158,227,1250,103"/>
+<area shape="rect" href="Matrix_8hxx.html" title="Template class for representing a 2D matrix with row&#45;major ordering." alt="" coords="1227,328,1424,353"/>
+<area shape="poly" title=" " alt="" coords="1266,104,1321,314,1316,315,1261,105"/>
+<area shape="poly" title=" " alt="" coords="1337,101,1433,125,1488,144,1544,167,1598,197,1649,233,1692,276,1726,327,1731,340,1730,353,1715,373,1689,389,1658,400,1656,395,1687,384,1712,369,1725,351,1725,341,1722,329,1688,279,1645,237,1596,201,1542,172,1486,149,1432,130,1335,107"/>
+<area shape="rect" title=" " alt="" coords="1499,328,1549,353"/>
+<area shape="poly" title=" " alt="" coords="1274,102,1503,316,1500,320,1271,106"/>
+<area shape="rect" title=" " alt="" coords="1574,328,1629,353"/>
+<area shape="poly" title=" " alt="" coords="1284,102,1367,150,1488,240,1579,316,1576,321,1485,244,1364,154,1281,106"/>
+<area shape="rect" title=" " alt="" coords="367,401,451,427"/>
+<area shape="poly" title=" " alt="" coords="186,271,311,351,379,392,376,397,308,356,183,275"/>
+<area shape="poly" title=" " alt="" coords="312,191,401,388,396,390,307,193"/>
+<area shape="poly" title=" " alt="" coords="327,190,385,236,382,241,324,194"/>
+<area shape="poly" title=" " alt="" coords="600,185,580,256,574,304,576,353,585,388,580,389,571,354,569,304,575,255,595,184"/>
+<area shape="poly" title=" " alt="" coords="594,187,429,392,425,389,590,183"/>
+<area shape="poly" title=" " alt="" coords="577,187,449,244,447,239,574,182"/>
+<area shape="poly" title=" " alt="" coords="674,182,1032,239,1031,244,673,187"/>
+<area shape="poly" title=" " alt="" coords="1233,267,1418,289,1640,325,1639,331,1417,294,1233,273"/>
+<area shape="poly" title=" " alt="" coords="1045,270,840,292,743,309,705,319,676,330,656,343,638,359,609,392,605,388,634,355,653,339,673,326,703,314,742,304,839,287,1044,265"/>
+<area shape="poly" title=" " alt="" coords="1184,278,1286,320,1284,325,1182,282"/>
+<area shape="rect" title=" " alt="" coords="1200,475,1280,500"/>
+<area shape="poly" title=" " alt="" coords="1045,265,953,270,856,281,772,301,741,314,721,330,716,341,721,352,752,377,800,400,861,420,929,437,1070,463,1187,478,1186,483,1070,468,928,442,859,425,798,405,749,382,717,355,711,341,717,326,739,309,770,295,855,276,952,265,1044,260"/>
+<area shape="rect" title=" " alt="" coords="1430,475,1517,500"/>
+<area shape="poly" title=" " alt="" coords="1150,279,1194,350,1227,390,1267,424,1303,444,1342,459,1417,477,1415,482,1340,465,1301,449,1264,429,1224,394,1190,353,1146,282"/>
+<area shape="poly" title=" " alt="" coords="1233,272,1333,293,1437,326,1491,354,1555,392,1552,396,1489,358,1435,330,1331,298,1232,278"/>
+<area shape="poly" title=" " alt="" coords="1233,276,1481,325,1486,327,1485,332,1479,331,1232,281"/>
+<area shape="rect" title=" " alt="" coords="731,328,807,353"/>
+<area shape="poly" title=" " alt="" coords="1048,283,821,331,820,325,1047,277"/>
+<area shape="rect" title=" " alt="" coords="832,328,928,353"/>
+<area shape="poly" title=" " alt="" coords="1077,283,932,327,930,321,1076,277"/>
+<area shape="poly" title=" " alt="" coords="1233,270,1383,292,1561,326,1560,331,1382,297,1232,276"/>
+<area shape="rect" title=" " alt="" coords="952,328,1067,353"/>
+<area shape="poly" title=" " alt="" coords="1109,282,1041,323,1039,319,1106,278"/>
+<area shape="rect" title=" " alt="" coords="1091,328,1151,353"/>
+<area shape="poly" title=" " alt="" coords="1137,281,1129,315,1124,314,1132,280"/>
+<area shape="poly" title=" " alt="" coords="1227,354,637,411,637,406,1226,349"/>
+<area shape="poly" title=" " alt="" coords="1227,352,548,404,466,411,465,405,548,399,1226,347"/>
+<area shape="poly" title=" " alt="" coords="1312,356,1289,376,1268,403,1254,432,1247,462,1241,460,1249,431,1263,400,1285,372,1308,352"/>
+<area shape="rect" title=" " alt="" coords="1365,401,1435,427"/>
+<area shape="poly" title=" " alt="" coords="1339,351,1380,390,1376,394,1335,355"/>
+<area shape="poly" title=" " alt="" coords="1370,351,1412,369,1432,383,1450,400,1466,429,1474,460,1469,461,1461,431,1446,403,1429,387,1409,374,1368,356"/>
+<area shape="rect" title=" " alt="" coords="1278,401,1341,427"/>
+<area shape="poly" title=" " alt="" coords="1325,354,1317,389,1312,388,1320,353"/>
+<area shape="poly" title=" " alt="" coords="1368,351,1530,395,1528,400,1366,356"/>
+<area shape="poly" title=" " alt="" coords="1529,429,1294,478,1293,472,1528,424"/>
+<area shape="poly" title=" " alt="" coords="1568,429,1505,469,1502,465,1565,424"/>
+<area shape="rect" title=" " alt="" coords="1552,475,1616,500"/>
+<area shape="poly" title=" " alt="" coords="1587,427,1587,461,1581,461,1581,427"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
