@@ -366,7 +366,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 if(splittedHeader.size()==2){
                     indexName = 0;
                     indexValue = 1;
-                    std::cout << "[WARNING] using the first and second column as name and value in the graph file:" << filename << std::endl;
+                    Logger::getInstance().printWarning("using the first and second column as name and value in the graph file:" + filename);
                 } else {
                     std::string error = "utilities::valuesVectorsFromFolder: header of file" + filename + " does not contain name and value";
                     throw std::invalid_argument(error);
