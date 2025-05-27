@@ -76,7 +76,7 @@ Matrix<T>::Matrix(const std::vector<T>& vec, uint nrows, uint ncols):rows_(vec.s
     else if( (nrows != vec.size() && (approximatelyEqual(vec.size()/(double)nrows, (double)ncols, std::numeric_limits<T>::epsilon())))){
         rows_ = nrows;
     } else {
-        std::cerr << "[ERROR] Matrix<T>::Matrix(vec,nrows=0,ncols=1): the number of resulting columns from the division of rows is not equal to the one passed in the ncols parameter: vec.size="<< vec.size() << " nrows=" << nrows << " ncols="<<ncols; 
+        Logger::getInstance().printError("Matrix<T>::Matrix(vec,nrows=0,ncols=1): the number of resulting columns from the division of rows is not equal to the one passed in the ncols parameter: vec.size=" + std::to_string(vec.size()) + " nrows=" + std::to_string(nrows) + " ncols=" + std::to_string(ncols)); 
         throw std::invalid_argument("[ERROR] Matrix<T>::Matrix(vec,nrows=0,ncols=1): the number of resulting columns from the division of rows is not equal to the one passed in the ncols parameter");
     }
     allocateMatrixSpace();
@@ -504,8 +504,8 @@ std::vector<T> Matrix<T>::asVector()const{
         }
         return ret;
     } else {
-        std::cerr << "[ERROR] Matrix::asVector: the matrix is not a vector (1 column, n rows)";
-        std::cerr << "rows_=" << rows_ << " cols_=" << cols_ << std::endl;
+        std::string empty = "";
+        Logger::getInstance().printError(empty + "Matrix::asVector: the matrix is not a vector (1 column, n rows)" + "rows_=" + std::to_string(rows_) + " cols_=" + std::to_string(cols_));
         throw std::domain_error("[ERROR] Matrix::asVector: the matrix is not a vector (1 column, n rows)");
     }
 }

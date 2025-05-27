@@ -12,6 +12,7 @@
 #include <vector>
 #include <armadillo>
 #include <cmath>
+#include "logging/Logger.hxx"
 
 /**
  * @class Matrix

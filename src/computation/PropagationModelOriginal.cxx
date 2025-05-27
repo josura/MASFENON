@@ -25,7 +25,7 @@ PropagationModelOriginal::PropagationModelOriginal(const WeightedEdgeGraph* grap
     
     //control determinant and invertibility, print warning if not invertible
     if(arma::det(temp) == 0){
-        std::cout << "WARNING: The graph is not invertible, the pseudoinverse could lead to faulty results" << std::endl;
+        Logger::getInstance().printWarning(" PropagationModelOriginal::PropagationModelOriginal(const WeightedEdgeGraph* graph): The graph is not invertible, the pseudoinverse could lead to faulty results");
     }
     pseudoinverse = arma::pinv(temp);
 }

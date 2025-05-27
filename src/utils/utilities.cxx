@@ -150,7 +150,7 @@ std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::strin
                     indexStart = 0;
                     indexEnd = 1;
                     indexWeight = 2;
-                    std::cout << "[WARNING] using the first, second and third column as start, end and weight in the graph file:" << filename << std::endl;
+                    Logger::getInstance().printWarning("using the first, second and third column as start, end and weight in the graph file:" + filename);
                 } else {
                     std::string error = "utilities::edgesFileToEdgesListAndNodesByName: header of file" + filename + " does not contain start, end or weight";
                     throw std::invalid_argument(error);
@@ -175,16 +175,16 @@ std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::strin
 
                     }
                 } else {
-                    std::cerr << "[ERROR] utilities::edgesFileToEdgesListAndNodesByName: header doesn't have the same amount of columns as the data for file " + filename << std::endl;
-                    std::cerr << "[ERROR] line: " << line << std::endl;
-                    std::cerr << "[ERROR] header size: " << entriesHeader.size() << std::endl;
-                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
+                    Logger::getInstance().printError("utilities::edgesFileToEdgesListAndNodesByName: header doesn't have the same amount of columns as the data for file " + filename);
+                    Logger::getInstance().printError("line: " + line);
+                    Logger::getInstance().printError("header size: " + std::to_string(entriesHeader.size()));
+                    Logger::getInstance().printError("line size: " + std::to_string(entries.size()));
                     throw std::invalid_argument("utilities::edgesFileToEdgesListAndNodesByName: header doesn't have the same amount of columns as the data " + filename);
                 }
             }
             // control if resulting edges vector is empty
             if(ret.size()==0){
-                std::cerr << "[WARNING] edgesFileToEdgesListAndNodesByName: no edges found in the file " << filename << " .Use the nodeDescriptionFolder parameter to pass the graphs nodes, otherwise an error will occur" << std::endl;
+                Logger::getInstance().printWarning("edgesFileToEdgesListAndNodesByName: no edges found in the file " + filename + " .Use the nodeDescriptionFolder parameter to pass the graphs nodes, otherwise an error will occur");
             }
             myfile.close();
         }
@@ -282,11 +282,12 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 }
             }
             myfile.close();
-            std::cout << "[LOG] No nodes in the graph for nodes: " << std::endl;
+            Logger::getInstance().printLog(" No nodes in the graph for nodes: ");
             for(auto iter = discardedGenes.cbegin();iter!=discardedGenes.cend();iter++){
                 std::cout << "," << *iter;
             }
-            std::cout << std::endl <<"[LOG] discarding values for the nodes not in the graph" << std::endl;
+            std::cout << std::endl;
+            Logger::getInstance().printLog("discarding values for the nodes not in the graph");
             
         }
     } else {
@@ -329,7 +330,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
         if(vectorContains(subType,type)){
             filteredFiles.push_back(*iter);
         } else {
-            std::cout << "[LOG] discarding file " << *iter << " since it is not in the subtypes" << std::endl;
+            Logger::getInstance().printError("discarding file " + *iter + " since it is not in the subtypes");
         }
     }
     if(filteredFiles.size()==0){
@@ -365,7 +366,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 if(splittedHeader.size()==2){
                     indexName = 0;
                     indexValue = 1;
-                    std::cout << "[WARNING] using the first and second column as name and value in the graph file:" << filename << std::endl;
+                    Logger::getInstance().printWarning("using the first and second column as name and value in the graph file:" + filename);
                 } else {
                     std::string error = "utilities::valuesVectorsFromFolder: header of file" + filename + " does not contain name and value";
                     throw std::invalid_argument(error);
@@ -391,11 +392,11 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                         discardedNodes.push_back(entries[indexName]);
                     }
                 } else {
-                    std::cerr << "[ERROR] utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data for file " + filename << std::endl;
-                    std::cerr << "[ERROR] header: " << lineHeader << std::endl;
-                    std::cerr << "[ERROR] line: " << line << std::endl;
-                    std::cerr << "[ERROR] header size: " << splittedHeader.size() << std::endl;
-                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
+                    Logger::getInstance().printError("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data for file " + filename);
+                    Logger::getInstance().printError("header: " + lineHeader);
+                    Logger::getInstance().printError("line: " + line);
+                    Logger::getInstance().printError("header size: " + std::to_string(splittedHeader.size()));
+                    Logger::getInstance().printError("line size: " + std::to_string(entries.size()));
                     throw std::invalid_argument("utilities::valuesVectorsFromFolder: header doesn't have the same amount of columns as the data " + filename);
                 }
                 // if(entries.size()==2){
@@ -410,7 +411,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 // }
             }
             myfile.close();
-            std::cout << "[LOG] discarding values for the nodes not in the graph for type "<< cellName << ", the nodes discarded are:" << std::endl;
+            Logger::getInstance().printLog("discarding values for the nodes not in the graph for type " + cellName + ", the nodes discarded are:");
             for(auto iter = discardedNodes.cbegin();iter!=discardedNodes.cend();iter++){
                 std::cout << "," << *iter;
             }
@@ -459,11 +460,11 @@ std::map<std::string,std::vector<std::string>> nodeNamesFromFolder(std::string f
                 if(entries.size()==splittedHeader.size()){
                     nodeNames.push_back(entries[indexName]);
                 } else {
-                    std::cerr << "[ERROR] utilities::nodeNamesFromFolder: header doesn't have the same amount of columns as the data for file " + *iter << std::endl;
-                    std::cerr << "[ERROR] header: " << header << std::endl;
-                    std::cerr << "[ERROR] line: " << line << std::endl;
-                    std::cerr << "[ERROR] header size: " << splittedHeader.size() << std::endl;
-                    std::cerr << "[ERROR] line size: " << entries.size() << std::endl;
+                    Logger::getInstance().printError("utilities::nodeNamesFromFolder: header doesn't have the same amount of columns as the data for file " + *iter);
+                    Logger::getInstance().printError("header: " + header);
+                    Logger::getInstance().printError("line: " + line);
+                    Logger::getInstance().printError("header size: " + splittedHeader.size());
+                    Logger::getInstance().printError("line size: " + entries.size());
                     throw std::invalid_argument("utilities::nodeNamesFromFolder: header doesn't have the same amount of columns as the data " + *iter);
                 }
             }
@@ -669,12 +670,12 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0){
                         if(!vectorContains(typeToNodeNames[startType],startNodeName)){
-                            std::cerr << "[ERROR] start node <"<< startNodeName <<"> for type: " << startType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("start node <" + startNodeName + "> for type: " + startType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContactsFileToEdgesListAndNodesByName: invalid file, the start node " + startNodeName + " is not in the type specified, aborting");
                         }
 
                         if(!vectorContains(typeToNodeNames[endType],endNodeName)){
-                            std::cerr << "[ERROR] end node <"<< endNodeName <<"> for type: " << endType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("end node <" + endNodeName + "> for type: " + endType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContactsFileToEdgesListAndNodesByName: invalid file, the end node " + endNodeName + " is not in the type specified, aborting");
                         }
                     }
@@ -749,7 +750,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                         ret.second.push_back(std::tuple<std::string, std::string, std::string, std::string, std::unordered_set<int>, double>(endNodeName, startNodeName, endType, startType, contactTimes, weight));
                     }
                 } else {
-                    std::cerr << "[ERROR] columns detected: " << entries.size() << " columns " <<std::endl;
+                    Logger::getInstance().printError("columns detected: " + std::to_string(entries.size()) + " columns ");
                     throw std::invalid_argument("utilities::interactionFileToEdgesListAndNodesByName: header doesn't have the right amount of columns(5 or 6 when considering interaction times) ");
                 }
             }
@@ -814,12 +815,12 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0){
                         if(!vectorContains(typeToNodeNames[startType],startNodeName)){
-                            std::cerr << "[ERROR] start node <"<< startNodeName <<"> for type: " << startType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("start node <" + startNodeName + "> for type: " + startType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: invalid file, the start node " + startNodeName + " is not in the type specified, aborting");
                         }
 
                         if(!vectorContains(typeToNodeNames[endType],endNodeName)){
-                            std::cerr << "[ERROR] end node <"<< endNodeName <<"> for type: " << endType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("end node <" + endNodeName + "> for type: " + endType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: invalid file, the end node " + endNodeName + " is not in the type specified, aborting");
                         }
                     }
@@ -895,7 +896,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                         ret.second.push_back(std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>(endNodeName, startNodeName, endType, startType, contactTimes, weight));
                     }
                 } else {
-                    std::cerr << "[ERROR] columns detected: " << entries.size() << " columns " <<std::endl;
+                    Logger::getInstance().printError("columns detected: " + std::to_string(entries.size()) + " columns ");
                     throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: header doesn't have the right amount of columns(5 or 6 when considering interaction times) ");
                 }
             }
@@ -944,8 +945,8 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
             }
             bool noContactTimes = false;
             if(indexTypeStart < 0 || indexTypeEnd < 0 || indexStartNode < 0 || indexEndNode < 0 || indexWeight < 0){
-                std::cerr << "[ERROR] invalid file, the header does not contain one of the following: startType, endType, start node, end node, weight feature" <<std::endl;
-                std::cerr << "[ERROR] values found for startType: " << indexTypeStart << " endType: " << indexTypeEnd << " start node: " << indexStartNode << " end node: " << indexEndNode << " weight: " << indexWeight <<std::endl;
+                Logger::getInstance().printError("invalid file, the header does not contain one of the following: startType, endType, start node, end node, weight feature");
+                Logger::getInstance().printError("values found for startType: " + std::to_string(indexTypeStart) + " endType: " + std::to_string(indexTypeEnd) + " start node: " + std::to_string(indexStartNode) + " end node: " + std::to_string(indexEndNode) + " weight: " + std::to_string(indexWeight));
                 throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: invalid file, the header does not contain a startType, or an endType, or a start node, or an end node, or a weight feature");
             }
             if(indexContactTimes < 0){
@@ -962,12 +963,12 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                     std::string endType = entries[indexTypeEnd];
                     if(typeToNodeNames.size() != 0 && vectorContains(subtypes, startType) && vectorContains(subtypes, endType)){
                         if(!vectorContains(typeToNodeNames[startType],startNodeName)){
-                            std::cerr << "[ERROR] start node <"<< startNodeName <<"> for type: " << startType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("start node <" + startNodeName + "> for type: " + startType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: invalid file " + filename +" , the start node " + startNodeName + " is not in the type specified, aborting");
                         }
 
                         if(!vectorContains(typeToNodeNames[endType],endNodeName)){
-                            std::cerr << "[ERROR] end node <"<< endNodeName <<"> for type: " << endType << " is not in the specified network, aborting " <<std::endl;
+                            Logger::getInstance().printError("end node <" + endNodeName + "> for type: " + endType + " is not in the specified network, aborting ");
                             throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: invalid file " + filename +" , the end node " + endNodeName + " is not in the type specified, aborting");
                         }
                     }
@@ -988,7 +989,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                             if(contactTime <= maximumIntertypeTime){
                                 contactTimes.insert(contactTime);
                             } else {
-                                std::cout << "[WARNING] contact time: " << contactTime << " is greater than the maximumIntertypeTime: " << maximumIntertypeTime << " ignoring it" <<std::endl;
+                                Logger::getInstance().printWarning("contact time: " + std::to_string(contactTime) + " is greater than the maximumIntertypeTime: " + std::to_string(maximumIntertypeTime) + " ignoring it");
                             }
                         }
                     }
@@ -1045,7 +1046,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                         ret.second.push_back(std::tuple<std::string, std::string, std::string, std::string, std::set<double>, double>(endNodeName, startNodeName, endType, startType, contactTimes, weight));
                     }
                 } else {
-                    std::cerr << "[ERROR] entries detected: " << entries.size() << " != " << entriesHeader.size() << "for file " << filename << std::endl;
+                    Logger::getInstance().printError("entries detected: " + std::to_string(entries.size()) + " != " + std::to_string(entriesHeader.size()) + "for file " + filename);
                     throw std::invalid_argument("utilities::interactionContinuousContactsFileToEdgesListAndNodesByName: entries.size() != entriesHeader.size() " + std::to_string(entries.size()) + " != " + std::to_string(entriesHeader.size()) + " meaning one of the entries of file " + filename + " has not the same amount of features as the header");    
                 }
             }
@@ -1104,11 +1105,11 @@ void saveNodeValues(std::string folderName, int iteration, std::string cellName,
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
     if (!outfile.is_open()) {
-        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        Logger::getInstance().printError("Unable to open file " + outputFilename );
         return;
     }
     if(nodesDescriptionFile.length()==0){
-        std::cout << "[WARNING] no nodes description file provided, using nothing to get the nodes description" << std::endl;
+        Logger::getInstance().printWarning("no nodes description file provided, using nothing to get the nodes description");
     } else {
         if(!file_exists(nodesDescriptionFile)){
             throw std::invalid_argument("utilities::saveNodeValues: file does not exists " + nodesDescriptionFile);
@@ -1164,7 +1165,7 @@ void saveNodeValues(std::string folderName, int iterationOuter, int intraIterati
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
     if (!outfile.is_open()) {
-        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        Logger::getInstance().printError("Unable to open file " + outputFilename);
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
@@ -1204,7 +1205,7 @@ void saveNodeValuesWithTime(std::string folderName,int iterationOuter, int intra
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
     if (!outfile.is_open()) {
-        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        Logger::getInstance().printError("Unable to open file " + outputFilename);
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
@@ -1245,7 +1246,7 @@ void saveNodeValuesWithTimeSimple(std::string folderName,int currentIteration, d
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
 
     if (!outfile.is_open()) {
-        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        Logger::getInstance().printError("Unable to open file " + outputFilename);
         throw std::invalid_argument("utilities::saveNodeValues: unable to open output file " + outputFilename);
     }
 
@@ -1285,7 +1286,7 @@ void saveOutputMatrix(std::string outputFolderNameMatrices, Matrix<double>* outp
     // write the header with the times
     std::ofstream outfile(outputFilename,ios::out|ios::trunc);
     if (!outfile.is_open()) {
-        std::cerr << "[ERROR] Unable to open file " << outputFilename << std::endl;
+        Logger::getInstance().printError("Unable to open file " + outputFilename);
         throw std::invalid_argument("utilities::saveOutputMatrix: unable to open output file " + outputFilename);
     }
     // first attribute is nodeNames, representing the node names

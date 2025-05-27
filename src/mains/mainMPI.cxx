@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
     }
 
     //logging options
-    Logger logger(std::cout); ///< logger object to log the messages
+    auto& logger = Logger::getInstance(); ///< logger object to log the messages
     if(vm.count("loggingOptions")){
         if(logMode == "all"){
             std::cout << "[LOG] logging options set to all"<<std::endl;
@@ -1451,7 +1451,7 @@ int main(int argc, char** argv) {
                     }
                 }
             } else if (virtualNodesGranularity == "node"){
-                logger << "[ERROR] virtual nodes granularity is not supported yet: aborting"<<std::endl;
+                logger.printError("virtual nodes granularity is not supported yet: aborting");
                 return 1;
             } else if (virtualNodesGranularity == "typeAndNode"){
                 // logic of reading the subvectors of the virtual inputs

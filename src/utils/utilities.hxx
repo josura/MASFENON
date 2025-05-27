@@ -362,7 +362,7 @@ std::vector<int> get_indexmap_vector_values(std::vector<T> const & origin, std::
             retVec.push_back(std::distance(origin.begin(), it));
         }
         else {
-            std::cout << "[ERROR] utilities::get_indexmap_vector_values : " << toMap[i] << " not found in the origin vector" << std::endl;
+            Logger::getInstance().printError("utilities::get_indexmap_vector_values : " + toMap[i] + " not found in the origin vector");
             throw std::invalid_argument( "utilities::get_indexmap_vector_values : " + toMap[i] + " not found in the origin vector" );
         }
     }
@@ -396,12 +396,11 @@ std::vector<int> get_indexmap_vector_values_full(std::vector<T> const & origin, 
         
     }
     if(notFoundValues == origin.size()){
-        std::cout << "[ERROR] utilities::get_indexmap_vector_values_full : all values not found in the origin vector" << std::endl;
+        Logger::getInstance().printError("utilities::get_indexmap_vector_values_full : all values not found in the origin vector");
         throw std::invalid_argument( "all values not found in the origin vector" );
     }
     if(notFoundValues>0){
-        std::cout << "[WARNING] utilities::get_indexmap_vector_values_full : " << notFoundValues << " values not found in the origin vector" << std::endl;
-        std::cout << "[WARNING] utilities::get_indexmap_vector_values_full : " << "values not found in the origin vector: ";
+        Logger::getInstance().printWarning("utilities::get_indexmap_vector_values_full : " + std::to_string(notFoundValues) + " values not found in the origin vector");
         printVector(notFoundValuesVector);
     }
     return retVec;
