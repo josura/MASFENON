@@ -150,7 +150,7 @@ std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::strin
                     indexStart = 0;
                     indexEnd = 1;
                     indexWeight = 2;
-                    std::cout << "[WARNING] using the first, second and third column as start, end and weight in the graph file:" << filename << std::endl;
+                    Logger::getInstance().printWarning("using the first, second and third column as start, end and weight in the graph file:" + filename);
                 } else {
                     std::string error = "utilities::edgesFileToEdgesListAndNodesByName: header of file" + filename + " does not contain start, end or weight";
                     throw std::invalid_argument(error);
@@ -282,11 +282,12 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 }
             }
             myfile.close();
-            std::cout << "[LOG] No nodes in the graph for nodes: " << std::endl;
+            Logger::getInstance().printLog(" No nodes in the graph for nodes: ");
             for(auto iter = discardedGenes.cbegin();iter!=discardedGenes.cend();iter++){
                 std::cout << "," << *iter;
             }
-            std::cout << std::endl <<"[LOG] discarding values for the nodes not in the graph" << std::endl;
+            std::cout << std::endl;
+            Logger::getInstance().printLog("discarding values for the nodes not in the graph");
             
         }
     } else {
@@ -329,7 +330,7 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
         if(vectorContains(subType,type)){
             filteredFiles.push_back(*iter);
         } else {
-            std::cout << "[LOG] discarding file " << *iter << " since it is not in the subtypes" << std::endl;
+            Logger::getInstance().printError("discarding file " + *iter + " since it is not in the subtypes");
         }
     }
     if(filteredFiles.size()==0){
@@ -988,7 +989,7 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
                             if(contactTime <= maximumIntertypeTime){
                                 contactTimes.insert(contactTime);
                             } else {
-                                std::cout << "[WARNING] contact time: " << contactTime << " is greater than the maximumIntertypeTime: " << maximumIntertypeTime << " ignoring it" <<std::endl;
+                                Logger::getInstance().printWarning("contact time: " + std::to_string(contactTime) + " is greater than the maximumIntertypeTime: " + std::to_string(maximumIntertypeTime) + " ignoring it");
                             }
                         }
                     }
