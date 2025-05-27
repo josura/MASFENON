@@ -7,6 +7,7 @@
 #pragma once
 
 #include "data_structures/Matrix.hxx"
+#include "logging/Logger.hxx"  
 #include <map>
 #include <ostream>
 #include <stdexcept>

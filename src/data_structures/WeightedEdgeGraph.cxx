@@ -76,7 +76,7 @@ WeightedEdgeGraph::WeightedEdgeGraph(const Matrix<double>& _adjMatrix){
             nameVector.push_back(std::to_string(i));
         }
     } else {
-        std::cerr << "[ERROR] WeightedEdgeGraph::WeightedEdgeGraph(constructor): invalid argument for graph constructor, the matrix is not square" << std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::WeightedEdgeGraph(constructor): invalid argument for graph constructor, the matrix is not square");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::WeightedEdgeGraph(constructor): invalid argument for graph constructor, the matrix is not square");
     }
     
@@ -128,7 +128,7 @@ WeightedEdgeGraph::~WeightedEdgeGraph(){
 
 int WeightedEdgeGraph::outDegreeOfNode(int node)const{
     if(node >= numberOfNodes || node < 0){
-        std::cerr << "[ERROR] WeightedEdgeGraph::outDegreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::outDegreeOfNode: node is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::outDegreeOfNode: invalid argument for outdegree of node");
     }
     return adjList[node].size();
@@ -137,7 +137,7 @@ int WeightedEdgeGraph::outDegreeOfNode(int node)const{
 //TODO use adjacency matrix to get the outdegree, since it's more efficient
 int WeightedEdgeGraph::inDegreeOfNode(int node)const{
     if(node >= numberOfNodes || node < 0){
-        std::cerr << "[ERROR] WeightedEdgeGraph::inDegreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::inDegreeOfNode: node " + std::to_string(node) + " is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::inDegreeOfNode: invalid argument for indegree of node");
     }
     int inDegree = 0;
@@ -151,7 +151,7 @@ int WeightedEdgeGraph::inDegreeOfNode(int node)const{
 
 int WeightedEdgeGraph::degreeOfNode(int node)const{
     if(node >= numberOfNodes || node < 0){
-        std::cerr << "[ERROR] WeightedEdgeGraph::degreeOfNode: node "<< std::to_string(node) << " is not in the graph "<<std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::degreeOfNode: node " + std::to_string(node) + " is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::degreeOfNode: invalid argument for degree of node");
     }
     return outDegreeOfNode(node) + inDegreeOfNode(node);
@@ -159,12 +159,12 @@ int WeightedEdgeGraph::degreeOfNode(int node)const{
 
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weight, bool directed){
     if(node1 >= numberOfNodes || node2 >= numberOfNodes){
-        std::cerr << "add edge failed for edges " << std::to_string(node1) << " and " << std::to_string(node2) << std::endl;
+        Logger::getInstance().printError("add edge failed for edges " + std::to_string(node1) + " and " + std::to_string(node2));
         if(node1 >= numberOfNodes){
-            std::cerr << "[ERROR] node1(number "<< std::to_string(node1) << ") is not in the graph that has " << std::to_string(numberOfNodes) << " nodes"<<std::endl;
+            Logger::getInstance().printError("node1(number " + std::to_string(node1) + ") is not in the graph that has " + std::to_string(numberOfNodes) + " nodes");
         }
         else{
-            std::cerr << "[ERROR] node2(number "<< std::to_string(node2) << ") is not in the graph that has " << std::to_string(numberOfNodes) << " nodes"<<std::endl;
+            Logger::getInstance().printError("node2(number " + std::to_string(node2) + ") is not in the graph that has " + std::to_string(numberOfNodes) + " nodes");
         }
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::addEdge: failed to add an edge, see error logs");
     } else if (connectedNodes(node1, node2)) {
@@ -187,12 +187,12 @@ WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weigh
 
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(std::string node1name, std::string node2name, double weight, bool directed){
     if(!(nodeToIndex.contains(node1name) && nodeToIndex.contains(node2name)) ){
-        std::cerr << "add edge failed for edges " << node1name << " and " << node2name << std::endl;
+        Logger::getInstance().printError("add edge failed for edges " + node1name + " and " + node2name);
         if(!nodeToIndex.contains(node1name)){
-            std::cerr << "[ERROR] WeightedEdgeGraph::addEdge: node1 "<< node1name << " is not in the graph "<<std::endl;
+            Logger::getInstance().printError("WeightedEdgeGraph::addEdge: node1 " + node1name + " is not in the graph ");
         }
         else{
-            std::cerr << "[ERROR] WeightedEdgeGraph::addEdge: node2 "<< node2name << " is not in the graph "<<std::endl;
+            Logger::getInstance().printError("WeightedEdgeGraph::addEdge: node2 " + node2name + " is not in the graph ");
         }
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::addEdge: invalid argument when adding an edge");
     } else if (connectedNodes(node1name, node2name)) {
@@ -355,7 +355,7 @@ WeightedEdgeGraph* WeightedEdgeGraph::setNodeName(std::string nodenameTarget, st
         nodeToIndex.insert(std::move(node));
     }
     else{
-        std::cerr << "[ERROR] WeightedEdgeGraph::setNodeName: node name not found: "<< nodenameTarget<<std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::setNodeName: node name not found: " + nodenameTarget);
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::setNodeName: node name not found");
     } 
     return this;
@@ -458,10 +458,10 @@ std::string WeightedEdgeGraph::getnodeValuesStr()const{
 
 std::unordered_set<int> WeightedEdgeGraph::getAdjList(int node)const{
     if(node>=numberOfNodes){
-        std::cerr << "[ERROR] getAdjList: trying to get an adjacent list of an unknown node: " << std::to_string(node) << ">=" << std::to_string(numberOfNodes) << std::endl;
+        Logger::getInstance().printError("getAdjList: trying to get an adjacent list of an unknown node: " + std::to_string(node) + ">=" + std::to_string(numberOfNodes));
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getAdjList: adjacent list of an unknown node");
     } else if(node < 0){
-        std::cerr << "[ERROR] getAdjList: trying to get an adjacent list of negative index node: " << std::to_string(node) << std::endl;
+        Logger::getInstance().printError("getAdjList: trying to get an adjacent list of negative index node: " + std::to_string(node));
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getAdjList: adjacent list of an negative index node");    
     }
     return adjList[node];
@@ -514,7 +514,7 @@ bool WeightedEdgeGraph::connectedNodes(int node1, int node2){
 
 bool WeightedEdgeGraph::connectedNodes(std::string node1, std::string node2){
     if(!nodeToIndex.contains(node1) || !nodeToIndex.contains(node2)){
-        std::cerr << "[ERROR] WeightedEdgeGraph::connectedNodes: node "<< node1 << " or " << node2 << " is not in the graph "<<std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::connectedNodes: node " + node1 + " or " + node2 + " is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::connectedNodes: invalid argument for connected nodes");
     }
     int node1Index = nodeToIndex.at(node1);
@@ -709,7 +709,7 @@ void WeightedEdgeGraph::saveEdgesToFile(std::string outputFolder, std::string fi
         }
         myfile.close();
     } else {
-        std::cerr << "[ERROR] WeightedEdgeGraph::saveEdgesToFile: file not opened" << std::endl;
+        Logger::getInstance().printError("WeightedEdgeGraph::saveEdgesToFile: file not opened");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::saveEdgesToFile: file not opened");
     }
 }
