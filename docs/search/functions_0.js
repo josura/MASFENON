@@ -12,9 +12,9 @@ var searchData=
   ['addrow_9',['addRow',['../classMatrix.html#a8eb3ce1a3378b7b231e9d19fb52ad85d',1,'Matrix']]],
   ['addrowattheend_10',['addRowAtTheEnd',['../classMatrix.html#a73f189985b8897374bdc87e6dc372b69',1,'Matrix']]],
   ['addrownew_11',['addRowNew',['../classMatrix.html#ac831c4c388a8940d036b37005d5b070f',1,'Matrix']]],
-  ['adjnodes_12',['adjnodes',['../classWeightedEdgeGraph.html#a9e17afcf5f267b11b18da77a4c012050',1,'WeightedEdgeGraph::adjNodes(int node1, int node2)'],['../classWeightedEdgeGraph.html#a63d76d44e8e8f970a47c7cf4d94cb71e',1,'WeightedEdgeGraph::adjNodes(std::string node1, std::string node2)']]],
+  ['adjnodes_12',['adjnodes',['../classWeightedEdgeGraph.html#a63d76d44e8e8f970a47c7cf4d94cb71e',1,'WeightedEdgeGraph::adjNodes(std::string node1, std::string node2)'],['../classWeightedEdgeGraph.html#a9e17afcf5f267b11b18da77a4c012050',1,'WeightedEdgeGraph::adjNodes(int node1, int node2)']]],
   ['allocatematrixspace_13',['allocateMatrixSpace',['../classMatrix.html#a34f356115d0cd05d64dbc8a2bb09b337',1,'Matrix']]],
-  ['approximatelyequal_14',['approximatelyequal',['../mathUtilities_8hxx.html#a04a5695e14385e9115e7006d63577f6b',1,'approximatelyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#ad37d63f9c9baada269fc715a59365223',1,'approximatelyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8cxx.html#a04a5695e14385e9115e7006d63577f6b',1,'approximatelyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8cxx.html#ad37d63f9c9baada269fc715a59365223',1,'approximatelyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx']]],
+  ['approximatelyequal_14',['approximatelyequal',['../mathUtilities_8cxx.html#ad37d63f9c9baada269fc715a59365223',1,'approximatelyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a04a5695e14385e9115e7006d63577f6b',1,'approximatelyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#ad37d63f9c9baada269fc715a59365223',1,'approximatelyEqual(float a, float b, float epsilon):&#160;mathUtilities.cxx'],['../mathUtilities_8cxx.html#a04a5695e14385e9115e7006d63577f6b',1,'approximatelyEqual(double a, double b, double epsilon):&#160;mathUtilities.cxx']]],
   ['armacolumntovector_15',['armaColumnToVector',['../armaUtilities_8hxx.html#aee48970590c601d6eadbc3817952e64f',1,'armaUtilities.hxx']]],
   ['armamatrixtovector_16',['armaMatrixToVector',['../armaUtilities_8hxx.html#a9ec07fe5b7e0cf19aa394c21d16ec236',1,'armaUtilities.hxx']]],
   ['armarowtovector_17',['armaRowToVector',['../armaUtilities_8hxx.html#a1a8015c7a1f445ed366993a70e1a6503',1,'armaUtilities.hxx']]],
@@ -26,5 +26,6 @@ var searchData=
   ['assign_23',['assign',['../classWeightedEdgeGraph.html#a0f70226f8c69a024b38012cfa4b75c9f',1,'WeightedEdgeGraph::assign()'],['../classComputation.html#aac8e31b1612a0c0ab0a18cb1a6cb1e56',1,'Computation::assign()']]],
   ['asvector_24',['asVector',['../classMatrix.html#a95cfde5e2b68f6a747f23ca63384df10',1,'Matrix']]],
   ['augmentgraph_25',['augmentGraph',['../classComputation.html#a758c80f8bd10cc85ad99144f5195132b',1,'Computation']]],
-  ['augmentgraphnocomputeinverse_26',['augmentGraphNoComputeInverse',['../classComputation.html#a111ca3d28a5b2d9b533db57601334542',1,'Computation']]]
+  ['augmentgraphnocomputeinverse_26',['augmentGraphNoComputeInverse',['../classComputation.html#a111ca3d28a5b2d9b533db57601334542',1,'Computation']]],
+  ['averageedgeweight_27',['averageEdgeWeight',['../namespaceweighed__graph__metrics.html#a0c6d5628d873b029bcbf6ad22481fff2',1,'weighed_graph_metrics']]]
 ];
