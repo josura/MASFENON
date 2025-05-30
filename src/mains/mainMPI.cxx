@@ -307,6 +307,9 @@ int main(int argc, char** argv) {
             logger.printError("outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting")<<std::endl;
             return 1;
         }
+    } else {
+        logger << "[LOG] outputFormat not set, set to default: singleIteration \n";
+        outputFormat = "singleIteration";
     }
 
 
@@ -372,13 +375,15 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // create output folder for the current perturbations
-    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
-    if(!folderExists(outputFolderNameSingular)){
-        logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
-        if(!createFolder(outputFolderNameSingular)){
-            logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
-            return 1;
+    // create output folder for the current perturbations, if the output format is set to singleIteration
+    if(outputFormat == "singleIteration"){
+        std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+        if(!folderExists(outputFolderNameSingular)){
+            logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
+            if(!createFolder(outputFolderNameSingular)){
+                logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
+                return 1;
+            }
         }
     }
 
@@ -1238,8 +1243,10 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
-                if(outputFormat == "iterationMatrix"){
+                if(outputFormat == "singleIteration"){
+                    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+                    saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                } else if(outputFormat == "iterationMatrix"){
                     std::vector<double> currentPerturbation = typeComputations[i]->getOutputAugmented();
                     if(currentIteration != 0){
                         // add the column to the matrix
