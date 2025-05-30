@@ -54,6 +54,7 @@ set(LIB_SRCS
     src/data_structures/WeightedEdgeGraph.cxx
     src/utils/utilities.cxx
     src/utils/mathUtilities.cxx
+    src/utils/graphUtilities.cxx
     src/utils/stringUtilities.cxx
     src/utils/armaUtilities.cxx
     src/utils/optimization.cxx
