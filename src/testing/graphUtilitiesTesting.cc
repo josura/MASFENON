@@ -54,3 +54,17 @@ class GraphUtilitiesTesting : public ::testing::Test {
         std::vector<double> nodeValues{0.3,4.1,3.8,8.2,9.5};
 };
 
+TEST_F(GraphUtilitiesTesting, testAverageEdgeWeight) {
+    // Test average edge weight for an empty graph
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeWeight(*graph1), 0.0);
+
+    // Test average edge weight for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeWeight(*graph2), 0.0);
+
+    // Test average edge weight for a graph with edges
+    double expectedAverage = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 1.5 + 2.5 + 3.5 + 4.5 + 5.5) / 10;
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeWeight(*graph3), expectedAverage);
+    
+    // Test average edge weight for a graph with values
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeWeight(*graph4), expectedAverage);
+}
