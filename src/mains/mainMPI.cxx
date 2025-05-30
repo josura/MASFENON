@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
         ("treatWarningAsError",po::bool_switch(&treatWarningAsError), "treat warnings as errors, if set, the program will throw an exception if a warning is encountered")
         ("savePerformance",po::value<std::string>(&performanceFilename), "(string) output performance (running time, number of total nodes, number of communities, number of total edges) to the defined file, if nothing is specified the performance are not saved")
         ("resumeCheckpoint",po::bool_switch(&resumeCheckpoint), "resume the computation from the last checkpoint, if the checkpoint is not found, the computation will start from the beginning")
-        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'")
+        ("outputFormat",po::value<std::string>(), "(string) output format for the output files, available options are: 'singleIteration' (default) and 'iterationMatrix'. If one is chosen, the other won't generate the corrispondent output files")
         ("saveAugmentedNetworks",po::bool_switch(&saveAugmentedNetworks), "save the augmented networks for each iteration, default to false")
     ;
 
@@ -307,6 +307,9 @@ int main(int argc, char** argv) {
             logger.printError("outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting")<<std::endl;
             return 1;
         }
+    } else {
+        logger << "[LOG] outputFormat not set, set to default: singleIteration \n";
+        outputFormat = "singleIteration";
     }
 
 
@@ -372,13 +375,15 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // create output folder for the current perturbations
-    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
-    if(!folderExists(outputFolderNameSingular)){
-        logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
-        if(!createFolder(outputFolderNameSingular)){
-            logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
-            return 1;
+    // create output folder for the current perturbations, if the output format is set to singleIteration
+    if(outputFormat == "singleIteration"){
+        std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+        if(!folderExists(outputFolderNameSingular)){
+            logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
+            if(!createFolder(outputFolderNameSingular)){
+                logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
+                return 1;
+            }
         }
     }
 
@@ -1238,8 +1243,10 @@ int main(int argc, char** argv) {
                 std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
                 int currentIteration = iterationInterType*intratypeIterations + iterationIntraType;
                 double currentTime = currentIteration*(timestep/intratypeIterations);
-                saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
-                if(outputFormat == "iterationMatrix"){
+                if(outputFormat == "singleIteration"){
+                    std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
+                    saveNodeValuesWithTimeSimple(outputFolderNameSingular, currentIteration, currentTime, types[i+startIdx], typeComputations[i]->getOutputAugmented(), nodeNames, nodesDescriptionFilename);
+                } else if(outputFormat == "iterationMatrix"){
                     std::vector<double> currentPerturbation = typeComputations[i]->getOutputAugmented();
                     if(currentIteration != 0){
                         // add the column to the matrix
