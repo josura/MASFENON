@@ -484,6 +484,45 @@ bool WeightedEdgeGraph::containsNode(std::string node)const{
     return nodeToIndex.contains(node);
 }
 
+std::vector<int> WeightedEdgeGraph::getPredecessors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getPredecessors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getPredecessors: invalid argument for predecessors of node");
+    }
+    std::vector<int> predecessors;
+    for(int i = 0; i < numberOfNodes; i++){
+        if(adjList[i].contains(node)){
+            predecessors.push_back(i);
+        }
+    }
+    return predecessors;
+}
+
+std::vector<int> WeightedEdgeGraph::getSuccessors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getSuccessors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getSuccessors: invalid argument for successors of node");
+    }
+    std::vector<int> successors;
+    for(auto it = adjList[node].cbegin(); it != adjList[node].cend(); it++){
+        successors.push_back(*it);
+    }
+    return successors;
+}
+
+std::vector<int> WeightedEdgeGraph::getNeighbors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getNeighbors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getNeighbors: invalid argument for neighbors of node");
+    }
+    std::vector<int> neighbors;
+    std::vector<int> successors = getSuccessors(node);
+    std::vector<int> predecessors = getPredecessors(node);
+    neighbors = vectorsIntersection(successors, predecessors);
+
+    return neighbors;
+}
+
 
 std::string WeightedEdgeGraph::getAdjListStr(std::string node)const{
     return getAdjListStr(nodeToIndex.at(node));
