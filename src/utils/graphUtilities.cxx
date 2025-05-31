@@ -53,20 +53,30 @@ std::pair<std::string,double> weighed_graph_metrics::minEdgeWeight(const Weighte
     return minEdge; // Return the minimum weight
 }
 
-double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph) {
+double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return 0.0;
     }
     
     double totalDegree = 0.0;
     for (int i = 0; i < graph.getNumNodes(); ++i) {
-        totalDegree += graph.degreeOfNode(i); // Get the degree of each node and sum them up
+        switch (mode) {
+            case DegreeMode::In:
+                totalDegree += graph.inDegreeOfNode(i); // Get the in-degree of each node
+                break;
+            case DegreeMode::Out:
+                totalDegree += graph.outDegreeOfNode(i); // Get the out-degree of each node
+                break;
+            case DegreeMode::Full:
+                totalDegree += graph.degreeOfNode(i); // Get the full degree of each node
+                break;
+        }
     }
     
     return totalDegree / graph.getNumNodes(); // Return the average degree
 }
 
-std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEdgeGraph& graph) {
+std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0}; // Return an empty pair if there are no edges
     }
@@ -74,7 +84,18 @@ std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEd
     std::string maxNodeName = ""; // Initialize an empty string for the node name
     std::pair<std::string, int> maxEdge; // Initialize a pair to hold the maximum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
-        int degree = graph.degreeOfNode(i); // Get the degree of each node
+        int degree = 0; // Initialize degree variable
+        switch (mode) {
+            case DegreeMode::In:
+                degree = graph.inDegreeOfNode(i); // Get the in-degree of each node
+                break;
+            case DegreeMode::Out:
+                degree = graph.outDegreeOfNode(i); // Get the out-degree of each node
+                break;
+            case DegreeMode::Full:
+                degree = graph.degreeOfNode(i); // Get the full degree of each node
+                break;
+        }
         if (degree > maxDegree) {
             maxDegree = degree; // Update the maximum degree
             maxNodeName = graph.getNodeName(i); // Get the name of the node corresponding to the maximum degree
@@ -84,7 +105,7 @@ std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEd
     return maxEdge; // Return the maximum degree
 }
 
-std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEdgeGraph& graph) {
+std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0}; // Return 0 if there are no edges
     }
@@ -93,7 +114,18 @@ std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEd
     std::string minNodeName = ""; // Initialize an empty string for the node name
     std::pair<std::string, int> minEdge; // Initialize a pair to hold the minimum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
-        int degree = graph.degreeOfNode(i); // Get the degree of each node
+        int degree = 0; // Initialize degree variable
+        switch (mode) {
+            case DegreeMode::In:
+                degree = graph.inDegreeOfNode(i); // Get the in-degree of each node
+                break;
+            case DegreeMode::Out:
+                degree = graph.outDegreeOfNode(i); // Get the out-degree of each node
+                break;
+            case DegreeMode::Full:
+                degree = graph.degreeOfNode(i); // Get the full degree of each node
+                break;
+        }
         if (degree < minDegree) {
             minDegree = degree; // Update the minimum degree
             minNodeName = graph.getNodeName(i); // Get the name of the node corresponding to the minimum degree
@@ -104,14 +136,26 @@ std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEd
     return minEdge; // Return the minimum degree
 }
 
-double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph) {
+double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return 0.0; // Avoid division by zero if there are no edges
     }
     
     double totalWeightedDegree = 0.0;
     for (int i = 0; i < graph.getNumNodes(); ++i) {
-        totalWeightedDegree += graph.degreeOfNode(i); // Get the weighted degree of each node and sum them up
+        double weightedDegree = 0.0; // Initialize weighted degree variable
+        switch (mode) {
+            case DegreeMode::In:
+                weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
+                break;
+            case DegreeMode::Out:
+                weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
+                break;
+            case DegreeMode::Full:
+                weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
+                break;
+        }
+        totalWeightedDegree += weightedDegree; // Accumulate the total weighted degree
     }
     
     return totalWeightedDegree / graph.getNumNodes(); // Return the average weighted degree
