@@ -22,7 +22,20 @@ namespace weighed_graph_metrics {
      * @details This function iterates through all edges in the graph and computes the average weight.
      */
     double averageEdgeWeight(const WeightedEdgeGraph& graph);
-    
+    /**
+     * @brief Computes the maximum edge weight in a weighted graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The maximum edge weight in the graph.
+     * @details This function iterates through all edges in the graph and finds the maximum weight.
+     */
+    double maxEdgeWeight(const WeightedEdgeGraph& graph);
+    /**
+     * @brief Computes the minimum edge weight in a weighted graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The minimum edge weight in the graph.
+     * @details This function iterates through all edges in the graph and finds the minimum weight.
+     */
+    double minEdgeWeight(const WeightedEdgeGraph& graph);
     /**
      * @brief Computes the average edge degree in a weighted graph.
      * @param graph The weighted edge graph to analyze.
