@@ -244,6 +244,19 @@ class WeightedEdgeGraph{
 
         // getters
         /**
+         * @brief Function to get the node name by its index.
+         * @param node The index of the node.
+         * @return The name of the specified node.
+         * @details This function retrieves the name of a node based on its index in the graph.
+         * @throw std::invalid_argument if the node index is out of range.
+         * @warning This function does not check if the node exists in the graph, it only checks the index.
+         */
+        std::string getNodeName(int node)const{
+            if(node >= 0 && node < numberOfNodes)
+                return nameVector[node];
+            else throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getNodeName: node name cannot be retrieved: node not in the list (as index)");
+        }
+        /**
          * @brief Function to get the value of a node by its index.
          * @param node The index of the node.
          * @return The value of the specified node.
