@@ -419,6 +419,46 @@ TEST_F(GraphTesting, getSuccessorsOfNode){
   EXPECT_EQ(successors.size(), 0);
 }
 
+TEST_F(GraphTesting, getPredecessorsOfNode){
+  std::vector<std::string> predecessors = g4_->getPredecessors("node1");
+  EXPECT_EQ(predecessors.size(), 0);
+
+  predecessors = g4_->getPredecessors("node2");
+  EXPECT_EQ(predecessors.size(), 1);
+  EXPECT_EQ(predecessors[0], "node3");
+
+  predecessors = g4_->getPredecessors("node3");
+  EXPECT_EQ(predecessors.size(), 1);
+  EXPECT_EQ(predecessors[0], "node1");
+
+  predecessors = g4_->getPredecessors("node4");
+  EXPECT_EQ(predecessors.size(), 0);
+
+  predecessors = g4_->getPredecessors("node5");
+  EXPECT_EQ(predecessors.size(), 0);
+}
+
+TEST_F(GraphTesting, getNeighborsOfNode){
+  std::vector<std::string> neighbours = g4_->getNeighbors("node1");
+  EXPECT_EQ(neighbours.size(), 1);
+  EXPECT_EQ(neighbours[0], "node3");
+
+  neighbours = g4_->getNeighbors("node2");
+  EXPECT_EQ(neighbours.size(), 1);
+  EXPECT_EQ(neighbours[0], "node3");
+
+  neighbours = g4_->getNeighbors("node3");
+  EXPECT_EQ(neighbours.size(), 2);
+  EXPECT_TRUE(std::find(neighbours.begin(), neighbours.end(), "node1") != neighbours.end());
+  EXPECT_TRUE(std::find(neighbours.begin(), neighbours.end(), "node2") != neighbours.end());
+
+  neighbours = g4_->getNeighbors("node4");
+  EXPECT_EQ(neighbours.size(), 0);
+
+  neighbours = g4_->getNeighbors("node5");
+  EXPECT_EQ(neighbours.size(), 0);
+}
+
 //throws and unexpected behaviour management TODO
 
 TEST_F(GraphTesting, gettingNodeValueOfNotPresentNode){
