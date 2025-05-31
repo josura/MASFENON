@@ -13,6 +13,7 @@
  * @brief Contains utility functions for calculating metrics on weighted graphs.
  * @details The functions are used to calculate metrics such as the average weight of edges in a graph.
  * @note The functions are designed to work with the WeightedEdgeGraph class.
+ * @todo Return also the name of the node with the maximum or minimum weight, degree, etc. (metrics that identify a node).
  */
 namespace weighed_graph_metrics {
     /**
