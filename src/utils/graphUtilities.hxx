@@ -73,14 +73,24 @@ namespace weighed_graph_metrics {
      */
     double averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph);
     /**
-     * @brief Computes the maximum edge degree in a weighted graph.
+     * @brief Computes the maximum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
-     * @return The maximum edge degree in the graph.
-     * @details This function calculates the maximum degree of edges in the graph, which is defined as the maximum number of edges connected to any node.
-     * @note The degree of a node is the number of edges connected to it(in and out).
+     * @return The maximum edge degree (weighted) in the graph.
+     * @details This function calculates the maximum degree of edges in the graph, which is defined as the maximum sum of weights of edges connected to any node.
+     * @note The degree of a node is the sum of weights of edges connected to it(in and out).
      * @return 0 if the graph has no edges.
      */
-    int maxEdgeDegree(const WeightedEdgeGraph& graph);
+    int maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph);
+    /**
+     * @brief Computes the minimum edge degree (weighted) in a weighted graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The minimum edge degree (weighted) in the graph.
+     * @details This function calculates the minimum degree of edges in the graph, which is defined as the minimum sum of weights of edges connected to any node.
+     * @note The degree of a node is the sum of weights of edges connected to it(in and out).
+     * @return 0 if the graph has no edges.
+     * @note This function is similar to minEdgeDegree, but it considers the weights of the edges.
+     */
+    int minEdgeDegreeWeighted(const WeightedEdgeGraph& graph);
     /**
      * @brief Computes the maximum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
