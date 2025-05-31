@@ -398,6 +398,27 @@ TEST_F(GraphTesting, adjacencyControl){ // TODO: control for throws in the next 
   EXPECT_FALSE(g4_->adjNodes("node5","node3"));
   EXPECT_FALSE(g4_->adjNodes("node5","node4"));
 }
+
+// controlling neighbourhood functions
+TEST_F(GraphTesting, getSuccessorsOfNode){
+  std::vector<std::string> successors = g4_->getSuccessors("node1");
+  EXPECT_EQ(successors.size(), 1);
+  EXPECT_EQ(successors[0], "node3");
+
+  successors = g4_->getSuccessors("node2");
+  EXPECT_EQ(successors.size(), 0);
+
+  successors = g4_->getSuccessors("node3");
+  EXPECT_EQ(successors.size(), 1);
+  EXPECT_EQ(successors[0], "node2");
+
+  successors = g4_->getSuccessors("node4");
+  EXPECT_EQ(successors.size(), 0);
+
+  successors = g4_->getSuccessors("node5");
+  EXPECT_EQ(successors.size(), 0);
+}
+
 //throws and unexpected behaviour management TODO
 
 TEST_F(GraphTesting, gettingNodeValueOfNotPresentNode){
