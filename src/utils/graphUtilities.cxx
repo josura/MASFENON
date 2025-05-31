@@ -209,6 +209,32 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const
                 weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
                 break;
         }
+        // sum the edge weights for the node
+        std::vector<int> neighborVector;
+        switch ( mode) {
+            case DegreeMode::In:
+                neighborVector = graph.getPredecessors(i); // Get predecessors for in-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                }
+                break;
+            case DegreeMode::Out:
+                neighborVector = graph.getSuccessors(i); // Get successors for out-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                }
+                break;
+            case DegreeMode::Full:
+                neighborVector = graph.getSuccessors(i); // Get first successors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                }
+                neighborVector = graph.getPredecessors(i); // Get predecessors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                }
+                break;
+        }
         if (weightedDegree > maxWeightedDegree) {
             maxWeightedDegree = weightedDegree; // Update the maximum weighted degree
             maxNodeName = graph.getNodeName(i); // Get the name of the node corresponding to the maximum weighted degree
