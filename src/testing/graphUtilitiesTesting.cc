@@ -90,3 +90,25 @@ TEST_F(GraphUtilitiesTesting, testMaxEdgeWeight) {
     EXPECT_EQ(maxEdge4.first, "node5");
     EXPECT_DOUBLE_EQ(maxEdge4.second, 5.5);
 }
+
+TEST_F(GraphUtilitiesTesting, testMinEdgeWeight) {
+    // Test min edge weight for an empty graph
+    auto minEdge1 = weighed_graph_metrics::minEdgeWeight(*graph1);
+    EXPECT_EQ(minEdge1.first, "");
+    EXPECT_DOUBLE_EQ(minEdge1.second, 0.0);
+
+    // Test min edge weight for a graph with no edges
+    auto minEdge2 = weighed_graph_metrics::minEdgeWeight(*graph2);
+    EXPECT_EQ(minEdge2.first, "");
+    EXPECT_DOUBLE_EQ(minEdge2.second, 0.0);
+
+    // Test min edge weight for a graph with edges
+    auto minEdge3 = weighed_graph_metrics::minEdgeWeight(*graph3);
+    EXPECT_EQ(minEdge3.first, "node1");
+    EXPECT_DOUBLE_EQ(minEdge3.second, 1.0);
+    
+    // Test min edge weight for a graph with values
+    auto minEdge4 = weighed_graph_metrics::minEdgeWeight(*graph4);
+    EXPECT_EQ(minEdge4.first, "node1");
+    EXPECT_DOUBLE_EQ(minEdge4.second, 1.0);
+}
