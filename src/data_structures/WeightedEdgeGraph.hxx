@@ -375,6 +375,42 @@ class WeightedEdgeGraph{
          * @see getSuccessors(int node)
          */
         std::vector<int> getNeighbors(int node)const;
+        
+        /**
+         * @brief Function to get the predecessors of a node by its name(immutable).
+         * @param nodeName The name of the node.
+         * @return A vector of names representing the predecessors of the specified node.
+         * @details The predecessors of a node are the nodes that have edges directed towards the specified node (entering neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getPredecessors(int node) function.
+         * @see getIndexFromName(std::string name)
+         * @see getPredecessors(int node)
+         */
+        std::vector<std::string> getPredecessors(std::string nodeName)const;
+
+        /**
+         * @brief Function to get the successors of a node by its name(immutable).
+         * @param nodeName The name of the node.
+         * @return A vector of names representing the successors of the specified node.
+         * @details The successors of a node are the nodes that have edges directed away from the specified node (exiting neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getSuccessors(int node) function.
+         * @see getIndexFromName(std::string name)
+         * @see getSuccessors(int node)
+         */
+        std::vector<std::string> getSuccessors(std::string nodeName)const;
+        /**
+         * @brief Function to get the neighbors of a node by its name(immutable).
+         * @param nodeName The name of the node.
+         * @return A vector of names representing the neighbors of the specified node.
+         * @details The neighbors of a node are the nodes that are directly connected to the specified node (both entering and exiting neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getNeighbors(int node) function.
+         * @see getIndexFromName(std::string name)
+         * @see getNeighbors(int node)
+         */
+        std::vector<std::string> getNeighbors(std::string nodeName)const;
+        
 
 
         /**

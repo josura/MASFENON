@@ -523,6 +523,48 @@ std::vector<int> WeightedEdgeGraph::getNeighbors(int node)const{
     return neighbors;
 }
 
+std::vector<std::string> WeightedEdgeGraph::getPredecessors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getPredecessors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getPredecessors: invalid argument for predecessors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> predecessors = getPredecessors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = predecessors.cbegin(); it != predecessors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
+}
+
+std::vector<std::string> WeightedEdgeGraph::getSuccessors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getSuccessors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getSuccessors: invalid argument for successors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> successors = getSuccessors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = successors.cbegin(); it != successors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
+}
+
+std::vector<std::string> WeightedEdgeGraph::getNeighbors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getNeighbors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getNeighbors: invalid argument for neighbors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> neighbors = getNeighbors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = neighbors.cbegin(); it != neighbors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
+}
+
 
 std::string WeightedEdgeGraph::getAdjListStr(std::string node)const{
     return getAdjListStr(nodeToIndex.at(node));
