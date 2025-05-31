@@ -22,6 +22,25 @@ namespace weighed_graph_metrics {
      * @details This function iterates through all edges in the graph and computes the average weight.
      */
     double averageEdgeWeight(const WeightedEdgeGraph& graph);
+    
+    /**
+     * @brief Computes the average edge degree in a weighted graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The average edge degree in the graph.
+     * @details This function calculates the average degree of edges in the graph, which is defined as the average number of edges connected to any node.
+     * @note The degree of a node is the number of edges connected to it(in and out).
+     * @return 0 if the graph has no edges.
+     */
+    double averageEdgeDegree(const WeightedEdgeGraph& graph);
+    /**
+     * @brief Computes the average edge degree (weighted) in a weighted graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The average edge degree (weighted) in the graph.
+     * @details This function calculates the average degree of edges in the graph, which is defined as the average sum of weights of edges connected to any node.
+     * @note The degree of a node is the sum of weights of edges connected to it(in and out).
+     * @return 0 if the graph has no edges.
+     */
+    double averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph);
     /**
      * @brief Computes the maximum edge degree in a weighted graph.
      * @param graph The weighted edge graph to analyze.
