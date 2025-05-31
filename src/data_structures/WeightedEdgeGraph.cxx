@@ -518,7 +518,7 @@ std::vector<int> WeightedEdgeGraph::getNeighbors(int node)const{
     std::vector<int> neighbors;
     std::vector<int> successors = getSuccessors(node);
     std::vector<int> predecessors = getPredecessors(node);
-    neighbors = vectorsIntersection(successors, predecessors);
+    neighbors = vectorsUnion(successors, predecessors);
 
     return neighbors;
 }

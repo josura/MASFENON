@@ -146,6 +146,38 @@ double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph&
         double weightedDegree = 0.0; // Initialize weighted degree variable
         switch (mode) {
             case DegreeMode::In:
+                weightedDegree = graph.inDegreeOfNode(i) ; // Get the in-degree
+                break;
+            case DegreeMode::Out:
+                weightedDegree = graph.outDegreeOfNode(i); // Get the out-degree
+                break;
+            case DegreeMode::Full:
+                weightedDegree = graph.degreeOfNode(i); // Get the full degree
+                break;
+        }
+        // sum the edge weights for the node
+        for(const auto& edge : graph.getAdjList(i)) {
+            weightedDegree += graph.getNodeValue(edge); // Multiply by the node value
+        }
+
+        totalWeightedDegree += weightedDegree; // Accumulate the total weighted degree
+    }
+    
+    return totalWeightedDegree / graph.getNumNodes(); // Return the average weighted degree
+}
+
+std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    if (graph.getNumEdges() == 0) {
+        return {"", 0.0}; // Return an empty pair if there are no edges
+    }
+    
+    double maxWeightedDegree = std::numeric_limits<double>::lowest(); // Initialize to the lowest possible value
+    std::string maxNodeName = ""; // Initialize an empty string for the node name
+    std::pair<std::string, double> maxEdge; // Initialize a pair to hold the maximum edge information
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        double weightedDegree = 0.0; // Initialize weighted degree variable
+        switch (mode) {
+            case DegreeMode::In:
                 weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
                 break;
             case DegreeMode::Out:
@@ -155,8 +187,12 @@ double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph&
                 weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
                 break;
         }
-        totalWeightedDegree += weightedDegree; // Accumulate the total weighted degree
+        if (weightedDegree > maxWeightedDegree) {
+            maxWeightedDegree = weightedDegree; // Update the maximum weighted degree
+            maxNodeName = graph.getNodeName(i); // Get the name of the node corresponding to the maximum weighted degree
+            maxEdge = {maxNodeName, maxWeightedDegree}; // Update the pair with the maximum edge information
+        }
     }
     
-    return totalWeightedDegree / graph.getNumNodes(); // Return the average weighted degree
+    return maxEdge; // Return the maximum weighted degree
 }
