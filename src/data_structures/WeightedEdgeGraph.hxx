@@ -345,6 +345,37 @@ class WeightedEdgeGraph{
          */
         bool containsNode(std::string node)const;
 
+        /**
+         * @brief Function to get the predecessors of a node by its index(immutable).
+         * @param node The index of the node.
+         * @return A vector of integers representing the predecessors of the specified node.
+         * @details The predecessors of a node are the nodes that have edges directed towards the specified node (entering neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         */
+        std::vector<int> getPredecessors(int node)const;
+
+        /**
+         * @brief Function to get the successors of a node by its index(immutable).
+         * @param node The index of the node.
+         * @return A vector of integers representing the successors of the specified node.
+         * @details The successors of a node are the nodes that have edges directed away from the specified node (exiting neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses the adjacency list to get the successors of the specified node.
+         * @see getAdjList(int node)
+         */
+        std::vector<int> getSuccessors(int node)const;
+        /**
+         * @brief Function to get the neighbors of a node by its index(immutable).
+         * @param node The index of the node.
+         * @return A vector of integers representing the neighbors of the specified node.
+         * @details The neighbors of a node are the nodes that are directly connected to the specified node (both entering and exiting neighbors).
+         * @throw std::invalid_argument if the node index is out of range.(-1 or greater than the number of nodes)
+         * @details This function uses both the predecessors and successors functions to get the neighbors of the specified node.
+         * @see getPredecessors(int node)
+         * @see getSuccessors(int node)
+         */
+        std::vector<int> getNeighbors(int node)const;
+
 
         /**
          * @brief Function to get the string representation of the node values(immutable)
