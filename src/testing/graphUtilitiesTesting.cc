@@ -68,3 +68,25 @@ TEST_F(GraphUtilitiesTesting, testAverageEdgeWeight) {
     // Test average edge weight for a graph with values
     EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeWeight(*graph4), expectedAverage);
 }
+
+TEST_F(GraphUtilitiesTesting, testMaxEdgeWeight) {
+    // Test max edge weight for an empty graph
+    auto maxEdge1 = weighed_graph_metrics::maxEdgeWeight(*graph1);
+    EXPECT_EQ(maxEdge1.first, "");
+    EXPECT_DOUBLE_EQ(maxEdge1.second, 0.0);
+
+    // Test max edge weight for a graph with no edges
+    auto maxEdge2 = weighed_graph_metrics::maxEdgeWeight(*graph2);
+    EXPECT_EQ(maxEdge2.first, "");
+    EXPECT_DOUBLE_EQ(maxEdge2.second, 0.0);
+
+    // Test max edge weight for a graph with edges
+    auto maxEdge3 = weighed_graph_metrics::maxEdgeWeight(*graph3);
+    EXPECT_EQ(maxEdge3.first, "node5");
+    EXPECT_DOUBLE_EQ(maxEdge3.second, 5.5);
+    
+    // Test max edge weight for a graph with values
+    auto maxEdge4 = weighed_graph_metrics::maxEdgeWeight(*graph4);
+    EXPECT_EQ(maxEdge4.first, "node5");
+    EXPECT_DOUBLE_EQ(maxEdge4.second, 5.5);
+}
