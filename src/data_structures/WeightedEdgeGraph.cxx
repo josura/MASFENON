@@ -154,7 +154,7 @@ int WeightedEdgeGraph::degreeOfNode(int node)const{
         Logger::getInstance().printError("WeightedEdgeGraph::degreeOfNode: node " + std::to_string(node) + " is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::degreeOfNode: invalid argument for degree of node");
     }
-    return outDegreeOfNode(node) + inDegreeOfNode(node);
+    return getNeighbors(node).size();
 }
 
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weight, bool directed){

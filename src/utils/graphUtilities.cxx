@@ -59,19 +59,20 @@ double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, 
     }
     
     double totalDegree = 0.0;
-    for (int i = 0; i < graph.getNumNodes(); ++i) {
-        switch (mode) {
-            case DegreeMode::In:
-                totalDegree += graph.inDegreeOfNode(i); // Get the in-degree of each node
-                break;
-            case DegreeMode::Out:
-                totalDegree += graph.outDegreeOfNode(i); // Get the out-degree of each node
-                break;
-            case DegreeMode::Full:
-                totalDegree += graph.degreeOfNode(i); // Get the full degree of each node
-                break;
-        }
-    }
+    // for (int i = 0; i < graph.getNumNodes(); ++i) {
+    //     switch (mode) {
+    //         case DegreeMode::In:
+    //             totalDegree += graph.inDegreeOfNode(i); // Get the in-degree of each node
+    //             break;
+    //         case DegreeMode::Out:
+    //             totalDegree += graph.outDegreeOfNode(i); // Get the out-degree of each node
+    //             break;
+    //         case DegreeMode::Full:
+    //             totalDegree += graph.degreeOfNode(i); // Get the full degree of each node
+    //             break;
+    //     }
+    // }
+    totalDegree = graph.getNumEdges(); // For average edge degree, we can directly use the number of edges
     
     return totalDegree / graph.getNumNodes(); // Return the average degree
 }
