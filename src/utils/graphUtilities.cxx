@@ -244,3 +244,59 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const
     
     return maxEdge; // Return the maximum weighted degree
 }
+
+std::pair<std::string,double> weighed_graph_metrics::minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    if (graph.getNumEdges() == 0) {
+        return {"", 0.0}; // Return an empty pair if there are no edges
+    }
+    
+    double minWeightedDegree = std::numeric_limits<double>::max(); // Initialize to the maximum possible value
+    std::string minNodeName = ""; // Initialize an empty string for the node name
+    std::pair<std::string, double> minEdge; // Initialize a pair to hold the minimum edge information
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        double weightedDegree = 0.0; // Initialize weighted degree variable
+        switch (mode) {
+            case DegreeMode::In:
+                weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
+                break;
+            case DegreeMode::Out:
+                weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
+                break;
+            case DegreeMode::Full:
+                weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
+                break;
+        }
+        // sum the edge weights for the node
+        std::vector<int> neighborVector;
+        switch ( mode) {
+            case DegreeMode::In:
+                neighborVector = graph.getPredecessors(i); // Get predecessors for in-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                }
+                break;
+            case DegreeMode::Out:
+                neighborVector = graph.getSuccessors(i); // Get successors for out-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                }
+                break;
+            case DegreeMode::Full:
+                neighborVector = graph.getSuccessors(i); // Get first successors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                }
+                neighborVector = graph.getPredecessors(i); // Get predecessors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                }
+                break;
+        }
+        if (weightedDegree < minWeightedDegree) {
+            minWeightedDegree = weightedDegree; // Update the minimum weighted degree
+            minNodeName = graph.getNodeName(i); // Get the name of the node corresponding to the minimum weighted degree
+            minEdge = {minNodeName, minWeightedDegree}; // Update the pair with the minimum edge information
+        }
+    }
+    return minEdge; // Return the minimum weighted degree
+}
