@@ -59,6 +59,7 @@ double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, 
     }
     
     double totalDegree = 0.0;
+    /****** PROBLEMS WITH COUNTING TWO TIMES IN CASE OF FULL DEGREE */
     // for (int i = 0; i < graph.getNumNodes(); ++i) {
     //     switch (mode) {
     //         case DegreeMode::In:

@@ -127,3 +127,33 @@ TEST_F(GraphUtilitiesTesting, testAverageEdgeDegreeFull) {
     // Test average edge degree for a graph with values
     EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph4, weighed_graph_metrics::DegreeMode::Full), expectedAverageDegree);
 }
+
+TEST_F(GraphUtilitiesTesting, testAverageEdgeDegreeIn) {
+    // Test average edge degree for an empty graph
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph1, weighed_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average edge degree for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph2, weighed_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average edge degree for a graph with edges
+    double expectedAverageDegree = (1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1) / 5; // Each node has in-degree of 2 on average
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph3, weighed_graph_metrics::DegreeMode::In), expectedAverageDegree);
+    
+    // Test average edge degree for a graph with values
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph4, weighed_graph_metrics::DegreeMode::In), expectedAverageDegree);
+}
+
+TEST_F(GraphUtilitiesTesting, testAverageEdgeDegreeOut) {
+    // Test average edge degree for an empty graph
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph1, weighed_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average edge degree for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph2, weighed_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average edge degree for a graph with edges
+    double expectedAverageDegree = (1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1) / 5; // Each node has out-degree of 2 on average
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph3, weighed_graph_metrics::DegreeMode::Out), expectedAverageDegree);
+    
+    // Test average edge degree for a graph with values
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegree(*graph4, weighed_graph_metrics::DegreeMode::Out), expectedAverageDegree);
+}
