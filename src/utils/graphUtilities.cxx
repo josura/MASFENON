@@ -156,8 +156,30 @@ double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph&
                 break;
         }
         // sum the edge weights for the node
-        for(const auto& edge : graph.getAdjList(i)) {
-            weightedDegree += graph.getNodeValue(edge); // Multiply by the node value
+        std::vector<int> neighborVector;
+        switch ( mode) {
+            case DegreeMode::In:
+                neighborVector = graph.getPredecessors(i); // Get predecessors for in-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
+                }
+                break;
+            case DegreeMode::Out:
+                neighborVector = graph.getSuccessors(i); // Get successors for out-degree
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
+                }
+                break;
+            case DegreeMode::Full:
+                neighborVector = graph.getSuccessors(i); // Get first successors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
+                }
+                neighborVector = graph.getPredecessors(i); // Get predecessors
+                for (int neighbor : neighborVector) {
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
+                }
+                break;
         }
 
         totalWeightedDegree += weightedDegree; // Accumulate the total weighted degree
