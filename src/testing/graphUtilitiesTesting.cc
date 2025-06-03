@@ -320,3 +320,29 @@ TEST_F(GraphUtilitiesTesting, testMaxEdgeDegreeWeightedOut) {
     double expectedMaxDegree2 = (5.0 + 5.5);
     EXPECT_DOUBLE_EQ(maxEdge4.second, expectedMaxDegree2);
 }
+
+TEST_F(GraphUtilitiesTesting, testMinEdgeDegreeWeightedFull) {
+    // Test min edge degree for an empty graph
+    auto minEdge1 = weighed_graph_metrics::minEdgeDegreeWeighted(*graph1, weighed_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minEdge1.first, "");
+    EXPECT_DOUBLE_EQ(minEdge1.second, 0.0);
+
+    // Test min edge degree for a graph with no edges
+    auto minEdge2 = weighed_graph_metrics::minEdgeDegreeWeighted(*graph2, weighed_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minEdge2.first, "");
+    EXPECT_DOUBLE_EQ(minEdge2.second, 0.0);
+
+    // Test min edge degree for a graph with edges
+    auto minEdge3 = weighed_graph_metrics::minEdgeDegreeWeighted(*graph3, weighed_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minEdge3.first, "node3");
+    // The node with the minimum full degree is "node3" with a weighted full degree of 10
+    double expectedMinDegree1 = (2.0 + 1.5 + 3.0 + 3.5);
+    EXPECT_DOUBLE_EQ(minEdge3.second, expectedMinDegree1);
+
+    // Test min edge degree for a graph with values
+    auto minEdge4 = weighed_graph_metrics::minEdgeDegreeWeighted(*graph4, weighed_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minEdge4.first, "node3");
+    // The node with the minimum full degree is "node3" with a weighted full degree of 10
+    double expectedMinDegree2 = (2.0 + 1.5 + 3.0 + 3.5);
+    EXPECT_DOUBLE_EQ(minEdge4.second, expectedMinDegree2);
+}
