@@ -257,6 +257,21 @@ TEST_F(GraphUtilitiesTesting, testAverageEdgeDegreeWeightedFull) {
     EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegreeWeighted(*graph4, weighed_graph_metrics::DegreeMode::Full), expectedAverageDegree);
 }
 
+TEST_F(GraphUtilitiesTesting, testAverageEdgeDegreeWeightedIn) {
+    // Test average edge degree for an empty graph
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegreeWeighted(*graph1, weighed_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average edge degree for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegreeWeighted(*graph2, weighed_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average edge degree for a graph with edges
+    double expectedAverageDegree = (1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 1.5 + 2.5 + 3.5 + 4.5 + 5.5) / 5; // Each node has weighted in-degree of 6.5 on average
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegreeWeighted(*graph3, weighed_graph_metrics::DegreeMode::In), expectedAverageDegree);
+    
+    // Test average edge degree for a graph with values
+    EXPECT_DOUBLE_EQ(weighed_graph_metrics::averageEdgeDegreeWeighted(*graph4, weighed_graph_metrics::DegreeMode::In), expectedAverageDegree);
+}
+
 TEST_F(GraphUtilitiesTesting, testMaxEdgeDegreeWeightedFull) {
     // Test max edge degree for an empty graph
     auto maxEdge1 = weighed_graph_metrics::maxEdgeDegreeWeighted(*graph1, weighed_graph_metrics::DegreeMode::Full);
