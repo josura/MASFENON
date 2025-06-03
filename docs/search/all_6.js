@@ -7,5 +7,6 @@ var searchData=
   ['fitting_2emd_4',['fitting.md',['../fitting_8md.html',1,'']]],
   ['folderexists_5',['folderexists',['../utilities_8cxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx'],['../utilities_8hxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx']]],
   ['freeaugmentedgraphs_6',['freeAugmentedGraphs',['../classComputation.html#aef8db370a06370ddb1f7ced489a4e686',1,'Computation']]],
-  ['freefunctions_7',['freeFunctions',['../classComputation.html#a65dfcb9d377f0413559f7898f29adb36',1,'Computation']]]
+  ['freefunctions_7',['freeFunctions',['../classComputation.html#a65dfcb9d377f0413559f7898f29adb36',1,'Computation']]],
+  ['full_8',['Full',['../namespaceweighed__graph__metrics.html#a6fc48885109c1eb36cd2c12f9548a7d0abbd47109890259c0127154db1af26c75',1,'weighed_graph_metrics']]]
 ];

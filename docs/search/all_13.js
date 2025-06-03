@@ -9,7 +9,8 @@ var searchData=
   ['vectorscalarmultiplication_6',['vectorScalarMultiplication',['../mathUtilities_8hxx.html#ae49b0197a9c6441e5c908825655ddfb7',1,'mathUtilities.hxx']]],
   ['vectorsintersection_7',['vectorsIntersection',['../mathUtilities_8hxx.html#a2ba20d20b0cdec501b771b413e32e06e',1,'mathUtilities.hxx']]],
   ['vectorsubtraction_8',['vectorSubtraction',['../mathUtilities_8hxx.html#aa56e22ad1e928252b1d4d6c04222ab67',1,'mathUtilities.hxx']]],
-  ['vectortoarmacolumn_9',['vectorToArmaColumn',['../armaUtilities_8hxx.html#a5c14caa95813a3d07b2974f0670a70e9',1,'armaUtilities.hxx']]],
-  ['vectortoarmamatrixrepeatcolumns_10',['vectorToArmaMatrixRepeatColumns',['../armaUtilities_8hxx.html#aad2716eb7ab99ed59b231c3b24a15945',1,'armaUtilities.hxx']]],
-  ['vectortoarmarow_11',['vectorToArmaRow',['../armaUtilities_8hxx.html#a2aaaedad815d30ff0bd0c20bf4d5aaa9',1,'armaUtilities.hxx']]]
+  ['vectorsunion_9',['vectorsUnion',['../mathUtilities_8hxx.html#aecd790ac1f01458a7b84cf3672f89c46',1,'mathUtilities.hxx']]],
+  ['vectortoarmacolumn_10',['vectorToArmaColumn',['../armaUtilities_8hxx.html#a5c14caa95813a3d07b2974f0670a70e9',1,'armaUtilities.hxx']]],
+  ['vectortoarmamatrixrepeatcolumns_11',['vectorToArmaMatrixRepeatColumns',['../armaUtilities_8hxx.html#aad2716eb7ab99ed59b231c3b24a15945',1,'armaUtilities.hxx']]],
+  ['vectortoarmarow_12',['vectorToArmaRow',['../armaUtilities_8hxx.html#a2aaaedad815d30ff0bd0c20bf4d5aaa9',1,'armaUtilities.hxx']]]
 ];

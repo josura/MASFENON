@@ -30,5 +30,7 @@ var searchData=
   ['asvector_27',['asVector',['../classMatrix.html#a95cfde5e2b68f6a747f23ca63384df10',1,'Matrix']]],
   ['augmentgraph_28',['augmentGraph',['../classComputation.html#a758c80f8bd10cc85ad99144f5195132b',1,'Computation']]],
   ['augmentgraphnocomputeinverse_29',['augmentGraphNoComputeInverse',['../classComputation.html#a111ca3d28a5b2d9b533db57601334542',1,'Computation']]],
-  ['averageedgeweight_30',['averageEdgeWeight',['../namespaceweighed__graph__metrics.html#a0c6d5628d873b029bcbf6ad22481fff2',1,'weighed_graph_metrics']]]
+  ['averageedgedegree_30',['averageEdgeDegree',['../namespaceweighed__graph__metrics.html#ac7e13394ad8bae4db14d26d479260ee6',1,'weighed_graph_metrics']]],
+  ['averageedgedegreeweighted_31',['averageEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#af846aa728c637723640e3e8ed56f3424',1,'weighed_graph_metrics']]],
+  ['averageedgeweight_32',['averageEdgeWeight',['../namespaceweighed__graph__metrics.html#a0c6d5628d873b029bcbf6ad22481fff2',1,'weighed_graph_metrics']]]
 ];

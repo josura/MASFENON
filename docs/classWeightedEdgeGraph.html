@@ -155,6 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c86e57f044655608a3e27551147269b" id="r_a2c86e57f044655608a3e27551147269b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a2c86e57f044655608a3e27551147269b">setNodesNames</a> (const std::vector&lt; std::string &gt; &amp;nodenameSets, const std::vector&lt; std::string &gt; &amp;nodenameTargets=std::vector&lt; std::string &gt;())</td></tr>
 <tr class="memdesc:a2c86e57f044655608a3e27551147269b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to set the names of multiple nodes in the graph.  <br /></td></tr>
 <tr class="separator:a2c86e57f044655608a3e27551147269b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c9aadcfc05bf0fe0ab75e1318146f42" id="r_a0c9aadcfc05bf0fe0ab75e1318146f42"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a0c9aadcfc05bf0fe0ab75e1318146f42">getNodeName</a> (int node) const</td></tr>
+<tr class="memdesc:a0c9aadcfc05bf0fe0ab75e1318146f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the node name by its index.  <br /></td></tr>
+<tr class="separator:a0c9aadcfc05bf0fe0ab75e1318146f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8fb3424f09147387c69ff7f39ffc23e" id="r_aa8fb3424f09147387c69ff7f39ffc23e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#aa8fb3424f09147387c69ff7f39ffc23e">getNodeValue</a> (int node) const</td></tr>
 <tr class="memdesc:aa8fb3424f09147387c69ff7f39ffc23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the value of a node by its index.  <br /></td></tr>
 <tr class="separator:aa8fb3424f09147387c69ff7f39ffc23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,6 +194,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d3bf2e7b630fc443a430ab6a5ecf1f1" id="r_a9d3bf2e7b630fc443a430ab6a5ecf1f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a9d3bf2e7b630fc443a430ab6a5ecf1f1">containsNode</a> (std::string node) const</td></tr>
 <tr class="memdesc:a9d3bf2e7b630fc443a430ab6a5ecf1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to know if a node is in the graph(immutable)  <br /></td></tr>
 <tr class="separator:a9d3bf2e7b630fc443a430ab6a5ecf1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f0455f9437b86554fb36209b736211e" id="r_a9f0455f9437b86554fb36209b736211e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a9f0455f9437b86554fb36209b736211e">getPredecessors</a> (int node) const</td></tr>
+<tr class="memdesc:a9f0455f9437b86554fb36209b736211e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the predecessors of a node by its index(immutable).  <br /></td></tr>
+<tr class="separator:a9f0455f9437b86554fb36209b736211e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7fc593e03daa34d9c0fcc1a24865f5a" id="r_ab7fc593e03daa34d9c0fcc1a24865f5a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#ab7fc593e03daa34d9c0fcc1a24865f5a">getSuccessors</a> (int node) const</td></tr>
+<tr class="memdesc:ab7fc593e03daa34d9c0fcc1a24865f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the successors of a node by its index(immutable).  <br /></td></tr>
+<tr class="separator:ab7fc593e03daa34d9c0fcc1a24865f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e716dbe1a72138daca3478f39f0bb5" id="r_a14e716dbe1a72138daca3478f39f0bb5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a14e716dbe1a72138daca3478f39f0bb5">getNeighbors</a> (int node) const</td></tr>
+<tr class="memdesc:a14e716dbe1a72138daca3478f39f0bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the neighbors of a node by its index(immutable).  <br /></td></tr>
+<tr class="separator:a14e716dbe1a72138daca3478f39f0bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46261714b6fe50b311cd727dbb6ce043" id="r_a46261714b6fe50b311cd727dbb6ce043"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a46261714b6fe50b311cd727dbb6ce043">getPredecessors</a> (std::string nodeName) const</td></tr>
+<tr class="memdesc:a46261714b6fe50b311cd727dbb6ce043"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the predecessors of a node by its name(immutable).  <br /></td></tr>
+<tr class="separator:a46261714b6fe50b311cd727dbb6ce043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1127dc0c0e930555827172d1015710" id="r_a2c1127dc0c0e930555827172d1015710"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a2c1127dc0c0e930555827172d1015710">getSuccessors</a> (std::string nodeName) const</td></tr>
+<tr class="memdesc:a2c1127dc0c0e930555827172d1015710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the successors of a node by its name(immutable).  <br /></td></tr>
+<tr class="separator:a2c1127dc0c0e930555827172d1015710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc42c47f150546dcc0ab07a25216deca" id="r_acc42c47f150546dcc0ab07a25216deca"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#acc42c47f150546dcc0ab07a25216deca">getNeighbors</a> (std::string nodeName) const</td></tr>
+<tr class="memdesc:acc42c47f150546dcc0ab07a25216deca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the neighbors of a node by its name(immutable).  <br /></td></tr>
+<tr class="separator:acc42c47f150546dcc0ab07a25216deca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12c94e60e58a2e8aefac52fe8db3391d" id="r_a12c94e60e58a2e8aefac52fe8db3391d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a12c94e60e58a2e8aefac52fe8db3391d">getnodeValuesStr</a> () const</td></tr>
 <tr class="memdesc:a12c94e60e58a2e8aefac52fe8db3391d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the string representation of the node values(immutable)  <br /></td></tr>
 <tr class="separator:a12c94e60e58a2e8aefac52fe8db3391d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1361,6 +1382,120 @@ getIndexFromName(std::string name) </dd>
 
 </div>
 </div>
+<a id="a14e716dbe1a72138daca3478f39f0bb5" name="a14e716dbe1a72138daca3478f39f0bb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e716dbe1a72138daca3478f39f0bb5">&#9670;&#160;</a></span>getNeighbors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; int &gt; WeightedEdgeGraph::getNeighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the neighbors of a node by its index(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The index of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of integers representing the neighbors of the specified node.</dd></dl>
+<p>The neighbors of a node are the nodes that are directly connected to the specified node (both entering and exiting neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses both the predecessors and successors functions to get the neighbors of the specified node. </p><dl class="section see"><dt>See also</dt><dd>getPredecessors(int node) </dd>
+<dd>
+getSuccessors(int node) </dd></dl>
+
+</div>
+</div>
+<a id="acc42c47f150546dcc0ab07a25216deca" name="acc42c47f150546dcc0ab07a25216deca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc42c47f150546dcc0ab07a25216deca">&#9670;&#160;</a></span>getNeighbors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; WeightedEdgeGraph::getNeighbors </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>nodeName</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the neighbors of a node by its name(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeName</td><td>The name of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of names representing the neighbors of the specified node.</dd></dl>
+<p>The neighbors of a node are the nodes that are directly connected to the specified node (both entering and exiting neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getNeighbors(int node) function. </p><dl class="section see"><dt>See also</dt><dd>getIndexFromName(std::string name) </dd>
+<dd>
+getNeighbors(int node) </dd></dl>
+
+</div>
+</div>
+<a id="a0c9aadcfc05bf0fe0ab75e1318146f42" name="a0c9aadcfc05bf0fe0ab75e1318146f42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c9aadcfc05bf0fe0ab75e1318146f42">&#9670;&#160;</a></span>getNodeName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string WeightedEdgeGraph::getNodeName </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to get the node name by its index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The index of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The name of the specified node.</dd></dl>
+<p>This function retrieves the name of a node based on its index in the graph. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function does not check if the node exists in the graph, it only checks the index. </dd></dl>
+
+</div>
+</div>
 <a id="aed769ff58f478aaccf711bd0252d61d3" name="aed769ff58f478aaccf711bd0252d61d3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed769ff58f478aaccf711bd0252d61d3">&#9670;&#160;</a></span>getNodeNames()</h2>
 
@@ -1608,6 +1743,145 @@ getIndexFromName(std::string name) </dd>
 
 <p>Function to get the number of nodes in the graph(immutable). </p>
 <dl class="section return"><dt>Returns</dt><dd>The number of nodes in the graph. </dd></dl>
+
+</div>
+</div>
+<a id="a9f0455f9437b86554fb36209b736211e" name="a9f0455f9437b86554fb36209b736211e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f0455f9437b86554fb36209b736211e">&#9670;&#160;</a></span>getPredecessors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; int &gt; WeightedEdgeGraph::getPredecessors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the predecessors of a node by its index(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The index of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of integers representing the predecessors of the specified node.</dd></dl>
+<p>The predecessors of a node are the nodes that have edges directed towards the specified node (entering neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a46261714b6fe50b311cd727dbb6ce043" name="a46261714b6fe50b311cd727dbb6ce043"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46261714b6fe50b311cd727dbb6ce043">&#9670;&#160;</a></span>getPredecessors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; WeightedEdgeGraph::getPredecessors </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>nodeName</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the predecessors of a node by its name(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeName</td><td>The name of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of names representing the predecessors of the specified node.</dd></dl>
+<p>The predecessors of a node are the nodes that have edges directed towards the specified node (entering neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getPredecessors(int node) function. </p><dl class="section see"><dt>See also</dt><dd>getIndexFromName(std::string name) </dd>
+<dd>
+getPredecessors(int node) </dd></dl>
+
+</div>
+</div>
+<a id="ab7fc593e03daa34d9c0fcc1a24865f5a" name="ab7fc593e03daa34d9c0fcc1a24865f5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7fc593e03daa34d9c0fcc1a24865f5a">&#9670;&#160;</a></span>getSuccessors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; int &gt; WeightedEdgeGraph::getSuccessors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the successors of a node by its index(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The index of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of integers representing the successors of the specified node.</dd></dl>
+<p>The successors of a node are the nodes that have edges directed away from the specified node (exiting neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the adjacency list to get the successors of the specified node. </p><dl class="section see"><dt>See also</dt><dd>getAdjList(int node) </dd></dl>
+
+</div>
+</div>
+<a id="a2c1127dc0c0e930555827172d1015710" name="a2c1127dc0c0e930555827172d1015710"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c1127dc0c0e930555827172d1015710">&#9670;&#160;</a></span>getSuccessors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; WeightedEdgeGraph::getSuccessors </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>nodeName</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get the successors of a node by its name(immutable). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeName</td><td>The name of the node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of names representing the successors of the specified node.</dd></dl>
+<p>The successors of a node are the nodes that have edges directed away from the specified node (exiting neighbors). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the node index is out of range.(-1 or greater than the number of nodes)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getSuccessors(int node) function. </p><dl class="section see"><dt>See also</dt><dd>getIndexFromName(std::string name) </dd>
+<dd>
+getSuccessors(int node) </dd></dl>
 
 </div>
 </div>

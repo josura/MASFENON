@@ -16,5 +16,11 @@ var searchData=
   ['matrix_2ehxx_13',['Matrix.hxx',['../Matrix_8hxx.html',1,'']]],
   ['matrix_3c_20double_20_3e_14',['Matrix&lt; double &gt;',['../classMatrix.html',1,'']]],
   ['matrixmultiplyvector_15',['matrixMultiplyVector',['../optimization_8cxx.html#a145f6520b4dc93f24ab962e5f76a3955',1,'optimization.cxx']]],
-  ['message_16',['Help Message',['../index.html#autotoc_md8',1,'']]]
+  ['maxedgedegree_16',['maxEdgeDegree',['../namespaceweighed__graph__metrics.html#ac310645078f8e9a28946d52f81b1ae1d',1,'weighed_graph_metrics']]],
+  ['maxedgedegreeweighted_17',['maxEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#aa4ce89d73ab20912317ecd574a6ea4be',1,'weighed_graph_metrics']]],
+  ['maxedgeweight_18',['maxEdgeWeight',['../namespaceweighed__graph__metrics.html#a8c0163f343e72ffdaba205205623f0c3',1,'weighed_graph_metrics']]],
+  ['message_19',['Help Message',['../index.html#autotoc_md8',1,'']]],
+  ['minedgedegree_20',['minEdgeDegree',['../namespaceweighed__graph__metrics.html#addd5bb51d2e0c02b6ac6aa8b669c230c',1,'weighed_graph_metrics']]],
+  ['minedgedegreeweighted_21',['minEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#a7f802904bbc561bb23882db005e859f2',1,'weighed_graph_metrics']]],
+  ['minedgeweight_22',['minEdgeWeight',['../namespaceweighed__graph__metrics.html#a02ce4381b2a1c99f1baeeda387af5641',1,'weighed_graph_metrics']]]
 ];
