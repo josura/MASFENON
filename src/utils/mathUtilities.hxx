@@ -392,6 +392,40 @@ std::vector<T> vectorAddition(std::vector<T> vec1, std::vector<T> vec2){
 }
 
 /**
+ * @brief  Function that implements the multiplication of a vector by a scalar
+ * @return  the result of the multiplication
+ * @param  vec : the vector to multiply
+ * @param  scalar : the scalar to multiply by
+ * @details the function is used to multiply a vector by a scalar. The vector can contain any type of value, as long as that type has the operator * defined
+ */
+template<typename T>
+std::vector<T> vectorScalarMultiplication(std::vector<T> vec, T scalar){
+    for (uint i = 0; i < vec.size(); ++i) {
+        vec[i]=vec[i]*scalar;
+    }
+    return vec;
+}
+
+/**
+ * @brief  Function that implements the search for an element in a vector
+ * @return  true if the element is found, false otherwise
+ * @param  vec : the vector to search
+ * @param  element : the element to search for
+ * @details the function is used to search for an element in a vector. The vector can contain any type of value, as long as that type has the operator == defined
+ * @warning the function is not optimized for large vectors, it is a linear search
+ */
+template<typename T>
+bool vectorContains(std::vector<T> vec, const T element){
+    for (uint i = 0; i < vec.size(); ++i) {
+        if(vec[i]==element){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+/**
  * @brief  Function that implements the intersection of two vectors(set intersection)
  * @return  the result of the intersection
  * @param  vec1 : the first vector
@@ -405,6 +439,24 @@ std::vector<T> vectorsIntersection(std::vector<T> vec1, std::vector<T> vec2){
         auto it = std::find(vec2.begin(), vec2.end(), vec1[i]);
         if (it != vec2.end()) {
             retVec.push_back(vec1[i]);
+        }
+    }
+    return retVec;
+}
+
+template<typename T>
+/**
+ * @brief  Function that implements the union of two vectors(set union)
+ * @return  the result of the union
+ * @param  vec1 : the first vector
+ * @param  vec2 : the second vector
+ * @details the function is used to find the union of two vectors. The vector can contain any type of value, as long as that type has the operator == defined
+ */
+std::vector<T> vectorsUnion(std::vector<T> vec1, std::vector<T> vec2){
+    std::vector<T> retVec = vec1;
+    for (uint i = 0; i < vec2.size(); ++i) {
+        if(!vectorContains(retVec, vec2[i])){
+            retVec.push_back(vec2[i]);
         }
     }
     return retVec;
@@ -443,39 +495,6 @@ std::vector<T> vectorNormalization(std::vector<T> vec){
  * @throws std::invalid_argument if the vector is null
  */
 double vectorNorm(std::vector<double> vec);
-
-/**
- * @brief  Function that implements the multiplication of a vector by a scalar
- * @return  the result of the multiplication
- * @param  vec : the vector to multiply
- * @param  scalar : the scalar to multiply by
- * @details the function is used to multiply a vector by a scalar. The vector can contain any type of value, as long as that type has the operator * defined
- */
-template<typename T>
-std::vector<T> vectorScalarMultiplication(std::vector<T> vec, T scalar){
-    for (uint i = 0; i < vec.size(); ++i) {
-        vec[i]=vec[i]*scalar;
-    }
-    return vec;
-}
-
-/**
- * @brief  Function that implements the search for an element in a vector
- * @return  true if the element is found, false otherwise
- * @param  vec : the vector to search
- * @param  element : the element to search for
- * @details the function is used to search for an element in a vector. The vector can contain any type of value, as long as that type has the operator == defined
- * @warning the function is not optimized for large vectors, it is a linear search
- */
-template<typename T>
-bool vectorContains(std::vector<T> vec, const T element){
-    for (uint i = 0; i < vec.size(); ++i) {
-        if(vec[i]==element){
-            return true;
-        }
-    }
-    return false;
-}
 
 /**
  * @brief  Function that implements the search for an element in a vector, and returns its index

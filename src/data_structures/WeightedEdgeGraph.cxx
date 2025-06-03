@@ -154,7 +154,7 @@ int WeightedEdgeGraph::degreeOfNode(int node)const{
         Logger::getInstance().printError("WeightedEdgeGraph::degreeOfNode: node " + std::to_string(node) + " is not in the graph ");
         throw std::invalid_argument("[ERROR] WeightedEdgeGraph::degreeOfNode: invalid argument for degree of node");
     }
-    return outDegreeOfNode(node) + inDegreeOfNode(node);
+    return getNeighbors(node).size();
 }
 
 WeightedEdgeGraph* WeightedEdgeGraph::addEdge(int node1, int node2, double weight, bool directed){
@@ -482,6 +482,87 @@ std::string WeightedEdgeGraph::getAdjListStr(int node)const{
 
 bool WeightedEdgeGraph::containsNode(std::string node)const{
     return nodeToIndex.contains(node);
+}
+
+std::vector<int> WeightedEdgeGraph::getPredecessors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getPredecessors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getPredecessors: invalid argument for predecessors of node");
+    }
+    std::vector<int> predecessors;
+    for(int i = 0; i < numberOfNodes; i++){
+        if(adjList[i].contains(node)){
+            predecessors.push_back(i);
+        }
+    }
+    return predecessors;
+}
+
+std::vector<int> WeightedEdgeGraph::getSuccessors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getSuccessors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getSuccessors: invalid argument for successors of node");
+    }
+    std::vector<int> successors;
+    for(auto it = adjList[node].cbegin(); it != adjList[node].cend(); it++){
+        successors.push_back(*it);
+    }
+    return successors;
+}
+
+std::vector<int> WeightedEdgeGraph::getNeighbors(int node)const{
+    if(node >= numberOfNodes || node < 0){
+        Logger::getInstance().printError("WeightedEdgeGraph::getNeighbors: node " + std::to_string(node) + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getNeighbors: invalid argument for neighbors of node");
+    }
+    std::vector<int> neighbors;
+    std::vector<int> successors = getSuccessors(node);
+    std::vector<int> predecessors = getPredecessors(node);
+    neighbors = vectorsUnion(successors, predecessors);
+
+    return neighbors;
+}
+
+std::vector<std::string> WeightedEdgeGraph::getPredecessors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getPredecessors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getPredecessors: invalid argument for predecessors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> predecessors = getPredecessors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = predecessors.cbegin(); it != predecessors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
+}
+
+std::vector<std::string> WeightedEdgeGraph::getSuccessors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getSuccessors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getSuccessors: invalid argument for successors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> successors = getSuccessors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = successors.cbegin(); it != successors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
+}
+
+std::vector<std::string> WeightedEdgeGraph::getNeighbors(std::string node)const{
+    if(!nodeToIndex.contains(node)){
+        Logger::getInstance().printError("WeightedEdgeGraph::getNeighbors: node " + node + " is not in the graph ");
+        throw std::invalid_argument("[ERROR] WeightedEdgeGraph::getNeighbors: invalid argument for neighbors of node");
+    }
+    int nodeIndex = nodeToIndex.at(node);
+    std::vector<int> neighbors = getNeighbors(nodeIndex);
+    std::vector<std::string> ret;
+    for(auto it = neighbors.cbegin(); it != neighbors.cend(); it++){
+        ret.push_back(nameVector[*it]);
+    }
+    return ret;
 }
 
 
