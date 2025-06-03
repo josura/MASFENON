@@ -146,17 +146,6 @@ double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph&
     double totalWeightedDegree = 0.0;
     for (int i = 0; i < graph.getNumNodes(); ++i) {
         double weightedDegree = 0.0; // Initialize weighted degree variable
-        switch (mode) {
-            case DegreeMode::In:
-                weightedDegree = graph.inDegreeOfNode(i) ; // Get the in-degree
-                break;
-            case DegreeMode::Out:
-                weightedDegree = graph.outDegreeOfNode(i); // Get the out-degree
-                break;
-            case DegreeMode::Full:
-                weightedDegree = graph.degreeOfNode(i); // Get the full degree
-                break;
-        }
         // sum the edge weights for the node
         std::vector<int> neighborVector;
         switch ( mode) {
