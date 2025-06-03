@@ -200,40 +200,44 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const
     std::pair<std::string, double> maxEdge; // Initialize a pair to hold the maximum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
         double weightedDegree = 0.0; // Initialize weighted degree variable
-        switch (mode) {
-            case DegreeMode::In:
-                weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
-                break;
-            case DegreeMode::Out:
-                weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
-                break;
-            case DegreeMode::Full:
-                weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
-                break;
-        }
+        // switch (mode) {
+        //     case DegreeMode::In:
+        //         weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
+        //         break;
+        //     case DegreeMode::Out:
+        //         weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
+        //         break;
+        //     case DegreeMode::Full:
+        //         weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
+        //         break;
+        // }
         // sum the edge weights for the node
         std::vector<int> neighborVector;
         switch ( mode) {
             case DegreeMode::In:
                 neighborVector = graph.getPredecessors(i); // Get predecessors for in-degree
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
                 }
                 break;
             case DegreeMode::Out:
                 neighborVector = graph.getSuccessors(i); // Get successors for out-degree
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
                 }
                 break;
             case DegreeMode::Full:
                 neighborVector = graph.getSuccessors(i); // Get first successors
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
                 }
                 neighborVector = graph.getPredecessors(i); // Get predecessors
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
                 }
                 break;
         }
@@ -257,40 +261,43 @@ std::pair<std::string,double> weighed_graph_metrics::minEdgeDegreeWeighted(const
     std::pair<std::string, double> minEdge; // Initialize a pair to hold the minimum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
         double weightedDegree = 0.0; // Initialize weighted degree variable
-        switch (mode) {
-            case DegreeMode::In:
-                weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
-                break;
-            case DegreeMode::Out:
-                weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
-                break;
-            case DegreeMode::Full:
-                weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
-                break;
-        }
-        // sum the edge weights for the node
+        // switch (mode) {
+        //     case DegreeMode::In:
+        //         weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
+        //         break;
+        //     case DegreeMode::Out:
+        //         weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
+        //         break;
+        //     case DegreeMode::Full:
+        //         weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
+        //         break;
+        // }
         std::vector<int> neighborVector;
         switch ( mode) {
             case DegreeMode::In:
                 neighborVector = graph.getPredecessors(i); // Get predecessors for in-degree
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
                 }
                 break;
             case DegreeMode::Out:
                 neighborVector = graph.getSuccessors(i); // Get successors for out-degree
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
                 }
                 break;
             case DegreeMode::Full:
                 neighborVector = graph.getSuccessors(i); // Get first successors
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(i, neighbor) * graph.getNodeValue(neighbor); // Sum the weights of outgoing edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(i, neighbor); // Sum the weights of outgoing edges
                 }
                 neighborVector = graph.getPredecessors(i); // Get predecessors
                 for (int neighbor : neighborVector) {
-                    weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    // weightedDegree += graph.getEdgeWeight(neighbor, i) * graph.getNodeValue(neighbor); // Sum the weights of incoming edges multiplied by node values
+                    weightedDegree += graph.getEdgeWeight(neighbor, i); // Sum the weights of incoming edges
                 }
                 break;
         }
