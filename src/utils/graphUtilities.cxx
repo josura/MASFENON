@@ -189,17 +189,6 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const
     std::pair<std::string, double> maxEdge; // Initialize a pair to hold the maximum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
         double weightedDegree = 0.0; // Initialize weighted degree variable
-        // switch (mode) {
-        //     case DegreeMode::In:
-        //         weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
-        //         break;
-        //     case DegreeMode::Out:
-        //         weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
-        //         break;
-        //     case DegreeMode::Full:
-        //         weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
-        //         break;
-        // }
         // sum the edge weights for the node
         std::vector<int> neighborVector;
         switch ( mode) {
@@ -250,17 +239,6 @@ std::pair<std::string,double> weighed_graph_metrics::minEdgeDegreeWeighted(const
     std::pair<std::string, double> minEdge; // Initialize a pair to hold the minimum edge information
     for (int i = 0; i < graph.getNumNodes(); ++i) {
         double weightedDegree = 0.0; // Initialize weighted degree variable
-        // switch (mode) {
-        //     case DegreeMode::In:
-        //         weightedDegree = graph.inDegreeOfNode(i) * graph.getNodeValue(i); // Get the in-degree and multiply by node value
-        //         break;
-        //     case DegreeMode::Out:
-        //         weightedDegree = graph.outDegreeOfNode(i) * graph.getNodeValue(i); // Get the out-degree and multiply by node value
-        //         break;
-        //     case DegreeMode::Full:
-        //         weightedDegree = graph.degreeOfNode(i) * graph.getNodeValue(i); // Get the full degree and multiply by node value
-        //         break;
-        // }
         std::vector<int> neighborVector;
         switch ( mode) {
             case DegreeMode::In:
