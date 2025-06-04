@@ -101,15 +101,19 @@ if [ "$#" -eq 5 ]; then
 elif [ "$#" -eq 2 ]; then
     # Resume mode from file
     mode="resume computation"
-    echo "[INFO] Computing ranges from simulation output folder"
+    echo "[INFO] RESUME COMPUTATION. Computing ranges from simulation output folder $2 for epochs $1"
     epochs=$1
     OutputFolder=$2
+    # TODO also make the intervals be passed as command line argument
+    # For now the intervals are set to 3 as a default value
+    intervals=3
+    echo "[INFO] Using default intervals: $intervals"
     # Create a subfolder for this epoch's outputs
     epochOutput="$OutputFolder/epoch_initial"
     mkdir -p "$epochOutput"
     # Infer the new parameters from the simulated data
     echo "[INFO] Computing MSE for initial parameter selection from simulation output folder"
-    # TODO also make the intervals be passed as command line argument
+    
     python3 $COMPUTE_MSE_SCRIPT $epochOutput
 
     echo "[DONE] Computed MSE for initial parameters."
