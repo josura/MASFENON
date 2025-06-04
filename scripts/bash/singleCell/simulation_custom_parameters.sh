@@ -25,6 +25,11 @@ dissStep=$(awk -v min="$dissMin" -v max="$dissMax" -v steps="$dissSteps" 'BEGIN 
 propStep=$(awk -v min="$propMin" -v max="$propMax" -v steps="$propSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
 consStep=$(awk -v min="$consMin" -v max="$consMax" -v steps="$consSteps" 'BEGIN { if (steps <= 1) print 0; else print (max - min) / (steps - 1) }')
 
+# Print the computed step sizes
+echo "dissipation parameters: min=$dissMin, max=$dissMax, steps=$dissSteps, step size=$dissStep"
+echo "propagation parameters: min=$propMin, max=$propMax, steps=$propSteps, step size=$propStep"
+echo "conservation parameters: min=$consMin, max=$consMax, steps=$consSteps, step size=$consStep"
+
 # Generate the value ranges
 dissipationScaleFactors=($(seq -f "%.6f" $dissMin $dissStep $dissMax))
 propagationScaleFactors=($(seq -f "%.6f" $propMin $propStep $propMax))
