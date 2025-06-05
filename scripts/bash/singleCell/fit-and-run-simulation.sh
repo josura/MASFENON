@@ -106,7 +106,7 @@ elif [ "$#" -eq 2 ]; then
     OutputFolder=$2
     # TODO also make the intervals be passed as command line argument
     # For now the intervals are set to 3 as a default value
-    intervals=3
+    intervals=4
     echo "[INFO] Using default intervals: $intervals"
     # Create a subfolder for this epoch's outputs
     epochOutput="$OutputFolder/epoch_initial"
