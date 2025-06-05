@@ -42,7 +42,7 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                 outputFolder="$allOutputsFolder/dissipation_$dissipationScaleFactor-propagation_$propagationScaleFactor-conservation_$conservationScaleFactor"
                 mkdir -p $outputFolder
                 # also generating the currentPerturbations folder and the iterationMatrices folder, to account for issue #38
-                mkdir -p $outputFolder/currentPerturbations
+                # mkdir -p $outputFolder/currentPerturbations  # not needed, as currentPerturbations are not generated in this simulation
                 mkdir -p $outputFolder/iterationMatrices
 
                 echo "Running simulation with dissipation: $dissipationScaleFactor, propagation: $propagationScaleFactor, conservation: $conservationScaleFactor"
