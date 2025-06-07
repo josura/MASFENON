@@ -26,10 +26,14 @@
  * @details The dissipation factor should be between 0 and 1 to avoid producing negative values in the system dynamics.
  */
 std::function<double(double)> getDissipationScalingFunction(std::vector<double> parameters) {
-    return [](double x) {
+    // Controls over the parameters can be added here if needed
+    if(parameters.size() == 0) {
+        throw std::invalid_argument("Parameters vector is empty. Cannot adjust dissipation factor.");
+    }
+    return [parameters](double x) {
         // Constant dissipation factor (can be modified for dynamic behavior)
         // Parameters can be used to adjust the factor if needed
-        return 0.5; // Example constant value
+        return parameters[0]; // Example constant value
     };
 }
  
