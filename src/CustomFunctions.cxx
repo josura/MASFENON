@@ -46,6 +46,19 @@ std::function<double(double)> getConservationScalingFunction() {
 }
 
 /**
+ * @brief Generates a constant conservation scaling function with parameters.
+ * @return A lambda function returning a constant conservation factor.
+ * @details The conservation factor should also lie between 0 and 1 to ensure values remain within logical bounds.
+ */
+std::function<double(double)> getConservationScalingFunction(std::vector<double> parameters) {
+    return [](double x) {
+        // Constant conservation factor (can be modified dynamically)
+        // Parameters can be used to adjust the factor if needed
+        return 0.5; // Example constant value
+    };
+}
+
+/**
  * @brief Generates a constant propagation scaling function.
  * @return A lambda function returning a constant propagation factor.
  * @details The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time.
