@@ -71,6 +71,19 @@ std::function<double(double)> getPropagationScalingFunction() {
 }
 
 /**
+ * @brief Generates a constant propagation scaling function with parameters.
+ * @return A lambda function returning a constant propagation factor.
+ * @details The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time.
+ */
+std::function<double(double)> getPropagationScalingFunction(std::vector<double> parameters) {
+    return [](double x) {
+        // Constant propagation factor (can be modified dynamically)
+        // Parameters can be used to adjust the factor if needed
+        return 0.5; // Example constant value
+    };
+}
+
+/**
  * @brief Generates a saturation function with upper and lower bounds.
  * @return A lambda function that clamps a value between [-saturation, +saturation].
  * @details Used to prevent node values from exceeding defined logical limits in the augmented graph.
