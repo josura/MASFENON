@@ -526,7 +526,12 @@ int main(int argc, char** argv) {
         } else if(conservationModelName == "custom"){
             //control if custom function for conservation returns double and takes a single parameter as double
             logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
-            conservationModel = new ConservationModel(getConservationScalingFunction());
+            if (vm.count("conservationModelParameters")) {
+
+            } else {
+                logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction());
+            }
         } else {
             logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
