@@ -533,6 +533,7 @@ int main(int argc, char** argv) {
                     logger << param << ", ";
                 }
                 logger << ")" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
             } else {
                 logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 conservationModel = new ConservationModel(getConservationScalingFunction());
