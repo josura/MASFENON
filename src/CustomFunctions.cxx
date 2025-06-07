@@ -80,10 +80,14 @@ std::function<double(double)> getPropagationScalingFunction() {
  * @details The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time.
  */
 std::function<double(double)> getPropagationScalingFunction(std::vector<double> parameters) {
-    return [](double x) {
+    // Controls over the parameters can be added here if needed
+    if(parameters.size() == 0) {
+        throw std::invalid_argument("Parameters vector is empty. Cannot adjust propagation factor.");
+    }
+    return [parameters](double x) {
         // Constant propagation factor (can be modified dynamically)
         // Parameters can be used to adjust the factor if needed
-        return 0.5; // Example constant value
+        return parameters[0]; // Example constant value
     };
 }
 
