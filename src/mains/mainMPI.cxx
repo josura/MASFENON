@@ -1137,11 +1137,16 @@ int main(int argc, char** argv) {
             }
             
         } else if(propagationModelName == "customPropagation"){
+            logger << "[LOG] propagation model set to custom propagation (with custom propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ", these parameters are not used since the propagation scaling function was set to custom.\n";
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;  //TODO change the logger to print the whole vector
+                std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+            } else {
+                logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                propagationScalingFunction = getPropagationScalingFunction();
             }
-            propagationScalingFunction = getPropagationScalingFunction();
             for(int i = 0; i < finalWorkload;i++ ){
                 PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
