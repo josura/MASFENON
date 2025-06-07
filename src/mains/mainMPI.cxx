@@ -1107,12 +1107,14 @@ int main(int argc, char** argv) {
                 //nothing to do, default propagation scaling function is the identity
             }
         } else if(propagationModelName == "customScaling"){ 
+            logger << "[LOG] propagation model set to custom scaling propagation (with original propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
                 << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else {
-                logger.printError("propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
             }
             for(int i = 0; i < finalWorkload;i++ ){
