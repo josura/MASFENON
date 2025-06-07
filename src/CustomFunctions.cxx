@@ -51,10 +51,14 @@ std::function<double(double)> getConservationScalingFunction() {
  * @details The conservation factor should also lie between 0 and 1 to ensure values remain within logical bounds.
  */
 std::function<double(double)> getConservationScalingFunction(std::vector<double> parameters) {
-    return [](double x) {
-        // Constant conservation factor (can be modified dynamically)
+    // Controls over the parameters can be added here if needed
+    if(parameters.size() == 0) {
+        throw std::invalid_argument("Parameters vector is empty. Cannot adjust conservation factor.");
+    }
+    return [parameters](double x) {
+        // Constant conservation factor returned as the first parameter (can be modified dynamically)
         // Parameters can be used to adjust the factor if needed
-        return 0.5; // Example constant value
+        return parameters[0]; // Example constant value from parameters
     };
 }
 
