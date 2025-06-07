@@ -33,6 +33,14 @@ std::function<double(double)> getDissipationScalingFunction(std::vector<double> 
 std::function<double(double)> getConservationScalingFunction();
 
 /**
+ * @brief Generates a scaling function for conservation, passing parameters.
+ * @return A theta function that takes a double value and returns a double value.
+ * @details The conservation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system. The conservation factor should also lie between 0 and 1 to ensure values remain within logical bounds.
+ * The parameters passed to the function will be used inside the function for the generation.
+ */
+std::function<double(double)> getConservationScalingFunction(std::vector<double> parameters);
+
+/**
  * @brief Generates a scaling function for propagation.
  * @return A omega function that takes a double value and returns a double value.
  * @details The propagation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system. The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time.
