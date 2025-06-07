@@ -1110,7 +1110,7 @@ int main(int argc, char** argv) {
             logger << "[LOG] propagation model set to custom scaling propagation (with original propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else {
@@ -1121,12 +1121,16 @@ int main(int argc, char** argv) {
                 PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
             }
-        } else if(propagationModelName == "customScalingNeighbors"){ 
+        } else if(propagationModelName == "customScalingNeighbors"){
+            logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ", these parameters are not used since the propagation scaling function was set to custom.\n";
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
+                std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+            } else{
+                logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                propagationScalingFunction = getPropagationScalingFunction();
             }
-            propagationScalingFunction = getPropagationScalingFunction();
             for(int i = 0; i < finalWorkload;i++ ){
                 PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
