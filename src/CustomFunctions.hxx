@@ -48,6 +48,14 @@ std::function<double(double)> getConservationScalingFunction(std::vector<double>
 std::function<double(double)> getPropagationScalingFunction();
 
 /**
+ * @brief Generates a scaling function for propagation, passing parameters.
+ * @return A omega function that takes a double value and returns a double value.
+ * @details The propagation scaling function is used to adjust the values of the nodes in the augmented graph based on the current state of the system. The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time.
+ * The parameters passed to the function will be used inside the function for the generation.
+ */
+std::function<double(double)> getPropagationScalingFunction(std::vector<double> parameters);
+
+/**
  * @brief Generates a saturation function. Should clamps a value between [-saturation, +saturation].
  * @return A saturation function that takes two double values(input value and saturation value) and returns a double value. 
  * @details The saturation function is used to limit the values of the nodes in the augmented graph. Used to prevent node values from exceeding defined logical limits in the augmented graph.
