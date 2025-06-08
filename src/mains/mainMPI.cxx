@@ -1127,6 +1127,7 @@ int main(int argc, char** argv) {
                 logger << "[LOG] propagation model parameters were declared to be "
                 << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else{
                 logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
