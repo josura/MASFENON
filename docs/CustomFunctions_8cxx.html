@@ -121,12 +121,21 @@ Functions</h2></td></tr>
 <tr class="memitem:a1c8e5fb6a081dad51c6b2faba6649e18" id="r_a1c8e5fb6a081dad51c6b2faba6649e18"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#a1c8e5fb6a081dad51c6b2faba6649e18">getDissipationScalingFunction</a> ()</td></tr>
 <tr class="memdesc:a1c8e5fb6a081dad51c6b2faba6649e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant dissipation scaling function.  <br /></td></tr>
 <tr class="separator:a1c8e5fb6a081dad51c6b2faba6649e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af325a815fa8f7c242605c7a7ce85eadc" id="r_af325a815fa8f7c242605c7a7ce85eadc"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#af325a815fa8f7c242605c7a7ce85eadc">getDissipationScalingFunction</a> (std::vector&lt; double &gt; parameters)</td></tr>
+<tr class="memdesc:af325a815fa8f7c242605c7a7ce85eadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant dissipation scaling function with parameters.  <br /></td></tr>
+<tr class="separator:af325a815fa8f7c242605c7a7ce85eadc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ca0bdc7e397ac7d84c3ef21202acce7" id="r_a0ca0bdc7e397ac7d84c3ef21202acce7"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#a0ca0bdc7e397ac7d84c3ef21202acce7">getConservationScalingFunction</a> ()</td></tr>
 <tr class="memdesc:a0ca0bdc7e397ac7d84c3ef21202acce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant conservation scaling function.  <br /></td></tr>
 <tr class="separator:a0ca0bdc7e397ac7d84c3ef21202acce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5f70b25058bec18b4a83bba7e7a6b41" id="r_ab5f70b25058bec18b4a83bba7e7a6b41"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#ab5f70b25058bec18b4a83bba7e7a6b41">getConservationScalingFunction</a> (std::vector&lt; double &gt; parameters)</td></tr>
+<tr class="memdesc:ab5f70b25058bec18b4a83bba7e7a6b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant conservation scaling function with parameters.  <br /></td></tr>
+<tr class="separator:ab5f70b25058bec18b4a83bba7e7a6b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c169dc716259e116aa005ac84710b98" id="r_a1c169dc716259e116aa005ac84710b98"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#a1c169dc716259e116aa005ac84710b98">getPropagationScalingFunction</a> ()</td></tr>
 <tr class="memdesc:a1c169dc716259e116aa005ac84710b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant propagation scaling function.  <br /></td></tr>
 <tr class="separator:a1c169dc716259e116aa005ac84710b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecf645a9739b054f67282e5c73c5931b" id="r_aecf645a9739b054f67282e5c73c5931b"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#aecf645a9739b054f67282e5c73c5931b">getPropagationScalingFunction</a> (std::vector&lt; double &gt; parameters)</td></tr>
+<tr class="memdesc:aecf645a9739b054f67282e5c73c5931b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a constant propagation scaling function with parameters.  <br /></td></tr>
+<tr class="separator:aecf645a9739b054f67282e5c73c5931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad32b772af5e4cfd1befbd330a5acf8a0" id="r_ad32b772af5e4cfd1befbd330a5acf8a0"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double, double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CustomFunctions_8cxx.html#ad32b772af5e4cfd1befbd330a5acf8a0">getSaturationFunction</a> ()</td></tr>
 <tr class="memdesc:ad32b772af5e4cfd1befbd330a5acf8a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a saturation function with upper and lower bounds.  <br /></td></tr>
 <tr class="separator:ad32b772af5e4cfd1befbd330a5acf8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,7 +145,7 @@ Functions</h2></td></tr>
 <p>Provides lambda-based function generators for dissipation, conservation, and propagation scaling, as well as saturation limiting to keep node values within desired bounds. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a0ca0bdc7e397ac7d84c3ef21202acce7" name="a0ca0bdc7e397ac7d84c3ef21202acce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ca0bdc7e397ac7d84c3ef21202acce7">&#9670;&#160;</a></span>getConservationScalingFunction()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ca0bdc7e397ac7d84c3ef21202acce7">&#9670;&#160;</a></span>getConservationScalingFunction() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -157,8 +166,31 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ab5f70b25058bec18b4a83bba7e7a6b41" name="ab5f70b25058bec18b4a83bba7e7a6b41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5f70b25058bec18b4a83bba7e7a6b41">&#9670;&#160;</a></span>getConservationScalingFunction() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt; double(double)&gt; getConservationScalingFunction </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>parameters</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a constant conservation scaling function with parameters. </p>
+<p>Generates a scaling function for conservation, passing parameters.</p>
+<dl class="section return"><dt>Returns</dt><dd>A lambda function returning a constant conservation factor.</dd></dl>
+<p>The conservation factor should also lie between 0 and 1 to ensure values remain within logical bounds. </p>
+
+</div>
+</div>
 <a id="a1c8e5fb6a081dad51c6b2faba6649e18" name="a1c8e5fb6a081dad51c6b2faba6649e18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c8e5fb6a081dad51c6b2faba6649e18">&#9670;&#160;</a></span>getDissipationScalingFunction()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c8e5fb6a081dad51c6b2faba6649e18">&#9670;&#160;</a></span>getDissipationScalingFunction() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,8 +211,31 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af325a815fa8f7c242605c7a7ce85eadc" name="af325a815fa8f7c242605c7a7ce85eadc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af325a815fa8f7c242605c7a7ce85eadc">&#9670;&#160;</a></span>getDissipationScalingFunction() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt; double(double)&gt; getDissipationScalingFunction </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>parameters</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a constant dissipation scaling function with parameters. </p>
+<p>Generates a scaling function for dissipation, passing parameters.</p>
+<dl class="section return"><dt>Returns</dt><dd>A lambda function returning a constant dissipation factor.</dd></dl>
+<p>The dissipation factor should be between 0 and 1 to avoid producing negative values in the system dynamics. </p>
+
+</div>
+</div>
 <a id="a1c169dc716259e116aa005ac84710b98" name="a1c169dc716259e116aa005ac84710b98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c169dc716259e116aa005ac84710b98">&#9670;&#160;</a></span>getPropagationScalingFunction()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c169dc716259e116aa005ac84710b98">&#9670;&#160;</a></span>getPropagationScalingFunction() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,6 +251,29 @@ Functions</h2></td></tr>
 
 <p>Generates a constant propagation scaling function. </p>
 <p>Generates a scaling function for propagation.</p>
+<dl class="section return"><dt>Returns</dt><dd>A lambda function returning a constant propagation factor.</dd></dl>
+<p>The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time. </p>
+
+</div>
+</div>
+<a id="aecf645a9739b054f67282e5c73c5931b" name="aecf645a9739b054f67282e5c73c5931b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecf645a9739b054f67282e5c73c5931b">&#9670;&#160;</a></span>getPropagationScalingFunction() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt; double(double)&gt; getPropagationScalingFunction </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>parameters</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a constant propagation scaling function with parameters. </p>
+<p>Generates a scaling function for propagation, passing parameters.</p>
 <dl class="section return"><dt>Returns</dt><dd>A lambda function returning a constant propagation factor.</dd></dl>
 <p>The propagation scaling can be tuned dynamically to reflect varying transmission/influence strength over time. </p>
 

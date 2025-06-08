@@ -48,7 +48,10 @@ It was originally developed as part of the [c2c-sepia](https://github.com/josura
 ```
 
 ## ⚙️ Parameter Customization
-Custom scaling functions (dissipation, conservation, etc.) can be modified in `src/CustomFunctions`.
+Custom scaling functions (dissipation, conservation, etc.) can be modified in the `src/CustomFunctions` files.
+
+## 📊 Propagation function customization
+Propagation functions can be customized in the `src/computation/PropagationModelCustom` files.
 
  
 ## 📄 License

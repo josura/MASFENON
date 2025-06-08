@@ -44,5 +44,5 @@ var searchData=
   ['createrandommatrixvector_41',['createRandomMatrixVector',['../mathUtilities_8hxx.html#ad2138900556fcf2586ee584803c79f30',1,'mathUtilities.hxx']]],
   ['customfunctions_2ecxx_42',['CustomFunctions.cxx',['../CustomFunctions_8cxx.html',1,'']]],
   ['customfunctions_2ehxx_43',['CustomFunctions.hxx',['../CustomFunctions_8hxx.html',1,'']]],
-  ['customization_44',['⚙️ Parameter Customization',['../index.html#autotoc_md10',1,'']]]
+  ['customization_44',['customization',['../index.html#autotoc_md10',1,'⚙️ Parameter Customization'],['../index.html#autotoc_md11',1,'📊 Propagation function customization']]]
 ];

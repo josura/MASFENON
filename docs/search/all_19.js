@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔧_20dependencies_0',['🔧 Dependencies',['../index.html#autotoc_md4',1,'']]]
+  ['📊_20propagation_20function_20customization_0',['📊 Propagation function customization',['../index.html#autotoc_md11',1,'']]]
 ];
