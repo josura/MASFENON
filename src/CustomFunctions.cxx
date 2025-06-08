@@ -30,6 +30,10 @@ std::function<double(double)> getDissipationScalingFunction(std::vector<double> 
     if(parameters.size() == 0) {
         throw std::invalid_argument("Parameters vector is empty. Cannot adjust dissipation factor.");
     }
+
+    if (parameters.size() < 3) {
+        throw std::invalid_argument("Parameters vector must contain at least 3 elements to define dissipation scaling.");
+    }
     return [parameters](double x) {
         // Constant dissipation factor (can be modified for dynamic behavior)
         // Parameters can be used to adjust the factor if needed
