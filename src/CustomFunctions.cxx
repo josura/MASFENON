@@ -72,6 +72,9 @@ std::function<double(double)> getConservationScalingFunction(std::vector<double>
     if(parameters.size() == 0) {
         throw std::invalid_argument("Parameters vector is empty. Cannot adjust conservation factor.");
     }
+    if (parameters.size() < 3) {
+        throw std::invalid_argument("Parameters vector must contain at least 3 element to define conservation scaling.");
+    }
     return [parameters](double x) {
         // Constant conservation factor returned as the first parameter (can be modified dynamically)
         // Parameters can be used to adjust the factor if needed
