@@ -51,11 +51,11 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                         --initialPerturbationPerTypeFolder $initialPerturbationFolder \
                         --typeInteractionFolder $typeInteractionsFolder \
                         --nodeDescriptionFolder $nodesFolder \
-                        --dissipationModel scaled \
+                        --dissipationModel custom \
                         --dissipationModelParameters $dissipationScaleFactor \
-                        --propagationModel neighbors \
+                        --propagationModel customScalingNeighbors \
                         --propagationModelParameters $propagationScaleFactor \
-                        --conservationModel scaled \
+                        --conservationModel custom \
                         --conservationModelParameters $conservationScaleFactor \
                         --intertypeIterations 10 \
                         --intratypeIterations 5 \

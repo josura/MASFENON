@@ -455,7 +455,7 @@ int main(int argc, char** argv) {
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if (dissipationModelParameters.size() == 3) {
                     logger << "[LOG] dissipation model parameters were set to Amplitude:"
-                    << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << ".\n";
+                    << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
                 } else {
                     logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
@@ -469,8 +469,19 @@ int main(int argc, char** argv) {
             }
         } else if(dissipationModelName == "custom"){
             //control if custom function for dissipation returns double and takes a single parameter as double
-            logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors\n " << std::endl;
-            dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
+            logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors" << std::endl;
+            if (vm.count("dissipationModelParameters")) {
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                logger << "[LOG] dissipation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                for (auto param : dissipationModelParameters) {
+                    logger << param << ", ";
+                }
+                logger << ")" << std::endl;
+                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters));
+            } else {
+                logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
+            }
         } else {
             logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
@@ -526,7 +537,18 @@ int main(int argc, char** argv) {
         } else if(conservationModelName == "custom"){
             //control if custom function for conservation returns double and takes a single parameter as double
             logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
-            conservationModel = new ConservationModel(getConservationScalingFunction());
+            if (vm.count("conservationModelParameters")) {
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                for (auto param : conservationModelParameters) {
+                    logger << param << ", ";
+                }
+                logger << ")" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
+            } else {
+                logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction());
+            }
         } else {
             logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
@@ -1085,32 +1107,47 @@ int main(int argc, char** argv) {
                 //nothing to do, default propagation scaling function is the identity
             }
         } else if(propagationModelName == "customScaling"){ 
+            logger << "[LOG] propagation model set to custom scaling propagation (with original propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ", these parameters are not used since the propagation scaling function was set to custom.\n";
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
+                std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+            } else {
+                logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                propagationScalingFunction = getPropagationScalingFunction();
             }
-            propagationScalingFunction = getPropagationScalingFunction();
             for(int i = 0; i < finalWorkload;i++ ){
                 PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
             }
-        } else if(propagationModelName == "customScalingNeighbors"){ 
+        } else if(propagationModelName == "customScalingNeighbors"){
+            logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ", these parameters are not used since the propagation scaling function was set to custom.\n";
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
+                std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+            } else{
+                logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                propagationScalingFunction = getPropagationScalingFunction();
             }
-            propagationScalingFunction = getPropagationScalingFunction();
             for(int i = 0; i < finalWorkload;i++ ){
                 PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
             }
             
         } else if(propagationModelName == "customPropagation"){
+            logger << "[LOG] propagation model set to custom propagation (with custom propagation model)\n";
             if(vm.count("propagationModelParameters")){
                 logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ", these parameters are not used since the propagation scaling function was set to custom.\n";
+                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;  //TODO change the logger to print the whole vector
+                std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
+                propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+            } else {
+                logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                propagationScalingFunction = getPropagationScalingFunction();
             }
-            propagationScalingFunction = getPropagationScalingFunction();
             for(int i = 0; i < finalWorkload;i++ ){
                 PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
