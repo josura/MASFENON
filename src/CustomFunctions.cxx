@@ -113,10 +113,13 @@ std::function<double(double)> getPropagationScalingFunction(std::vector<double> 
     if(parameters.size() == 0) {
         throw std::invalid_argument("Parameters vector is empty. Cannot adjust propagation factor.");
     }
+    if (parameters.size() < 3) {
+        throw std::invalid_argument("Parameters vector must contain at least 3 elements to define propagation scaling.");
+    }
     return [parameters](double x) {
         // Constant propagation factor (can be modified dynamically)
         // Parameters can be used to adjust the factor if needed
-        return parameters[0]; // Example constant value
+        
     };
 }
 
