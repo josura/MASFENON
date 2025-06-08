@@ -119,7 +119,16 @@ std::function<double(double)> getPropagationScalingFunction(std::vector<double> 
     return [parameters](double x) {
         // Constant propagation factor (can be modified dynamically)
         // Parameters can be used to adjust the factor if needed
-        
+        if(x <= 5.0){
+            return parameters[0]; // Example constant value from parameters
+        } else if (x > 5.0 && x <= 6.0) {
+            return parameters[1]; // Example different constant value from parameters
+        }
+        else if (x > 6.0 && x <= 10.0) {
+            return parameters[2]; // Example another constant value from parameters
+        } else {
+            return parameters[2]; // Default value if none of the conditions are met
+        }
     };
 }
 
