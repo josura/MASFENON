@@ -35,6 +35,9 @@ dissipationScaleFactors=($(seq -f "%.6f" $dissMin $dissStep $dissMax))
 propagationScaleFactors=($(seq -f "%.6f" $propMin $propStep $propMax))
 conservationScaleFactors=($(seq -f "%.6f" $consMin $consStep $consMax))
 
+dissipationScaleFactor6h = 0.280320
+propagationScaleFactor6h = 0.015737
+conservationScaleFactor6h = 0.350748
 
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
