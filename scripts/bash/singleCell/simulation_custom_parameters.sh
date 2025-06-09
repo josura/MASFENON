@@ -55,11 +55,11 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                         --typeInteractionFolder $typeInteractionsFolder \
                         --nodeDescriptionFolder $nodesFolder \
                         --dissipationModel custom \
-                        --dissipationModelParameters $dissipationScaleFactor $dissipationScaleFactor $dissipationScaleFactor \
+                        --dissipationModelParameters $dissipationScaleFactor6h $dissipationScaleFactor $dissipationScaleFactor \
                         --propagationModel customScalingNeighbors \
-                        --propagationModelParameters $propagationScaleFactor $propagationScaleFactor $propagationScaleFactor \
+                        --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor $propagationScaleFactor \
                         --conservationModel custom \
-                        --conservationModelParameters $conservationScaleFactor $conservationScaleFactor $conservationScaleFactor \
+                        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor $conservationScaleFactor \
                         --intertypeIterations 10 \
                         --intratypeIterations 5 \
                         --timestep 1 \
