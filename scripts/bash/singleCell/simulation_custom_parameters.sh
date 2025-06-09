@@ -35,6 +35,8 @@ dissipationScaleFactors=($(seq -f "%.6f" $dissMin $dissStep $dissMax))
 propagationScaleFactors=($(seq -f "%.6f" $propMin $propStep $propMax))
 conservationScaleFactors=($(seq -f "%.6f" $consMin $consStep $consMax))
 
+# Hardcoded scale parameters for the single timepoints
+# TODO fix this with the use of a single file or pass them via command line parameters
 dissipationScaleFactor6h = 0.280320
 propagationScaleFactor6h = 0.015737
 conservationScaleFactor6h = 0.350748
