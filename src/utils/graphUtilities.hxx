@@ -24,9 +24,9 @@ namespace weighed_graph_metrics {
      * @note The in-degree is the number of edges directed towards a node, the out-degree is the number of edges directed away from a node, and the full degree is the total number of edges connected to a node (both in and out).
      */
     enum class DegreeMode {
-        In,
-        Out,
-        Full
+        In,  /**< Define the mode for considering only the entering edges in the functions */
+        Out, /**< Define the mode for considering only the exiting edges in the functions  */
+        Full /**< Define the mode for considering all the edges */
     };
     /**
      * @brief Calculates the average weight of edges in a weighted graph.
