@@ -34,7 +34,12 @@
 #include "logging/Logger.hxx"
 #include "checkpoint/Checkpoint.hxx"
 
+#include <boost/program_options/option.hpp>
+#include <boost/lexical_cast/try_lexical_convert.hpp>
+#include <boost/program_options/value_semantic.hpp>
 
+namespace po = boost::program_options;///< namespace for program options
+    
 
 int main(int argc, char** argv) {    
     //program options
@@ -54,7 +59,6 @@ int main(int argc, char** argv) {
     std::string virtualNodesGranularity = "type"; ///< string variable to indicate the virtual nodes granularity
     std::string performanceFilename = ""; ///< string variable to indicate the performance filename where the performance times are saved
     std::string outputFormat = "singleIteration"; ///< string variable to indicate the output format
-    namespace po = boost::program_options; ///< namespace for program options
     po::options_description desc("Allowed options"); ///< options description
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
