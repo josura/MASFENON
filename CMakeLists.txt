@@ -58,6 +58,7 @@ set(LIB_SRCS
     src/utils/stringUtilities.cxx
     src/utils/armaUtilities.cxx
     src/utils/optimization.cxx
+    src/utils/boost_ignore_numbers_parser.cxx
     src/data_structures/Matrix.cxx
     src/computation/Computation.cxx
     src/computation/ComputationVectorized.cxx
