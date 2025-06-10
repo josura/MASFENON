@@ -33,10 +33,7 @@
 #include "CustomFunctions.hxx"
 #include "logging/Logger.hxx"
 #include "checkpoint/Checkpoint.hxx"
-
-#include <boost/program_options/option.hpp>
-#include <boost/lexical_cast/try_lexical_convert.hpp>
-#include <boost/program_options/value_semantic.hpp>
+#include "utils/boost_ignore_numbers_parser.hxx"
 
 namespace po = boost::program_options;///< namespace for program options
     
@@ -104,7 +101,12 @@ int main(int argc, char** argv) {
 
     po::variables_map vm; ///< variables map for program options
     // parse the command line arguments
-    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::store(
+        po::command_line_parser(argc, argv)    // ✅ use command_line_parser
+        .options(desc)                     // add your options_description
+        .extra_style_parser(&ignore_numbers)  // intercept negatives
+        .run(), vm                            // then parse
+    );
     // notify the variables map
     // this will throw an exception if there are any errors in the command line arguments
     po::notify(vm);
