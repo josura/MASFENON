@@ -31,15 +31,15 @@ echo "propagation parameters: min=$propMin, max=$propMax, steps=$propSteps, step
 echo "conservation parameters: min=$consMin, max=$consMax, steps=$consSteps, step size=$consStep"
 
 # Generate the value ranges
-dissipationScaleFactors=($(seq -f "%.6f" $dissMin $dissStep $dissMax))
-propagationScaleFactors=($(seq -f "%.6f" $propMin $propStep $propMax))
-conservationScaleFactors=($(seq -f "%.6f" $consMin $consStep $consMax))
+dissipationScaleFactors=($(seq -f "%.6f" "$dissMin" "$dissStep" "$dissMax"))
+propagationScaleFactors=($(seq -f "%.6f" "$propMin" "$propStep" "$propMax"))
+conservationScaleFactors=($(seq -f "%.6f" "$consMin" "$consStep" "$consMax"))
 
 # Hardcoded scale parameters for the single timepoints
 # TODO fix this with the use of a single file or pass them via command line parameters
-dissipationScaleFactor6h="0.280320"
-propagationScaleFactor6h="0.015737"
-conservationScaleFactor6h="0.350748"
+dissipationScaleFactor6h=0.280320
+propagationScaleFactor6h=0.015737
+conservationScaleFactor6h=0.350748
 
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
@@ -74,17 +74,17 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                         --typeInteractionFolder $typeInteractionsFolder \
                         --nodeDescriptionFolder $nodesFolder \
                         --dissipationModel custom \
-                        --dissipationModelParameters $dissipationScaleFactor6h $dissipationScaleFactor $dissipationScaleFactor \
+                        --dissipationModelParameters "$dissipationScaleFactor6h" "$dissipationScaleFactor" "$dissipationScaleFactor" \
                         --propagationModel customScalingNeighbors \
-                        --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor $propagationScaleFactor \
+                        --propagationModelParameters "$propagationScaleFactor6h" "$propagationScaleFactor" "$propagationScaleFactor" \
                         --conservationModel custom \
-                        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor $conservationScaleFactor \
+                        --conservationModelParameters "$conservationScaleFactor6h" "$conservationScaleFactor" "$conservationScaleFactor" \
                         --intertypeIterations 10 \
                         --intratypeIterations 5 \
                         --timestep 1 \
                         --virtualNodesGranularity typeAndNode \
                         --outputFormat iterationMatrix \
-                        --outputFolder $outputFolder
+                        --outputFolder "$outputFolder"
                         # --saturation \
                         # --saturationTerm 0.05 \
         done
