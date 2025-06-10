@@ -37,9 +37,9 @@ conservationScaleFactors=($(seq -f "%.6f" $consMin $consStep $consMax))
 
 # Hardcoded scale parameters for the single timepoints
 # TODO fix this with the use of a single file or pass them via command line parameters
-dissipationScaleFactor6h = 0.280320
-propagationScaleFactor6h = 0.015737
-conservationScaleFactor6h = 0.350748
+dissipationScaleFactor6h="0.280320"
+propagationScaleFactor6h="0.015737"
+conservationScaleFactor6h="0.350748"
 
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
@@ -51,6 +51,23 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                 mkdir -p $outputFolder/iterationMatrices
 
                 echo "Running simulation with dissipation: $dissipationScaleFactor, propagation: $propagationScaleFactor, conservation: $conservationScaleFactor"
+                echo """mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 8 ./build/masfenon-MPI \
+                        --graphsFilesFolder $graphsFolder \
+                        --initialPerturbationPerTypeFolder $initialPerturbationFolder \
+                        --typeInteractionFolder $typeInteractionsFolder \
+                        --nodeDescriptionFolder $nodesFolder \
+                        --dissipationModel custom \
+                        --dissipationModelParameters $dissipationScaleFactor6h $dissipationScaleFactor $dissipationScaleFactor \
+                        --propagationModel customScalingNeighbors \
+                        --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor $propagationScaleFactor \
+                        --conservationModel custom \
+                        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor $conservationScaleFactor \
+                        --intertypeIterations 10 \
+                        --intratypeIterations 5 \
+                        --timestep 1 \
+                        --virtualNodesGranularity typeAndNode \
+                        --outputFormat iterationMatrix \
+                        --outputFolder $outputFolder"""
                 mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 8 ./build/masfenon-MPI \
                         --graphsFilesFolder $graphsFolder \
                         --initialPerturbationPerTypeFolder $initialPerturbationFolder \
