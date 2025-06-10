@@ -33,8 +33,10 @@
 #include "CustomFunctions.hxx"
 #include "logging/Logger.hxx"
 #include "checkpoint/Checkpoint.hxx"
+#include "utils/boost_ignore_numbers_parser.hxx"
 
-
+namespace po = boost::program_options;///< namespace for program options
+    
 
 int main(int argc, char** argv) {    
     //program options
@@ -54,7 +56,6 @@ int main(int argc, char** argv) {
     std::string virtualNodesGranularity = "type"; ///< string variable to indicate the virtual nodes granularity
     std::string performanceFilename = ""; ///< string variable to indicate the performance filename where the performance times are saved
     std::string outputFormat = "singleIteration"; ///< string variable to indicate the output format
-    namespace po = boost::program_options; ///< namespace for program options
     po::options_description desc("Allowed options"); ///< options description
     desc.add_options()
         ("help", "() print help section")//<initialPerturbationPerType>.tsv [<subtypes>.txt] [<typesInteraction>.tsv]\nFILE STRUCTURE SCHEMA:\ngraph.tsv\nstart end weight\n<gene1> <gene2>  <0.something>\n...\n\n\ninitialPerturbationPerType.tsv\n type1 type2 ... typeN\ngene1 <lfc_type1:gene1> <lfc_type2:gene1> ... <lfc_typeN:gene1>\ngene1 <lfc_type1:gene2> <lfc_type2:gene2> ... <lfc_typeN:gene2>\n...\n\n\ntypesInteraction.tsv\nstartType:geneLigand endType:geneReceptor weight\n<type1:geneLigand> <type2:genereceptor>  <0.something>\n...\n\n\nsubtypes.txt\ntype1\ntype3\n...")
@@ -100,7 +101,12 @@ int main(int argc, char** argv) {
 
     po::variables_map vm; ///< variables map for program options
     // parse the command line arguments
-    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::store(
+        po::command_line_parser(argc, argv)    // ✅ use command_line_parser
+        .options(desc)                     // add your options_description
+        .extra_style_parser(&ignore_numbers)  // intercept negatives
+        .run(), vm                            // then parse
+    );
     // notify the variables map
     // this will throw an exception if there are any errors in the command line arguments
     po::notify(vm);
