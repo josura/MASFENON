@@ -48,7 +48,7 @@ VENV_FOLDER="/home/josura/Projects/ccc/c2c-sepia/scripts/python/temporalSingleCe
 source "$VENV_FOLDER/bin/activate"
 
 
-timepointToFit="7h"
+timepointToFit="10h"
 echo "[INFO] Timepoint to fit set to $timepointToFit"
 
 
