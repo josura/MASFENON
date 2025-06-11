@@ -41,6 +41,10 @@ dissipationScaleFactor6h=0.280320
 propagationScaleFactor6h=0.015737
 conservationScaleFactor6h=0.350748
 
+dissipationScaleFactor7h=0.161740
+propagationScaleFactor7h=-0.005539
+conservationScaleFactor7h=0.164609
+
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
         for conservationScaleFactor in "${conservationScaleFactors[@]}"; do
