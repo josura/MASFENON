@@ -725,7 +725,9 @@ int main(int argc, char** argv) {
         typesFromFolder = allGraphs.first;
         auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
         if(typesFromFolderFiltered.size() != types.size()){
-            logger.printError("types from folder (filtered with subtypes) and types from values do not have the same length: aborting") << std::endl;
+            if(rank == 0) { // only the master process prints the error
+                logger.printError("types from folder (filtered with subtypes) and types from values do not have the same length: aborting") << std::endl;
+            }
             return 1;
         }
         for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
