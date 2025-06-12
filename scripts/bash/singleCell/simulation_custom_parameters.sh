@@ -45,6 +45,10 @@ dissipationScaleFactor7h=0.161740
 propagationScaleFactor7h=-0.005539
 conservationScaleFactor7h=0.164609
 
+dissipationScaleFactor10h=0.161740
+propagationScaleFactor10h=-0.005539
+conservationScaleFactor10h=0.164609
+
 for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
     for propagationScaleFactor in "${propagationScaleFactors[@]}"; do
         for conservationScaleFactor in "${conservationScaleFactors[@]}"; do
@@ -61,11 +65,11 @@ for dissipationScaleFactor in "${dissipationScaleFactors[@]}"; do
                         --typeInteractionFolder $typeInteractionsFolder \
                         --nodeDescriptionFolder $nodesFolder \
                         --dissipationModel custom \
-                        --dissipationModelParameters $dissipationScaleFactor6h $dissipationScaleFactor $dissipationScaleFactor \
+                        --dissipationModelParameters $dissipationScaleFactor6h $dissipationScaleFactor7h $dissipationScaleFactor \
                         --propagationModel customScalingNeighbors \
-                        --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor $propagationScaleFactor \
+                        --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor7h $propagationScaleFactor \
                         --conservationModel custom \
-                        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor $conservationScaleFactor \
+                        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor7h $conservationScaleFactor \
                         --intertypeIterations 10 \
                         --intratypeIterations 5 \
                         --timestep 1 \
