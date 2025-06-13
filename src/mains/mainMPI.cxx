@@ -812,13 +812,14 @@ int main(int argc, char** argv) {
     std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::vector<double>>> initialValues;
     std::vector<std::vector<double>> inputInitials;
     if(vm.count("fInitialPerturbationPerType")){
-        logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
+        if(rank==0)
+            logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
         initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
     } else if (vm.count("initialPerturbationPerTypeFolder")){
-        logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
+        if(rank==0) logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
         initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes); // TODO change the function to return only the values for the types in the workload
     } else {
-        logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
+        if(rank==0) logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
         return 1;
     }
     logger.printLog(true, "perturbation values successfully read for rank ", rank );
@@ -827,19 +828,21 @@ int main(int argc, char** argv) {
     std::vector<std::string> typesFromValues = std::get<1>(initialValues);
     //this condition should take into account the intersection of the types and the subtypes
     if(typesFromValues.size() == 0){
-        logger.printError("types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting")<<std::endl;
-        logger.printError("types specified(subtypes): ");
-        for(auto type: subtypes)
-            std::cerr << type << " "; //TODO handle logger with these
-        std::cerr << std::endl;
-        logger.printError("types from file(from graphs folder or from matrix): ");
-        for(auto type: types)
-            std::cerr << type << " ";
-        std::cerr << std::endl;
-        logger.printError("types from values(from initial values folder or from values matrix) intersected with subtypes: ");
-        for(auto type: typesFromValues)
-            std::cerr << type << " ";
-        std::cerr << std::endl;
+        if(rank==0){
+            logger.printError("types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting")<<std::endl;
+            logger.printError("types specified(subtypes): ");
+            for(auto type: subtypes)
+                std::cerr << type << " "; //TODO handle logger with these
+            std::cerr << std::endl;
+            logger.printError("types from file(from graphs folder or from matrix): ");
+            for(auto type: types)
+                std::cerr << type << " ";
+            std::cerr << std::endl;
+            logger.printError("types from values(from initial values folder or from values matrix) intersected with subtypes: ");
+            for(auto type: typesFromValues)
+                std::cerr << type << " ";
+            std::cerr << std::endl;
+        }
         return 1;
     }
     auto indexMapGraphTypesToValuesTypes = get_indexmap_vector_values_full(types, typesFromValues);
