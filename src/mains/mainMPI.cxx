@@ -369,15 +369,15 @@ int main(int argc, char** argv) {
     }
 
     if (vm.count("typeInteractionFolder")) {
-        logger << "[LOG] folder for the type interactions was set to " 
+        if(rank==0)logger << "[LOG] folder for the type interactions was set to " 
     << vm["typeInteractionFolder"].as<std::string>() << ".\n";
         typesInteractionFoldername = vm["typeInteractionFolder"].as<std::string>();
         if(!folderExists(typesInteractionFoldername)){
-            logger.printError("folder ")<< typesInteractionFoldername << " for the type interactions do not exist: aborting"<<std::endl;
+            if(rank==0)logger.printError("folder ")<< typesInteractionFoldername << " for the type interactions do not exist: aborting"<<std::endl;
             return 1;
         }
     } else {
-        logger << "[LOG] typeInteractionFolder folder was not set. computing without taking into account type interactions\n";
+        if(rank==0)logger << "[LOG] typeInteractionFolder folder was not set. computing without taking into account type interactions\n";
     }
     if (vm.count("outputFolder")) {
         logger << "[LOG] output folder  was set to " 
