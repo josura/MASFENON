@@ -334,11 +334,11 @@ int main(int argc, char** argv) {
 
 
     if (vm.count("fUniqueGraph")) {
-        logger << "[LOG] file for the graph was set to " 
-    << vm["fUniqueGraph"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] file for the graph was set to " 
+            << vm["fUniqueGraph"].as<std::string>() << ".\n";
         uniqueGraphFilename = vm["fUniqueGraph"].as<std::string>();
         if(!fileExistsPath(uniqueGraphFilename)){
-            logger.printError("file ")<< uniqueGraphFilename <<" for the graph do not exist: aborting"<<std::endl;
+            if(rank==0)logger.printError("file ")<< uniqueGraphFilename <<" for the graph do not exist: aborting"<<std::endl;
             return 1;
         }
     } else if(vm.count("graphsFilesFolder")){
