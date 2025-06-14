@@ -662,7 +662,7 @@ int main(int argc, char** argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     // print the number of processes and the rank
-    logger.printLog("Number of processes: ") << numProcesses << ", rank: " << rank << std::endl;
+    logger.printLog(true,"Number of processes: ", numProcesses,", rank: ", rank);
 
     // control if the number of processes is greater than the number of types, exit if true (useless process are not accepted)
     if (numProcesses > SizeToInt(types.size())) {
@@ -1710,6 +1710,6 @@ int main(int argc, char** argv) {
     }
 
     logger.printLog(true,"Execution ended for rank ", rank, " with no errors");
-    logger << "[LOG] Execution ended with no problems" << std::endl;
+    if(rank==0)logger << "[LOG] Execution ended with no problems" << std::endl;
     return 0;
 }
