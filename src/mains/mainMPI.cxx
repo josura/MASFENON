@@ -324,11 +324,11 @@ int main(int argc, char** argv) {
     if(vm.count("outputFormat")){
         outputFormat = vm["outputFormat"].as<std::string>();
         if(outputFormat != "singleIteration" && outputFormat != "iterationMatrix"){
-            logger.printError("outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting")<<std::endl;
+            if(rank==0)logger.printError("outputFormat must be one of the following: 'singleIteration' or 'iterationMatrix': aborting")<<std::endl;
             return 1;
         }
     } else {
-        logger << "[LOG] outputFormat not set, set to default: singleIteration \n";
+        if(rank==0)logger << "[LOG] outputFormat not set, set to default: singleIteration \n";
         outputFormat = "singleIteration";
     }
 
