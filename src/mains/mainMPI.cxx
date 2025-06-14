@@ -847,7 +847,7 @@ int main(int argc, char** argv) {
     }
     auto indexMapGraphTypesToValuesTypes = get_indexmap_vector_values_full(types, typesFromValues);
     if(indexMapGraphTypesToValuesTypes.size() == 0){
-        logger.printError("types from folder and types from file do not match even on one instance: aborting")<<std::endl;
+        if(rank==0)logger.printError("types from folder and types from file do not match even on one instance: aborting")<<std::endl;
         return 1;
     }
 
