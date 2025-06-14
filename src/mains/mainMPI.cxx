@@ -893,12 +893,12 @@ int main(int argc, char** argv) {
 
     // saturation function for the computation is changed if custom saturation is set
     if(saturation && customSaturation){
-        logger << "[LOG] custom saturation function set, using the custom saturation function defined in src/CustomFunctions.cxx"<<std::endl;
+        if(rank==0)logger << "[LOG] custom saturation function set, using the custom saturation function defined in src/CustomFunctions.cxx"<<std::endl;
         for(int i = 0; i < finalWorkload;i++){
             typeComputations[typesIndexes[i]]->setSaturationFunction(getSaturationFunction());
         }
     } else {
-        logger << "[LOG] custom saturation function not set, using the default saturation function"<<std::endl;
+        if(rank==0)logger << "[LOG] custom saturation function not set, using the default saturation function"<<std::endl;
     }
 
     logger << "[LOG] loading type interactions for rank "<< rank << std::endl;
