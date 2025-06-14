@@ -1386,7 +1386,7 @@ int main(int argc, char** argv) {
                         
             }
         } else {
-            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
+            if(rank==0)logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
             return 1;
         }
 
