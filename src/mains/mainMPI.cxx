@@ -1070,15 +1070,15 @@ int main(int argc, char** argv) {
             << vm["propagationModel"].as<std::string>() << ".\n";
         std::string propagationModelName = vm["propagationModel"].as<std::string>();
         if(propagationModelName == "default"){
-            logger << "[LOG] propagation model set to default (pseudoinverse propagation)\n";
+            if(rank==0)logger << "[LOG] propagation model set to default (pseudoinverse propagation)\n";
             for(int i = 0; i < finalWorkload ;i++ ){
                 typeComputations[i]->setPropagationModel(new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction));
             }
             //nothing to do, default propagation scaling function is the identity
         } else if (propagationModelName == "scaled"){
             if (vm.count("propagationModelParameters")) {
-                logger << "[LOG] propagation model parameters were declared to be "
-            << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be "
+                    << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 if(propagationModelParameters.size() == 1){
                     propagationScalingFunction = [propagationModelParameters](double time)->double{return propagationModelParameters[0];};
@@ -1087,11 +1087,11 @@ int main(int argc, char** argv) {
                         typeComputations[i]->setPropagationModel(tmpPropagationModel);
                     }
                 } else {
-                    logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
+                    if(rank==0)logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
+                if(rank==0)logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
                 for(int i = 0; i < finalWorkload ;i++ ){
                     PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                     typeComputations[i]->setPropagationModel(tmpPropagationModel);
@@ -1100,8 +1100,8 @@ int main(int argc, char** argv) {
             }
         } else if (propagationModelName == "neighbors"){
             if (vm.count("propagationModelParameters")) {
-                logger << "[LOG] propagation model parameters were declared to be "
-            << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be "
+                    << vm["propagationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 if(propagationModelParameters.size() == 1){
                     propagationScalingFunction = [propagationModelParameters](double time)->double{return propagationModelParameters[0];};
@@ -1110,11 +1110,11 @@ int main(int argc, char** argv) {
                         typeComputations[i]->setPropagationModel(tmpPropagationModel);
                     }
                 } else {
-                    logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
+                    if(rank==0)logger.printError("propagation model parameters for scaled propagation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
+                if(rank==0)logger.printError("propagation model parameters for scaled propagation was not set: setting to default 1 costant")<<std::endl;
                 for(int i = 0; i < finalWorkload;i++ ){
                     PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
                     typeComputations[i]->setPropagationModel(tmpPropagationModel);
@@ -1122,14 +1122,14 @@ int main(int argc, char** argv) {
                 //nothing to do, default propagation scaling function is the identity
             }
         } else if(propagationModelName == "customScaling"){ 
-            logger << "[LOG] propagation model set to custom scaling propagation (with original propagation model)\n";
+            if(rank==0)logger << "[LOG] propagation model set to custom scaling propagation (with original propagation model)\n";
             if(vm.count("propagationModelParameters")){
-                logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be "
+                    << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else {
-                logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
             }
             for(int i = 0; i < finalWorkload;i++ ){
@@ -1137,14 +1137,14 @@ int main(int argc, char** argv) {
                 typeComputations[i]->setPropagationModel(tmpPropagationModel);
             }
         } else if(propagationModelName == "customScalingNeighbors"){
-            logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
+            if(rank==0)logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
             if(vm.count("propagationModelParameters")){
-                logger << "[LOG] propagation model parameters were declared to be "
-                << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be "
+                    << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else{
-                logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
             }
             for(int i = 0; i < finalWorkload;i++ ){
@@ -1153,14 +1153,14 @@ int main(int argc, char** argv) {
             }
             
         } else if(propagationModelName == "customPropagation"){
-            logger << "[LOG] propagation model set to custom propagation (with custom propagation model)\n";
+            if(rank==0)logger << "[LOG] propagation model set to custom propagation (with custom propagation model)\n";
             if(vm.count("propagationModelParameters")){
-                logger << "[LOG] propagation model parameters were declared to be "
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be "
                 << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;  //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
             } else {
-                logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
+                if(rank==0)logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
             }
             for(int i = 0; i < finalWorkload;i++ ){
@@ -1169,11 +1169,11 @@ int main(int argc, char** argv) {
             }
         
         } else {
-            logger.printError("propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom");
+            if(rank==0)logger.printError("propagation model is not any of the types. propagation model scale functions available are default, scaled, neighbors and custom");
             return 1;
         }
     } else {
-        logger << "[LOG] propagation model was not set. set to default (pseudoInverse)" << std::endl;
+        if(rank==0)logger << "[LOG] propagation model was not set. set to default (pseudoInverse)" << std::endl;
         for(int i = 0; i < finalWorkload;i++ ){
             PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
             typeComputations[i]->setPropagationModel(tmpPropagationModel);
