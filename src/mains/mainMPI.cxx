@@ -370,7 +370,7 @@ int main(int argc, char** argv) {
 
     if (vm.count("typeInteractionFolder")) {
         if(rank==0)logger << "[LOG] folder for the type interactions was set to " 
-    << vm["typeInteractionFolder"].as<std::string>() << ".\n";
+            << vm["typeInteractionFolder"].as<std::string>() << ".\n";
         typesInteractionFoldername = vm["typeInteractionFolder"].as<std::string>();
         if(!folderExists(typesInteractionFoldername)){
             if(rank==0)logger.printError("folder ")<< typesInteractionFoldername << " for the type interactions do not exist: aborting"<<std::endl;
@@ -380,18 +380,18 @@ int main(int argc, char** argv) {
         if(rank==0)logger << "[LOG] typeInteractionFolder folder was not set. computing without taking into account type interactions\n";
     }
     if (vm.count("outputFolder")) {
-        logger << "[LOG] output folder  was set to " 
-    << vm["outputFolder"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] output folder  was set to " 
+            << vm["outputFolder"].as<std::string>() << ".\n";
         outputFoldername = vm["outputFolder"].as<std::string>();
         if(!folderExists(outputFoldername)){
-            logger.printWarning("folder for the output do not exist: creating the folder")<<std::endl;
+            if(rank==0)logger.printWarning("folder for the output do not exist: creating the folder")<<std::endl;
             if(!createFolder(outputFoldername)){
                 logger.printError("folder for the output could not be created: aborting")<<std::endl;
                 return 1;
             }
         }
     } else {
-        logger.printError("output folder was not set. aborting");
+        if(rank==0)logger.printError("output folder was not set. aborting");
         return 1;
     }
 
