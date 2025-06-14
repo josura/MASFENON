@@ -139,37 +139,51 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // take starting time before initializing MPI and the computation
+    auto start = std::chrono::steady_clock::now();
+    // initialize MPI
+    MPI_Init(&argc, &argv);
+
+    int numProcesses, rank;
+    MPI_Comm_size(MPI_COMM_WORLD, &numProcesses);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+
     //logging options
     auto& logger = Logger::getInstance(); ///< logger object to log the messages
     if(vm.count("loggingOptions")){
         if(logMode == "all"){
-            std::cout << "[LOG] logging options set to all"<<std::endl;
+            if(rank==0)std::cout << "[LOG] logging options set to all"<<std::endl;
             logger.enable();
         } else if (logMode == "none"){
-            std::cout << "[LOG] logging options set to none"<<std::endl;
+            if(rank==0)std::cout << "[LOG] logging options set to none"<<std::endl;
             logger.disable();
         } else {
-            std::cout << "[LOG] logging options set to default (all)"<<std::endl;
+            if(rank==0)std::cout << "[LOG] logging options set to default (all)"<<std::endl;
             logger.enable();
         }
     } else {
-        std::cout << "[LOG] logging options set to default (all)"<<std::endl;
+        if(rank==0)std::cout << "[LOG] logging options set to default (all)"<<std::endl;
         logger.enable();
     }
     if(verbose){
         logger.enableVerbose();
-        logger.printLog(false,"verbose mode enabled");
+        if(rank==0)logger.printLog(false,"verbose mode enabled");
     } else {
         logger.disableVerbose();
-        logger.printLog(false,"verbose mode disabled");
+        if(rank==0)logger.printLog(false,"verbose mode disabled");
     }
     if(treatWarningAsError){
         logger.printLog(false,"treat warnings as errors enabled");
-        logger.setTreatWarningsAsErrors(true);
+        if(rank==0)logger.setTreatWarningsAsErrors(true);
     } else {
         logger.printLog(false,"treat warnings as errors disabled");
-        logger.setTreatWarningsAsErrors(false);
+        if(rank==0)logger.setTreatWarningsAsErrors(false);
     }
+
+
+    // print the number of processes and the rank
+    logger.printLog(true,"Number of processes: ", numProcesses,", rank: ", rank);
 
 
     //controls over impossible configurations
@@ -651,18 +665,6 @@ int main(int argc, char** argv) {
     }
     logger << std::endl;
 
-
-    // take starting time before initializing MPI and the computation
-    auto start = std::chrono::steady_clock::now();
-    // initialize MPI
-    MPI_Init(&argc, &argv);
-
-    int numProcesses, rank;
-    MPI_Comm_size(MPI_COMM_WORLD, &numProcesses);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
-    // print the number of processes and the rank
-    logger.printLog(true,"Number of processes: ", numProcesses,", rank: ", rank);
 
     // control if the number of processes is greater than the number of types, exit if true (useless process are not accepted)
     if (numProcesses > SizeToInt(types.size())) {
