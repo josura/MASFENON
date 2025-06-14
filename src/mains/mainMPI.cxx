@@ -351,19 +351,19 @@ int main(int argc, char** argv) {
         }
     }
     if (vm.count("fInitialPerturbationPerType")) {
-        logger << "[LOG] file for the initialPerturbationPerType matrix was set to " 
-    << vm["fInitialPerturbationPerType"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] file for the initialPerturbationPerType matrix was set to " 
+            << vm["fInitialPerturbationPerType"].as<std::string>() << ".\n";
         typesInitialPerturbationMatrixFilename = vm["fInitialPerturbationPerType"].as<std::string>();
         if(!fileExistsPath(typesInitialPerturbationMatrixFilename)){
-            logger.printError("file ")<< typesInitialPerturbationMatrixFilename << " for the initialPerturbationPerType does not exist: aborting"<<std::endl;
+            if(rank==0)logger.printError("file ")<< typesInitialPerturbationMatrixFilename << " for the initialPerturbationPerType does not exist: aborting"<<std::endl;
             return 1;
         }
     } else if (vm.count("initialPerturbationPerTypeFolder")) {
-        logger << "[LOG] folder for the initialPerturbationPerType was set to "
-    << vm["initialPerturbationPerTypeFolder"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] folder for the initialPerturbationPerType was set to "
+            << vm["initialPerturbationPerTypeFolder"].as<std::string>() << ".\n";
         typeInitialPerturbationFolderFilename = vm["initialPerturbationPerTypeFolder"].as<std::string>();
         if(!folderExists(typeInitialPerturbationFolderFilename)){
-            logger.printError("folder ")<< typeInitialPerturbationFolderFilename << " for the initialPerturbationPerType do not exist: aborting"<<std::endl;
+            if(rank==0)logger.printError("folder ")<< typeInitialPerturbationFolderFilename << " for the initialPerturbationPerType do not exist: aborting"<<std::endl;
             return 1;
         }
     }
