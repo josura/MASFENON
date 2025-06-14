@@ -315,9 +315,9 @@ int main(int argc, char** argv) {
     //logging virtual nodes reset
 
     if(resetVirtualOutputs){
-        logger << "[LOG] resetVirtualOutputs specified, virtual outputs will be reset to 0 after each inter-propagation"<<std::endl;
+        if(rank==0)logger << "[LOG] resetVirtualOutputs specified, virtual outputs will be reset to 0 after each inter-propagation"<<std::endl;
     } else {
-        logger << "[LOG] resetVirtualOutputs not specified, virtual outputs will not be reset to 0 after each inter-propagation"<<std::endl;
+        if(rank==0)logger << "[LOG] resetVirtualOutputs not specified, virtual outputs will not be reset to 0 after each inter-propagation"<<std::endl;
     }
 
     // output format parameter
