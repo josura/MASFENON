@@ -1510,7 +1510,7 @@ int main(int argc, char** argv) {
                     }
                 }
             } else if (virtualNodesGranularity == "node"){
-                logger.printError("virtual nodes granularity is not supported yet: aborting");
+                if(rank==0)logger.printError("virtual nodes granularity is not supported yet: aborting");
                 return 1;
             } else if (virtualNodesGranularity == "typeAndNode"){
                 // logic of reading the subvectors of the virtual inputs
@@ -1710,6 +1710,6 @@ int main(int argc, char** argv) {
     }
 
     logger.printLog(true,"Execution ended for rank ", rank, " with no errors");
-    logger << "[LOG] Execution ended" << std::endl;
+    logger << "[LOG] Execution ended with no problems" << std::endl;
     return 0;
 }
