@@ -265,37 +265,37 @@ int main(int argc, char** argv) {
     // reading granularity
     if(vm.count("virtualNodesGranularity")){
         virtualNodesGranularity = vm["virtualNodesGranularity"].as<std::string>();
-        logger << "[LOG] virtual nodes granularity set to " << virtualNodesGranularity << std::endl;
+        if(rank==0)logger << "[LOG] virtual nodes granularity set to " << virtualNodesGranularity << std::endl;
         // controls over the value
         if(virtualNodesGranularity != "type" && virtualNodesGranularity != "node" && virtualNodesGranularity != "typeAndNode"){
-            logger.printError("virtual nodes granularity must be one of the following: 'type', 'node' or 'typeAndNode': aborting")<<std::endl;
+            if(rank==0)logger.printError("virtual nodes granularity must be one of the following: 'type', 'node' or 'typeAndNode': aborting")<<std::endl;
             return 1;
         }
         if(virtualNodesGranularity == "node"){
-            logger.printWarning("virtual nodes granularity set to 'node', this option is unstable and not fully implemented: aborting")<<std::endl;
+            if(rank==0)logger.printWarning("virtual nodes granularity set to 'node', this option is unstable and not fully implemented: aborting")<<std::endl;
             return 1;
         }
     } else {
-        logger << "[LOG] virtual nodes granularity not set, set to default: type \n";
+        if(rank==0)logger << "[LOG] virtual nodes granularity not set, set to default: type \n";
         virtualNodesGranularity = "type";
     }
 
     // reading granularity parameters (not used for now)
     if(vm.count("virtualNodesGranularityParameters")){
         std::vector<std::string> virtualNodesGranularityParameters = vm["virtualNodesGranularityParameters"].as<std::vector<std::string>>();
-        logger << "[LOG] virtual nodes granularity parameters set "<< std::endl;
-        logger.printWarning("virtual nodes granularity parameters are not used for now")<<std::endl;
+        if(rank==0)logger << "[LOG] virtual nodes granularity parameters set "<< std::endl;
+        if(rank==0)logger.printWarning("virtual nodes granularity parameters are not used for now")<<std::endl;
     } else {
         // logger << "[LOG] virtual nodes granularity parameters not set, set to default: empty vector \n";  // not used for now
     }
 
     //logging timestep settings
     if(vm.count("timestep")){
-        logger << "[LOG] timestep set to " 
-    << vm["timestep"].as<double>() << ".\n";
+        if(rank==0)logger << "[LOG] timestep set to " 
+            << vm["timestep"].as<double>() << ".\n";
         timestep = vm["timestep"].as<double>();
     } else {
-        logger << "[LOG] timestep not set, set to default (1)"<<std::endl;
+        if(rank==0)logger << "[LOG] timestep not set, set to default (1)"<<std::endl;
     }
 
     //logging edges direction in the graphs
