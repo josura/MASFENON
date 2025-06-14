@@ -1066,8 +1066,8 @@ int main(int argc, char** argv) {
     // setting propagation model in this moment since in the case of the original model, the pseudoinverse should be computed for the augmented pathway
     std::function<double(double)> propagationScalingFunction = [](double time)->double{return 1;};
     if(vm.count("propagationModel")){
-        logger << "[LOG] propagation model was set to "
-    << vm["propagationModel"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] propagation model was set to "
+            << vm["propagationModel"].as<std::string>() << ".\n";
         std::string propagationModelName = vm["propagationModel"].as<std::string>();
         if(propagationModelName == "default"){
             logger << "[LOG] propagation model set to default (pseudoinverse propagation)\n";
