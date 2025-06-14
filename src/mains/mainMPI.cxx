@@ -342,11 +342,11 @@ int main(int argc, char** argv) {
             return 1;
         }
     } else if(vm.count("graphsFilesFolder")){
-        logger << "[LOG] folder for the graphs was set to " 
-    << vm["graphsFilesFolder"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] folder for the graphs was set to " 
+            << vm["graphsFilesFolder"].as<std::string>() << ".\n";
         graphsFilesFolder = vm["graphsFilesFolder"].as<std::string>();
         if(!folderExists(graphsFilesFolder)){
-            logger.printError("folder ")<< graphsFilesFolder << " for the graphs do not exist: aborting"<<std::endl;
+            if(rank==0)logger.printError("folder ")<< graphsFilesFolder << " for the graphs do not exist: aborting"<<std::endl;
             return 1;
         }
     }
