@@ -233,31 +233,31 @@ int main(int argc, char** argv) {
     // reading the parameters
 
     if (vm.count("intertypeIterations")) {
-        logger << "[LOG] iterations intertype set to " 
+        if(rank==0)logger << "[LOG] iterations intertype set to " 
     << vm["intertypeIterations"].as<uint>() << ".\n";
         intertypeIterations = vm["intertypeIterations"].as<uint>();
     } else {
-        logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
+        if(rank==0)logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
         intertypeIterations = 10;
     }
 
     if (vm.count("intratypeIterations")) {
-        logger << "[LOG] iterations intratype set to " 
+        if(rank==0)logger << "[LOG] iterations intratype set to " 
     << vm["intratypeIterations"].as<uint>() << ".\n";
         intratypeIterations = vm["intratypeIterations"].as<uint>();
     } else {
-        logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
+        if(rank==0)logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
         intratypeIterations = 5;
     }
 
     if (vm.count("quantizationMethod")) {
-        logger << "[LOG] quantization method set to " << vm["quantizationMethod"].as<std::string>();
+        if(rank==0)logger << "[LOG] quantization method set to " << vm["quantizationMethod"].as<std::string>();
         if(vm["quantizationMethod"].as<std::string>() == "single"){
             quantizationMethod = "single";
         } else if(vm["quantizationMethod"].as<std::string>() == "multiple"){
             quantizationMethod = "multiple";
         } else {
-            logger.printError("quantizationMethod set to a not available option, aborting");
+            if(rank==0)logger.printError("quantizationMethod set to a not available option, aborting");
             return 1;            
         }
     }
