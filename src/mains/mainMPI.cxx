@@ -189,43 +189,43 @@ int main(int argc, char** argv) {
     //controls over impossible configurations
     if(vm.count("fUniqueGraph") == 0 && vm.count("graphsFilesFolder") == 0){
         //no unique graph of folder of the graphs was set
-        logger.printError("no unique graph filename or folder was set to get the graphs, set one. abort ") <<std::endl;
+        if(rank==0)logger.printError("no unique graph filename or folder was set to get the graphs, set one. abort ") <<std::endl;
         return 1;
     }
 
     if(vm.count("fInitialPerturbationPerType") == 0 && vm.count("initialPerturbationPerTypeFolder") == 0){
         //no way of getting the initial perturbation values
-        logger.printError("no matrix for the initial values was passed as filename or single vector in files contained in the folder specified was set, set one ")<<std::endl;
+        if(rank==0)logger.printError("no matrix for the initial values was passed as filename or single vector in files contained in the folder specified was set, set one ")<<std::endl;
         return 1;
     }
 
     if(vm.count("fInitialPerturbationPerType") && vm.count("graphsFilesFolder")){
         //unstable configuration of different graphs and single matrix with the same nodes
-        logger.printWarning("unstable configuration of different graphs and a single matrix with the initial perturbations") <<std::endl;
+        if(rank==0)logger.printWarning("unstable configuration of different graphs and a single matrix with the initial perturbations") <<std::endl;
     }
 
     if(saturation && conservateInitialNorm){
-        logger.printError("saturation and conservateInitialNorm cannot be both true, aborting")<<std::endl;
+        if(rank==0)logger.printError("saturation and conservateInitialNorm cannot be both true, aborting")<<std::endl;
         return 1;
     }
 
 
     if(vm.count("graphsFilesFolder") && vm.count("fUniqueGraph")){
-        logger.printError("fUniqueGraph and graphsFilesFolder were both set. Aborting");
+        if(rank==0)logger.printError("fUniqueGraph and graphsFilesFolder were both set. Aborting");
         return 1;
     }
     if(vm.count("initialPerturbationPerTypeFolder") && vm.count("fInitialPerturbationPerType")){
-        logger.printError("fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting");
+        if(rank==0)logger.printError("fInitialPerturbationPerType and initialPerturbationPerTypeFolder were both set. Aborting");
         return 1;
     }
 
     if(!saturation){
         if (vm.count("saturationTerm")){
-            logger.printError("saturationTerm was set but saturation was not set, impossible configuration, aborting")<<std::endl;
+            if(rank==0)logger.printError("saturationTerm was set but saturation was not set, impossible configuration, aborting")<<std::endl;
             return 1;
         }
         if (customSaturation){
-            logger.printError("customSaturation was set but saturation was not set, impossible configuration, aborting")<<std::endl;
+            if(rank==0)logger.printError("customSaturation was set but saturation was not set, impossible configuration, aborting")<<std::endl;
             return 1;
         }
     } 
