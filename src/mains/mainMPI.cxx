@@ -1240,7 +1240,7 @@ int main(int argc, char** argv) {
                 virtualOutputs.push_back(new double[rankVirtualOutputsSizes[targetRank]]);                        
             }
         } else {
-            logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
+            if(rank==0)logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
             return 1;
         }
 
@@ -1264,7 +1264,7 @@ int main(int argc, char** argv) {
             // computation of perturbation
             #pragma omp parallel for
             for(int i = 0; i < finalWorkload; i++){
-                logger.printLog(true,"computation of perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")"); 
+                if(rank==0)logger.printLog(true,"computation of perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")"); 
                 // TODO use stateful scaling function to consider previous times
                 try
                 {
@@ -1321,10 +1321,10 @@ int main(int argc, char** argv) {
                     double outputNorm = vectorNorm(typeComputations[i]->getOutputAugmented());
                     double normRatio = initialNorm/outputNorm;
                     std::vector<double> newInput = vectorScalarMultiplication(typeComputations[i]->getOutputAugmented(),normRatio);
-                    logger.printLog(true,"update input with conservation of the initial perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")");
+                    logger.printLog(true,"update input with conservation of the initial perturbation for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")"); // could change this to verbose
                     typeComputations[i]->updateInput(newInput,true);
                 } else {
-                    logger.printLog(true,"update input for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")");
+                    logger.printLog(true,"update input for iteration intertype-intratype (", iterationInterType, "<->", iterationIntraType, ") for type (", types[i+startIdx], ")");  //could change this to verbose
                     typeComputations[i]->updateInput(std::vector<double>(),true);
                 }
                 
