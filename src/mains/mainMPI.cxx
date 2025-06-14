@@ -300,16 +300,16 @@ int main(int argc, char** argv) {
 
     //logging edges direction in the graphs
     if(undirected){
-        logger << "[LOG] undirectedEdges specified, undirected edges in the graphs"<<std::endl;
+        if(rank==0)logger << "[LOG] undirectedEdges specified, undirected edges in the graphs"<<std::endl;
     } else {
-        logger << "[LOG] undirectedEdges not specified, directed edges in the graphs(only the edges specified in the graph files will be added)"<<std::endl;
+        if(rank==0)logger << "[LOG] undirectedEdges not specified, directed edges in the graphs(only the edges specified in the graph files will be added)"<<std::endl;
     }
 
     //logging edges direction in the graphs
     if(undirectedTypeEdges){
-        logger << "[LOG] undirectedTypeEdges specified, undirected edges between types"<<std::endl;
+        if(rank==0)logger << "[LOG] undirectedTypeEdges specified, undirected edges between types"<<std::endl;
     } else {
-        logger << "[LOG] undirectedTypeEdges not specified, directed edges between types"<<std::endl;
+        if(rank==0)logger << "[LOG] undirectedTypeEdges not specified, directed edges between types"<<std::endl;
     }
 
     //logging virtual nodes reset
