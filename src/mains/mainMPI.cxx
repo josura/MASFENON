@@ -633,13 +633,13 @@ int main(int argc, char** argv) {
         } else if (vm.count("initialPerturbationPerTypeFolder")){
             types = getTypesFromFolderFileNames(typeInitialPerturbationFolderFilename);
         } else {
-            logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
+            if(rank==0)logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
             return 1;
         }
     } else if (vm.count("graphsFilesFolder")) {
         types = getTypesFromFolderFileNames(graphsFilesFolder);
     } else {
-        logger.printError("no graph file or folder specified: aborting")<<std::endl;
+        if(rank==0)logger.printError("no graph file or folder specified: aborting")<<std::endl;
         return 1;
     }
 
