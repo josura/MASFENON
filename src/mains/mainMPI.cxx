@@ -420,30 +420,30 @@ int main(int argc, char** argv) {
     }
 
     if (vm.count("dissipationModel")) {
-        logger << "[LOG] dissipation model was set to "
-    << vm["dissipationModel"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] dissipation model was set to "
+            << vm["dissipationModel"].as<std::string>() << ".\n";
         std::string dissipationModelName = vm["dissipationModel"].as<std::string>();
         if(dissipationModelName == "none"){
-            logger << "[LOG] dissipation model set to default (none)\n";
+            if(rank==0)logger << "[LOG] dissipation model set to default (none)\n";
             dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
         } else if(dissipationModelName == "power"){
             if (vm.count("dissipationModelParameters")) {
-                logger << "[LOG] dissipation model parameters for power dissipation were declared to be" << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                if(rank==0)logger << "[LOG] dissipation model parameters for power dissipation were declared to be" << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelPow(dissipationModelParameters[0]);
                 } else {
-                    logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
+                    if(rank==0)logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
+                if(rank==0)logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
                 dissipationModel = new DissipationModelPow(2);
             }
         } else if(dissipationModelName == "random"){
             if (vm.count("dissipationModelParameters")) {
-                logger << "[LOG] dissipation model parameters were declared to be "
-            << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["dissipationModelParameters"].as<std::vector<double>>()[1] << ".\n";
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
+                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["dissipationModelParameters"].as<std::vector<double>>()[1] << ".\n";
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 2){
                     dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
