@@ -457,17 +457,17 @@ int main(int argc, char** argv) {
             }
         } else if(dissipationModelName == "scaled"){
             if (vm.count("dissipationModelParameters")) {
-                logger << "[LOG] dissipation model parameters were declared to be "
-            << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
+                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];});
                 } else {
-                    logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
+                    if(rank==0)logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
+                if(rank==0)logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
                 dissipationModel = new DissipationModelScaled();
             }
         } else if(dissipationModelName == "periodic"){
