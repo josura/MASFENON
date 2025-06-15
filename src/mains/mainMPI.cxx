@@ -411,9 +411,9 @@ int main(int argc, char** argv) {
     if(outputFormat == "iterationMatrix"){
         std::string outputFolderNameIterationMatrix = outputFoldername + "/iterationMatrices";
         if(!folderExists(outputFolderNameIterationMatrix)){
-            logger.printWarning("folder for the output of iteration matrix do not exist: creating the folder")<<std::endl;
+            if(rank==0)logger.printWarning("folder for the output of iteration matrix do not exist: creating the folder")<<std::endl;
             if(!createFolder(outputFolderNameIterationMatrix)){
-                logger.printError("folder for the output of iteration matrix could not be created: aborting")<<std::endl;
+                if(rank==0)logger.printError("folder for the output of iteration matrix could not be created: aborting")<<std::endl;
                 return 1;
             }
         }
