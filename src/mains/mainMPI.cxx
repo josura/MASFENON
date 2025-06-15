@@ -604,7 +604,7 @@ int main(int argc, char** argv) {
 
     std::string nodesDescriptionFilename="";
     if(vm.count("nodeDescriptionFile")){
-        logger <<"[LOG] using node description file to get the names of the nodes in the graphs"<<std::endl;
+        if(rank==0)logger <<"[LOG] using node description file to get the names of the nodes in the graphs"<<std::endl;
         nodesDescriptionFilename = vm["nodeDescriptionFile"].as<std::string>();
     } else {
         logger <<"[LOG] no nodes description"<<std::endl;
@@ -612,15 +612,15 @@ int main(int argc, char** argv) {
 
     // if both homogenousGraphNodesFile and nodeDescriptionFolder are set, exit
     if(vm.count("homogenousGraphNodesFile") && vm.count("nodeDescriptionFolder")){
-        logger.printError("homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting");
+        if(rank==0)logger.printError("homogenousGraphNodesFile and nodeDescriptionFolder were both set, only one can be used when using an homogeneous configuration for the agent or with different structured agents. Aborting");
         return 1;
     }
     std::string nodesDescriptionFolder="";
     if(vm.count("nodeDescriptionFolder")){
-        logger <<"[LOG] using node description folder to get the names of the nodes in the graphs"<<std::endl;
+        if(rank==0)logger <<"[LOG] using node description folder to get the names of the nodes in the graphs"<<std::endl;
         nodesDescriptionFolder = vm["nodeDescriptionFolder"].as<std::string>();
     } else {
-        logger <<"[LOG] no nodes description folder"<<std::endl;
+        if(rank==0)logger <<"[LOG] no nodes description folder"<<std::endl;
     }
 
 
