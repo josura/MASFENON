@@ -448,11 +448,11 @@ int main(int argc, char** argv) {
                 if(dissipationModelParameters.size() == 2){
                     dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
                 } else {
-                    logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
+                    if(rank==0)logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("dissipation model parameters for random dissipation was not set: aborting")<<std::endl;
+                if(rank==0)logger.printError("dissipation model parameters for random dissipation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(dissipationModelName == "scaled"){
