@@ -581,7 +581,7 @@ int main(int argc, char** argv) {
             return 1;
         }
     } else {
-        logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
+        if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
         conservationModel = new ConservationModel([](double time)->double{return 0;});
     }
 
