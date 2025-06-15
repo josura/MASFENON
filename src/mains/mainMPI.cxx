@@ -588,12 +588,12 @@ int main(int argc, char** argv) {
     //logging if saturation is set and saturation parameters are set
     if (saturation) {
         if(vm.count("saturationTerm") == 0){
-            logger << "[LOG] saturation term not specified, using the interval [-1,1]"<<std::endl;
+            if(rank==0)logger << "[LOG] saturation term not specified, using the interval [-1,1]"<<std::endl;
         } else if(vm.count("saturationTerm") == 1){
             double saturationTerm = vm["saturationTerm"].as<double>();
-            logger << "[LOG] saturation term specified, using the interval [-" << saturationTerm << "," << saturationTerm << "]"<<std::endl;
+            if(rank==0)logger << "[LOG] saturation term specified, using the interval [-" << saturationTerm << "," << saturationTerm << "]"<<std::endl;
         } else {
-            logger.printError("saturation term specified more than once, possibility of using more values not yet implemented: aborting")<<std::endl;
+            if(rank==0)logger.printError("saturation term specified more than once, possibility of using more values not yet implemented: aborting")<<std::endl;
             return 1;
         }
     }
