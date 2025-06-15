@@ -491,25 +491,27 @@ int main(int argc, char** argv) {
             }
         } else if(dissipationModelName == "custom"){
             //control if custom function for dissipation returns double and takes a single parameter as double
-            logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors" << std::endl;
+            if(rank==0)logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors" << std::endl;
             if (vm.count("dissipationModelParameters")) {
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                logger << "[LOG] dissipation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
-                for (auto param : dissipationModelParameters) {
-                    logger << param << ", ";
+                if(rank==0){
+                    logger << "[LOG] dissipation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                    for (auto param : dissipationModelParameters) {
+                        logger << param << ", ";
+                    }
+                    logger << ")" << std::endl;
                 }
-                logger << ")" << std::endl;
                 dissipationModel = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters));
             } else {
-                logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                if(rank==0)logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
             }
         } else {
-            logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
+            if(rank==0)logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
         }
     } else { //dissipation model set to default (none)
-        logger << "[LOG] dissipation model was not set. set to default (none)\n";
+        if(rank==0)logger << "[LOG] dissipation model was not set. set to default (none)\n";
         dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
     }
 
