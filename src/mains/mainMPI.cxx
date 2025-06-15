@@ -399,9 +399,9 @@ int main(int argc, char** argv) {
     if(outputFormat == "singleIteration"){
         std::string outputFolderNameSingular = outputFoldername + "/currentPerturbations";
         if(!folderExists(outputFolderNameSingular)){
-            logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
+            if(rank==0)logger.printWarning("folder for the output of singular perturbance values do not exist: creating the folder")<<std::endl;
             if(!createFolder(outputFolderNameSingular)){
-                logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
+                if(rank==0)logger.printError("folder for the output of singular perturbance values could not be created: aborting")<<std::endl;
                 return 1;
             }
         }
