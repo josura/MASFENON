@@ -539,6 +539,7 @@ int main(int argc, char** argv) {
                 conservationModel = new ConservationModel();
             }
         } else if (conservationModelName == "random"){
+            if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
             if (vm.count("conservationModelParameters")) {
                 if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
                     << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
