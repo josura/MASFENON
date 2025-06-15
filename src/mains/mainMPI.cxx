@@ -573,11 +573,11 @@ int main(int argc, char** argv) {
                 }
                 conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
             } else {
-                logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 conservationModel = new ConservationModel(getConservationScalingFunction());
             }
         } else {
-            logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
+            if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
             return 1;
         }
     } else {
