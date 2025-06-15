@@ -456,6 +456,7 @@ int main(int argc, char** argv) {
                 return 1;
             }
         } else if(dissipationModelName == "scaled"){
+            if(rank==0)logger << "[LOG] dissipation model was set to scaled, the function will be a constant function with the value of the parameter" << std::endl;
             if (vm.count("dissipationModelParameters")) {
                 if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
                     << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
@@ -471,20 +472,21 @@ int main(int argc, char** argv) {
                 dissipationModel = new DissipationModelScaled();
             }
         } else if(dissipationModelName == "periodic"){
+            if(rank==0)logger << "[LOG] dissipation model was set to periodic, the function will be a sinusoidal function with amplitude, period and phase" << std::endl;
             if (vm.count("dissipationModelParameters")) {
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if (dissipationModelParameters.size() == 3) {
-                    logger << "[LOG] dissipation model parameters were set to Amplitude:"
-                    << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
+                    if(rank==0)logger << "[LOG] dissipation model parameters were set to Amplitude:"
+                        << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
                 } else {
-                    logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
+                    if(rank==0)logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
                     return 1;
                 }
                 
                 
             } else {
-                logger.printError("dissipation model parameters for periodic dissipation was not set: aborting")<<std::endl;
+                if(rank==0)logger.printError("dissipation model parameters for periodic dissipation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(dissipationModelName == "custom"){
