@@ -547,16 +547,16 @@ int main(int argc, char** argv) {
                 if(conservationModelParameters.size() == 2){
                     //control if lower and upper limits of the random values are within 0 and 1
                     if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
-                        logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
+                        if(rank==0)logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
                         return 1;
                     }
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
                 } else {
-                    logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
+                    if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
+                if(rank==0)logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
                 return 1;
             }
         } else if(conservationModelName == "custom"){
