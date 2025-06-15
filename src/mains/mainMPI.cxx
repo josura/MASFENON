@@ -517,31 +517,31 @@ int main(int argc, char** argv) {
 
 
     if (vm.count("conservationModel")) {
-        logger << "[LOG] conservation model was set to "
-    << vm["conservationModel"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] conservation model was set to "
+            << vm["conservationModel"].as<std::string>() << ".\n";
         std::string conservationModelName = vm["conservationModel"].as<std::string>();
         if(conservationModelName == "none"){
-            logger << "[LOG] conservation model set to default (none)\n";
+            if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
             conservationModel = new ConservationModel([](double time)->double{return 0;});
         } else if (conservationModelName == "scaled"){
             if (vm.count("conservationModelParameters")) {
-                logger << "[LOG] conservation model parameters were declared to be "
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
             << vm["conservationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
                 if(conservationModelParameters.size() == 1){
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
                 } else {
-                    logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
+                    if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
                     return 1;
                 }
             } else {
-                logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
+                if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
                 conservationModel = new ConservationModel();
             }
         } else if (conservationModelName == "random"){
             if (vm.count("conservationModelParameters")) {
-                logger << "[LOG] conservation model parameters were declared to be "
-            << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
+                    << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
                 std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
                 if(conservationModelParameters.size() == 2){
                     //control if lower and upper limits of the random values are within 0 and 1
