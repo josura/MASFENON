@@ -561,14 +561,16 @@ int main(int argc, char** argv) {
             }
         } else if(conservationModelName == "custom"){
             //control if custom function for conservation returns double and takes a single parameter as double
-            logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
+            if(rank==0)logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
             if (vm.count("conservationModelParameters")) {
                 std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
-                for (auto param : conservationModelParameters) {
-                    logger << param << ", ";
+                if(rank==0){
+                    logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                    for (auto param : conservationModelParameters) {
+                        logger << param << ", ";
+                    }
+                    logger << ")" << std::endl;
                 }
-                logger << ")" << std::endl;
                 conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
             } else {
                 logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
