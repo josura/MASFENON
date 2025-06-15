@@ -645,39 +645,44 @@ int main(int argc, char** argv) {
 
     std::vector<std::string> subtypes;
     if(vm.count("subtypes")){
-        logger << "[LOG] subtypes filename set to "
-    << vm["subtypes"].as<std::string>() << ".\n";
+        if(rank==0)logger << "[LOG] subtypes filename set to "
+            << vm["subtypes"].as<std::string>() << ".\n";
         subtypesFilename = vm["subtypes"].as<std::string>();
         subtypes = getVectorFromFile<std::string>(subtypesFilename);
     }else{
-        logger << "[LOG] subtypes filename not set, set to default: all types \n";
+        if(rank==0)logger << "[LOG] subtypes filename not set, set to default: all types \n";
         subtypes = types;
     }
 
-    logger << "[LOG] types found in the folder used for the computation: " << std::endl;
-    for (auto type : types) {
-        logger << type << ", ";
+    if(rank==0){
+        logger << "[LOG] types found in the folder used for the computation: " << std::endl;
+        for (auto type : types) {
+            logger << type << ", ";
+        }
+        logger << std::endl;
     }
-    logger << std::endl;
     
     //filter types with the subtypesresetVirtualOutputs
     types = vectorsIntersection(types, subtypes);
     if (types.size() == 0) {
-        logger.printError("no types in common between the types and subtypes: aborting")<<std::endl;
+        if(rank==0)logger.printError("no types in common between the types and subtypes: aborting")<<std::endl;
         return 1;
     }
-    logger << "[LOG] final types used for the computation: " << std::endl;
-    for (auto type : types) {
-        logger << type << ", ";
+    if(rank==0){
+        logger << "[LOG] final types used for the computation: " << std::endl;
+        for (auto type : types) {
+            logger << type << ", ";
+        }
+        logger << std::endl;
     }
-    logger << std::endl;
-
 
     // control if the number of processes is greater than the number of types, exit if true (useless process are not accepted)
     if (numProcesses > SizeToInt(types.size())) {
-        logger.printError("number of processes is greater than the number of types: aborting")<<std::endl;
-        logger.printError("number of processes: ") << numProcesses << std::endl;
-        logger.printError("number of types: ") << types.size() << std::endl;
+        if(rank==0){
+            logger.printError("number of processes is greater than the number of types: aborting")<<std::endl;
+            logger.printError("number of processes: ") << numProcesses << std::endl;
+            logger.printError("number of types: ") << types.size() << std::endl;
+        }
         return 1;
     }
 
