@@ -174,11 +174,11 @@ int main(int argc, char** argv) {
         if(rank==0)logger.printLog(false,"verbose mode disabled");
     }
     if(treatWarningAsError){
-        logger.printLog(false,"treat warnings as errors enabled");
-        if(rank==0)logger.setTreatWarningsAsErrors(true);
+        if(rank==0)logger.printLog(false,"treat warnings as errors enabled");
+        logger.setTreatWarningsAsErrors(true);
     } else {
-        logger.printLog(false,"treat warnings as errors disabled");
-        if(rank==0)logger.setTreatWarningsAsErrors(false);
+        if(rank==0)logger.printLog(false,"treat warnings as errors disabled");
+        logger.setTreatWarningsAsErrors(false);
     }
 
 
@@ -607,7 +607,7 @@ int main(int argc, char** argv) {
         if(rank==0)logger <<"[LOG] using node description file to get the names of the nodes in the graphs"<<std::endl;
         nodesDescriptionFilename = vm["nodeDescriptionFile"].as<std::string>();
     } else {
-        logger <<"[LOG] no nodes description"<<std::endl;
+        if(rank==0)logger <<"[LOG] no nodes description"<<std::endl;
     }
 
     // if both homogenousGraphNodesFile and nodeDescriptionFolder are set, exit
