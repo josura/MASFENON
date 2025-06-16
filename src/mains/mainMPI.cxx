@@ -1616,20 +1616,6 @@ int main(int argc, char** argv) {
                 }
             }
         }
-
-        // // TESTING
-        // // printing nodes values(inputAugmented) for augmented graph 1
-        // for(int i = 0; i< finalWorkload; i++){
-        //     if(types[startIdx + i] == "1"){
-        //         std::vector<std::string> nodeNames = typeComputations[i]->getAugmentedGraph()->getNodeNames();
-        //         std::cout << "printing values for type 1 after receiving them via MPI"<<std::endl;
-        //         for(uint nodeIndex = 0; nodeIndex < nodeNames.size(); nodeIndex++){
-        //             std::cout << "(" << nodeNames[nodeIndex] << " = " << typeComputations[i]->getInputAugmented()[nodeIndex] << "), ";
-        //         }
-        //     }
-        // } 
-        // std::cout << std::endl;
-        // // TESTING
     }
 
     // save the augmented graph for every type if the option was set
