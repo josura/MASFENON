@@ -44,7 +44,7 @@ echo """mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -
         --propagationModel customScalingNeighbors \
         --propagationModelParameters $propagationScaleFactor6h $propagationScaleFactor7h $propagationScaleFactor10h \
         --conservationModel custom \
-        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor7h $conservationScaleFactor10 \
+        --conservationModelParameters $conservationScaleFactor6h $conservationScaleFactor7h $conservationScaleFactor10h \
         --intertypeIterations 10 \
         --intratypeIterations 5 \
         --timestep 1 \
@@ -57,11 +57,11 @@ mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0 -np 8 ./b
         --typeInteractionFolder $typeInteractionsFolder \
         --nodeDescriptionFolder $nodesFolder \
         --dissipationModel custom \
-        --dissipationModelParameters "$dissipationScaleFactor6h" "$dissipationScaleFactor" "$dissipationScaleFactor" \
+        --dissipationModelParameters "$dissipationScaleFactor6h" "$dissipationScaleFactor7h" "$dissipationScaleFactor10h" \
         --propagationModel customScalingNeighbors \
-        --propagationModelParameters "$propagationScaleFactor6h" "$propagationScaleFactor" "$propagationScaleFactor" \
+        --propagationModelParameters "$propagationScaleFactor6h" "$propagationScaleFactor7h" "$propagationScaleFactor10h" \
         --conservationModel custom \
-        --conservationModelParameters "$conservationScaleFactor6h" "$conservationScaleFactor" "$conservationScaleFactor" \
+        --conservationModelParameters "$conservationScaleFactor6h" "$conservationScaleFactor7h" "$conservationScaleFactor10h" \
         --intertypeIterations 10 \
         --intratypeIterations 5 \
         --timestep 1 \
