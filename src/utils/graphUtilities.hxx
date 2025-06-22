@@ -93,7 +93,6 @@ namespace weighed_graph_metrics {
      * @brief Computes the maximum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
      * @param mode The mode of degree calculation (In, Out, Full).
-     * @return The maximum edge degree (weighted) in the graph.
      * @details This function calculates the maximum degree of edges in the graph, which is defined as the maximum sum of weights of edges connected to any node.
      * @note The degree of a node is the sum of weights of edges connected to it. Depending on the mode, it can be the in-degree, out-degree, or full degree.
      * @return The pair <name,value>. 0 if the graph has no edges.
@@ -103,12 +102,12 @@ namespace weighed_graph_metrics {
      * @brief Computes the minimum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
      * @param mode The mode of degree calculation (In, Out, Full).
-     * @return The minimum edge degree (weighted) in the graph.
      * @details This function calculates the minimum degree of edges in the graph, which is defined as the minimum sum of weights of edges connected to any node.
      * @note The degree of a node is the sum of weights of edges connected to it. Depending on the mode, it can be the in-degree, out-degree, or full degree.
-     * @return The pair <name,value>. 0 if the graph has no edges.
+     * @return The pair <name,value> node that has the minimum edge degree. 0 if the graph has no edges.
      * @note This function is similar to minEdgeDegree, but it considers the weights of the edges.
      */
     std::pair<std::string,double> minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
+
 
 }
