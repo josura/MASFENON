@@ -109,5 +109,12 @@ namespace weighed_graph_metrics {
      */
     std::pair<std::string,double> minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
 
-
+    /**
+     * @brief Computes the average strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return the average strength centrality measure in the graph
+     * @details This function computes the average strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    double averageStrengthCentrality(const WeightedEdgeGraph& graph);
 }
