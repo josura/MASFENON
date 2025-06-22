@@ -95,7 +95,7 @@ namespace weighed_graph_metrics {
      * @param mode The mode of degree calculation (In, Out, Full).
      * @details This function calculates the maximum degree of edges in the graph, which is defined as the maximum sum of weights of edges connected to any node.
      * @note The degree of a node is the sum of weights of edges connected to it. Depending on the mode, it can be the in-degree, out-degree, or full degree.
-     * @return The pair <name,value>. 0 if the graph has no edges.
+     * @return The pair <name,value> node that has the maximum edge degree. 0 if the graph has no edges.
      */
     std::pair<std::string,double> maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
     /**
