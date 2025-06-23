@@ -127,6 +127,13 @@ namespace weighed_graph_metrics {
      */
     std::pair<std::string,double> maxStrengthCentrality(const WeightedEdgeGraph& graph);
 
-
+    /**
+     * @brief Computes the minimum strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return the minimum strength centrality measure in the graph and a node that has that minimum centrality 
+     * @details This function computes the minimum strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    std::pair<std::string,double> minStrengthCentrality(const WeightedEdgeGraph& graph);
     
 }
