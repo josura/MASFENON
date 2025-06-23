@@ -116,7 +116,7 @@ namespace weighed_graph_metrics {
      * @details This function computes the average strength centrality, where the strength is computed as:
      * strength(v) = sum of weights of edges incident to v      
      */
-    double averageStrengthCentrality(const WeightedEdgeGraph& graph);
+    double averageStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
 
     /**
      * @brief Computes the maximum strength centrality in the graph.
@@ -125,7 +125,7 @@ namespace weighed_graph_metrics {
      * @details This function computes the maximum strength centrality, where the strength is computed as:
      * strength(v) = sum of weights of edges incident to v      
      */
-    std::pair<std::string,double> maxStrengthCentrality(const WeightedEdgeGraph& graph);
+    std::pair<std::string,double> maxStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
 
     /**
      * @brief Computes the minimum strength centrality in the graph.
@@ -134,6 +134,6 @@ namespace weighed_graph_metrics {
      * @details This function computes the minimum strength centrality, where the strength is computed as:
      * strength(v) = sum of weights of edges incident to v      
      */
-    std::pair<std::string,double> minStrengthCentrality(const WeightedEdgeGraph& graph);
+    std::pair<std::string,double> minStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
     
 }
