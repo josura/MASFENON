@@ -117,4 +117,13 @@ namespace weighed_graph_metrics {
      * strength(v) = sum of weights of edges incident to v      
      */
     double averageStrengthCentrality(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Computes the maximum strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return the average strength centrality measure in the graph and a node that has that maximum centrality 
+     * @details This function computes the average strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    std::pair<std::string,double> maxStrengthCentrality(const WeightedEdgeGraph& graph)
 }
