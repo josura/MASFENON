@@ -132,6 +132,7 @@ namespace weighed_graph_metrics {
     /**
      * @brief Computes the minimum strength centrality in the graph.
      * @param graph The weighted edge graph to analyze.
+     * @param mode The mode of strength calculation (In, Out, Full).
      * @return the minimum strength centrality measure in the graph and a node that has that minimum centrality 
      * @details This function computes the minimum strength centrality, where the strength is computed as:
      * strength(v) = sum of weights of edges incident to v      
