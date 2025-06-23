@@ -112,6 +112,7 @@ namespace weighed_graph_metrics {
     /**
      * @brief Computes the average strength centrality in the graph.
      * @param graph The weighted edge graph to analyze.
+     * @param mode The mode of the strength calculation (In, Out, Full).
      * @return the average strength centrality measure in the graph
      * @details This function computes the average strength centrality, where the strength is computed as:
      * strength(v) = sum of weights of edges incident to v      
