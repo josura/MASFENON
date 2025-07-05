@@ -449,5 +449,31 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
 }
 
 double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& graph, int v){
+    if (v < 0 || v >= graph.getNumNodes()) {
+        throw std::out_of_range("Node index out of range");
+    }
+
+    std::vector<int> neighbors = graph.getSuccessors(v); // I am not convinced by the fact that I am callin the successors here, but the neighbors should also
+    int k = neighbors.size();
     
+    if (k < 2) {
+        return 0.0; // No clustering possible with less than 2 neighbors
+    }
+
+    double totalWeight = 0.0;
+    int edgeCount = 0;
+
+    for (int i = 0; i < k; ++i) {
+        for (int j = i + 1; j < k; ++j) {
+            int u = neighbors[i];
+            int w = neighbors[j];
+            double weight = graph.getEdgeWeight(u, w);
+            if (weight > 0) {
+                totalWeight += weight;
+                edgeCount++;
+            }
+        }
+    }
+
+    return (edgeCount > 0) ? (totalWeight / (k * (k - 1) / 2)) : 0.0; // Return the average weight of edges between neighbors
 }
