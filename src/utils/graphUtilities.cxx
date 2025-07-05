@@ -477,3 +477,14 @@ double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& 
 
     return (edgeCount > 0) ? (totalWeight / (k * (k - 1) / 2)) : 0.0; // Return the average weight of edges between neighbors
 }
+
+double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph& graph) {
+    double totalClustering = 0.0;
+    int numNodes = graph.getNumNodes();
+
+    for (int v = 0; v < numNodes; ++v) {
+        totalClustering += weightedLocalClustering(graph, v);
+    }
+
+    return (numNodes > 0) ? (totalClustering / numNodes) : 0.0; // Return the average clustering coefficient
+}
