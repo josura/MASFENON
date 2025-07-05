@@ -447,3 +447,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
 
     return minCentrality;
 }
+
+double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& graph, int v){
+    
+}
