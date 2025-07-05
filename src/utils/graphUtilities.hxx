@@ -10,12 +10,12 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
 
 /**
- * @namespace weighed_graph_metrics
+ * @namespace weighted_graph_metrics
  * @brief Contains utility functions for calculating metrics on weighted graphs.
  * @details The functions are used to calculate metrics such as the average weight of edges in a graph.
  * @note The functions are designed to work with the WeightedEdgeGraph class.
  */
-namespace weighed_graph_metrics {
+namespace weighted_graph_metrics {
     /**
      * @enum DegreeMode
      * @brief Enum class to specify the mode of degree calculation.
