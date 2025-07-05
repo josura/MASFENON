@@ -160,7 +160,10 @@ namespace weighted_graph_metrics {
      * @brief Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
-     * @return A vector containing the shortest path lengths from the source node to all other nodes
+     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the source node index is out of range.
+     * @throw std::invalid_argument if the graph is empty.
      * @details This function uses a breadth-first search (BFS) algorithm to compute the shortest path lengths in an unweighted graph.
      * @note The graph is treated as unweighted for the purpose of this function, meaning
      * that all edges are considered to have equal weight (1).
@@ -169,6 +172,8 @@ namespace weighted_graph_metrics {
         std::pair< 
             int,std::vector<int> 
         > 
-    > unweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source);
+    > allUnweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source);
+
+
 
 }

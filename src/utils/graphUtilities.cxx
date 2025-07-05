@@ -488,3 +488,7 @@ double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph&
 
     return (numNodes > 0) ? (totalClustering / numNodes) : 0.0; // Return the average clustering coefficient
 }
+
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::unweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source) {
+
+}
