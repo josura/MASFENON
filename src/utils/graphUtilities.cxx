@@ -306,6 +306,19 @@ double weighed_graph_metrics::averageStrengthCentrality(const WeightedEdgeGraph&
             }
             totalStrength += strength;
         }
+    } else if(mode == DegreeMode::Full){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+            totalStrength += strength;
+        }
     }
 
     return totalStrength / numNodes;
