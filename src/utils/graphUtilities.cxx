@@ -453,7 +453,7 @@ double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& 
         throw std::out_of_range("Node index out of range");
     }
 
-    std::vector<int> neighbors = graph.getSuccessors(v); // I am not convinced by the fact that I am callin the successors here, but the neighbors should also
+    std::vector<int> neighbors = graph.getSuccessors(v); // I am not convinced by the fact that I am callin the successors here, maybe because they are defined as outgoing edges (immediately connected nodes)
     int k = neighbors.size();
     
     if (k < 2) {
