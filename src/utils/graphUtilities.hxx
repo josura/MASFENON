@@ -138,5 +138,23 @@ namespace weighted_graph_metrics {
      * strength(v) = sum of weights of edges incident to v      
      */
     std::pair<std::string,double> minStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
+
+    /**
+     * @brief Computes the local clustering coefficient for a node in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param v The node for which to compute the local clustering coefficient.
+     * @return The local clustering coefficient for the node v.
+     * @details The local clustering coefficient is computed as the Barrat's local clustering coefficient
+     */
+    double weightedLocalClustering(const WeightedEdgeGraph& graph, int v);
+
+    /**
+     * @brief Computes the global clustering coefficient for a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The global clustering coefficient for the graph.
+     * @details The global clustering coefficient is computed as the average of the local clustering coefficients of all the nodes in the graph.
+     */
+    double weightedGlobalClustering(const WeightedEdgeGraph& graph);
+
     
 }
