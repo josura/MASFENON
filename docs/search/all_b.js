@@ -16,11 +16,13 @@ var searchData=
   ['matrix_2ehxx_13',['Matrix.hxx',['../Matrix_8hxx.html',1,'']]],
   ['matrix_3c_20double_20_3e_14',['Matrix&lt; double &gt;',['../classMatrix.html',1,'']]],
   ['matrixmultiplyvector_15',['matrixMultiplyVector',['../optimization_8cxx.html#a145f6520b4dc93f24ab962e5f76a3955',1,'optimization.cxx']]],
-  ['maxedgedegree_16',['maxEdgeDegree',['../namespaceweighed__graph__metrics.html#ac310645078f8e9a28946d52f81b1ae1d',1,'weighed_graph_metrics']]],
-  ['maxedgedegreeweighted_17',['maxEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#aa4ce89d73ab20912317ecd574a6ea4be',1,'weighed_graph_metrics']]],
-  ['maxedgeweight_18',['maxEdgeWeight',['../namespaceweighed__graph__metrics.html#a8c0163f343e72ffdaba205205623f0c3',1,'weighed_graph_metrics']]],
-  ['message_19',['Help Message',['../index.html#autotoc_md8',1,'']]],
-  ['minedgedegree_20',['minEdgeDegree',['../namespaceweighed__graph__metrics.html#addd5bb51d2e0c02b6ac6aa8b669c230c',1,'weighed_graph_metrics']]],
-  ['minedgedegreeweighted_21',['minEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#a7f802904bbc561bb23882db005e859f2',1,'weighed_graph_metrics']]],
-  ['minedgeweight_22',['minEdgeWeight',['../namespaceweighed__graph__metrics.html#a02ce4381b2a1c99f1baeeda387af5641',1,'weighed_graph_metrics']]]
+  ['maxedgedegree_16',['maxEdgeDegree',['../namespaceweighted__graph__metrics.html#abfe275fc4ad149f1869c09682b253983',1,'weighted_graph_metrics']]],
+  ['maxedgedegreeweighted_17',['maxEdgeDegreeWeighted',['../namespaceweighted__graph__metrics.html#a2498b653e38ac90ae03b5b2431906ee4',1,'weighted_graph_metrics']]],
+  ['maxedgeweight_18',['maxEdgeWeight',['../namespaceweighted__graph__metrics.html#a47c712fc7c4b43b513fa7c3d4e803bde',1,'weighted_graph_metrics']]],
+  ['maxstrengthcentrality_19',['maxStrengthCentrality',['../namespaceweighted__graph__metrics.html#a231415d33d2279dc80c50050ff3549bd',1,'weighted_graph_metrics']]],
+  ['message_20',['Help Message',['../index.html#autotoc_md8',1,'']]],
+  ['minedgedegree_21',['minEdgeDegree',['../namespaceweighted__graph__metrics.html#a51143329e38f9727461cc5fde52feeaa',1,'weighted_graph_metrics']]],
+  ['minedgedegreeweighted_22',['minEdgeDegreeWeighted',['../namespaceweighted__graph__metrics.html#ab937700172ec4eabe348ab648efe6645',1,'weighted_graph_metrics']]],
+  ['minedgeweight_23',['minEdgeWeight',['../namespaceweighted__graph__metrics.html#ac12afe34560c3abcb8765042721482ab',1,'weighted_graph_metrics']]],
+  ['minstrengthcentrality_24',['minStrengthCentrality',['../namespaceweighted__graph__metrics.html#a44aaedb1c61ef4dff8e9f1987692db49',1,'weighted_graph_metrics']]]
 ];

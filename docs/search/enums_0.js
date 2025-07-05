@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['degreemode_0',['DegreeMode',['../namespaceweighed__graph__metrics.html#a6fc48885109c1eb36cd2c12f9548a7d0',1,'weighed_graph_metrics']]]
+  ['degreemode_0',['DegreeMode',['../namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0',1,'weighted_graph_metrics']]]
 ];

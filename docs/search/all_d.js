@@ -13,6 +13,6 @@ var searchData=
   ['operator_3d_10',['operator=',['../classLogger.html#a8c0ca770cdc91ca9fc3015286568e1ea',1,'Logger::operator=()'],['../classWeightedEdgeGraph.html#ac7f45c9edc82d7a54661cf4c45b5ed54',1,'WeightedEdgeGraph::operator=()'],['../classMatrix.html#a110f31ce303d4a399b139f2a5751c525',1,'Matrix::operator=()'],['../classComputation.html#a0e060ed80bfa62a4c0820737fa5a6563',1,'Computation::operator=()']]],
   ['optimization_2ecxx_11',['optimization.cxx',['../optimization_8cxx.html',1,'']]],
   ['other_20sections_12',['Other sections',['../index.html#autotoc_md6',1,'']]],
-  ['out_13',['Out',['../namespaceweighed__graph__metrics.html#a6fc48885109c1eb36cd2c12f9548a7d0a7c147cda9e49590f6abe83d118b7353b',1,'weighed_graph_metrics']]],
+  ['out_13',['Out',['../namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0a7c147cda9e49590f6abe83d118b7353b',1,'weighted_graph_metrics']]],
   ['outdegreeofnode_14',['outDegreeOfNode',['../classWeightedEdgeGraph.html#a1cf9979070b8837a84ef80a4e99265b2',1,'WeightedEdgeGraph']]]
 ];

@@ -27,7 +27,8 @@ var searchData=
   ['asvector_24',['asVector',['../classMatrix.html#a95cfde5e2b68f6a747f23ca63384df10',1,'Matrix']]],
   ['augmentgraph_25',['augmentGraph',['../classComputation.html#a758c80f8bd10cc85ad99144f5195132b',1,'Computation']]],
   ['augmentgraphnocomputeinverse_26',['augmentGraphNoComputeInverse',['../classComputation.html#a111ca3d28a5b2d9b533db57601334542',1,'Computation']]],
-  ['averageedgedegree_27',['averageEdgeDegree',['../namespaceweighed__graph__metrics.html#ac7e13394ad8bae4db14d26d479260ee6',1,'weighed_graph_metrics']]],
-  ['averageedgedegreeweighted_28',['averageEdgeDegreeWeighted',['../namespaceweighed__graph__metrics.html#af846aa728c637723640e3e8ed56f3424',1,'weighed_graph_metrics']]],
-  ['averageedgeweight_29',['averageEdgeWeight',['../namespaceweighed__graph__metrics.html#a0c6d5628d873b029bcbf6ad22481fff2',1,'weighed_graph_metrics']]]
+  ['averageedgedegree_27',['averageEdgeDegree',['../namespaceweighted__graph__metrics.html#a199ccec857bdbc4b02866f74818085c3',1,'weighted_graph_metrics']]],
+  ['averageedgedegreeweighted_28',['averageEdgeDegreeWeighted',['../namespaceweighted__graph__metrics.html#a23d2ead9501228fa8f73c0580c313053',1,'weighted_graph_metrics']]],
+  ['averageedgeweight_29',['averageEdgeWeight',['../namespaceweighted__graph__metrics.html#a96e4885e6b887c610d059a1bdc1ebed0',1,'weighted_graph_metrics']]],
+  ['averagestrengthcentrality_30',['averageStrengthCentrality',['../namespaceweighted__graph__metrics.html#a2a28883c9b95be0aabda4c3416e4f5a3',1,'weighted_graph_metrics']]]
 ];
