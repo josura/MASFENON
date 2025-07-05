@@ -1,6 +1,6 @@
 #include "utils/graphUtilities.hxx"
 
-double weighed_graph_metrics::averageEdgeWeight(const WeightedEdgeGraph& graph){
+double weighted_graph_metrics::averageEdgeWeight(const WeightedEdgeGraph& graph){
     if (graph.getNumEdges() == 0) {
         return 0.0; // Avoid division by zero if there are no edges
     }
@@ -13,7 +13,7 @@ double weighed_graph_metrics::averageEdgeWeight(const WeightedEdgeGraph& graph){
     return totalWeight / graph.getNumEdges(); // Return the average weight
 }
 
-std::pair<std::string,double> weighed_graph_metrics::maxEdgeWeight(const WeightedEdgeGraph& graph) {
+std::pair<std::string,double> weighted_graph_metrics::maxEdgeWeight(const WeightedEdgeGraph& graph) {
     if (graph.getNumEdges() == 0) {
         return {"", 0.0}; // Return an empty pair if there are no edges 
     }
@@ -33,7 +33,7 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeWeight(const Weighte
     return maxEdge; // Return the maximum weight
 }
 
-std::pair<std::string,double> weighed_graph_metrics::minEdgeWeight(const WeightedEdgeGraph& graph) {
+std::pair<std::string,double> weighted_graph_metrics::minEdgeWeight(const WeightedEdgeGraph& graph) {
     if (graph.getNumEdges() == 0) {
         return {"", 0.0}; // Return an empty pair if there are no edges
     }
@@ -53,7 +53,7 @@ std::pair<std::string,double> weighed_graph_metrics::minEdgeWeight(const Weighte
     return minEdge; // Return the minimum weight
 }
 
-double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
+double weighted_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return 0.0;
     }
@@ -78,7 +78,7 @@ double weighed_graph_metrics::averageEdgeDegree(const WeightedEdgeGraph& graph, 
     return totalDegree / graph.getNumNodes(); // Return the average degree
 }
 
-std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
+std::pair<std::string,int> weighted_graph_metrics::maxEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0}; // Return an empty pair if there are no edges
     }
@@ -107,7 +107,7 @@ std::pair<std::string,int> weighed_graph_metrics::maxEdgeDegree(const WeightedEd
     return maxEdge; // Return the maximum degree
 }
 
-std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
+std::pair<std::string,int> weighted_graph_metrics::minEdgeDegree(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0}; // Return 0 if there are no edges
     }
@@ -138,7 +138,7 @@ std::pair<std::string,int> weighed_graph_metrics::minEdgeDegree(const WeightedEd
     return minEdge; // Return the minimum degree
 }
 
-double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
+double weighted_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return 0.0; // Avoid division by zero if there are no edges
     }
@@ -179,7 +179,7 @@ double weighed_graph_metrics::averageEdgeDegreeWeighted(const WeightedEdgeGraph&
     return totalWeightedDegree / graph.getNumNodes(); // Return the average weighted degree
 }
 
-std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
+std::pair<std::string,double> weighted_graph_metrics::maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0.0}; // Return an empty pair if there are no edges
     }
@@ -229,7 +229,7 @@ std::pair<std::string,double> weighed_graph_metrics::maxEdgeDegreeWeighted(const
     return maxEdge; // Return the maximum weighted degree
 }
 
-std::pair<std::string,double> weighed_graph_metrics::minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
+std::pair<std::string,double> weighted_graph_metrics::minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode) {
     if (graph.getNumEdges() == 0) {
         return {"", 0.0}; // Return an empty pair if there are no edges
     }
@@ -275,4 +275,175 @@ std::pair<std::string,double> weighed_graph_metrics::minEdgeDegreeWeighted(const
         }
     }
     return minEdge; // Return the minimum weighted degree
+}
+
+double weighted_graph_metrics::averageStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        return 0.0;
+    }
+
+    double totalStrength = 0.0;
+    if(mode == DegreeMode::Out){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+
+            // If the graph is undirected, and you're counting both v->u and u->v,
+            // make sure not to double-count or adjust accordingly
+            totalStrength += strength;
+        }
+    } else if(mode == DegreeMode::In){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+            totalStrength += strength;
+        }
+    } else if(mode == DegreeMode::Full){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+            totalStrength += strength;
+        }
+    }
+
+    return totalStrength / numNodes;
+}
+
+std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        return {"", 0.0};
+    }
+
+    double maxStrength = std::numeric_limits<double>::lowest();
+    std::string maxNodeName = "";
+    std::pair<std::string, double> maxCentrality;
+
+    if(mode == DegreeMode::Out){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+
+            if (strength > maxStrength) {
+                maxStrength = strength;
+                maxNodeName = graph.getNodeName(v);
+                maxCentrality = {maxNodeName, maxStrength};
+            }
+        }
+    } else if(mode == DegreeMode::In){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength > maxStrength) {
+                maxStrength = strength;
+                maxNodeName = graph.getNodeName(v);
+                maxCentrality = {maxNodeName, maxStrength};
+            }
+        }
+    } else if(mode == DegreeMode::Full){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength > maxStrength) {
+                maxStrength = strength;
+                maxNodeName = graph.getNodeName(v);
+                maxCentrality = {maxNodeName, maxStrength};
+            }
+        }
+    }
+
+    return maxCentrality;
+}
+
+std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        return {"", 0.0};
+    }
+
+    double minStrength = std::numeric_limits<double>::max();
+    std::string minNodeName = "";
+    std::pair<std::string, double> minCentrality;
+
+    if(mode == DegreeMode::Out){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    } else if(mode == DegreeMode::In){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    } else if(mode == DegreeMode::Full){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    }
+
+    return minCentrality;
 }

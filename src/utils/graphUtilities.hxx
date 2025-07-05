@@ -10,12 +10,12 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
 
 /**
- * @namespace weighed_graph_metrics
+ * @namespace weighted_graph_metrics
  * @brief Contains utility functions for calculating metrics on weighted graphs.
  * @details The functions are used to calculate metrics such as the average weight of edges in a graph.
  * @note The functions are designed to work with the WeightedEdgeGraph class.
  */
-namespace weighed_graph_metrics {
+namespace weighted_graph_metrics {
     /**
      * @enum DegreeMode
      * @brief Enum class to specify the mode of degree calculation.
@@ -93,22 +93,50 @@ namespace weighed_graph_metrics {
      * @brief Computes the maximum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
      * @param mode The mode of degree calculation (In, Out, Full).
-     * @return The maximum edge degree (weighted) in the graph.
      * @details This function calculates the maximum degree of edges in the graph, which is defined as the maximum sum of weights of edges connected to any node.
      * @note The degree of a node is the sum of weights of edges connected to it. Depending on the mode, it can be the in-degree, out-degree, or full degree.
-     * @return The pair <name,value>. 0 if the graph has no edges.
+     * @return The pair <name,value> node that has the maximum edge degree. 0 if the graph has no edges.
      */
     std::pair<std::string,double> maxEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
     /**
      * @brief Computes the minimum edge degree (weighted) in a weighted graph.
      * @param graph The weighted edge graph to analyze.
      * @param mode The mode of degree calculation (In, Out, Full).
-     * @return The minimum edge degree (weighted) in the graph.
      * @details This function calculates the minimum degree of edges in the graph, which is defined as the minimum sum of weights of edges connected to any node.
      * @note The degree of a node is the sum of weights of edges connected to it. Depending on the mode, it can be the in-degree, out-degree, or full degree.
-     * @return The pair <name,value>. 0 if the graph has no edges.
+     * @return The pair <name,value> node that has the minimum edge degree. 0 if the graph has no edges.
      * @note This function is similar to minEdgeDegree, but it considers the weights of the edges.
      */
     std::pair<std::string,double> minEdgeDegreeWeighted(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
 
+    /**
+     * @brief Computes the average strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param mode The mode of the strength calculation (In, Out, Full).
+     * @return the average strength centrality measure in the graph
+     * @details This function computes the average strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    double averageStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
+
+    /**
+     * @brief Computes the maximum strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param mode The mode of the strength calculation (In, Out, Full).
+     * @return the maximum strength centrality measure in the graph and a node that has that maximum centrality 
+     * @details This function computes the maximum strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    std::pair<std::string,double> maxStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
+
+    /**
+     * @brief Computes the minimum strength centrality in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param mode The mode of strength calculation (In, Out, Full).
+     * @return the minimum strength centrality measure in the graph and a node that has that minimum centrality 
+     * @details This function computes the minimum strength centrality, where the strength is computed as:
+     * strength(v) = sum of weights of edges incident to v      
+     */
+    std::pair<std::string,double> minStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode = DegreeMode::Full);
+    
 }
