@@ -284,19 +284,20 @@ double weighed_graph_metrics::averageStrengthCentrality(const WeightedEdgeGraph&
     }
 
     double totalStrength = 0.0;
+    if(mode == DegreeMode::Out){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
 
-    for (int v = 0; v < numNodes; ++v) {
-        double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
 
-        // Iterate over outgoing neighbors of node v
-        for (int u : graph.getAdjList(v)) {
-            strength += graph.getEdgeWeight(v, u);
+            // If the graph is undirected, and you're counting both v->u and u->v,
+            // make sure not to double-count or adjust accordingly
+            totalStrength += strength;
         }
-
-        // If the graph is undirected, and you're counting both v->u and u->v,
-        // make sure not to double-count or adjust accordingly
-        totalStrength += strength;
-    }
+    } 
 
     return totalStrength / numNodes;
 }
