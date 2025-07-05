@@ -385,3 +385,65 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
 
     return maxCentrality;
 }
+
+std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(const WeightedEdgeGraph& graph, DegreeMode mode) {
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        return {"", 0.0};
+    }
+
+    double minStrength = std::numeric_limits<double>::max();
+    std::string minNodeName = "";
+    std::pair<std::string, double> minCentrality;
+
+    if(mode == DegreeMode::Out){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    } else if(mode == DegreeMode::In){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    } else if(mode == DegreeMode::Full){
+        for (int v = 0; v < numNodes; ++v) {
+            double strength = 0.0;
+            // Iterate over outgoing neighbors of node v
+            for (int u : graph.getAdjList(v)) {
+                strength += graph.getEdgeWeight(v, u);
+            }
+            // Iterate over incoming neighbors of node v
+            for (int u : graph.getPredecessors(v)) {
+                strength += graph.getEdgeWeight(u, v);
+            }
+
+            if (strength < minStrength) {
+                minStrength = strength;
+                minNodeName = graph.getNodeName(v);
+                minCentrality = {minNodeName, minStrength};
+            }
+        }
+    }
+
+    return minCentrality;
+}
