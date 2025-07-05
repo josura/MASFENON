@@ -126,6 +126,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a44aaedb1c61ef4dff8e9f1987692db49" id="r_a44aaedb1c61ef4dff8e9f1987692db49"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a44aaedb1c61ef4dff8e9f1987692db49">minStrengthCentrality</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, <a class="el" href="namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0">DegreeMode</a> mode=<a class="el" href="namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0abbd47109890259c0127154db1af26c75">DegreeMode::Full</a>)</td></tr>
 <tr class="memdesc:a44aaedb1c61ef4dff8e9f1987692db49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the minimum strength centrality in the graph.  <br /></td></tr>
 <tr class="separator:a44aaedb1c61ef4dff8e9f1987692db49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7635c03f5832977b527061802a107cea" id="r_a7635c03f5832977b527061802a107cea"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a7635c03f5832977b527061802a107cea">weightedLocalClustering</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, int v)</td></tr>
+<tr class="memdesc:a7635c03f5832977b527061802a107cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the local clustering coefficient for a node in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:a7635c03f5832977b527061802a107cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157d69078092126c6a3d6951d5142ec2" id="r_a157d69078092126c6a3d6951d5142ec2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a157d69078092126c6a3d6951d5142ec2">weightedGlobalClustering</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:a157d69078092126c6a3d6951d5142ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the global clustering coefficient for a weighted edge graph.  <br /></td></tr>
+<tr class="separator:a157d69078092126c6a3d6951d5142ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains utility functions for calculating metrics on weighted graphs. </p>
@@ -603,6 +609,73 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the minimum strength centrality measure in the graph and a node that has that minimum centrality</dd></dl>
 <p>This function computes the minimum strength centrality, where the strength is computed as: strength(v) = sum of weights of edges incident to v <br  />
  </p>
+
+</div>
+</div>
+<a id="a157d69078092126c6a3d6951d5142ec2" name="a157d69078092126c6a3d6951d5142ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a157d69078092126c6a3d6951d5142ec2">&#9670;&#160;</a></span>weightedGlobalClustering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double weighted_graph_metrics::weightedGlobalClustering </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the global clustering coefficient for a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The global clustering coefficient for the graph.</dd></dl>
+<p>The global clustering coefficient is computed as the average of the local clustering coefficients of all the nodes in the graph. </p>
+
+</div>
+</div>
+<a id="a7635c03f5832977b527061802a107cea" name="a7635c03f5832977b527061802a107cea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7635c03f5832977b527061802a107cea">&#9670;&#160;</a></span>weightedLocalClustering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double weighted_graph_metrics::weightedLocalClustering </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the local clustering coefficient for a node in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">v</td><td>The node for which to compute the local clustering coefficient. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The local clustering coefficient for the node v.</dd></dl>
+<p>The local clustering coefficient is computed as the Barrat's local clustering coefficient </p>
 
 </div>
 </div>
