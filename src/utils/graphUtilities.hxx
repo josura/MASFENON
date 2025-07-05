@@ -165,6 +165,10 @@ namespace weighted_graph_metrics {
      * @note The graph is treated as unweighted for the purpose of this function, meaning
      * that all edges are considered to have equal weight (1).
      */
-    std::vector<int> unweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source);
+    std::vector< 
+        std::pair< 
+            int,std::vector<int> 
+        > 
+    > unweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source);
 
 }
