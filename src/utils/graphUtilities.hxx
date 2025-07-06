@@ -7,6 +7,7 @@
 #pragma once
 #include <vector>
 #include <tuple>
+#include <queue>
 #include "data_structures/WeightedEdgeGraph.hxx"
 
 /**
@@ -167,6 +168,7 @@ namespace weighted_graph_metrics {
      * @details This function uses a breadth-first search (BFS) algorithm to compute the shortest path lengths in an unweighted graph.
      * @note The graph is treated as unweighted for the purpose of this function, meaning
      * that all edges are considered to have equal weight (1).
+     * @todo: Implement a check for the possibility of a graph that is not connected, for example: after a while, if the discovered nodes are the same as the previous iteration, then we can stop the search.
      */
     std::vector< 
         std::pair< 
