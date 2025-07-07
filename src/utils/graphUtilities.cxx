@@ -490,5 +490,32 @@ double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph&
 }
 
 std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source) {
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
 
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths; // Vector to store pairs of node and its shortest path
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    std::queue<int> queue; // Queue for BFS
+    queue.push(source); // Start BFS from the source node
+    visited[source] = true; // Mark the source node as visited
+
+    while (!queue.empty()) {
+        int currentNode = queue.front();
+        queue.pop();
+        std::vector<int> path; // Vector to store the path to the current node
+        path.push_back(currentNode); // Add the current node to the path
+
+        for (int neighbor : graph.getSuccessors(currentNode)) { // Iterate over neighbors of the current node
+            if (!visited[neighbor]) { // If the neighbor has not been visited
+                visited[neighbor] = true; // Mark it as visited
+                queue.push(neighbor); // Add it to the queue for further exploration
+                path.push_back(neighbor); // Add the neighbor to the path
+            }
+        }
+
+        shortestPaths.emplace_back(currentNode, path); // Store the current node and its path in the result vector
+    }
+
+    return shortestPaths; // Return all shortest paths from the source node
 }
