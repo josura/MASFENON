@@ -505,7 +505,7 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweigh
         queue.pop();
         std::vector<int> path; // Vector to store the path to the current node
         path.push_back(currentNode); // Add the current node to the path
-
+        // Explore all neighbors of the current node
         for (int neighbor : graph.getSuccessors(currentNode)) { // Iterate over neighbors of the current node
             if (!visited[neighbor]) { // If the neighbor has not been visited
                 visited[neighbor] = true; // Mark it as visited
@@ -515,6 +515,13 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweigh
         }
 
         shortestPaths.emplace_back(currentNode, path); // Store the current node and its path in the result vector
+    }
+
+    // Add the nodes that were not reachable from the source node
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        if (!visited[i]) {
+            shortestPaths.emplace_back(i, std::vector<int>{}); // Add unreachable nodes with an empty path
+        }
     }
 
     return shortestPaths; // Return all shortest paths from the source node
