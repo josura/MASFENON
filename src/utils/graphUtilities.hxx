@@ -186,6 +186,7 @@ namespace weighted_graph_metrics {
      * @throw std::invalid_argument if the graph is empty.
      * @details This function uses Dijkstra's algorithm to compute the shortest path lengths in a weighted graph.
      * @note The graph is treated as weighted, meaning that edges can have different weights.
+     * @warning This function assumes that the graph does not contain negative weight cycles. And that the weights are non-negative.
      */
     std::vector< 
         std::pair< 
