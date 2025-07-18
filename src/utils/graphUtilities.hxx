@@ -158,6 +158,17 @@ namespace weighted_graph_metrics {
     double weightedGlobalClustering(const WeightedEdgeGraph& graph);
 
     /**
+     * @brief Computes the weigth of a path in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param path A vector of node indices representing the path.
+     * @return The total weight of the path.
+     * @details The weight of the path is computed as the sum of the weights of the edges in the path.
+     * @note The path is represented as a vector of node indices, where each index corresponds to a node in the graph.
+     * @throw std::out_of_range if any node index in the path is out of range of the graph's nodes.
+     */
+    double weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path);
+
+    /**
      * @brief Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
