@@ -111,17 +111,20 @@ class WeightedEdgeGraph{
                 return adjMatrix.getValue(node1,node2);
             else throw std::out_of_range("WeightedEdgeGraph::getEdgeWeight: one of the nodes is out of range(index)");
         }
+
         /**
-         * @brief Function to get the weight of an edge between two nodes using their names.
-         * @param node1 The name of the first node.
-         * @param node2 The name of the second node.
-         * @return The weight of the edge between the specified nodes.
-         * @throw std::out_of_range if one of the nodes is out of range (meaning that no node has that name). 
+         * @brief Function to control if an edge exists between two nodes.
+         * @param node1 The index of the first node.
+         * @param node2 The index of the second node.
+         * @return True if the edge exists, false otherwise.
+         * @throw std::out_of_range if one of the nodes is out of range (index).
+         * @details This function checks if an edge exists between the specified nodes by checking the value in the adjacency matrix.
+         * @details If the value is greater than 0, it means the edge exists.
          */
-        double getEdgeWeight(std::string node1, std::string node2)const{
-            if(getIndexFromName(node1) >= 0 && getIndexFromName(node2) >= 0)
-                return adjMatrix.getValue(nodeToIndex.at(node1),nodeToIndex.at(node2));
-            else throw std::out_of_range("WeightedEdgeGraph::getEdgeWeight: one of the nodes is out of range(string)");
+        bool hasEdge(int node1, int node2)const{
+            if(node1 >= 0 && node2 >= 0)
+                return adjMatrix.getValue(node1,node2) > 0;
+            else throw std::out_of_range("WeightedEdgeGraph::hasEdge: one of the nodes is out of range(index)");
         }
 
         
@@ -140,6 +143,19 @@ class WeightedEdgeGraph{
                 return -1;
                 // TODO: Deal with the missing element.
             }
+        }
+
+        /**
+         * @brief Function to get the weight of an edge between two nodes using their names.
+         * @param node1 The name of the first node.
+         * @param node2 The name of the second node.
+         * @return The weight of the edge between the specified nodes.
+         * @throw std::out_of_range if one of the nodes is out of range (meaning that no node has that name). 
+         */
+        double getEdgeWeight(std::string node1, std::string node2)const{
+            if(getIndexFromName(node1) >= 0 && getIndexFromName(node2) >= 0)
+                return adjMatrix.getValue(nodeToIndex.at(node1),nodeToIndex.at(node2));
+            else throw std::out_of_range("WeightedEdgeGraph::getEdgeWeight: one of the nodes is out of range(string)");
         }
 
         /**
