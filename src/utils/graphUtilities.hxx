@@ -173,7 +173,7 @@ namespace weighted_graph_metrics {
         std::pair< 
             int,std::vector<int> 
         > 
-    > allUnweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source);
+    > allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source);
 
 
     /**
@@ -192,7 +192,7 @@ namespace weighted_graph_metrics {
         std::pair< 
             int,std::vector<int>
         >
-    > allWeightedShortestPathDijkstra(const WeightedEdgeGraph& graph, int source);
+    > allWeightedShortestPathFromSourceDijkstra(const WeightedEdgeGraph& graph, int source);
 
 
 }

@@ -489,7 +489,7 @@ double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph&
     return (numNodes > 0) ? (totalClustering / numNodes) : 0.0; // Return the average clustering coefficient
 }
 
-std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathBFS(const WeightedEdgeGraph& graph, int source) {
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source) {
     if (source < 0 || source >= graph.getNumNodes()) {
         throw std::out_of_range("Source node index out of range");
     }
@@ -527,7 +527,7 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweigh
     return shortestPaths; // Return all shortest paths from the source node
 }
 
-std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathDijkstra(const WeightedEdgeGraph& graph, int source) {
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra(const WeightedEdgeGraph& graph, int source) {
     if (source < 0 || source >= graph.getNumNodes()) {
         throw std::out_of_range("Source node index out of range");
     }
