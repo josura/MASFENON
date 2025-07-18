@@ -187,12 +187,31 @@ namespace weighted_graph_metrics {
      * @details This function uses Dijkstra's algorithm to compute the shortest path lengths in a weighted graph.
      * @note The graph is treated as weighted, meaning that edges can have different weights.
      * @warning This function assumes that the graph does not contain negative weight cycles. And that the weights are non-negative.
+     * @todo add control for negative weights
      */
     std::vector< 
         std::pair< 
             int,std::vector<int>
         >
     > allWeightedShortestPathFromSourceDijkstra(const WeightedEdgeGraph& graph, int source);
+
+    /**
+     * @brief Computes the weighted shortest path with Bellman-Ford algorithm from a source node to all other nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param source The source node from which to compute the shortest paths.
+     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the source node index is out of range.
+     * @throw std::invalid_argument if the graph is empty.
+     * @details This function uses the Bellman-Ford algorithm to compute the shortest path lengths
+     * in a weighted graph.
+     * @note The graph is treated as weighted, meaning that edges can have different weights.
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int>
+        >
+    > allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source);
 
 
 }
