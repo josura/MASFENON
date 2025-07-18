@@ -165,6 +165,7 @@ namespace weighted_graph_metrics {
      * @details The weight of the path is computed as the sum of the weights of the edges in the path.
      * @note The path is represented as a vector of node indices, where each index corresponds to a node in the graph.
      * @throw std::out_of_range if any node index in the path is out of range of the graph's nodes.
+     * @throw std::invalid_argument if the path is not valid (e.g., edges do not exist between consecutive nodes).
      */
     double weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path);
 

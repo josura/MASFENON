@@ -489,6 +489,29 @@ double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph&
     return (numNodes > 0) ? (totalClustering / numNodes) : 0.0; // Return the average clustering coefficient
 }
 
+
+double weighted_graph_metrics::weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path){
+    if (path.empty()) {
+        return 0.0; // Return 0 if the path is empty
+    }
+
+    double totalWeight = 0.0;
+    for (size_t i = 0; i < path.size() - 1; ++i) {
+        int node1 = path[i];
+        int node2 = path[i + 1];
+        if (node1 < 0 || node2 < 0 || node1 >= graph.getNumNodes() || node2 >= graph.getNumNodes()) {
+            throw std::out_of_range("Node index out of range in the path");
+        }
+        // Check for the validity of the edge
+        if(!graph.hasEdge(node1, node2)) {
+            throw std::invalid_argument("Invalid edge in the path: " + std::to_string(node1) + " -> " + std::to_string(node2));
+        }
+        totalWeight += graph.getEdgeWeight(node1, node2); // Sum the weights of edges in the path
+    }
+
+    return totalWeight; // Return the total weight of the path
+}
+
 std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source) {
     if (source < 0 || source >= graph.getNumNodes()) {
         throw std::out_of_range("Source node index out of range");
