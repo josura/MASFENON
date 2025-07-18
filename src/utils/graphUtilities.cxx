@@ -526,3 +526,59 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweigh
 
     return shortestPaths; // Return all shortest paths from the source node
 }
+
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathDijkstra(const WeightedEdgeGraph& graph, int source) {
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
+
+    std::vector<double> distances(graph.getNumNodes(), std::numeric_limits<double>::max()); // Vector to store distances from source
+    std::vector<int> previous(graph.getNumNodes(), -1); // Vector to store previous nodes in the path
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    distances[source] = 0.0; // Distance to the source node is 0
+
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        int currentNode = -1;
+        double minDistance = std::numeric_limits<double>::max();
+
+        // Find the unvisited node with the smallest distance, also implementable with a priority queue for efficiency
+        for (int j = 0; j < graph.getNumNodes(); ++j) {
+            if (!visited[j] && distances[j] < minDistance) {
+                minDistance = distances[j];
+                currentNode = j;
+            }
+        }
+
+        if (currentNode == -1) {
+            break; // All reachable nodes have been visited
+        }
+
+        visited[currentNode] = true; // Mark the current node as visited
+
+        // Update distances to neighbors of the current node
+        for (int neighbor : graph.getSuccessors(currentNode)) {
+            double edgeWeight = graph.getEdgeWeight(currentNode, neighbor);
+            if (edgeWeight > 0 && !visited[neighbor]) { // Only consider unvisited neighbors with positive edge weights
+                double newDistance = distances[currentNode] + edgeWeight;
+                if (newDistance < distances[neighbor]) {
+                    distances[neighbor] = newDistance; // Update distance to neighbor
+                    previous[neighbor] = currentNode; // Update previous node in the path
+                }
+            }
+        }
+    }
+
+    // Construct the shortest paths from the source node to all other nodes
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path;
+        if (distances[i] < std::numeric_limits<double>::max()) { // If the node is reachable
+            for (int v = i; v != -1; v = previous[v]) {
+                path.push_back(v); // Backtrack to construct the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
+    }
+    return shortestPaths; // Return all shortest paths from the source node
+}
