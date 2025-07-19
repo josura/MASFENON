@@ -170,6 +170,16 @@ namespace weighted_graph_metrics {
     double weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path);
 
     /**
+     * @brief Control if the graph contains a cycle.
+     * @param graph The weighted edge graph to analyze.
+     * @return true if the graph contains a cycle, false otherwise.
+     * @details This function uses a depth-first search (DFS) algorithm to detect cycles in the graph.
+     * @note The function assumes that the graph is directed.
+     * @throw std::invalid_argument if the graph is empty.
+     */
+    bool hasCycle(const WeightedEdgeGraph& graph);
+
+    /**
      * @brief Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
