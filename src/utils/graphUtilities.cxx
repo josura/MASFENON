@@ -512,6 +512,10 @@ double weighted_graph_metrics::weightedPathWeight(const WeightedEdgeGraph& graph
     return totalWeight; // Return the total weight of the path
 }
 
+bool weighted_graph_metrics::hasCycle(const WeightedEdgeGraph& graph){
+    return false; // Placeholder implementation, as cycle detection is not implemented in this example
+}
+
 std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source) {
     if (source < 0 || source >= graph.getNumNodes()) {
         throw std::out_of_range("Source node index out of range");
