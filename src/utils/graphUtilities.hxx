@@ -170,10 +170,21 @@ namespace weighted_graph_metrics {
     double weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path);
 
     /**
+     * @brief Control if the graph contains negative weights.
+     * @param graph The weighted edge graph to analyze.
+     * @return true if the graph contains negative weights, false otherwise.
+     * @details This function iterates through all edges in the graph and checks if any edge has a negative weight.
+     * @note The function assumes that the graph is directed.
+     * @throw std::invalid_argument if the graph is empty.
+     * @warning This function does not check for negative weight cycles, only for the presence of negative weights.
+     */
+    bool hasNegativeWeights(const WeightedEdgeGraph& graph);
+
+    /**
      * @brief Control if the graph contains a cycle.
      * @param graph The weighted edge graph to analyze.
      * @return true if the graph contains a cycle, false otherwise.
-     * @details This function uses a depth-first search (DFS) algorithm to detect cycles in the graph.
+     * @details This function uses a depth-first search (DFS) algorithm to detect cycles (strongly connected components) in the graph.
      * @note The function assumes that the graph is directed.
      * @throw std::invalid_argument if the graph is empty.
      */
