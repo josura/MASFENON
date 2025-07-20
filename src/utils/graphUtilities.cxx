@@ -569,6 +569,11 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeighte
         throw std::out_of_range("Source node index out of range");
     }
 
+    // Control for negative weights
+    if (hasNegativeWeights(graph)) {
+        throw std::invalid_argument("Graph contains negative edge weights, Dijkstra's algorithm cannot be used.");
+    }
+
     std::vector<double> distances(graph.getNumNodes(), std::numeric_limits<double>::max()); // Vector to store distances from source
     std::vector<int> previous(graph.getNumNodes(), -1); // Vector to store previous nodes in the path
     std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
