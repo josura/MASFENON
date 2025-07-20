@@ -512,6 +512,16 @@ double weighted_graph_metrics::weightedPathWeight(const WeightedEdgeGraph& graph
     return totalWeight; // Return the total weight of the path
 }
 
+
+bool weighted_graph_metrics::hasNegativeWeights(const WeightedEdgeGraph& graph){
+    for (const auto& edge : graph.edgesVector) {
+        if (std::get<2>(edge) < 0) { // Check if any edge weight is negative
+            return true; // Return true if a negative weight is found
+        }
+    }
+    return false; // Return false if no negative weights are found
+}
+
 bool weighted_graph_metrics::hasCycle(const WeightedEdgeGraph& graph){
     return false; // Placeholder implementation, as cycle detection is not implemented in this example
 }
