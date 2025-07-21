@@ -15,6 +15,7 @@
  * @brief Contains utility functions for calculating metrics on weighted graphs.
  * @details The functions are used to calculate metrics such as the average weight of edges in a graph.
  * @note The functions are designed to work with the WeightedEdgeGraph class.
+ * @todo When some of the functions in this namespace are used in the code, there needs to be some checks before using some functions, such as negative weights or cycles in the graph with Dijkstra's algorithm.
  */
 namespace weighted_graph_metrics {
     /**
