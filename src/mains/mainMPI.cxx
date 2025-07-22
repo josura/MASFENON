@@ -294,6 +294,11 @@ int main(int argc, char** argv) {
         if(rank==0)logger << "[LOG] timestep set to " 
             << vm["timestep"].as<double>() << ".\n";
         timestep = vm["timestep"].as<double>();
+        // control over the sign of the value, since it should be positive
+        if(timestep <= 0){
+            if(rank==0)logger.printError("timestep must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
     } else {
         if(rank==0)logger << "[LOG] timestep not set, set to default (1)"<<std::endl;
     }
