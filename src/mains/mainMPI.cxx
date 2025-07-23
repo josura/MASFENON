@@ -249,6 +249,11 @@ int main(int argc, char** argv) {
     if (vm.count("intratypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intratype set to " 
     << vm["intratypeIterations"].as<uint>() << ".\n";
+        int testingIterations = vm["intratypeIterations"].as<int>();
+        if(testingIterations <= 0){
+            if(rank==0)logger.printError("intratypeIterations must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
         intratypeIterations = vm["intratypeIterations"].as<uint>();
     } else {
         if(rank==0)logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
