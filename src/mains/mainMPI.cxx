@@ -235,6 +235,11 @@ int main(int argc, char** argv) {
     if (vm.count("intertypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intertype set to " 
     << vm["intertypeIterations"].as<uint>() << ".\n";
+        int testingIterations = vm["intertypeIterations"].as<int>();
+        if(testingIterations <= 0){
+            if(rank==0)logger.printError("intertypeIterations must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
         intertypeIterations = vm["intertypeIterations"].as<uint>();
     } else {
         if(rank==0)logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
