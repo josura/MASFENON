@@ -182,6 +182,18 @@ namespace weighted_graph_metrics {
     bool hasNegativeWeights(const WeightedEdgeGraph& graph);
 
     /**
+     * @brief Utility function to check if the graph contains a cycle.
+     * @param graph The weighted edge graph to analyze.
+     * @param v The current node being visited.
+     * @param visited A vector to track visited nodes.
+     * @param recStack A vector to track nodes in the current recursion stack.
+     * @return true if a cycle is detected, false otherwise.
+     * @details This function uses depth-first search (DFS) to detect cycles in the graph.
+     * @note The function assumes that the graph is directed.
+     */
+    bool hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack)
+
+    /**
      * @brief Control if the graph contains a cycle.
      * @param graph The weighted edge graph to analyze.
      * @return true if the graph contains a cycle, false otherwise.
