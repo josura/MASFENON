@@ -522,8 +522,37 @@ bool weighted_graph_metrics::hasNegativeWeights(const WeightedEdgeGraph& graph){
     return false; // Return false if no negative weights are found
 }
 
+bool weighted_graph_metrics::hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack) {
+    visited[v] = true; // Mark the current node as visited
+    recStack[v] = true; // Add the current node to the recursion stack
+
+    // Explore all neighbors of the current node
+    for (int neighbor : graph.getSuccessors(v)) {
+        if (!visited[neighbor]) { // If the neighbor has not been visited
+            if (hasCycleUtil(graph, neighbor, visited, recStack)) { // Recursively check for cycles
+                return true; // Return true if a cycle is found
+            }
+        } else if (recStack[neighbor]) { // If the neighbor is in the recursion stack
+            return true; // A cycle is detected
+        }
+    }
+
+    recStack[v] = false; // Remove the current node from the recursion stack before backtracking
+    return false; // No cycle found from this path
+}
+
 bool weighted_graph_metrics::hasCycle(const WeightedEdgeGraph& graph){
-    return false; // Placeholder implementation, as cycle detection is not implemented in this example
+    //This function uses a depth-first search (DFS) algorithm to detect cycles (strongly connected components) in the graph
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    std::vector<bool> recStack(graph.getNumNodes(), false); // Vector to track nodes in the current recursion stack
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        if (!visited[i]) { // If the node has not been visited
+            if (hasCycleUtil(graph, i, visited, recStack)) { // Call the utility function to check for cycles
+                return true; // Return true if a cycle is found
+            }
+        }
+    }
+    return false; // Return false if no cycles are found
 }
 
 std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source) {
