@@ -538,3 +538,20 @@ TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityFull){
     EXPECT_EQ(minCentrality3.first, "node2");
     EXPECT_DOUBLE_EQ(minCentrality3.second, 3.0); // node2 has the minimum strength centrality of 3.0
 }
+
+TEST_F(GraphUtilitiesTesting, testMaxStrengthCentralityIn){
+    // Test max strength centrality for an empty graph
+    auto maxCentrality1 = weighted_graph_metrics::maxStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(maxCentrality1.second, 0.0);
+
+    // Test max strength centrality for a graph with no edges
+    auto maxCentrality2 = weighted_graph_metrics::maxStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(maxCentrality2.second, 0.0);
+
+    // Test max strength centrality for a graph with no cycles
+    auto maxCentrality3 = weighted_graph_metrics::maxStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality3.first, "node4");
+    EXPECT_DOUBLE_EQ(maxCentrality3.second, 5.0); // node4 has the maximum strength centrality of 5.0
+}
