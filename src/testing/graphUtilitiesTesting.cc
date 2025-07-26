@@ -623,3 +623,26 @@ TEST_F(GraphUtilitiesTesting, testweightedPathWeight){
 
     EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph3, {1,2,3}), 5.0); // 2.0 + 3
 }
+
+TEST_F(GraphUtilitiesTesting, testHasCycle) {
+    // Test hasCycle for an empty graph
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph1));
+
+    // Test hasCycle for a graph with no edges
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph2));
+
+    // Test hasCycle for a graph with edges, with cycles
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph3));
+
+    // Test hasCycle for a graph with values with cycles
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph4));
+
+    // Test hasCycle for a graph with no cycles
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph5));
+
+    // Testing adding a cycle to graph5 (in a copy of it)
+    auto graph5WithCycle = graph5->copyNew();
+    graph5WithCycle->addEdge(2,3, 1.0); // Adding an edge that creates a cycle
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph5WithCycle));
+    delete graph5WithCycle; // Clean up the dynamically allocated graph
+}
