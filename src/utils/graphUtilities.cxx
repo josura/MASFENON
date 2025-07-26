@@ -468,6 +468,9 @@ double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& 
             int u = neighbors[i];
             int w = neighbors[j];
             double weight = graph.getEdgeWeight(u, w);
+            if (weight == 0) {
+                weight = graph.getEdgeWeight(w, u); // Check for undirected edges
+            }
             if (weight > 0) {
                 totalWeight += weight;
                 edgeCount++;
