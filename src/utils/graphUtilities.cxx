@@ -405,7 +405,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(v, u);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
@@ -419,7 +419,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
@@ -437,7 +437,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
