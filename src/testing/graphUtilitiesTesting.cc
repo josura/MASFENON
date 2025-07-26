@@ -607,3 +607,19 @@ TEST_F(GraphUtilitiesTesting, testWeightedGlobalClustering){
     double expectedClusteringNoCycles = 0.4; // average of the edge weights in graph5
     EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph5), expectedClusteringNoCycles);
 }
+
+TEST_F(GraphUtilitiesTesting, testweightedPathWeight){
+    std::vector<int> emptypath = {};
+    // Test weighted path weight for an empty path
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph1, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph2, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph3, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph4, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph5, emptypath), 0.0);
+    // Test throwing an exception if the node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::weightedPathWeight(*graph1, {1,5}), std::out_of_range);
+    // Test throwing an exception if the edge is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::weightedPathWeight(*graph2, {1,2,3}), std::invalid_argument);
+
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph3, {1,2,3}), 5.0); // 2.0 + 3
+}
