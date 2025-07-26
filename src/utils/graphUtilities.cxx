@@ -569,21 +569,32 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweigh
     queue.push(source); // Start BFS from the source node
     visited[source] = true; // Mark the source node as visited
 
+    // Vector to store the previous node in the path for each node
+    std::vector<int> previous(graph.getNumNodes(), -1); // Initialize previous nodes to -1 (no predecessor)
+    previous[source] = -1; // The source node is its own predecessor, so we set it to -1
     while (!queue.empty()) {
-        int currentNode = queue.front();
-        queue.pop();
-        std::vector<int> path; // Vector to store the path to the current node
-        path.push_back(currentNode); // Add the current node to the path
-        // Explore all neighbors of the current node
-        for (int neighbor : graph.getSuccessors(currentNode)) { // Iterate over neighbors of the current node
+        int currentNode = queue.front(); // Get the front node from the queue
+        queue.pop(); // Remove the front node from the queue
+
+        // Iterate over all successors (neighbors) of the current node
+        for (int neighbor : graph.getSuccessors(currentNode)) {
             if (!visited[neighbor]) { // If the neighbor has not been visited
-                visited[neighbor] = true; // Mark it as visited
-                queue.push(neighbor); // Add it to the queue for further exploration
-                path.push_back(neighbor); // Add the neighbor to the path
+                visited[neighbor] = true; // Mark the neighbor as visited
+                previous[neighbor] = currentNode; // Set the predecessor of the neighbor to the current node
+                queue.push(neighbor); // Add the neighbor to the queue for further exploration
             }
         }
-
-        shortestPaths.emplace_back(currentNode, path); // Store the current node and its path in the result vector
+    }
+    // Construct the shortest paths from the source node to all other nodes
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path; // Vector to store the path from source to node i
+        if (visited[i]) { // If the node is reachable from the source
+            for (int v = i; v != -1; v = previous[v]) { // Backtrack to construct the path
+                path.push_back(v); // Add the node to the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source to node i
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
     }
 
     // Add the nodes that were not reachable from the source node
