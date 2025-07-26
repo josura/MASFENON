@@ -191,7 +191,7 @@ namespace weighted_graph_metrics {
      * @details This function uses depth-first search (DFS) to detect cycles in the graph.
      * @note The function assumes that the graph is directed.
      */
-    bool hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack)
+    bool hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack);
 
     /**
      * @brief Control if the graph contains a cycle.
