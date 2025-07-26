@@ -249,6 +249,7 @@ namespace weighted_graph_metrics {
      * @note The paths are represented as vectors of node indices.
      * @throw std::out_of_range if the source node index is out of range.
      * @throw std::invalid_argument if the graph is empty.
+     * @throw std::runtime_error if the graph contains a negative weight cycle.
      * @details This function uses the Bellman-Ford algorithm to compute the shortest path lengths
      * in a weighted graph.
      * @note The graph is treated as weighted, meaning that edges can have different weights.

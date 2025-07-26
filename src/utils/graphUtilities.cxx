@@ -668,3 +668,54 @@ std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeighte
     return shortestPaths; // Return all shortest paths from the source node
 }
 
+std::vector< std::pair<int,std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source){
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
+
+    // Control for negative weights
+    if (!hasNegativeWeights(graph)) {
+        throw std::invalid_argument("Graph does not contain negative edge weights, Bellman-Ford algorithm is not necessary.");
+    }
+
+    std::vector<double> distances(graph.getNumNodes(), std::numeric_limits<double>::max()); // Vector to store distances from source
+    std::vector<int> previous(graph.getNumNodes(), -1); // Vector to store previous nodes in the path
+    distances[source] = 0.0; // Distance to the source node is 0
+
+    // Relax edges up to (V-1) times, where V is the number of vertices
+    for (int i = 0; i < graph.getNumNodes() - 1; ++i) {
+        for (const auto& edge : graph.edgesVector) {
+            int u = std::get<0>(edge);
+            int v = std::get<1>(edge);
+            double weight = std::get<2>(edge);
+            if (distances[u] != std::numeric_limits<double>::max() && distances[u] + weight < distances[v]) {
+                distances[v] = distances[u] + weight; // Update distance to vertex v
+                previous[v] = u; // Update previous node in the path
+            }
+        }
+    }
+
+    // Check for negative-weight cycles
+    for (const auto& edge : graph.edgesVector) {
+        int u = std::get<0>(edge);
+        int v = std::get<1>(edge);
+        double weight = std::get<2>(edge);
+        if (distances[u] != std::numeric_limits<double>::max() && distances[u] + weight < distances[v]) {
+            throw std::runtime_error("Graph contains a negative-weight cycle");
+        }
+    }
+
+    // Construct the shortest paths from the source node to all other nodes
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path;
+        if (distances[i] < std::numeric_limits<double>::max()) { // If the node is reachable
+            for (int v = i; v != -1; v = previous[v]) { // Backtrack to construct the path
+                path.push_back(v); // Add the node to the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
+    }
+    return shortestPaths; // Return all shortest paths from the source node
+}
