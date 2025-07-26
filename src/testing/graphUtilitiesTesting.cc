@@ -502,7 +502,7 @@ TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityIn){
     // Test min strength centrality for a graph with no cycles
     auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In);
     EXPECT_EQ(minCentrality3.first, "node5");
-    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 1.0
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 0.0
 }
 
 TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityOut){
@@ -519,5 +519,22 @@ TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityOut){
     // Test min strength centrality for a graph with no cycles
     auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Out);
     EXPECT_EQ(minCentrality3.first, "node3");
-    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 1.0
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 0.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityFull){
+    // Test min strength centrality for an empty graph
+    auto minCentrality1 = weighted_graph_metrics::minStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(minCentrality1.second, 0.0);
+
+    // Test min strength centrality for a graph with no edges
+    auto minCentrality2 = weighted_graph_metrics::minStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(minCentrality2.second, 0.0);
+
+    // Test min strength centrality for a graph with no cycles
+    auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality3.first, "node2");
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 3.0); // node2 has the minimum strength centrality of 3.0
 }
