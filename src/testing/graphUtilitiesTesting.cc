@@ -646,3 +646,46 @@ TEST_F(GraphUtilitiesTesting, testHasCycle) {
     EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph5WithCycle));
     delete graph5WithCycle; // Clean up the dynamically allocated graph
 }
+
+TEST_F(GraphUtilitiesTesting, testUnweightedShortestPathBFS){
+    // Test unweighted shortest path BFS for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph1, 1), std::out_of_range);
+    // the pairs are (node, path)
+    std::vector<std::pair<int, std::vector<int>>> allEmptyPaths = weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph2, 1);
+    for(const auto& pair : allEmptyPaths) {
+        if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 1);
+        } else {
+            EXPECT_EQ(pair.second.size(), 0); // All paths should be empty
+        }
+    }
+    // Test unweighted shortest path BFS for a graph with edges
+    std::vector<std::pair<int, std::vector<int>>> allPaths = weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph3, 0);
+    for(const auto& pair : allPaths) {
+        if(pair.first == 0) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 0);
+        } else if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 1 is [0, 1]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 1);
+        } else if(pair.first == 2) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 2 is [0, 2]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+        } else if(pair.first == 3) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 3 is [0, 1, 3]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+            EXPECT_EQ(pair.second[2], 3);
+        } else if(pair.first == 4) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 4 is [0, 2, 4]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+            EXPECT_EQ(pair.second[2], 4);
+        }
+    }
+
+}
