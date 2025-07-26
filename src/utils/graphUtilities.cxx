@@ -343,7 +343,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(v, u);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
@@ -357,7 +357,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
@@ -375,7 +375,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
