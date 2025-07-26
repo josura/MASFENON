@@ -464,3 +464,14 @@ TEST_F(GraphUtilitiesTesting, testAverageStrengthCentralityIn){
     EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In), expectedAverageCentrality);
 }
 
+TEST_F(GraphUtilitiesTesting, testAverageStrengthCentralityOut){
+    // Test average strength centrality for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average strength centrality for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average strength centrality for a graph with no cycles
+    double expectedAverageCentrality = (4.0 + 2.0 + 0.0 + 4.0 + 5.0) / 5; // strength centralities computed by hand
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Out), expectedAverageCentrality);
+}
