@@ -589,3 +589,21 @@ TEST_F(GraphUtilitiesTesting, testMaxStrengthCentralityFull){
     EXPECT_EQ(maxCentrality3.first, "node4");
     EXPECT_DOUBLE_EQ(maxCentrality3.second, 9.0); // node4 has the maximum strength centrality of 9.0
 }
+
+TEST_F(GraphUtilitiesTesting, testWeightedGlobalClustering){
+    // Test weighted global clustering for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph1), 0.0);
+
+    // Test weighted global clustering for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph2), 0.0);
+
+    // Test weighted global clustering for a graph with edges
+    double expectedClustering = 3; // average of the edge weights
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph3), expectedClustering);
+    
+    // Test weighted global clustering for a graph with values
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph4), expectedClustering);
+    // Test weighted global clustering for a graph with no cycles
+    double expectedClusteringNoCycles = 0.4; // average of the edge weights in graph5
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph5), expectedClusteringNoCycles);
+}
