@@ -833,3 +833,40 @@ TEST_F(GraphUtilitiesTesting, testWeightedShortestPathFloydWarshall) {
     }
 
 }
+
+TEST_F(GraphUtilitiesTesting, testUnweightedShortestPathFloydWarshall){
+    // Test unweighted shortest path Floyd-Warshall for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph1), std::out_of_range);
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with no edges
+    auto allEmptyPaths = weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph2);
+    for (const auto& pair : allEmptyPaths) {
+        if(pair.second.size()==1){// the path to itself only contains the node
+            EXPECT_EQ(pair.first, pair.second.front()); // The first element in the path is the source node
+        } else {
+            EXPECT_TRUE(pair.second.empty()); // All paths should be empty
+        }
+    }
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with edges
+    auto allPaths = weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph3);
+    for (const auto& pair : allPaths) {
+        // we don't need to control if the path is empty since the graph is fully connected
+        int source = pair.second.front(); // The first element in the path is the source node
+        int target = pair.second.back(); // The last element in the path is the target node
+        // Just controlling some of the paths
+        if (source == 0 && target == 1) {
+            EXPECT_EQ(pair.second, std::vector<int>({0, 1})); // The path is [0, 1]
+        } else if (source == 0 && target == 2) {
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2})); // The path is [0, 2]
+        } else if (source == 0 && target == 4) { 
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2, 4})); // The path is [0, 2, 4]
+        } else if (source == 1 && target == 3) {
+            EXPECT_EQ(pair.second, std::vector<int>({1, 3})); // The path is [1, 3]
+        } else if (source == 2 && target == 4) {
+            EXPECT_EQ(pair.second, std::vector<int>({2, 4})); // The path is [2, 4]
+        }
+    }
+
+}
