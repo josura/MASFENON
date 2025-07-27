@@ -722,6 +722,9 @@ std::vector< std::pair<int,std::vector<int>>> weighted_graph_metrics::allWeighte
 
 std::vector< std::pair<double ,std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph){
     int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        throw std::out_of_range("Graph has no nodes");    
+    }
     std::vector<std::vector<double>> distances(numNodes, std::vector<double>(numNodes, std::numeric_limits<double>::max()));
     std::vector<std::vector<int>> next(numNodes, std::vector<int>(numNodes, -1));
 
