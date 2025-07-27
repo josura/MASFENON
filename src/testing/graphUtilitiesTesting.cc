@@ -47,7 +47,7 @@ class GraphUtilitiesTesting : public ::testing::Test {
             graph6->addEdge("node2", "node3", 2.0);
             graph6->addEdge("node2", "node5", 3.0);
             graph6->addEdge("node5", "node4", 5.0);
-            graph6->addEdge("node5", "node1", -4.0);
+            graph6->addEdge("node5", "node1", -5.0);
         }
 
         void TearDown() override {
@@ -743,4 +743,49 @@ TEST_F(GraphUtilitiesTesting, testWeightedShortestPathDijkstra) {
             EXPECT_EQ(pair.second[2], 4);
         }
     }
+}
+
+TEST_F(GraphUtilitiesTesting, testWeightedShortestPathBellmanFord) {
+    // Test unweighted shortest path Bellman-Ford for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph1, 1), std::out_of_range);
+
+    // Testing throwing an exception for graph with no negative weights
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph3, 0), std::invalid_argument);
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph4, 0), std::invalid_argument);
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph5, 0), std::invalid_argument);
+    
+    // Testing for graph with negative weights but no negative cycles
+    auto graphWithNegativeWeights = graph5->copyNew();
+    graphWithNegativeWeights->addEdge("node5", "node1", -1.0); // Adding a negative weight edge
+    std::vector<std::pair<int, std::vector<int>>> allPaths = weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graphWithNegativeWeights, 4); // Starting from node 5
+    for(const auto& pair : allPaths) {
+        if(pair.first == 4) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 4);
+        } else if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 1 is [4, 0, 1]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+            EXPECT_EQ(pair.second[2], 1);
+        } else if(pair.first == 2) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 2 is [4, 0, 2]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+            EXPECT_EQ(pair.second[2], 2);
+        } else if(pair.first == 3) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 3 is [4, 3]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 3);
+        } else if(pair.first == 0) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node1 is [4,0]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+        }
+    }
+    // Clean up
+    delete graphWithNegativeWeights; 
+
+    // Test graph with negative weights and negative cycles
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph6, 0), std::runtime_error);
 }
