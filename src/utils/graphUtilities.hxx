@@ -263,7 +263,7 @@ namespace weighted_graph_metrics {
     /**
      * @brief Computes the weighted shortest path with Floyd-Warshall algorithm from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
-     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @return A vector pairs containing the shortest path weight and the corresponding paths from the source node to a target node.
      * @note The paths are represented as vectors of node indices.
      * @throw std::invalid_argument if the graph is empty.
      * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
@@ -271,7 +271,7 @@ namespace weighted_graph_metrics {
      */
     std::vector< 
         std::pair< 
-            std::pair<int,int> ,std::vector<int>
+            double ,std::vector<int>
         >
     > allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
 
