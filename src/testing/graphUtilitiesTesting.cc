@@ -789,3 +789,47 @@ TEST_F(GraphUtilitiesTesting, testWeightedShortestPathBellmanFord) {
     // Test graph with negative weights and negative cycles
     EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph6, 0), std::runtime_error);
 }
+
+TEST_F(GraphUtilitiesTesting, testWeightedShortestPathFloydWarshall) {
+    // Test unweighted shortest path Floyd-Warshall for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph1), std::out_of_range);
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with no edges
+    auto allEmptyPaths = weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph2);
+    for (const auto& pair : allEmptyPaths) {
+        if(pair.second.size() == 1){// the path to itself only contains the node
+            EXPECT_EQ(pair.second.size(), 1);
+            EXPECT_DOUBLE_EQ(pair.first, 0.0); // the weight of the path to itself is 0.0
+        } else {
+            EXPECT_TRUE(pair.second.empty()); // All paths should be empty
+            EXPECT_DOUBLE_EQ(pair.first, std::numeric_limits<double>::max()); // the final weight of the path is std::numeric_limits<double>::max()
+        }
+    }
+
+    // Test weighted shortest path Floyd-Warshall for a graph with edges
+    auto allPaths = weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph3);
+    for (const auto& pair : allPaths) {
+        // we don't need to control if the path is empty since the graph is fully connected
+        int source = pair.second.front(); // The first element in the path is the source node
+        int target = pair.second.back(); // The last element in the path is the target node
+        // Just controlling some of the paths
+        if (source == 0 && target == 1) {
+            EXPECT_DOUBLE_EQ(pair.first, 1.0); // The weight of the path from 0 to 1 is 1.0
+            EXPECT_EQ(pair.second, std::vector<int>({0, 1})); // The path is [0, 1]
+        } else if (source == 0 && target == 2) {
+            EXPECT_DOUBLE_EQ(pair.first, 1.5); // The weight of the path from 0 to 2 is 1.5
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2})); // The path is [0, 2]
+        } else if (source == 0 && target == 4) { 
+            EXPECT_DOUBLE_EQ(pair.first, 5.0); // The weight of the path from 0 to 4 is 5.0
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2, 4})); // The path is [0, 2, 4]
+        } else if (source == 1 && target == 3) {
+            EXPECT_DOUBLE_EQ(pair.first, 2.5); // The weight of the path from 1 to 3 is 2.5
+            EXPECT_EQ(pair.second, std::vector<int>({1, 3})); // The path is [1, 3]
+        } else if (source == 2 && target == 4) {
+            EXPECT_DOUBLE_EQ(pair.first, 3.5); // The weight of the path from 2 to 4 is 3.5
+            EXPECT_EQ(pair.second, std::vector<int>({2, 4})); // The path is [2, 4]
+        }
+    }
+
+}
