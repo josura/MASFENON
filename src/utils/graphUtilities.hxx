@@ -261,11 +261,11 @@ namespace weighted_graph_metrics {
     > allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source);
 
     /**
-     * @brief Computes the weighted shortest path with Floyd-Warshall algorithm from a source node to all other nodes in a weighted edge graph.
+     * @brief Computes the weighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @return A vector pairs containing the shortest path weight and the corresponding paths from the source node to a target node.
      * @note The paths are represented as vectors of node indices.
-     * @throw std::invalid_argument if the graph is empty.
+     * @throw std::out_of_range if the graph is empty.
      * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
      * in a weighted graph.
      */
@@ -274,5 +274,19 @@ namespace weighted_graph_metrics {
             double ,std::vector<int>
         >
     > allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Computes the unweighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return A vector pairs containing the target node and the corresponding paths from the source node to a target node.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the graph is empty.
+     * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int>
+        >
+    > allUnweightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
 
 }
