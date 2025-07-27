@@ -301,7 +301,7 @@ namespace weighted_graph_metrics {
     int graphDiameter(const WeightedEdgeGraph& graph);
 
     /**
-     * @brief Returns the average distance between all pairs of nodes in the graph.
+     * @brief Returns the average distance between all pairs of nodes in the graph(unweighted).
      * @param graph The weighted edge graph to analyze.
      * @return The average distance between all pairs of nodes in the graph (unweighted).
      * @details The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph.
@@ -309,5 +309,15 @@ namespace weighted_graph_metrics {
      * @throw std::out_of_range if the graph is empty.
      */
     double averageDistance(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Returns the average distance between all pairs of nodes in the graph(weighted).
+     * @param graph The weighted edge graph to analyze.
+     * @return The average distance between all pairs of nodes in the graph (weighted).
+     * @details The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph.
+     * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
+     * @throw std::out_of_range if the graph is empty.
+     */
+    double averageWeightedDistance(const WeightedEdgeGraph& graph);
 
 }
