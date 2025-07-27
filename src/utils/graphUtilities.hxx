@@ -7,6 +7,7 @@
 #pragma once
 #include <vector>
 #include <tuple>
+#include <queue>
 #include "data_structures/WeightedEdgeGraph.hxx"
 
 /**
@@ -14,6 +15,7 @@
  * @brief Contains utility functions for calculating metrics on weighted graphs.
  * @details The functions are used to calculate metrics such as the average weight of edges in a graph.
  * @note The functions are designed to work with the WeightedEdgeGraph class.
+ * @todo When some of the functions in this namespace are used in the code, there needs to be some checks before using some functions, such as negative weights or cycles in the graph with Dijkstra's algorithm.
  */
 namespace weighted_graph_metrics {
     /**
@@ -156,5 +158,166 @@ namespace weighted_graph_metrics {
      */
     double weightedGlobalClustering(const WeightedEdgeGraph& graph);
 
-    
+    /**
+     * @brief Computes the weigth of a path in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param path A vector of node indices representing the path.
+     * @return The total weight of the path.
+     * @details The weight of the path is computed as the sum of the weights of the edges in the path.
+     * @note The path is represented as a vector of node indices, where each index corresponds to a node in the graph.
+     * @throw std::out_of_range if any node index in the path is out of range of the graph's nodes.
+     * @throw std::invalid_argument if the path is not valid (e.g., edges do not exist between consecutive nodes).
+     */
+    double weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path);
+
+    /**
+     * @brief Control if the graph contains negative weights.
+     * @param graph The weighted edge graph to analyze.
+     * @return true if the graph contains negative weights, false otherwise.
+     * @details This function iterates through all edges in the graph and checks if any edge has a negative weight.
+     * @note The function assumes that the graph is directed.
+     * @throw std::invalid_argument if the graph is empty.
+     * @warning This function does not check for negative weight cycles, only for the presence of negative weights.
+     */
+    bool hasNegativeWeights(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Utility function to check if the graph contains a cycle.
+     * @param graph The weighted edge graph to analyze.
+     * @param v The current node being visited.
+     * @param visited A vector to track visited nodes.
+     * @param recStack A vector to track nodes in the current recursion stack.
+     * @return true if a cycle is detected, false otherwise.
+     * @details This function uses depth-first search (DFS) to detect cycles in the graph.
+     * @note The function assumes that the graph is directed.
+     */
+    bool hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack);
+
+    /**
+     * @brief Control if the graph contains a cycle.
+     * @param graph The weighted edge graph to analyze.
+     * @return true if the graph contains a cycle, false otherwise.
+     * @details This function uses a depth-first search (DFS) algorithm to detect cycles (strongly connected components) in the graph.
+     * @note The function assumes that the graph is directed.
+     * @throw std::invalid_argument if the graph is empty.
+     */
+    bool hasCycle(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param source The source node from which to compute the shortest paths.
+     * @return A vector pairs containing the target and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the source node index is out of range.
+     * @throw std::invalid_argument if the graph is empty.
+     * @details This function uses a breadth-first search (BFS) algorithm to compute the shortest path lengths in an unweighted graph.
+     * @note The graph is treated as unweighted for the purpose of this function, meaning
+     * that all edges are considered to have equal weight (1).
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int> 
+        > 
+    > allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source);
+
+
+    /**
+     * @brief Computes the weighted shortest path with Dijkstra's algorithm from a source node to all other nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param source The source node from which to compute the shortest paths.
+     * @return A vector pairs containing the target node and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the source node index is out of range.
+     * @throw std::invalid_argument if the graph is empty.
+     * @details This function uses Dijkstra's algorithm to compute the shortest path lengths in a weighted graph.
+     * @note The graph is treated as weighted, meaning that edges can have different weights.
+     * @warning This function assumes that the graph does not contain negative weight cycles. And that the weights are non-negative.
+     * @todo add control for negative weights
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int>
+        >
+    > allWeightedShortestPathFromSourceDijkstra(const WeightedEdgeGraph& graph, int source);
+
+    /**
+     * @brief Computes the weighted shortest path with Bellman-Ford algorithm from a source node to all other nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @param source The source node from which to compute the shortest paths.
+     * @return A vector pairs containing the target and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the source node index is out of range.
+     * @throw std::invalid_argument if the graph is empty.
+     * @throw std::runtime_error if the graph contains a negative weight cycle.
+     * @details This function uses the Bellman-Ford algorithm to compute the shortest path lengths
+     * in a weighted graph.
+     * @note The graph is treated as weighted, meaning that edges can have different weights.
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int>
+        >
+    > allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source);
+
+    /**
+     * @brief Computes the weighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return A vector pairs containing the shortest path weight and the corresponding paths from the source node to a target node.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the graph is empty.
+     * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
+     * in a weighted graph.
+     */
+    std::vector< 
+        std::pair< 
+            double ,std::vector<int>
+        >
+    > allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Computes the unweighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return A vector pairs containing the target node and the corresponding paths from the source node to a target node.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::out_of_range if the graph is empty.
+     * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
+     */
+    std::vector< 
+        std::pair< 
+            int,std::vector<int>
+        >
+    > allUnweightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Returns the diameter of the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The diameter of the graph, which is the maximum distance between any two nodes in the graph (unweighted).
+     * @details The diameter is computed as the maximum shortest path length between any two nodes in the graph.
+     * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
+     * @warning This function assumes that the graph is connected. If the graph is not connected, the diameter may not be well-defined.
+     * @see allUnweightedShortestPathFloydWarshall for more details on the algorithm used.
+     */
+    int graphDiameter(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Returns the average distance between all pairs of nodes in the graph(unweighted).
+     * @param graph The weighted edge graph to analyze.
+     * @return The average distance between all pairs of nodes in the graph (unweighted).
+     * @details The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph.
+     * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
+     * @throw std::out_of_range if the graph is empty.
+     */
+    double averageDistance(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Returns the average distance between all pairs of nodes in the graph(weighted).
+     * @param graph The weighted edge graph to analyze.
+     * @return The average distance between all pairs of nodes in the graph (weighted).
+     * @details The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph.
+     * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
+     * @throw std::out_of_range if the graph is empty.
+     */
+    double averageWeightedDistance(const WeightedEdgeGraph& graph);
+
 }

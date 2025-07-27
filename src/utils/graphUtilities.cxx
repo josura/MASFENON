@@ -343,7 +343,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(v, u);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
@@ -357,7 +357,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
@@ -375,7 +375,7 @@ std::pair<std::string, double> weighted_graph_metrics::maxStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength > maxStrength) {
+            if (strength >= maxStrength) {
                 maxStrength = strength;
                 maxNodeName = graph.getNodeName(v);
                 maxCentrality = {maxNodeName, maxStrength};
@@ -405,7 +405,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(v, u);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
@@ -419,7 +419,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
@@ -437,7 +437,7 @@ std::pair<std::string, double> weighted_graph_metrics::minStrengthCentrality(con
                 strength += graph.getEdgeWeight(u, v);
             }
 
-            if (strength < minStrength) {
+            if (strength <= minStrength) {
                 minStrength = strength;
                 minNodeName = graph.getNodeName(v);
                 minCentrality = {minNodeName, minStrength};
@@ -468,6 +468,9 @@ double weighted_graph_metrics::weightedLocalClustering(const WeightedEdgeGraph& 
             int u = neighbors[i];
             int w = neighbors[j];
             double weight = graph.getEdgeWeight(u, w);
+            if (weight == 0) {
+                weight = graph.getEdgeWeight(w, u); // Check for undirected edges
+            }
             if (weight > 0) {
                 totalWeight += weight;
                 edgeCount++;
@@ -487,4 +490,399 @@ double weighted_graph_metrics::weightedGlobalClustering(const WeightedEdgeGraph&
     }
 
     return (numNodes > 0) ? (totalClustering / numNodes) : 0.0; // Return the average clustering coefficient
+}
+
+
+double weighted_graph_metrics::weightedPathWeight(const WeightedEdgeGraph& graph, const std::vector<int>& path){
+    if (path.empty()) {
+        return 0.0; // Return 0 if the path is empty
+    }
+
+    double totalWeight = 0.0;
+    for (size_t i = 0; i < path.size() - 1; ++i) {
+        int node1 = path[i];
+        int node2 = path[i + 1];
+        if (node1 < 0 || node2 < 0 || node1 >= graph.getNumNodes() || node2 >= graph.getNumNodes()) {
+            throw std::out_of_range("Node index out of range in the path");
+        }
+        // Check for the validity of the edge
+        if(!graph.hasEdge(node1, node2)) {
+            throw std::invalid_argument("Invalid edge in the path: " + std::to_string(node1) + " -> " + std::to_string(node2));
+        }
+        totalWeight += graph.getEdgeWeight(node1, node2); // Sum the weights of edges in the path
+    }
+
+    return totalWeight; // Return the total weight of the path
+}
+
+
+bool weighted_graph_metrics::hasNegativeWeights(const WeightedEdgeGraph& graph){
+    for (const auto& edge : graph.edgesVector) {
+        if (std::get<2>(edge) < 0) { // Check if any edge weight is negative
+            return true; // Return true if a negative weight is found
+        }
+    }
+    return false; // Return false if no negative weights are found
+}
+
+bool weighted_graph_metrics::hasCycleUtil(const WeightedEdgeGraph& graph, int v, std::vector<bool>& visited, std::vector<bool>& recStack) {
+    visited[v] = true; // Mark the current node as visited
+    recStack[v] = true; // Add the current node to the recursion stack
+
+    // Explore all neighbors of the current node
+    for (int neighbor : graph.getSuccessors(v)) {
+        if (!visited[neighbor]) { // If the neighbor has not been visited
+            if (hasCycleUtil(graph, neighbor, visited, recStack)) { // Recursively check for cycles
+                return true; // Return true if a cycle is found
+            }
+        } else if (recStack[neighbor]) { // If the neighbor is in the recursion stack
+            return true; // A cycle is detected
+        }
+    }
+
+    recStack[v] = false; // Remove the current node from the recursion stack before backtracking
+    return false; // No cycle found from this path
+}
+
+bool weighted_graph_metrics::hasCycle(const WeightedEdgeGraph& graph){
+    //This function uses a depth-first search (DFS) algorithm to detect cycles (strongly connected components) in the graph
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    std::vector<bool> recStack(graph.getNumNodes(), false); // Vector to track nodes in the current recursion stack
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        if (!visited[i]) { // If the node has not been visited
+            if (hasCycleUtil(graph, i, visited, recStack)) { // Call the utility function to check for cycles
+                return true; // Return true if a cycle is found
+            }
+        }
+    }
+    return false; // Return false if no cycles are found
+}
+
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(const WeightedEdgeGraph& graph, int source) {
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
+
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths; // Vector to store pairs of node and its shortest path
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    std::queue<int> queue; // Queue for BFS
+    queue.push(source); // Start BFS from the source node
+    visited[source] = true; // Mark the source node as visited
+
+    // Vector to store the previous node in the path for each node
+    std::vector<int> previous(graph.getNumNodes(), -1); // Initialize previous nodes to -1 (no predecessor)
+    previous[source] = -1; // The source node is its own predecessor, so we set it to -1
+    while (!queue.empty()) {
+        int currentNode = queue.front(); // Get the front node from the queue
+        queue.pop(); // Remove the front node from the queue
+
+        // Iterate over all successors (neighbors) of the current node
+        for (int neighbor : graph.getSuccessors(currentNode)) {
+            if (!visited[neighbor]) { // If the neighbor has not been visited
+                visited[neighbor] = true; // Mark the neighbor as visited
+                previous[neighbor] = currentNode; // Set the predecessor of the neighbor to the current node
+                queue.push(neighbor); // Add the neighbor to the queue for further exploration
+            }
+        }
+    }
+    // Construct the shortest paths from the source node to all other nodes
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path; // Vector to store the path from source to node i
+        if (visited[i]) { // If the node is reachable from the source
+            for (int v = i; v != -1; v = previous[v]) { // Backtrack to construct the path
+                path.push_back(v); // Add the node to the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source to node i
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
+    }
+
+    // Add the nodes that were not reachable from the source node
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        if (!visited[i]) {
+            shortestPaths.emplace_back(i, std::vector<int>{}); // Add unreachable nodes with an empty path
+        }
+    }
+
+    return shortestPaths; // Return all shortest paths from the source node
+}
+
+std::vector<std::pair<int, std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra(const WeightedEdgeGraph& graph, int source) {
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
+
+    // Control for negative weights
+    if (hasNegativeWeights(graph)) {
+        throw std::invalid_argument("Graph contains negative edge weights, Dijkstra's algorithm cannot be used.");
+    }
+
+    std::vector<double> distances(graph.getNumNodes(), std::numeric_limits<double>::max()); // Vector to store distances from source
+    std::vector<int> previous(graph.getNumNodes(), -1); // Vector to store previous nodes in the path
+    std::vector<bool> visited(graph.getNumNodes(), false); // Vector to track visited nodes
+    distances[source] = 0.0; // Distance to the source node is 0
+
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        int currentNode = -1;
+        double minDistance = std::numeric_limits<double>::max();
+
+        // Find the unvisited node with the smallest distance, also implementable with a priority queue for efficiency
+        for (int j = 0; j < graph.getNumNodes(); ++j) {
+            if (!visited[j] && distances[j] < minDistance) {
+                minDistance = distances[j];
+                currentNode = j;
+            }
+        }
+
+        if (currentNode == -1) {
+            break; // All reachable nodes have been visited
+        }
+
+        visited[currentNode] = true; // Mark the current node as visited
+
+        // Update distances to neighbors of the current node
+        for (int neighbor : graph.getSuccessors(currentNode)) {
+            double edgeWeight = graph.getEdgeWeight(currentNode, neighbor);
+            if (edgeWeight > 0 && !visited[neighbor]) { // Only consider unvisited neighbors with positive edge weights
+                double newDistance = distances[currentNode] + edgeWeight;
+                if (newDistance < distances[neighbor]) {
+                    distances[neighbor] = newDistance; // Update distance to neighbor
+                    previous[neighbor] = currentNode; // Update previous node in the path
+                }
+            }
+        }
+    }
+
+    // Construct the shortest paths from the source node to all other nodes
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path;
+        if (distances[i] < std::numeric_limits<double>::max()) { // If the node is reachable
+            for (int v = i; v != -1; v = previous[v]) {
+                path.push_back(v); // Backtrack to construct the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
+    }
+    return shortestPaths; // Return all shortest paths from the source node
+}
+
+std::vector< std::pair<int,std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source){
+    if (source < 0 || source >= graph.getNumNodes()) {
+        throw std::out_of_range("Source node index out of range");
+    }
+
+    // Control for negative weights
+    if (!hasNegativeWeights(graph)) {
+        throw std::invalid_argument("Graph does not contain negative edge weights, Bellman-Ford algorithm is not necessary.");
+    }
+
+    std::vector<double> distances(graph.getNumNodes(), std::numeric_limits<double>::max()); // Vector to store distances from source
+    std::vector<int> previous(graph.getNumNodes(), -1); // Vector to store previous nodes in the path
+    distances[source] = 0.0; // Distance to the source node is 0
+
+    // Relax edges up to (V-1) times, where V is the number of vertices
+    for (int i = 0; i < graph.getNumNodes() - 1; ++i) {
+        for (const auto& edge : graph.edgesVector) {
+            int u = std::get<0>(edge);
+            int v = std::get<1>(edge);
+            double weight = std::get<2>(edge);
+            if (distances[u] != std::numeric_limits<double>::max() && distances[u] + weight < distances[v]) {
+                distances[v] = distances[u] + weight; // Update distance to vertex v
+                previous[v] = u; // Update previous node in the path
+            }
+        }
+    }
+
+    // Check for negative-weight cycles
+    for (const auto& edge : graph.edgesVector) {
+        int u = std::get<0>(edge);
+        int v = std::get<1>(edge);
+        double weight = std::get<2>(edge);
+        if (distances[u] != std::numeric_limits<double>::max() && distances[u] + weight < distances[v]) {
+            throw std::runtime_error("Graph contains a negative-weight cycle");
+        }
+    }
+
+    // Construct the shortest paths from the source node to all other nodes
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < graph.getNumNodes(); ++i) {
+        std::vector<int> path;
+        if (distances[i] < std::numeric_limits<double>::max()) { // If the node is reachable
+            for (int v = i; v != -1; v = previous[v]) { // Backtrack to construct the path
+                path.push_back(v); // Add the node to the path
+            }
+            std::reverse(path.begin(), path.end()); // Reverse the path to get it from source
+        }
+        shortestPaths.emplace_back(i, path); // Store the node and its path in the result vector
+    }
+    return shortestPaths; // Return all shortest paths from the source node
+}
+
+std::vector< std::pair<double ,std::vector<int>>> weighted_graph_metrics::allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph){
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        throw std::out_of_range("Graph has no nodes");    
+    }
+    std::vector<std::vector<double>> distances(numNodes, std::vector<double>(numNodes, std::numeric_limits<double>::max()));
+    std::vector<std::vector<int>> next(numNodes, std::vector<int>(numNodes, -1));
+
+    // Initialize distances and next matrices
+    for (int i = 0; i < numNodes; ++i) {
+        distances[i][i] = 0.0; // Distance to self is 0
+        for (int j : graph.getSuccessors(i)) {
+            distances[i][j] = graph.getEdgeWeight(i, j); // Set distance for direct edges
+            next[i][j] = j; // Set next node in the path
+        }
+    }
+
+    // Floyd-Warshall algorithm to compute shortest paths
+    for (int k = 0; k < numNodes; ++k) {
+        for (int i = 0; i < numNodes; ++i) {
+            for (int j = 0; j < numNodes; ++j) {
+                if (distances[i][k] < std::numeric_limits<double>::max() && distances[k][j] < std::numeric_limits<double>::max()) {
+                    if (distances[i][j] > distances[i][k] + distances[k][j]) {
+                        distances[i][j] = distances[i][k] + distances[k][j]; // Update distance
+                        next[i][j] = next[i][k]; // Update next node in the path
+                    }
+                }
+            }
+        }
+    }
+
+    // Construct the shortest paths from the distance matrix
+    std::vector<std::pair<double, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < numNodes; ++i) {
+        for (int j = 0; j < numNodes; ++j) {
+            if (distances[i][j] < std::numeric_limits<double>::max()) { // If there is a path from i to j
+                std::vector<int> path;
+                int currentNode = i;
+                while (currentNode != -1 && currentNode != j) {
+                    path.push_back(currentNode); // Add current node to the path
+                    currentNode = next[currentNode][j]; // Move to the next node in the path
+                }
+                if (currentNode == j) {
+                    path.push_back(j); // Add the destination node to the path
+                }
+                shortestPaths.emplace_back(distances[i][j], path); // Store the distance and path in the result vector
+            } else {
+                shortestPaths.emplace_back(std::numeric_limits<double>::max(), std::vector<int>{}); // If no path exists, store max distance and empty path
+            }
+        }
+    }
+    return shortestPaths; // Return all shortest paths with their distances
+}
+
+std::vector< std::pair<int ,std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph){
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        throw std::out_of_range("Graph has no nodes");
+    }
+    
+    std::vector<std::vector<int>> next(numNodes, std::vector<int>(numNodes, -1));
+    std::vector<std::vector<int>> distances(numNodes, std::vector<int>(numNodes, std::numeric_limits<int>::max()));
+
+    // Initialize distances and next matrices
+    for (int i = 0; i < numNodes; ++i) {
+        distances[i][i] = 0; // Distance to self is 0
+        for (int j : graph.getSuccessors(i)) {
+            distances[i][j] = 1; // Set distance for direct edges as 1 (unweighted)
+            next[i][j] = j; // Set next node in the path
+        }
+    }
+
+    // Floyd-Warshall algorithm to compute shortest paths
+    for (int k = 0; k < numNodes; ++k) {
+        for (int i = 0; i < numNodes; ++i) {
+            for (int j = 0; j < numNodes; ++j) {
+                if (distances[i][k] < std::numeric_limits<int>::max() && distances[k][j] < std::numeric_limits<int>::max()) {
+                    if (distances[i][j] > distances[i][k] + distances[k][j]) {
+                        distances[i][j] = distances[i][k] + distances[k][j]; // Update distance
+                        next[i][j] = next[i][k]; // Update next node in the path
+                    }
+                }
+            }
+        }
+    }
+
+    // Construct the shortest paths from the distance matrix
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < numNodes; ++i) {
+        for (int j = 0; j < numNodes; ++j) {
+            if (distances[i][j] < std::numeric_limits<int>::max()) { // If there is a path from i to j
+                std::vector<int> path;
+                int currentNode = i;
+                while (currentNode != -1 && currentNode != j) {
+                    path.push_back(currentNode); // Add current node to
+                    currentNode = next[currentNode][j]; // Move to the next node in the path
+                }
+                if (currentNode == j) {
+                    path.push_back(j); // Add the destination node to the path
+                }
+                shortestPaths.emplace_back(j, path); // Store the destination node and path in the result vector
+            } else {
+                shortestPaths.emplace_back(j, std::vector<int>{}); // If no path exists, store empty path
+            }
+        }
+    }
+    return shortestPaths; // Return all shortest paths with their destination nodes
+}
+    
+
+int weighted_graph_metrics::graphDiameter(const WeightedEdgeGraph& graph){
+    // control for empty graph
+    if (graph.getNumNodes() == 0) {
+        return 0; // Return 0 for an empty graph
+    }
+    int diameter = 0; // Initialize diameter to 0
+    auto allPaths = allUnweightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
+    for (const auto& path : allPaths) {
+        const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
+        int shortestPathLength = shortestPath.size(); // Get the length of the shortest path
+        if (shortestPathLength > diameter) { // Check if the length of the path is greater than the current diameter
+            diameter = shortestPath.size(); // Update the diameter
+        }
+    }
+    return diameter - 1; // Return the diameter (subtracting 1 to account for the number of edges)
+}
+
+double weighted_graph_metrics::averageDistance(const WeightedEdgeGraph& graph) {
+    if (graph.getNumNodes() == 0) {
+        return 0.0; // Return 0 for an empty graph
+    }
+
+    double totalDistance = 0.0; // Initialize total distance to 0
+    int count = 0; // Initialize count of reachable pairs
+
+    auto allPaths = allUnweightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
+    for (const auto& path : allPaths) {
+        const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
+        if (!shortestPath.empty()) { // Check if the path is not empty
+            totalDistance += shortestPath.size() - 1; // Add the length of the path (number of edges)
+            count++; // Increment count of reachable pairs
+        }
+    }
+
+    return (count > 0) ? (totalDistance / count) : 0.0; // Return average distance, or 0 if no pairs are reachable
+}
+
+double weighted_graph_metrics::averageWeightedDistance(const WeightedEdgeGraph& graph) {
+    if (graph.getNumNodes() == 0) {
+        return 0.0; // Return 0 for an empty graph
+    }
+
+    double totalDistance = 0.0; // Initialize total distance to 0
+    int count = 0; // Initialize count of reachable pairs
+
+    auto allPaths = allWeightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
+    for (const auto& path : allPaths) {
+        const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
+        if (!shortestPath.empty()) { // Check if the path is not empty
+            totalDistance += path.first; // Add the weight of the path
+            count++; // Increment count of reachable pairs
+        }
+    }
+
+    return (count > 0) ? (totalDistance / count) : 0.0; // Return average distance, or 0 if no pairs are reachable
 }

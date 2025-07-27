@@ -11,6 +11,8 @@ class GraphUtilitiesTesting : public ::testing::Test {
             graph2 = new WeightedEdgeGraph(5); // Graph with 5 nodes, no edges
             graph3 = new WeightedEdgeGraph(nodeNames); // Graph with 5 nodes
             graph4 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes and values
+            graph5 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes, no cycles
+            graph6 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes, negative cycle
 
             // Add edges to graph3
             graph3->addEdge("node1", "node2", 1.0);
@@ -34,6 +36,18 @@ class GraphUtilitiesTesting : public ::testing::Test {
             graph4->addEdge("node3", "node5", 3.5);
             graph4->addEdge("node4", "node1", 4.5);
             graph4->addEdge("node5", "node2", 5.5);
+            // add edges to graph5
+            graph5->addEdge("node1", "node2", 1.0);
+            graph5->addEdge("node2", "node3", 2.0);
+            graph5->addEdge("node1", "node3", 3.0);
+            graph5->addEdge("node4", "node1", 4.0);
+            graph5->addEdge("node5", "node4", 5.0);
+            // add edges to graph6
+            graph6->addEdge("node1", "node2", 1.0);
+            graph6->addEdge("node2", "node3", 2.0);
+            graph6->addEdge("node2", "node5", 3.0);
+            graph6->addEdge("node5", "node4", 5.0);
+            graph6->addEdge("node5", "node1", -5.0);
         }
 
         void TearDown() override {
@@ -42,6 +56,8 @@ class GraphUtilitiesTesting : public ::testing::Test {
             delete graph2;
             delete graph3;
             delete graph4;
+            delete graph5;
+            delete graph6;
         }
 
         // member variables for the test class
@@ -49,6 +65,8 @@ class GraphUtilitiesTesting : public ::testing::Test {
         WeightedEdgeGraph *graph2; // graph with 5 nodes and no edges
         WeightedEdgeGraph *graph3; // graph with 5 nodes, no values and 10 edges
         WeightedEdgeGraph *graph4; // graph with 5 nodes and values and 10 edges
+        WeightedEdgeGraph *graph5; // graph with 5 nodes and 5 edges, no cycles
+        WeightedEdgeGraph *graph6; // graph with 5 nodes and 5 edges, negative cycle
 
         std::vector<std::string> nodeNames{"node1","node2","node3","node4","node5"};
         std::vector<double> nodeValues{0.3,4.1,3.8,8.2,9.5};
@@ -443,3 +461,412 @@ TEST_F(GraphUtilitiesTesting, testMinEdgeDegreeWeightedOut) {
     EXPECT_DOUBLE_EQ(minEdge4.second, expectedMinDegree2);
 }
 
+TEST_F(GraphUtilitiesTesting, testAverageStrengthCentralityIn){
+    // Test average strength centrality for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average strength centrality for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::In), 0.0);
+
+    // Test average strength centrality for a graph with no cycles
+    double expectedAverageCentrality = (4.0 + 1.0 + 5.0 + 5 + 0.0) / 5; // strength centralities computed by hand
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In), expectedAverageCentrality);
+}
+
+TEST_F(GraphUtilitiesTesting, testAverageStrengthCentralityOut){
+    // Test average strength centrality for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average strength centrality for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Out), 0.0);
+
+    // Test average strength centrality for a graph with no cycles
+    double expectedAverageCentrality = (4.0 + 2.0 + 0.0 + 4.0 + 5.0) / 5; // strength centralities computed by hand
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Out), expectedAverageCentrality);
+}
+
+TEST_F(GraphUtilitiesTesting, testAverageStrengthCentralityFull){
+    // Test average strength centrality for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Full), 0.0);
+
+    // Test average strength centrality for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Full), 0.0);
+
+    // Test average strength centrality for a graph with no cycles
+    double expectedAverageCentrality = (8.0 + 3.0 + 5.0 + 9.0 + 5.0) / 5; // strength centralities computed by hand
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::averageStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Full), expectedAverageCentrality);
+}
+
+TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityIn){
+    // Test min strength centrality for an empty graph
+    auto minCentrality1 = weighted_graph_metrics::minStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(minCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(minCentrality1.second, 0.0);
+
+    // Test min strength centrality for a graph with no edges
+    auto minCentrality2 = weighted_graph_metrics::minStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(minCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(minCentrality2.second, 0.0);
+
+    // Test min strength centrality for a graph with no cycles
+    auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(minCentrality3.first, "node5");
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 0.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityOut){
+    // Test min strength centrality for an empty graph
+    auto minCentrality1 = weighted_graph_metrics::minStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(minCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(minCentrality1.second, 0.0);
+
+    // Test min strength centrality for a graph with no edges
+    auto minCentrality2 = weighted_graph_metrics::minStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(minCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(minCentrality2.second, 0.0);
+
+    // Test min strength centrality for a graph with no cycles
+    auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(minCentrality3.first, "node3");
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 0.0); // node3 has the minimum strength centrality of 0.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMinStrengthCentralityFull){
+    // Test min strength centrality for an empty graph
+    auto minCentrality1 = weighted_graph_metrics::minStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(minCentrality1.second, 0.0);
+
+    // Test min strength centrality for a graph with no edges
+    auto minCentrality2 = weighted_graph_metrics::minStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(minCentrality2.second, 0.0);
+
+    // Test min strength centrality for a graph with no cycles
+    auto minCentrality3 = weighted_graph_metrics::minStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(minCentrality3.first, "node2");
+    EXPECT_DOUBLE_EQ(minCentrality3.second, 3.0); // node2 has the minimum strength centrality of 3.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMaxStrengthCentralityIn){
+    // Test max strength centrality for an empty graph
+    auto maxCentrality1 = weighted_graph_metrics::maxStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(maxCentrality1.second, 0.0);
+
+    // Test max strength centrality for a graph with no edges
+    auto maxCentrality2 = weighted_graph_metrics::maxStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(maxCentrality2.second, 0.0);
+
+    // Test max strength centrality for a graph with no cycles
+    auto maxCentrality3 = weighted_graph_metrics::maxStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::In);
+    EXPECT_EQ(maxCentrality3.first, "node4");
+    EXPECT_DOUBLE_EQ(maxCentrality3.second, 5.0); // node4 has the maximum strength centrality of 5.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMaxStrengthCentralityOut){
+    // Test max strength centrality for an empty graph
+    auto maxCentrality1 = weighted_graph_metrics::maxStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(maxCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(maxCentrality1.second, 0.0);
+
+    // Test max strength centrality for a graph with no edges
+    auto maxCentrality2 = weighted_graph_metrics::maxStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(maxCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(maxCentrality2.second, 0.0);
+
+    // Test max strength centrality for a graph with no cycles
+    auto maxCentrality3 = weighted_graph_metrics::maxStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Out);
+    EXPECT_EQ(maxCentrality3.first, "node5");
+    EXPECT_DOUBLE_EQ(maxCentrality3.second, 5.0); // node5 has the maximum strength centrality of 5.0
+}
+
+TEST_F(GraphUtilitiesTesting, testMaxStrengthCentralityFull){
+    // Test max strength centrality for an empty graph
+    auto maxCentrality1 = weighted_graph_metrics::maxStrengthCentrality(*graph1, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(maxCentrality1.first, "");
+    EXPECT_DOUBLE_EQ(maxCentrality1.second, 0.0);
+
+    // Test max strength centrality for a graph with no edges
+    auto maxCentrality2 = weighted_graph_metrics::maxStrengthCentrality(*graph2, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(maxCentrality2.first, "4");
+    EXPECT_DOUBLE_EQ(maxCentrality2.second, 0.0);
+
+    // Test max strength centrality for a graph with no cycles
+    auto maxCentrality3 = weighted_graph_metrics::maxStrengthCentrality(*graph5, weighted_graph_metrics::DegreeMode::Full);
+    EXPECT_EQ(maxCentrality3.first, "node4");
+    EXPECT_DOUBLE_EQ(maxCentrality3.second, 9.0); // node4 has the maximum strength centrality of 9.0
+}
+
+TEST_F(GraphUtilitiesTesting, testWeightedGlobalClustering){
+    // Test weighted global clustering for an empty graph
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph1), 0.0);
+
+    // Test weighted global clustering for a graph with no edges
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph2), 0.0);
+
+    // Test weighted global clustering for a graph with edges
+    double expectedClustering = 3; // average of the edge weights
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph3), expectedClustering);
+    
+    // Test weighted global clustering for a graph with values
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph4), expectedClustering);
+    // Test weighted global clustering for a graph with no cycles
+    double expectedClusteringNoCycles = 0.4; // average of the edge weights in graph5
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedGlobalClustering(*graph5), expectedClusteringNoCycles);
+}
+
+TEST_F(GraphUtilitiesTesting, testweightedPathWeight){
+    std::vector<int> emptypath = {};
+    // Test weighted path weight for an empty path
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph1, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph2, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph3, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph4, emptypath), 0.0);
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph5, emptypath), 0.0);
+    // Test throwing an exception if the node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::weightedPathWeight(*graph1, {1,5}), std::out_of_range);
+    // Test throwing an exception if the edge is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::weightedPathWeight(*graph2, {1,2,3}), std::invalid_argument);
+
+    EXPECT_DOUBLE_EQ(weighted_graph_metrics::weightedPathWeight(*graph3, {1,2,3}), 5.0); // 2.0 + 3
+}
+
+TEST_F(GraphUtilitiesTesting, testHasCycle) {
+    // Test hasCycle for an empty graph
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph1));
+
+    // Test hasCycle for a graph with no edges
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph2));
+
+    // Test hasCycle for a graph with edges, with cycles
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph3));
+
+    // Test hasCycle for a graph with values with cycles
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph4));
+
+    // Test hasCycle for a graph with no cycles
+    EXPECT_FALSE(weighted_graph_metrics::hasCycle(*graph5));
+
+    // Testing adding a cycle to graph5 (in a copy of it)
+    auto graph5WithCycle = graph5->copyNew();
+    graph5WithCycle->addEdge(2,3, 1.0); // Adding an edge that creates a cycle
+    EXPECT_TRUE(weighted_graph_metrics::hasCycle(*graph5WithCycle));
+    delete graph5WithCycle; // Clean up the dynamically allocated graph
+}
+
+TEST_F(GraphUtilitiesTesting, testUnweightedShortestPathBFS){
+    // Test unweighted shortest path BFS for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph1, 1), std::out_of_range);
+    // the pairs are (node, path)
+    std::vector<std::pair<int, std::vector<int>>> allEmptyPaths = weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph2, 1);
+    for(const auto& pair : allEmptyPaths) {
+        if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 1);
+        } else {
+            EXPECT_EQ(pair.second.size(), 0); // All paths should be empty
+        }
+    }
+    // Test unweighted shortest path BFS for a graph with edges
+    std::vector<std::pair<int, std::vector<int>>> allPaths = weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS(*graph3, 0);
+    for(const auto& pair : allPaths) {
+        if(pair.first == 0) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 0);
+        } else if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 1 is [0, 1]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 1);
+        } else if(pair.first == 2) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 2 is [0, 2]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+        } else if(pair.first == 3) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 3 is [0, 1, 3]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+            EXPECT_EQ(pair.second[2], 3);
+        } else if(pair.first == 4) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 4 is [0, 2, 4]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+            EXPECT_EQ(pair.second[2], 4);
+        }
+    }
+
+}
+
+
+
+TEST_F(GraphUtilitiesTesting, testWeightedShortestPathDijkstra) {
+    // Test unweighted shortest path Dijkstra for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra(*graph1, 1), std::out_of_range);
+    
+    // Test unweighted shortest path Dijkstra for a graph with no edges
+    std::vector<std::pair<int, std::vector<int>>> allEmptyPaths = weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra(*graph2, 1);
+    for(const auto& pair : allEmptyPaths) {
+        if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 1);
+        } else {
+            EXPECT_EQ(pair.second.size(), 0); // All paths should be empty
+        }
+    }
+
+    // Test unweighted shortest path Dijkstra for a graph with edges
+    std::vector<std::pair<int, std::vector<int>>> allPaths = weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra(*graph3, 0);
+    for(const auto& pair : allPaths) {
+        if(pair.first == 0) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 0);
+        } else if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 1 is [0, 1]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 1);
+        } else if(pair.first == 2) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 2 is [0, 2]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+        } else if(pair.first == 3) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 3 is [0, 1, 3]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 1);
+            EXPECT_EQ(pair.second[2], 3);
+        } else if(pair.first == 4) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 4 is [0, 2, 4]
+            EXPECT_EQ(pair.second[0], 0);
+            EXPECT_EQ(pair.second[1], 2);
+            EXPECT_EQ(pair.second[2], 4);
+        }
+    }
+}
+
+TEST_F(GraphUtilitiesTesting, testWeightedShortestPathBellmanFord) {
+    // Test unweighted shortest path Bellman-Ford for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph1, 1), std::out_of_range);
+
+    // Testing throwing an exception for graph with no negative weights
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph3, 0), std::invalid_argument);
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph4, 0), std::invalid_argument);
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph5, 0), std::invalid_argument);
+    
+    // Testing for graph with negative weights but no negative cycles
+    auto graphWithNegativeWeights = graph5->copyNew();
+    graphWithNegativeWeights->addEdge("node5", "node1", -1.0); // Adding a negative weight edge
+    std::vector<std::pair<int, std::vector<int>>> allPaths = weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graphWithNegativeWeights, 4); // Starting from node 5
+    for(const auto& pair : allPaths) {
+        if(pair.first == 4) {
+            EXPECT_EQ(pair.second.size(), 1); // path to itself only contains the node
+            EXPECT_EQ(pair.second[0], 4);
+        } else if(pair.first == 1) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 1 is [4, 0, 1]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+            EXPECT_EQ(pair.second[2], 1);
+        } else if(pair.first == 2) {
+            EXPECT_EQ(pair.second.size(), 3); // path to node 2 is [4, 0, 2]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+            EXPECT_EQ(pair.second[2], 2);
+        } else if(pair.first == 3) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node 3 is [4, 3]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 3);
+        } else if(pair.first == 0) {
+            EXPECT_EQ(pair.second.size(), 2); // path to node1 is [4,0]
+            EXPECT_EQ(pair.second[0], 4);
+            EXPECT_EQ(pair.second[1], 0);
+        }
+    }
+    // Clean up
+    delete graphWithNegativeWeights; 
+
+    // Test graph with negative weights and negative cycles
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord(*graph6, 0), std::runtime_error);
+}
+
+TEST_F(GraphUtilitiesTesting, testWeightedShortestPathFloydWarshall) {
+    // Test unweighted shortest path Floyd-Warshall for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph1), std::out_of_range);
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with no edges
+    auto allEmptyPaths = weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph2);
+    for (const auto& pair : allEmptyPaths) {
+        if(pair.second.size() == 1){// the path to itself only contains the node
+            EXPECT_EQ(pair.second.size(), 1);
+            EXPECT_DOUBLE_EQ(pair.first, 0.0); // the weight of the path to itself is 0.0
+        } else {
+            EXPECT_TRUE(pair.second.empty()); // All paths should be empty
+            EXPECT_DOUBLE_EQ(pair.first, std::numeric_limits<double>::max()); // the final weight of the path is std::numeric_limits<double>::max()
+        }
+    }
+
+    // Test weighted shortest path Floyd-Warshall for a graph with edges
+    auto allPaths = weighted_graph_metrics::allWeightedShortestPathFloydWarshall(*graph3);
+    for (const auto& pair : allPaths) {
+        // we don't need to control if the path is empty since the graph is fully connected
+        int source = pair.second.front(); // The first element in the path is the source node
+        int target = pair.second.back(); // The last element in the path is the target node
+        // Just controlling some of the paths
+        if (source == 0 && target == 1) {
+            EXPECT_DOUBLE_EQ(pair.first, 1.0); // The weight of the path from 0 to 1 is 1.0
+            EXPECT_EQ(pair.second, std::vector<int>({0, 1})); // The path is [0, 1]
+        } else if (source == 0 && target == 2) {
+            EXPECT_DOUBLE_EQ(pair.first, 1.5); // The weight of the path from 0 to 2 is 1.5
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2})); // The path is [0, 2]
+        } else if (source == 0 && target == 4) { 
+            EXPECT_DOUBLE_EQ(pair.first, 5.0); // The weight of the path from 0 to 4 is 5.0
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2, 4})); // The path is [0, 2, 4]
+        } else if (source == 1 && target == 3) {
+            EXPECT_DOUBLE_EQ(pair.first, 2.5); // The weight of the path from 1 to 3 is 2.5
+            EXPECT_EQ(pair.second, std::vector<int>({1, 3})); // The path is [1, 3]
+        } else if (source == 2 && target == 4) {
+            EXPECT_DOUBLE_EQ(pair.first, 3.5); // The weight of the path from 2 to 4 is 3.5
+            EXPECT_EQ(pair.second, std::vector<int>({2, 4})); // The path is [2, 4]
+        }
+    }
+
+}
+
+TEST_F(GraphUtilitiesTesting, testUnweightedShortestPathFloydWarshall){
+    // Test unweighted shortest path Floyd-Warshall for an empty graph
+    // Should throw an exception since source node is not in the graph
+    EXPECT_THROW(weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph1), std::out_of_range);
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with no edges
+    auto allEmptyPaths = weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph2);
+    for (const auto& pair : allEmptyPaths) {
+        if(pair.second.size()==1){// the path to itself only contains the node
+            EXPECT_EQ(pair.first, pair.second.front()); // The first element in the path is the source node
+        } else {
+            EXPECT_TRUE(pair.second.empty()); // All paths should be empty
+        }
+    }
+
+    // Test unweighted shortest path Floyd-Warshall for a graph with edges
+    auto allPaths = weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(*graph3);
+    for (const auto& pair : allPaths) {
+        // we don't need to control if the path is empty since the graph is fully connected
+        int source = pair.second.front(); // The first element in the path is the source node
+        int target = pair.second.back(); // The last element in the path is the target node
+        // Just controlling some of the paths
+        if (source == 0 && target == 1) {
+            EXPECT_EQ(pair.second, std::vector<int>({0, 1})); // The path is [0, 1]
+        } else if (source == 0 && target == 2) {
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2})); // The path is [0, 2]
+        } else if (source == 0 && target == 4) { 
+            EXPECT_EQ(pair.second, std::vector<int>({0, 2, 4})); // The path is [0, 2, 4]
+        } else if (source == 1 && target == 3) {
+            EXPECT_EQ(pair.second, std::vector<int>({1, 3})); // The path is [1, 3]
+        } else if (source == 2 && target == 4) {
+            EXPECT_EQ(pair.second, std::vector<int>({2, 4})); // The path is [2, 4]
+        }
+    }
+
+}

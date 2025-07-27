@@ -235,6 +235,11 @@ int main(int argc, char** argv) {
     if (vm.count("intertypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intertype set to " 
     << vm["intertypeIterations"].as<uint>() << ".\n";
+        int testingIterations = vm["intertypeIterations"].as<int>();
+        if(testingIterations <= 0){
+            if(rank==0)logger.printError("intertypeIterations must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
         intertypeIterations = vm["intertypeIterations"].as<uint>();
     } else {
         if(rank==0)logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
@@ -244,6 +249,11 @@ int main(int argc, char** argv) {
     if (vm.count("intratypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intratype set to " 
     << vm["intratypeIterations"].as<uint>() << ".\n";
+        int testingIterations = vm["intratypeIterations"].as<int>();
+        if(testingIterations <= 0){
+            if(rank==0)logger.printError("intratypeIterations must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
         intratypeIterations = vm["intratypeIterations"].as<uint>();
     } else {
         if(rank==0)logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
@@ -294,6 +304,11 @@ int main(int argc, char** argv) {
         if(rank==0)logger << "[LOG] timestep set to " 
             << vm["timestep"].as<double>() << ".\n";
         timestep = vm["timestep"].as<double>();
+        // control over the sign of the value, since it should be positive
+        if(timestep <= 0){
+            if(rank==0)logger.printError("timestep must be a positive value, aborting")<<std::endl;
+            return 1;
+        }
     } else {
         if(rank==0)logger << "[LOG] timestep not set, set to default (1)"<<std::endl;
     }
