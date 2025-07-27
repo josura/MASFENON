@@ -866,3 +866,22 @@ double weighted_graph_metrics::averageDistance(const WeightedEdgeGraph& graph) {
     return (count > 0) ? (totalDistance / count) : 0.0; // Return average distance, or 0 if no pairs are reachable
 }
 
+double weighted_graph_metrics::averageWeightedDistance(const WeightedEdgeGraph& graph) {
+    if (graph.getNumNodes() == 0) {
+        return 0.0; // Return 0 for an empty graph
+    }
+
+    double totalDistance = 0.0; // Initialize total distance to 0
+    int count = 0; // Initialize count of reachable pairs
+
+    auto allPaths = allWeightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
+    for (const auto& path : allPaths) {
+        const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
+        if (!shortestPath.empty()) { // Check if the path is not empty
+            totalDistance += path.first; // Add the weight of the path
+            count++; // Increment count of reachable pairs
+        }
+    }
+
+    return (count > 0) ? (totalDistance / count) : 0.0; // Return average distance, or 0 if no pairs are reachable
+}
