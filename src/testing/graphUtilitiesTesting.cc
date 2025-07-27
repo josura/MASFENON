@@ -12,6 +12,7 @@ class GraphUtilitiesTesting : public ::testing::Test {
             graph3 = new WeightedEdgeGraph(nodeNames); // Graph with 5 nodes
             graph4 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes and values
             graph5 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes, no cycles
+            graph6 = new WeightedEdgeGraph(nodeNames, nodeValues); // Graph with 5 nodes, negative cycle
 
             // Add edges to graph3
             graph3->addEdge("node1", "node2", 1.0);
@@ -41,6 +42,12 @@ class GraphUtilitiesTesting : public ::testing::Test {
             graph5->addEdge("node1", "node3", 3.0);
             graph5->addEdge("node4", "node1", 4.0);
             graph5->addEdge("node5", "node4", 5.0);
+            // add edges to graph6
+            graph6->addEdge("node1", "node2", 1.0);
+            graph6->addEdge("node2", "node3", 2.0);
+            graph6->addEdge("node2", "node5", 3.0);
+            graph6->addEdge("node5", "node4", 5.0);
+            graph6->addEdge("node5", "node1", -4.0);
         }
 
         void TearDown() override {
@@ -50,6 +57,7 @@ class GraphUtilitiesTesting : public ::testing::Test {
             delete graph3;
             delete graph4;
             delete graph5;
+            delete graph6;
         }
 
         // member variables for the test class
@@ -58,6 +66,7 @@ class GraphUtilitiesTesting : public ::testing::Test {
         WeightedEdgeGraph *graph3; // graph with 5 nodes, no values and 10 edges
         WeightedEdgeGraph *graph4; // graph with 5 nodes and values and 10 edges
         WeightedEdgeGraph *graph5; // graph with 5 nodes and 5 edges, no cycles
+        WeightedEdgeGraph *graph6; // graph with 5 nodes and 5 edges, negative cycle
 
         std::vector<std::string> nodeNames{"node1","node2","node3","node4","node5"};
         std::vector<double> nodeValues{0.3,4.1,3.8,8.2,9.5};
