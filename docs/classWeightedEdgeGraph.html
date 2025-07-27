@@ -119,12 +119,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a45d7a47ac0dd1ec17466250a6713a89d" id="r_a45d7a47ac0dd1ec17466250a6713a89d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a45d7a47ac0dd1ec17466250a6713a89d">getEdgeWeight</a> (int node1, int node2) const</td></tr>
 <tr class="memdesc:a45d7a47ac0dd1ec17466250a6713a89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the weight of an edge between two nodes.  <br /></td></tr>
 <tr class="separator:a45d7a47ac0dd1ec17466250a6713a89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a750eb82403adfe2ddae8b6ad75b50bec" id="r_a750eb82403adfe2ddae8b6ad75b50bec"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a750eb82403adfe2ddae8b6ad75b50bec">getEdgeWeight</a> (std::string node1, std::string node2) const</td></tr>
-<tr class="memdesc:a750eb82403adfe2ddae8b6ad75b50bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the weight of an edge between two nodes using their names.  <br /></td></tr>
-<tr class="separator:a750eb82403adfe2ddae8b6ad75b50bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af23237478cef594d6c9e07f2f9fa2acc" id="r_af23237478cef594d6c9e07f2f9fa2acc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#af23237478cef594d6c9e07f2f9fa2acc">hasEdge</a> (int node1, int node2) const</td></tr>
+<tr class="memdesc:af23237478cef594d6c9e07f2f9fa2acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to control if an edge exists between two nodes.  <br /></td></tr>
+<tr class="separator:af23237478cef594d6c9e07f2f9fa2acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a441ff5c47a1cd44684b7ebc6fb3f2494" id="r_a441ff5c47a1cd44684b7ebc6fb3f2494"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a441ff5c47a1cd44684b7ebc6fb3f2494">getIndexFromName</a> (std::string name) const</td></tr>
 <tr class="memdesc:a441ff5c47a1cd44684b7ebc6fb3f2494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the index of a node by its name.  <br /></td></tr>
 <tr class="separator:a441ff5c47a1cd44684b7ebc6fb3f2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750eb82403adfe2ddae8b6ad75b50bec" id="r_a750eb82403adfe2ddae8b6ad75b50bec"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a750eb82403adfe2ddae8b6ad75b50bec">getEdgeWeight</a> (std::string node1, std::string node2) const</td></tr>
+<tr class="memdesc:a750eb82403adfe2ddae8b6ad75b50bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the weight of an edge between two nodes using their names.  <br /></td></tr>
+<tr class="separator:a750eb82403adfe2ddae8b6ad75b50bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ec9cac4c7991f04ffe7044d01348754" id="r_a3ec9cac4c7991f04ffe7044d01348754"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeightedEdgeGraph.html#a3ec9cac4c7991f04ffe7044d01348754">addNode</a> (double value=0)</td></tr>
 <tr class="memdesc:a3ec9cac4c7991f04ffe7044d01348754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to add a node to the graph.  <br /></td></tr>
 <tr class="separator:a3ec9cac4c7991f04ffe7044d01348754"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1882,6 +1885,60 @@ getPredecessors(int node) </dd></dl>
 <p>This function uses the getIndexFromName(std::string name) function to get the index of the node and then calls the getSuccessors(int node) function. </p><dl class="section see"><dt>See also</dt><dd>getIndexFromName(std::string name) </dd>
 <dd>
 getSuccessors(int node) </dd></dl>
+
+</div>
+</div>
+<a id="af23237478cef594d6c9e07f2f9fa2acc" name="af23237478cef594d6c9e07f2f9fa2acc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af23237478cef594d6c9e07f2f9fa2acc">&#9670;&#160;</a></span>hasEdge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WeightedEdgeGraph::hasEdge </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to control if an edge exists between two nodes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node1</td><td>The index of the first node. </td></tr>
+    <tr><td class="paramname">node2</td><td>The index of the second node. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the edge exists, false otherwise. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if one of the nodes is out of range (index).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function checks if an edge exists between the specified nodes by checking the value in the adjacency matrix.</p>
+<p>If the value is greater than 0, it means the edge exists. </p>
 
 </div>
 </div>

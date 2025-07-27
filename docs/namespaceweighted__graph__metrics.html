@@ -132,10 +132,47 @@ Functions</h2></td></tr>
 <tr class="memitem:a157d69078092126c6a3d6951d5142ec2" id="r_a157d69078092126c6a3d6951d5142ec2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a157d69078092126c6a3d6951d5142ec2">weightedGlobalClustering</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
 <tr class="memdesc:a157d69078092126c6a3d6951d5142ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the global clustering coefficient for a weighted edge graph.  <br /></td></tr>
 <tr class="separator:a157d69078092126c6a3d6951d5142ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f66cbd1b3b4ce938a2996328ad4bc41" id="r_a2f66cbd1b3b4ce938a2996328ad4bc41"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a2f66cbd1b3b4ce938a2996328ad4bc41">weightedPathWeight</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, const std::vector&lt; int &gt; &amp;path)</td></tr>
+<tr class="memdesc:a2f66cbd1b3b4ce938a2996328ad4bc41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the weigth of a path in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:a2f66cbd1b3b4ce938a2996328ad4bc41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8549350ecd60d73a291f4f5ee09f32b" id="r_ad8549350ecd60d73a291f4f5ee09f32b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#ad8549350ecd60d73a291f4f5ee09f32b">hasNegativeWeights</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:ad8549350ecd60d73a291f4f5ee09f32b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control if the graph contains negative weights.  <br /></td></tr>
+<tr class="separator:ad8549350ecd60d73a291f4f5ee09f32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a486039a812ae40f1fa75ed4334829f7a" id="r_a486039a812ae40f1fa75ed4334829f7a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a486039a812ae40f1fa75ed4334829f7a">hasCycleUtil</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, int v, std::vector&lt; bool &gt; &amp;visited, std::vector&lt; bool &gt; &amp;recStack)</td></tr>
+<tr class="memdesc:a486039a812ae40f1fa75ed4334829f7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function to check if the graph contains a cycle.  <br /></td></tr>
+<tr class="separator:a486039a812ae40f1fa75ed4334829f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76129222e905c1e6a03022164b7dcba3" id="r_a76129222e905c1e6a03022164b7dcba3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a76129222e905c1e6a03022164b7dcba3">hasCycle</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:a76129222e905c1e6a03022164b7dcba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control if the graph contains a cycle.  <br /></td></tr>
+<tr class="separator:a76129222e905c1e6a03022164b7dcba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace1a19dbb93067185610c89de534a2d8" id="r_ace1a19dbb93067185610c89de534a2d8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#ace1a19dbb93067185610c89de534a2d8">allUnweightedShortestPathFromSourceBFS</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, int source)</td></tr>
+<tr class="memdesc:ace1a19dbb93067185610c89de534a2d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:ace1a19dbb93067185610c89de534a2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad4e75fc89dca0a8163aa1e0895dcd0" id="r_a5ad4e75fc89dca0a8163aa1e0895dcd0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a5ad4e75fc89dca0a8163aa1e0895dcd0">allWeightedShortestPathFromSourceDijkstra</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, int source)</td></tr>
+<tr class="memdesc:a5ad4e75fc89dca0a8163aa1e0895dcd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the weighted shortest path with Dijkstra's algorithm from a source node to all other nodes in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:a5ad4e75fc89dca0a8163aa1e0895dcd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8b676cd2109b6b47a6b8d4c5cec926e" id="r_ae8b676cd2109b6b47a6b8d4c5cec926e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#ae8b676cd2109b6b47a6b8d4c5cec926e">allWeightedShortestPathFromSourceBellmanFord</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph, int source)</td></tr>
+<tr class="memdesc:ae8b676cd2109b6b47a6b8d4c5cec926e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the weighted shortest path with Bellman-Ford algorithm from a source node to all other nodes in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:ae8b676cd2109b6b47a6b8d4c5cec926e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae175f00c642386ea5dfc2ff8796f90d5" id="r_ae175f00c642386ea5dfc2ff8796f90d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; double, std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#ae175f00c642386ea5dfc2ff8796f90d5">allWeightedShortestPathFloydWarshall</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:ae175f00c642386ea5dfc2ff8796f90d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the weighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:ae175f00c642386ea5dfc2ff8796f90d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d725c0fcb1cd90ffce196183f7b51f3" id="r_a6d725c0fcb1cd90ffce196183f7b51f3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#a6d725c0fcb1cd90ffce196183f7b51f3">allUnweightedShortestPathFloydWarshall</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:a6d725c0fcb1cd90ffce196183f7b51f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the unweighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph.  <br /></td></tr>
+<tr class="separator:a6d725c0fcb1cd90ffce196183f7b51f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9be1abec71ea46a561df0fc78e4cd88" id="r_ac9be1abec71ea46a561df0fc78e4cd88"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#ac9be1abec71ea46a561df0fc78e4cd88">graphDiameter</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:ac9be1abec71ea46a561df0fc78e4cd88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the diameter of the graph.  <br /></td></tr>
+<tr class="separator:ac9be1abec71ea46a561df0fc78e4cd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4b96fa215c637e76c0582fcb049fafb" id="r_af4b96fa215c637e76c0582fcb049fafb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#af4b96fa215c637e76c0582fcb049fafb">averageDistance</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:af4b96fa215c637e76c0582fcb049fafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the average distance between all pairs of nodes in the graph(unweighted).  <br /></td></tr>
+<tr class="separator:af4b96fa215c637e76c0582fcb049fafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc760cd8f63c82a9d1c4b5bbc8e84e66" id="r_afc760cd8f63c82a9d1c4b5bbc8e84e66"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceweighted__graph__metrics.html#afc760cd8f63c82a9d1c4b5bbc8e84e66">averageWeightedDistance</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:afc760cd8f63c82a9d1c4b5bbc8e84e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the average distance between all pairs of nodes in the graph(weighted).  <br /></td></tr>
+<tr class="separator:afc760cd8f63c82a9d1c4b5bbc8e84e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains utility functions for calculating metrics on weighted graphs. </p>
 <p>The functions are used to calculate metrics such as the average weight of edges in a graph. </p><dl class="section note"><dt>Note</dt><dd>The functions are designed to work with the <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> class. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>When some of the functions in this namespace are used in the code, there needs to be some checks before using some functions, such as negative weights or cycles in the graph with Dijkstra's algorithm. </dd></dl>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="adc62972d56e6dfca8d9d83b6e80a2bf0" name="adc62972d56e6dfca8d9d83b6e80a2bf0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc62972d56e6dfca8d9d83b6e80a2bf0">&#9670;&#160;</a></span>DegreeMode</h2>
@@ -169,6 +206,254 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a6d725c0fcb1cd90ffce196183f7b51f3" name="a6d725c0fcb1cd90ffce196183f7b51f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d725c0fcb1cd90ffce196183f7b51f3">&#9670;&#160;</a></span>allUnweightedShortestPathFloydWarshall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt; weighted_graph_metrics::allUnweightedShortestPathFloydWarshall </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the unweighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector pairs containing the target node and the corresponding paths from the source node to a target node. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The paths are represented as vectors of node indices. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the graph is empty.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the Floyd-Warshall algorithm to compute the shortest path lengths </p>
+
+</div>
+</div>
+<a id="ace1a19dbb93067185610c89de534a2d8" name="ace1a19dbb93067185610c89de534a2d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace1a19dbb93067185610c89de534a2d8">&#9670;&#160;</a></span>allUnweightedShortestPathFromSourceBFS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt; weighted_graph_metrics::allUnweightedShortestPathFromSourceBFS </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">source</td><td>The source node from which to compute the shortest paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector pairs containing the target and the corresponding paths from the source node to all other nodes. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The paths are represented as vectors of node indices. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the source node index is out of range. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>if the graph is empty.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses a breadth-first search (BFS) algorithm to compute the shortest path lengths in an unweighted graph. </p><dl class="section note"><dt>Note</dt><dd>The graph is treated as unweighted for the purpose of this function, meaning that all edges are considered to have equal weight (1). </dd></dl>
+
+</div>
+</div>
+<a id="ae175f00c642386ea5dfc2ff8796f90d5" name="ae175f00c642386ea5dfc2ff8796f90d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae175f00c642386ea5dfc2ff8796f90d5">&#9670;&#160;</a></span>allWeightedShortestPathFloydWarshall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; double, std::vector&lt; int &gt; &gt; &gt; weighted_graph_metrics::allWeightedShortestPathFloydWarshall </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the weighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector pairs containing the shortest path weight and the corresponding paths from the source node to a target node. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The paths are represented as vectors of node indices. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the graph is empty.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the Floyd-Warshall algorithm to compute the shortest path lengths in a weighted graph. </p>
+
+</div>
+</div>
+<a id="ae8b676cd2109b6b47a6b8d4c5cec926e" name="ae8b676cd2109b6b47a6b8d4c5cec926e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8b676cd2109b6b47a6b8d4c5cec926e">&#9670;&#160;</a></span>allWeightedShortestPathFromSourceBellmanFord()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt; weighted_graph_metrics::allWeightedShortestPathFromSourceBellmanFord </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the weighted shortest path with Bellman-Ford algorithm from a source node to all other nodes in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">source</td><td>The source node from which to compute the shortest paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector pairs containing the target and the corresponding paths from the source node to all other nodes. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The paths are represented as vectors of node indices. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the source node index is out of range. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>if the graph is empty. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the graph contains a negative weight cycle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses the Bellman-Ford algorithm to compute the shortest path lengths in a weighted graph. </p><dl class="section note"><dt>Note</dt><dd>The graph is treated as weighted, meaning that edges can have different weights. </dd></dl>
+
+</div>
+</div>
+<a id="a5ad4e75fc89dca0a8163aa1e0895dcd0" name="a5ad4e75fc89dca0a8163aa1e0895dcd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ad4e75fc89dca0a8163aa1e0895dcd0">&#9670;&#160;</a></span>allWeightedShortestPathFromSourceDijkstra()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; int, std::vector&lt; int &gt; &gt; &gt; weighted_graph_metrics::allWeightedShortestPathFromSourceDijkstra </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the weighted shortest path with Dijkstra's algorithm from a source node to all other nodes in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">source</td><td>The source node from which to compute the shortest paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector pairs containing the target node and the corresponding paths from the source node to all other nodes. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The paths are represented as vectors of node indices. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the source node index is out of range. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>if the graph is empty.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function uses Dijkstra's algorithm to compute the shortest path lengths in a weighted graph. </p><dl class="section note"><dt>Note</dt><dd>The graph is treated as weighted, meaning that edges can have different weights. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function assumes that the graph does not contain negative weight cycles. And that the weights are non-negative. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>add control for negative weights </dd></dl>
+
+</div>
+</div>
+<a id="af4b96fa215c637e76c0582fcb049fafb" name="af4b96fa215c637e76c0582fcb049fafb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4b96fa215c637e76c0582fcb049fafb">&#9670;&#160;</a></span>averageDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double weighted_graph_metrics::averageDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the average distance between all pairs of nodes in the graph(unweighted). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The average distance between all pairs of nodes in the graph (unweighted).</dd></dl>
+<p>The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph. </p><dl class="section note"><dt>Note</dt><dd>The function uses the Floyd-Warshall algorithm to compute the shortest paths. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the graph is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a199ccec857bdbc4b02866f74818085c3" name="a199ccec857bdbc4b02866f74818085c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a199ccec857bdbc4b02866f74818085c3">&#9670;&#160;</a></span>averageEdgeDegree()</h2>
 
@@ -314,6 +599,192 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the average strength centrality measure in the graph</dd></dl>
 <p>This function computes the average strength centrality, where the strength is computed as: strength(v) = sum of weights of edges incident to v <br  />
  </p>
+
+</div>
+</div>
+<a id="afc760cd8f63c82a9d1c4b5bbc8e84e66" name="afc760cd8f63c82a9d1c4b5bbc8e84e66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc760cd8f63c82a9d1c4b5bbc8e84e66">&#9670;&#160;</a></span>averageWeightedDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double weighted_graph_metrics::averageWeightedDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the average distance between all pairs of nodes in the graph(weighted). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The average distance between all pairs of nodes in the graph (weighted).</dd></dl>
+<p>The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph. </p><dl class="section note"><dt>Note</dt><dd>The function uses the Floyd-Warshall algorithm to compute the shortest paths. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the graph is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac9be1abec71ea46a561df0fc78e4cd88" name="ac9be1abec71ea46a561df0fc78e4cd88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9be1abec71ea46a561df0fc78e4cd88">&#9670;&#160;</a></span>graphDiameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int weighted_graph_metrics::graphDiameter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the diameter of the graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The diameter of the graph, which is the maximum distance between any two nodes in the graph (unweighted).</dd></dl>
+<p>The diameter is computed as the maximum shortest path length between any two nodes in the graph. </p><dl class="section note"><dt>Note</dt><dd>The function uses the Floyd-Warshall algorithm to compute the shortest paths. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function assumes that the graph is connected. If the graph is not connected, the diameter may not be well-defined. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceweighted__graph__metrics.html#a6d725c0fcb1cd90ffce196183f7b51f3" title="Computes the unweighted shortest path with Floyd-Warshall algorithm all-to-all nodes in a weighted ed...">allUnweightedShortestPathFloydWarshall</a> for more details on the algorithm used. </dd></dl>
+
+</div>
+</div>
+<a id="a76129222e905c1e6a03022164b7dcba3" name="a76129222e905c1e6a03022164b7dcba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76129222e905c1e6a03022164b7dcba3">&#9670;&#160;</a></span>hasCycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool weighted_graph_metrics::hasCycle </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Control if the graph contains a cycle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the graph contains a cycle, false otherwise.</dd></dl>
+<p>This function uses a depth-first search (DFS) algorithm to detect cycles (strongly connected components) in the graph. </p><dl class="section note"><dt>Note</dt><dd>The function assumes that the graph is directed. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the graph is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a486039a812ae40f1fa75ed4334829f7a" name="a486039a812ae40f1fa75ed4334829f7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a486039a812ae40f1fa75ed4334829f7a">&#9670;&#160;</a></span>hasCycleUtil()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool weighted_graph_metrics::hasCycleUtil </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; bool &gt; &amp;&#160;</td>
+          <td class="paramname"><em>visited</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; bool &gt; &amp;&#160;</td>
+          <td class="paramname"><em>recStack</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Utility function to check if the graph contains a cycle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">v</td><td>The current node being visited. </td></tr>
+    <tr><td class="paramname">visited</td><td>A vector to track visited nodes. </td></tr>
+    <tr><td class="paramname">recStack</td><td>A vector to track nodes in the current recursion stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a cycle is detected, false otherwise.</dd></dl>
+<p>This function uses depth-first search (DFS) to detect cycles in the graph. </p><dl class="section note"><dt>Note</dt><dd>The function assumes that the graph is directed. </dd></dl>
+
+</div>
+</div>
+<a id="ad8549350ecd60d73a291f4f5ee09f32b" name="ad8549350ecd60d73a291f4f5ee09f32b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8549350ecd60d73a291f4f5ee09f32b">&#9670;&#160;</a></span>hasNegativeWeights()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool weighted_graph_metrics::hasNegativeWeights </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Control if the graph contains negative weights. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the graph contains negative weights, false otherwise.</dd></dl>
+<p>This function iterates through all edges in the graph and checks if any edge has a negative weight. </p><dl class="section note"><dt>Note</dt><dd>The function assumes that the graph is directed. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the graph is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function does not check for negative weight cycles, only for the presence of negative weights. </dd></dl>
 
 </div>
 </div>
@@ -676,6 +1147,52 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The local clustering coefficient for the node v.</dd></dl>
 <p>The local clustering coefficient is computed as the Barrat's local clustering coefficient </p>
+
+</div>
+</div>
+<a id="a2f66cbd1b3b4ce938a2996328ad4bc41" name="a2f66cbd1b3b4ce938a2996328ad4bc41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f66cbd1b3b4ce938a2996328ad4bc41">&#9670;&#160;</a></span>weightedPathWeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double weighted_graph_metrics::weightedPathWeight </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the weigth of a path in a weighted edge graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The weighted edge graph to analyze. </td></tr>
+    <tr><td class="paramname">path</td><td>A vector of node indices representing the path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The total weight of the path.</dd></dl>
+<p>The weight of the path is computed as the sum of the weights of the edges in the path. </p><dl class="section note"><dt>Note</dt><dd>The path is represented as a vector of node indices, where each index corresponds to a node in the graph. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if any node index in the path is out of range of the graph's nodes. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>if the path is not valid (e.g., edges do not exist between consecutive nodes). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

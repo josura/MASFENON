@@ -5,5 +5,6 @@ var searchData=
   ['weightededgegraph_2ecxx_2',['WeightedEdgeGraph.cxx',['../WeightedEdgeGraph_8cxx.html',1,'']]],
   ['weightededgegraph_2ehxx_3',['WeightedEdgeGraph.hxx',['../WeightedEdgeGraph_8hxx.html',1,'']]],
   ['weightedglobalclustering_4',['weightedGlobalClustering',['../namespaceweighted__graph__metrics.html#a157d69078092126c6a3d6951d5142ec2',1,'weighted_graph_metrics']]],
-  ['weightedlocalclustering_5',['weightedLocalClustering',['../namespaceweighted__graph__metrics.html#a7635c03f5832977b527061802a107cea',1,'weighted_graph_metrics']]]
+  ['weightedlocalclustering_5',['weightedLocalClustering',['../namespaceweighted__graph__metrics.html#a7635c03f5832977b527061802a107cea',1,'weighted_graph_metrics']]],
+  ['weightedpathweight_6',['weightedPathWeight',['../namespaceweighted__graph__metrics.html#a2f66cbd1b3b4ce938a2996328ad4bc41',1,'weighted_graph_metrics']]]
 ];
