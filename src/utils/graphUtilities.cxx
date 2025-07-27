@@ -829,3 +829,19 @@ std::vector< std::pair<int ,std::vector<int>>> weighted_graph_metrics::allUnweig
     return shortestPaths; // Return all shortest paths with their destination nodes
 }
     
+
+int weighted_graph_metrics::graphDiameter(const WeightedEdgeGraph& graph){
+    // control for empty graph
+    if (graph.getNumNodes() == 0) {
+        return 0; // Return 0 for an empty graph
+    }
+    int diameter = 0; // Initialize diameter to 0
+    auto allPaths = allUnweightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
+    for (const auto& path : allPaths) {
+        const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
+        if (shortestPath.size() > diameter) { // Check if the length of the path is greater than the current diameter
+            diameter = shortestPath.size(); // Update the diameter
+        }
+    }
+    return diameter - 1; // Return the diameter (subtracting 1 to account for the number of edges)
+}
