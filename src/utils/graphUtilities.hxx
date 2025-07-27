@@ -207,7 +207,7 @@ namespace weighted_graph_metrics {
      * @brief Computes the unweighted shortest path with BFS from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
-     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @return A vector pairs containing the target and the corresponding paths from the source node to all other nodes.
      * @note The paths are represented as vectors of node indices.
      * @throw std::out_of_range if the source node index is out of range.
      * @throw std::invalid_argument if the graph is empty.
@@ -226,7 +226,7 @@ namespace weighted_graph_metrics {
      * @brief Computes the weighted shortest path with Dijkstra's algorithm from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
-     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @return A vector pairs containing the target node and the corresponding paths from the source node to all other nodes.
      * @note The paths are represented as vectors of node indices.
      * @throw std::out_of_range if the source node index is out of range.
      * @throw std::invalid_argument if the graph is empty.
@@ -245,7 +245,7 @@ namespace weighted_graph_metrics {
      * @brief Computes the weighted shortest path with Bellman-Ford algorithm from a source node to all other nodes in a weighted edge graph.
      * @param graph The weighted edge graph to analyze.
      * @param source The source node from which to compute the shortest paths.
-     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @return A vector pairs containing the target and the corresponding paths from the source node to all other nodes.
      * @note The paths are represented as vectors of node indices.
      * @throw std::out_of_range if the source node index is out of range.
      * @throw std::invalid_argument if the graph is empty.
@@ -260,5 +260,19 @@ namespace weighted_graph_metrics {
         >
     > allWeightedShortestPathFromSourceBellmanFord(const WeightedEdgeGraph& graph, int source);
 
+    /**
+     * @brief Computes the weighted shortest path with Floyd-Warshall algorithm from a source node to all other nodes in a weighted edge graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return A vector pairs containing the shortest path lengths and the corresponding paths from the source node to all other nodes.
+     * @note The paths are represented as vectors of node indices.
+     * @throw std::invalid_argument if the graph is empty.
+     * @details This function uses the Floyd-Warshall algorithm to compute the shortest path lengths
+     * in a weighted graph.
+     */
+    std::vector< 
+        std::pair< 
+            std::pair<int,int> ,std::vector<int>
+        >
+    > allWeightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph);
 
 }
