@@ -839,7 +839,8 @@ int weighted_graph_metrics::graphDiameter(const WeightedEdgeGraph& graph){
     auto allPaths = allUnweightedShortestPathFloydWarshall(graph); // Get all shortest paths using Floyd-Warshall algorithm
     for (const auto& path : allPaths) {
         const std::vector<int>& shortestPath = path.second; // Get the shortest path for the node
-        if (shortestPath.size() > diameter) { // Check if the length of the path is greater than the current diameter
+        int shortestPathLength = shortestPath.size(); // Get the length of the shortest path
+        if (shortestPathLength > diameter) { // Check if the length of the path is greater than the current diameter
             diameter = shortestPath.size(); // Update the diameter
         }
     }
