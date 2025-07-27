@@ -773,3 +773,59 @@ std::vector< std::pair<double ,std::vector<int>>> weighted_graph_metrics::allWei
     }
     return shortestPaths; // Return all shortest paths with their distances
 }
+
+std::vector< std::pair<int ,std::vector<int>>> weighted_graph_metrics::allUnweightedShortestPathFloydWarshall(const WeightedEdgeGraph& graph){
+    int numNodes = graph.getNumNodes();
+    if (numNodes == 0) {
+        throw std::out_of_range("Graph has no nodes");
+    }
+    
+    std::vector<std::vector<int>> next(numNodes, std::vector<int>(numNodes, -1));
+    std::vector<std::vector<int>> distances(numNodes, std::vector<int>(numNodes, std::numeric_limits<int>::max()));
+
+    // Initialize distances and next matrices
+    for (int i = 0; i < numNodes; ++i) {
+        distances[i][i] = 0; // Distance to self is 0
+        for (int j : graph.getSuccessors(i)) {
+            distances[i][j] = 1; // Set distance for direct edges as 1 (unweighted)
+            next[i][j] = j; // Set next node in the path
+        }
+    }
+
+    // Floyd-Warshall algorithm to compute shortest paths
+    for (int k = 0; k < numNodes; ++k) {
+        for (int i = 0; i < numNodes; ++i) {
+            for (int j = 0; j < numNodes; ++j) {
+                if (distances[i][k] < std::numeric_limits<int>::max() && distances[k][j] < std::numeric_limits<int>::max()) {
+                    if (distances[i][j] > distances[i][k] + distances[k][j]) {
+                        distances[i][j] = distances[i][k] + distances[k][j]; // Update distance
+                        next[i][j] = next[i][k]; // Update next node in the path
+                    }
+                }
+            }
+        }
+    }
+
+    // Construct the shortest paths from the distance matrix
+    std::vector<std::pair<int, std::vector<int>>> shortestPaths;
+    for (int i = 0; i < numNodes; ++i) {
+        for (int j = 0; j < numNodes; ++j) {
+            if (distances[i][j] < std::numeric_limits<int>::max()) { // If there is a path from i to j
+                std::vector<int> path;
+                int currentNode = i;
+                while (currentNode != -1 && currentNode != j) {
+                    path.push_back(currentNode); // Add current node to
+                    currentNode = next[currentNode][j]; // Move to the next node in the path
+                }
+                if (currentNode == j) {
+                    path.push_back(j); // Add the destination node to the path
+                }
+                shortestPaths.emplace_back(j, path); // Store the destination node and path in the result vector
+            } else {
+                shortestPaths.emplace_back(j, std::vector<int>{}); // If no path exists, store empty path
+            }
+        }
+    }
+    return shortestPaths; // Return all shortest paths with their destination nodes
+}
+    
