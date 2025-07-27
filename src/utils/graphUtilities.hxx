@@ -295,10 +295,19 @@ namespace weighted_graph_metrics {
      * @return The diameter of the graph, which is the maximum distance between any two nodes in the graph (unweighted).
      * @details The diameter is computed as the maximum shortest path length between any two nodes in the graph.
      * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
-     * @throw std::out_of_range if the graph is empty.
      * @warning This function assumes that the graph is connected. If the graph is not connected, the diameter may not be well-defined.
      * @see allUnweightedShortestPathFloydWarshall for more details on the algorithm used.
      */
     int graphDiameter(const WeightedEdgeGraph& graph);
+
+    /**
+     * @brief Returns the average distance between all pairs of nodes in the graph.
+     * @param graph The weighted edge graph to analyze.
+     * @return The average distance between all pairs of nodes in the graph (unweighted).
+     * @details The average distance is computed as the average of the shortest path lengths between all pairs of nodes in the graph.
+     * @note The function uses the Floyd-Warshall algorithm to compute the shortest paths.
+     * @throw std::out_of_range if the graph is empty.
+     */
+    double averageDistance(const WeightedEdgeGraph& graph);
 
 }
