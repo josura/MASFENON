@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['single_20cell_20experiments_0',['Fitting of single cell experiments',['../FittingSingleCell.html',1,'']]]
+  ['results_0',['Visualization of simulation results',['../Visualization.html',1,'']]]
 ];

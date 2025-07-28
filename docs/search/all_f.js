@@ -5,7 +5,8 @@ var searchData=
   ['randomrealnumber_2',['randomrealnumber',['../mathUtilities_8cxx.html#a8bb08c65c0127512433ffba2f85aca26',1,'randomRealNumber(double min, double max):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a8bb08c65c0127512433ffba2f85aca26',1,'randomRealNumber(double min, double max):&#160;mathUtilities.cxx']]],
   ['randomvector_3',['randomVector',['../mathUtilities_8hxx.html#aa530faa6617911b3236d3aae08d22094',1,'mathUtilities.hxx']]],
   ['resetvirtualoutputs_4',['resetVirtualOutputs',['../classComputation.html#ab813459d7172f3192249ea6d28e21a99',1,'Computation']]],
-  ['rowreducegaussian_5',['rowReduceGaussian',['../classMatrix.html#a26da670506296e091a068d7d49793cf3',1,'Matrix']]],
-  ['rows_5f_6',['rows_',['../classMatrix.html#afb06909dde9fadca52d4f6afacc9b644',1,'Matrix']]],
-  ['run_7',['run',['../index.html#autotoc_md9',1,'Example Run'],['../optimization_8cxx.html#ad6db996856b894d43455d2618a593f3c',1,'run():&#160;optimization.cxx']]]
+  ['results_5',['results',['../Visualization.html',1,'Visualization of simulation results'],['../Visualization.html#autotoc_md13',1,'Visualization of simulation results']]],
+  ['rowreducegaussian_6',['rowReduceGaussian',['../classMatrix.html#a26da670506296e091a068d7d49793cf3',1,'Matrix']]],
+  ['rows_5f_7',['rows_',['../classMatrix.html#afb06909dde9fadca52d4f6afacc9b644',1,'Matrix']]],
+  ['run_8',['run',['../index.html#autotoc_md9',1,'Example Run'],['../optimization_8cxx.html#ad6db996856b894d43455d2618a593f3c',1,'run():&#160;optimization.cxx']]]
 ];

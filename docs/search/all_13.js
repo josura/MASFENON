@@ -12,5 +12,7 @@ var searchData=
   ['vectorsunion_9',['vectorsUnion',['../mathUtilities_8hxx.html#aecd790ac1f01458a7b84cf3672f89c46',1,'mathUtilities.hxx']]],
   ['vectortoarmacolumn_10',['vectorToArmaColumn',['../armaUtilities_8hxx.html#a5c14caa95813a3d07b2974f0670a70e9',1,'armaUtilities.hxx']]],
   ['vectortoarmamatrixrepeatcolumns_11',['vectorToArmaMatrixRepeatColumns',['../armaUtilities_8hxx.html#aad2716eb7ab99ed59b231c3b24a15945',1,'armaUtilities.hxx']]],
-  ['vectortoarmarow_12',['vectorToArmaRow',['../armaUtilities_8hxx.html#a2aaaedad815d30ff0bd0c20bf4d5aaa9',1,'armaUtilities.hxx']]]
+  ['vectortoarmarow_12',['vectorToArmaRow',['../armaUtilities_8hxx.html#a2aaaedad815d30ff0bd0c20bf4d5aaa9',1,'armaUtilities.hxx']]],
+  ['visualization_20of_20simulation_20results_13',['visualization of simulation results',['../Visualization.html',1,'Visualization of simulation results'],['../Visualization.html#autotoc_md13',1,'Visualization of simulation results']]],
+  ['visualization_2emd_14',['visualization.md',['../visualization_8md.html',1,'']]]
 ];
