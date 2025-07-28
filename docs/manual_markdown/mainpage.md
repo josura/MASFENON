@@ -32,6 +32,7 @@ It was originally developed as part of the [c2c-sepia](https://github.com/josura
 ## Other sections
 - \ref Building "Building"
 - \ref FittingSingleCell "Fitting of single cell experiments"
+- \ref Visualization "Visualization of simulation results"
 
 ## 🧪 Usage
 ### Help Message
