@@ -47,3 +47,24 @@ fig.show()
 ndlib_memory = pd.read_csv(NDlib_memory_file, sep="\t", header=0)
 netlogo_memory = pd.read_csv(netlogo_memory_file, sep="\t", header=0)
 masfenon_memory = pd.read_csv(MASFENON_memory_file, sep="\t", header=0)
+
+# add columns for the source of the data
+ndlib_memory['source'] = 'NDlib'
+netlogo_memory['source'] = 'NetLogo'
+masfenon_memory['source'] = 'MASFENON'
+# concatenate the dataframes on the same columns
+memory_data = pd.concat([ndlib_memory, netlogo_memory, masfenon_memory], ignore_index=True)
+# select only the relevant columns
+memory_data = memory_data[['nodes', 'memory_kb', 'source']]
+
+# select only the nodes from 1000 to 10000 in steps of 1000 (ignore the other nodes configurations )
+relevant_memory_nodes = memory_data['nodes']
+relevant_memory_nodes = [n for n in relevant_memory_nodes if n >= 1000 and n <= 10000 and n % 1000 == 0]
+relevant_memory_data = memory_data[memory_data['nodes'].isin(relevant_memory_nodes)]
+# plot the memory data with box plots
+fig = px.box(relevant_memory_data, x='nodes', y='memory_kb', color='source',
+             title='Memory Usage Comparison of NDlib, NetLogo, and MASFENON',
+             labels={'nodes': 'Number of Nodes', 'memory_kb': 'Memory Usage (KB)', 'source': 'Source'},
+             points='all')
+fig.update_layout(xaxis_title='Number of Nodes', yaxis_title='Memory Usage (KB)')
+fig.show()
