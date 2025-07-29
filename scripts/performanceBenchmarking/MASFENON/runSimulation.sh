@@ -39,25 +39,7 @@ for graphFolder in $(ls $inputsFolder | grep "Nodes"); do
     # get the number of nodes from the file name
     numNodes=$(echo $graphFolder | cut -d'N' -f 1)
     echo "Number of nodes: $numNodes" >> spaceOccupied.tsv
-    echo "mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np 4 ../../../build/masfenon-MPI --graphsFilesFolder $graphsFolder \
-                --initialPerturbationPerTypeFolder $initialPerturbationFolder \
-                --typeInteractionFolder $typeInteractionsFolder \
-                --dissipationModel scaled \
-                --dissipationModelParameters 0.2 \
-                --conservationModel scaled \
-                --conservationModelParameters 0.2 \
-                --propagationModel scaled \
-                --propagationModelParameters 0.2 \
-                --intertypeIterations 10 \
-                --intratypeIterations 5 \
-                --virtualNodesGranularity typeAndNode \
-                --saturation \
-                --undirectedEdges \
-                --undirectedTypeEdges \
-                --outputFolder $outputsFolder/$graphFolder \
-                --savePerformance times.tsv"
-    # run the simulation and save the memory used in the file spaceOccupied.tsv
-    # /usr/bin/time -f "%M" mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np 4 ../../../build/c2c-sepia-MPI --graphsFilesFolder $graphsFolder \
+    # echo "mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np 4 ../../../build/masfenon-MPI --graphsFilesFolder $graphsFolder \
     #             --initialPerturbationPerTypeFolder $initialPerturbationFolder \
     #             --typeInteractionFolder $typeInteractionsFolder \
     #             --dissipationModel scaled \
@@ -73,6 +55,24 @@ for graphFolder in $(ls $inputsFolder | grep "Nodes"); do
     #             --undirectedEdges \
     #             --undirectedTypeEdges \
     #             --outputFolder $outputsFolder/$graphFolder \
-    #             --savePerformance times.tsv 2>> spaceOccupied.tsv
+    #             --savePerformance times.tsv"
+    # run the simulation and save the memory used in the file spaceOccupied.tsv
+    /usr/bin/time -f "%M" mpirun --mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include $interface -np 4 ../../../build/masfenon-MPI --graphsFilesFolder $graphsFolder \
+                --initialPerturbationPerTypeFolder $initialPerturbationFolder \
+                --typeInteractionFolder $typeInteractionsFolder \
+                --dissipationModel scaled \
+                --dissipationModelParameters 0.2 \
+                --conservationModel scaled \
+                --conservationModelParameters 0.2 \
+                --propagationModel scaled \
+                --propagationModelParameters 0.2 \
+                --intertypeIterations 10 \
+                --intratypeIterations 10 \
+                --virtualNodesGranularity typeAndNode \
+                --saturation \
+                --undirectedEdges \
+                --undirectedTypeEdges \
+                --outputFolder $outputsFolder/$graphFolder \
+                --savePerformance times.tsv 2>> spaceOccupied.tsv
 
 done
