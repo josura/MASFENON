@@ -68,8 +68,8 @@ int main(int argc, char** argv) {
         ("nodeDescriptionFolder", po::value<std::string>(), "(string) nodes folder, where the files containing the description/nodes for all the graphs are contained, used to read the graph nodes, if not specified the graphs will be built with the edges files(could not contain some isolated nodes) for an example see the folder structure in data/testdata/testHeterogeneousTemporalGraph/nodesDescriptionDifferentStructure")
         ("sameTypeCommunication",po::bool_switch(&sameTypeCommunication),"() use same type communication, since it is not permitted as the standard definition of the model, this adds a virtual node for the same type type")
         ("outputFolder",po::value<std::string>(),"(string) output folder for output of the algorithm at each iteration")
-        ("intertypeIterations",po::value<uint>(),"(positive integer) number of iterations for intertype communication")
-        ("intratypeIterations",po::value<uint>(),"(positive integer) number of iterations for intratype communication")
+        ("intertypeIterations",po::value<int>(),"(positive integer) number of iterations for intertype communication")
+        ("intratypeIterations",po::value<int>(),"(positive integer) number of iterations for intratype communication")
         ("timestep",po::value<double>(),"timestep to use for the iteration, the final time is iterationIntracell*iterationIntercell*timestep")
         ("dissipationModel",po::value<std::string>(),"(string) the dissipation model for the computation, available models are: 'none (default)','power','random','periodic','scaled' and 'custom'")
         ("dissipationModelParameters",po::value<std::vector<double>>()->multitoken(),"(string) the parameters for the dissipation model, for the power dissipation indicate the base, for the random dissipation indicate the min and max value, for the periodic dissipation indicate the period")
@@ -234,13 +234,13 @@ int main(int argc, char** argv) {
 
     if (vm.count("intertypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intertype set to " 
-    << vm["intertypeIterations"].as<uint>() << ".\n";
+    << vm["intertypeIterations"].as<int>() << ".\n";
         int testingIterations = vm["intertypeIterations"].as<int>();
         if(testingIterations <= 0){
             if(rank==0)logger.printError("intertypeIterations must be a positive value, aborting")<<std::endl;
             return 1;
         }
-        intertypeIterations = vm["intertypeIterations"].as<uint>();
+        intertypeIterations = testingIterations; // only assigned when positive
     } else {
         if(rank==0)logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
         intertypeIterations = 10;
@@ -248,13 +248,13 @@ int main(int argc, char** argv) {
 
     if (vm.count("intratypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intratype set to " 
-    << vm["intratypeIterations"].as<uint>() << ".\n";
+    << vm["intratypeIterations"].as<int>() << ".\n";
         int testingIterations = vm["intratypeIterations"].as<int>();
         if(testingIterations <= 0){
             if(rank==0)logger.printError("intratypeIterations must be a positive value, aborting")<<std::endl;
             return 1;
         }
-        intratypeIterations = vm["intratypeIterations"].as<uint>();
+        intratypeIterations = testingIterations;
     } else {
         if(rank==0)logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
         intratypeIterations = 5;
