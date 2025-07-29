@@ -1,3 +1,14 @@
+# Install the required packages if not already installed
+if (!requireNamespace("igraph", quietly = TRUE)) {
+  install.packages("igraph", repos = "http://cran.us.r-project.org")
+}
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr", repos = "http://cran.us.r-project.org")
+}
+if (!requireNamespace("readr", quietly = TRUE)) {
+  install.packages("readr", repos = "http://cran.us.r-project.org")
+}
+# Load the required libraries
 library(igraph)
 library(dplyr)
 library(readr)
