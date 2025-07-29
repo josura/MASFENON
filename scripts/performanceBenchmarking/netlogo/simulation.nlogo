@@ -55,7 +55,7 @@ to process-graph-pair [edge-path value-path base-name]
   ]
 
   let mem-before (runtime:totalMemory - runtime:freeMemory) / (1024 * 1024)
-  propagate 0.1 10
+  propagate 0.1 50
   let elapsed-time timer
   let mem-after (runtime:totalMemory - runtime:freeMemory) / (1024 * 1024)
 
