@@ -7,10 +7,20 @@ import ndlib.models.ModelConfig as mc
 import os
 
 def load_graph(path):
-    G = nx.read_weighted_edgelist(path, delimiter='\t', nodetype=int, data=(('weight',float),))
+    #G = nx.read_weighted_edgelist(path, delimiter='\t', nodetype=int, data=(('weight',float),))
+    # Since the data has a header, we need to skip the first line
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Graph file {path} does not exist.")
+    if not path.endswith('.tsv'):
+        raise ValueError("Graph file must be a .tsv file.")
+    # Read the graph from a weighted edgelist file
+    # The file should have a header, so we use `skiprows=1` to skip the first line
+    import pandas as pd
+    df = pd.read_csv(path, sep='\t', skiprows=1, header=None, names=['source', 'target', 'weight'])
+    G = nx.from_pandas_edgelist(df, 'source', 'target', ['weight'], create_using=nx.Graph())
     return G
 
-def run_model(G, model_type='sir', iterations=100, beta=0.01, gamma=0.005, fraction_infected=0.05):
+def run_model(G, start_time, model_type='sir', iterations=100, beta=0.01, gamma=0.005, fraction_infected=0.05):
     if model_type == 'sir':
         model = ep.SIRModel(G)
         cfg = mc.Configuration()
@@ -27,7 +37,6 @@ def run_model(G, model_type='sir', iterations=100, beta=0.01, gamma=0.005, fract
     
     model.set_initial_status(cfg)
     
-    start_time = time.time()
     iterations_data = model.iteration_bunch(iterations)
     end_time = time.time()
 
@@ -50,12 +59,13 @@ def main():
     model_type = sys.argv[2].lower() if len(sys.argv) > 2 else 'sir'
     num_iterations = int(sys.argv[3]) if len(sys.argv) > 3 else 100
 
+    start_time = time.time()
     print(f"Loading graph from {fname} …")
     G = load_graph(fname)
     print(f"Graph loaded: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
 
     try:
-        results, elapsed_time = run_model(G, model_type=model_type, iterations=num_iterations)
+        results, elapsed_time = run_model(G, start_time, model_type=model_type, iterations=num_iterations)
     except ValueError as e:
         print(str(e))
         sys.exit(1)
