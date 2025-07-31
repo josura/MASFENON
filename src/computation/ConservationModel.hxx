@@ -21,6 +21,7 @@
 class ConservationModel{
     protected:
         std::function<double(double)> scaleFunction; ///< The function to scale the conservation term. It takes a double value (time) and returns a double value.>
+        std::function<arma::Col<double>(double)> scaleFunctionVectorized; ///< The function to scale the conservation term for vectorized operations. It takes a double value (time) and returns a vector of double values (scaling values).
     public:
         /**
          * @brief Default constructor for the ConservationModel class.
