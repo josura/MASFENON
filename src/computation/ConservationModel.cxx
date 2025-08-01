@@ -59,6 +59,16 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
 }
 
 arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, arma::Mat<double> Wstar, double time, std::vector<double> q){
+    // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
+    if (this->scaleFunctionVectorized(0).n_cols == 0) {
+        // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
+        auto scaleFunction = this->scaleFunction; // capture the scale function
+        this->scaleFunctionVectorized = [scaleFunction,input](double time)-> arma::Mat<double>{
+            arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
+            return scaleMatrix;
+        };  
+    }
+
     if (q.size()) {
         if (q.size() == input.n_elem) {
             //convert q vector to arma vector
