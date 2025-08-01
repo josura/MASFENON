@@ -36,10 +36,10 @@ class ConservationModel{
         ConservationModel(std::function<double(double)> scaleFunction);
         /**
          * @brief Constructor for the Conservation Model class, passing a scaling function that uses vectorized operations.
-         * @param scaleFunction The function to scale the conservation term. It takes a double value (time) and returns a vector of double values (scaling values).
+         * @param scaleFunction The function to scale the conservation term. It takes a double value (time) and returns a Diagonal matrix of double values (scaling values for each node, outgoing edges are scaled with this).
          * @details Initializes the scale function to the provided value, allowing for vectorized operations on the input vector.
          */
-        ConservationModel(std::function<arma::Col<double>(double)> scaleFunction);
+        ConservationModel(std::function<arma::Mat<double>(double)> scaleFunction);
         /**
          * @brief Destructor for the ConservationModel class.
          * @details Cleans up any resources used by the class.
