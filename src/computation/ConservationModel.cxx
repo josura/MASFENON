@@ -29,7 +29,8 @@ ConservationModel::~ConservationModel(){}
 
 arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::Col<double> inputDissipated, arma::Mat<double> Wstar,double time, std::vector<double> q){
     // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
-    if (this->scaleFunctionVectorized(0).n_cols == 0) {
+    // WARNING: do not use n_cols since it is still 1 for control, since armadillo still considers it as 1 even though there are 0 elements in the matrix
+    if (this->scaleFunctionVectorized(0).n_elem == 0) {
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
         auto scaleFunction = this->scaleFunction; // capture the scale function
         this->scaleFunctionVectorized = [scaleFunction,input](double time)-> arma::Mat<double>{
@@ -60,7 +61,7 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
 
 arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, arma::Mat<double> Wstar, double time, std::vector<double> q){
     // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
-    if (this->scaleFunctionVectorized(0).n_cols == 0) {
+    if (this->scaleFunctionVectorized(0).n_elem == 0) {
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
         auto scaleFunction = this->scaleFunction; // capture the scale function
         this->scaleFunctionVectorized = [scaleFunction,input](double time)-> arma::Mat<double>{
