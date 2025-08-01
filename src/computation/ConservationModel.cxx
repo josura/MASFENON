@@ -11,17 +11,18 @@
 ConservationModel::ConservationModel(){
     this->scaleFunction = [](double time)-> double{return 0.5;};
     // initialize the vectorized scaled function to be used later when the number of elements is known (to be able to meet a condition when being initialized, like returning a size 0 Matrix)
-    this->scaleFunctionVectorized = [](double time)-> arma::Mat<double>{return arma::Mat<double>(0,0);};
+    // this->scaleFunctionVectorized = [](double time)-> arma::Mat<double>{return arma::Mat<double>(0,0);};
+    this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);}; // using a column vector with 0 elements as a placeholder
 
 }
 
 ConservationModel::ConservationModel(std::function<double(double)> scaleFunction){
     this->scaleFunction = scaleFunction;
     // initialize the vectorized scaled function to be used later when the number of elements is known (to be able to meet a condition when being initialized, like returning a size 0 Matrix)
-    this->scaleFunctionVectorized = [](double time)-> arma::Mat<double>{return arma::Mat<double>(0,0);};
+    this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);};
 }
 
-ConservationModel::ConservationModel(std::function<arma::Mat<double>(double)> scaleFunction){
+ConservationModel::ConservationModel(std::function<arma::Col<double>(double)> scaleFunction){
     this->scaleFunctionVectorized = scaleFunction;
 }
 
@@ -32,10 +33,11 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
     // WARNING: do not use n_cols since it is still 1 for control, since armadillo still considers it as 1 even though there are 0 elements in the matrix
     if (this->scaleFunctionVectorized(0).n_elem == 0) {
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
-        auto scaleFunction = this->scaleFunction; // capture the scale function
-        this->scaleFunctionVectorized = [scaleFunction,input](double time)-> arma::Mat<double>{
-            arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
-            return scaleMatrix;
+        //capturing the scale function by copy to avoid issues with the lambda capture
+        this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = input.n_elem](double time)-> arma::Col<double>{
+            // arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
+            arma::Col<double> scaleValues = arma::ones<arma::Col<double>>(numElem) * scaleFunction(time);
+            return scaleValues;
         };  
     }
 
@@ -45,7 +47,7 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
         if (q.size() == input.n_elem) {
             //convert q vector to arma vector
             arma::Col<double> qArma = vectorToArmaColumn(q);
-            arma::Col<double> outputArma = inputDissipated -  (scaleFunctionVectorized(time) * Wstar * qArma) % input;
+            arma::Col<double> outputArma = inputDissipated -  scaleFunctionVectorized(time) % (Wstar * qArma) % input;
             return outputArma;
         } else{
             throw std::invalid_argument("q vector is not of the same size as input vector. abort");
@@ -54,7 +56,7 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
     else {
         //since in the case of vector values with all q values equal to 1
         arma::Col<double> qOnes = arma::ones<arma::Col<double>>(input.n_elem);
-        arma::Col<double> outputArma =  inputDissipated -  (scaleFunctionVectorized(time)* Wstar * qOnes) % input;
+        arma::Col<double> outputArma =  inputDissipated - scaleFunctionVectorized(time) % (Wstar * qOnes) % input;
         return outputArma;
     }
 }
@@ -63,10 +65,12 @@ arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, a
     // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
     if (this->scaleFunctionVectorized(0).n_elem == 0) {
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
-        auto scaleFunction = this->scaleFunction; // capture the scale function
-        this->scaleFunctionVectorized = [scaleFunction,input](double time)-> arma::Mat<double>{
-            arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
-            return scaleMatrix;
+        //this->scaleFunctionVectorized = [scaleFunction = scaleFunction,input](double time)-> arma::Mat<double>{
+            //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
+        this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = input.n_elem](double time)-> arma::Col<double>{
+            //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * 1.0); // using 1.0 as a placeholder, since we will multiply it later with the scale function value
+            arma::Col<double> scaleValues = arma::ones<arma::Col<double>>(numElem) * scaleFunction(time);
+            return scaleValues;
         };  
     }
 
@@ -74,14 +78,14 @@ arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, a
         if (q.size() == input.n_elem) {
             //convert q vector to arma vector
             arma::Col<double> qArma = vectorToArmaColumn(q);
-            arma::Col<double> outputArma =  (scaleFunctionVectorized(time) * Wstar * qArma) % input;
+            arma::Col<double> outputArma =  scaleFunctionVectorized(time) % (Wstar * qArma) % input;
             return outputArma;
         } else{
             throw std::invalid_argument("q is not of the same size as input vector. abort");
         }
     } else{
         arma::Col<double> qOnes = arma::ones<arma::Col<double>>(input.n_elem);
-        arma::Col<double> outputArma =  scaleFunctionVectorized(time) *(Wstar * qOnes) % input;
+        arma::Col<double> outputArma = scaleFunctionVectorized(time) % (Wstar * qOnes) % input;
         return outputArma;
     }
 }
