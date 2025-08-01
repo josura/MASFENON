@@ -31,7 +31,7 @@ ConservationModel::~ConservationModel(){}
 arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::Col<double> inputDissipated, arma::Mat<double> Wstar,double time, std::vector<double> q){
     // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
     // WARNING: do not use n_cols since it is still 1 for control, since armadillo still considers it as 1 even though there are 0 elements in the matrix
-    if (this->scaleFunctionVectorized(0).n_elem == 0) {
+    if (this->scaleFunctionVectorized(0).n_elem != input.n_elem) {
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
         //capturing the scale function by copy to avoid issues with the lambda capture
         this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = input.n_elem](double time)-> arma::Col<double>{
@@ -62,12 +62,14 @@ arma::Col<double> ConservationModel::conservate(arma::Col<double> input, arma::C
 }
 
 arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, arma::Mat<double> Wstar, double time, std::vector<double> q){
+    uint numElem = input.n_elem;
     // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
-    if (this->scaleFunctionVectorized(0).n_elem == 0) {
+    //if (this->scaleFunctionVectorized(0).n_elem == 0) {
+    if (this->scaleFunctionVectorized(0).n_elem != numElem) { // workaround for the case when the scale function is not initialized or we use the same scale function for different input sizes
         // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
         //this->scaleFunctionVectorized = [scaleFunction = scaleFunction,input](double time)-> arma::Mat<double>{
             //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
-        this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = input.n_elem](double time)-> arma::Col<double>{
+        this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = numElem](double time)-> arma::Col<double>{
             //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * 1.0); // using 1.0 as a placeholder, since we will multiply it later with the scale function value
             arma::Col<double> scaleValues = arma::ones<arma::Col<double>>(numElem) * scaleFunction(time);
             return scaleValues;
@@ -75,7 +77,7 @@ arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, a
     }
 
     if (q.size()) {
-        if (q.size() == input.n_elem) {
+        if (q.size() == numElem) {
             //convert q vector to arma vector
             arma::Col<double> qArma = vectorToArmaColumn(q);
             arma::Col<double> outputArma =  scaleFunctionVectorized(time) % (Wstar * qArma) % input;
@@ -84,7 +86,7 @@ arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, a
             throw std::invalid_argument("q is not of the same size as input vector. abort");
         }
     } else{
-        arma::Col<double> qOnes = arma::ones<arma::Col<double>>(input.n_elem);
+        arma::Col<double> qOnes = arma::ones<arma::Col<double>>(numElem);
         arma::Col<double> outputArma = scaleFunctionVectorized(time) % (Wstar * qOnes) % input;
         return outputArma;
     }
