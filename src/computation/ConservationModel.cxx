@@ -14,6 +14,15 @@ ConservationModel::ConservationModel(){
 
 ConservationModel::ConservationModel(std::function<double(double)> scaleFunction){
     this->scaleFunction = scaleFunction;
+    // make a vectorized function that returns a diagonal matrix with the scale function values on the diagonal
+    this->scaleFunctionVectorized = [scaleFunction](double time)-> arma::Mat<double>{
+        arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(1) * scaleFunction(time));
+        return scaleMatrix;
+    };  
+}
+
+ConservationModel::ConservationModel(std::function<arma::Mat<double>(double)> scaleFunction){
+    this->scaleFunctionVectorized = scaleFunction;
 }
 
 ConservationModel::~ConservationModel(){}
