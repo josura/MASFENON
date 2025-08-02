@@ -121,8 +121,8 @@ int main(int argc, char** argv) {
     int intratypeIterations; ///< integer variable to indicate the number of iterations for the intratype communication
     DissipationModel* dissipationModel = nullptr; ///< pointer to the dissipation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
     ConservationModel* conservationModel = nullptr; ///< pointer to the conservation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
-    DissipationModel** dissipationModels = nullptr; ///< pointer to the dissipation models used for the computation, in the case of multiple dissipation models, this is a list of dissipation models
-    ConservationModel** conservationModels = nullptr; ///< pointer to the conservation models used for the computation, in the case of multiple conservation models, this is a list of conservation models 
+    std::vector<DissipationModel*> dissipationModels = {}; ///< vector of pointers to the dissipation models used for the computation, in case of multiple dissipation models 
+    std::vector<ConservationModel*> conservationModels = {}; ///< vector of pointers to the conservation models used for the computation, in case of multiple conservation models
     double timestep = 1; ///< double variable to indicate the timestep to use for the iteration, the final time is iterationIntercell*timestep. The time between to intracell iterations is the timestep divided by the number of intracell iterations.
     // final output matrices if the output format is set to iterationMatrix
     std::map<std::string,Matrix<double>*> outputMatrices; ///< map of the output matrices, where the key is the name of the type, and the value is the matrix of the output values(iteration as columns and nodes values as rows)
@@ -533,74 +533,6 @@ int main(int argc, char** argv) {
     }
 
 
-    if (vm.count("conservationModel")) {
-        if(rank==0)logger << "[LOG] conservation model was set to "
-            << vm["conservationModel"].as<std::string>() << ".\n";
-        std::string conservationModelName = vm["conservationModel"].as<std::string>();
-        if(conservationModelName == "none"){
-            if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
-            conservationModel = new ConservationModel([](double time)->double{return 0;});
-        } else if (conservationModelName == "scaled"){
-            if (vm.count("conservationModelParameters")) {
-                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
-            << vm["conservationModelParameters"].as<std::vector<double>>()[0] << ".\n";
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(conservationModelParameters.size() == 1){
-                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
-                } else {
-                    if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
-                conservationModel = new ConservationModel();
-            }
-        } else if (conservationModelName == "random"){
-            if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
-            if (vm.count("conservationModelParameters")) {
-                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
-                    << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(conservationModelParameters.size() == 2){
-                    //control if lower and upper limits of the random values are within 0 and 1
-                    if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
-                        if(rank==0)logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
-                        return 1;
-                    }
-                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
-                } else {
-                    if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
-                return 1;
-            }
-        } else if(conservationModelName == "custom"){
-            //control if custom function for conservation returns double and takes a single parameter as double
-            if(rank==0)logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
-            if (vm.count("conservationModelParameters")) {
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(rank==0){
-                    logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
-                    for (auto param : conservationModelParameters) {
-                        logger << param << ", ";
-                    }
-                    logger << ")" << std::endl;
-                }
-                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
-            } else {
-                if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
-                conservationModel = new ConservationModel(getConservationScalingFunction());
-            }
-        } else {
-            if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
-            return 1;
-        }
-    } else {
-        if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
-        conservationModel = new ConservationModel([](double time)->double{return 0;});
-    }
 
     //logging if saturation is set and saturation parameters are set
     if (saturation) {
@@ -720,6 +652,77 @@ int main(int argc, char** argv) {
             rankType = i / workloadPerProcess;
         }
         typeToRank[types[i]] = rankType;
+    }
+
+    // conservation model initialization from command line options
+    conservationModels = std::vector<ConservationModel*>();
+    if (vm.count("conservationModel")) {
+        if(rank==0)logger << "[LOG] conservation model was set to "
+            << vm["conservationModel"].as<std::string>() << ".\n";
+        std::string conservationModelName = vm["conservationModel"].as<std::string>();
+        if(conservationModelName == "none"){
+            if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
+            conservationModel = new ConservationModel([](double time)->double{return 0;});
+        } else if (conservationModelName == "scaled"){
+            if (vm.count("conservationModelParameters")) {
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
+            << vm["conservationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(conservationModelParameters.size() == 1){
+                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
+                } else {
+                    if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
+                conservationModel = new ConservationModel();
+            }
+        } else if (conservationModelName == "random"){
+            if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
+            if (vm.count("conservationModelParameters")) {
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
+                    << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(conservationModelParameters.size() == 2){
+                    //control if lower and upper limits of the random values are within 0 and 1
+                    if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
+                        if(rank==0)logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
+                        return 1;
+                    }
+                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
+                } else {
+                    if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
+                return 1;
+            }
+        } else if(conservationModelName == "custom"){
+            //control if custom function for conservation returns double and takes a single parameter as double
+            if(rank==0)logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
+            if (vm.count("conservationModelParameters")) {
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(rank==0){
+                    logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                    for (auto param : conservationModelParameters) {
+                        logger << param << ", ";
+                    }
+                    logger << ")" << std::endl;
+                }
+                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
+            } else {
+                if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction());
+            }
+        } else {
+            if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
+            return 1;
+        }
+    } else {
+        if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
+        conservationModel = new ConservationModel([](double time)->double{return 0;});
     }
 
     //use the number of types for workload to allocate an array of pointers to contain the graph for each type
