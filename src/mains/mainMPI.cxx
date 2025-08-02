@@ -121,6 +121,8 @@ int main(int argc, char** argv) {
     int intratypeIterations; ///< integer variable to indicate the number of iterations for the intratype communication
     DissipationModel* dissipationModel = nullptr; ///< pointer to the dissipation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
     ConservationModel* conservationModel = nullptr; ///< pointer to the conservation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
+    DissipationModel** dissipationModels = nullptr; ///< pointer to the dissipation models used for the computation, in the case of multiple dissipation models, this is a list of dissipation models
+    ConservationModel** conservationModels = nullptr; ///< pointer to the conservation models used for the computation, in the case of multiple conservation models, this is a list of conservation models 
     double timestep = 1; ///< double variable to indicate the timestep to use for the iteration, the final time is iterationIntercell*timestep. The time between to intracell iterations is the timestep divided by the number of intracell iterations.
     // final output matrices if the output format is set to iterationMatrix
     std::map<std::string,Matrix<double>*> outputMatrices; ///< map of the output matrices, where the key is the name of the type, and the value is the matrix of the output values(iteration as columns and nodes values as rows)
