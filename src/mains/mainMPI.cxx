@@ -102,10 +102,10 @@ int main(int argc, char** argv) {
     po::variables_map vm; ///< variables map for program options
     // parse the command line arguments
     po::store(
-        po::command_line_parser(argc, argv)    // ✅ use command_line_parser
-        .options(desc)                     // add your options_description
+        po::command_line_parser(argc, argv)    // use command_line_parser
+        .options(desc)                     // add options_description
         .extra_style_parser(&ignore_numbers)  // intercept negatives
-        .run(), vm                            // then parse
+        .run(), vm                            // parse
     );
     // notify the variables map
     // this will throw an exception if there are any errors in the command line arguments
@@ -654,8 +654,8 @@ int main(int argc, char** argv) {
         typeToRank[types[i]] = rankType;
     }
 
-    // conservation model initialization from command line options
-    conservationModels = std::vector<ConservationModel*>();
+    // conservation model initialization from command line options, since the number of types is not known before, we will be reading the conservation model now instead of when we were reading the parameters
+    conservationModels = std::vector<ConservationModel*>(finalWorkload, nullptr); ///< vector of conservation models for each type, initialized to nullptr
     if (vm.count("conservationModel")) {
         if(rank==0)logger << "[LOG] conservation model was set to "
             << vm["conservationModel"].as<std::string>() << ".\n";
@@ -663,6 +663,9 @@ int main(int argc, char** argv) {
         if(conservationModelName == "none"){
             if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
             conservationModel = new ConservationModel([](double time)->double{return 0;});
+            for(int i = 0; i < finalWorkload; ++i){
+                conservationModels[i] = new ConservationModel([](double time)->double{return 0;}); // all processes will use the same conservation model
+            }
         } else if (conservationModelName == "scaled"){
             if (vm.count("conservationModelParameters")) {
                 if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
@@ -670,6 +673,9 @@ int main(int argc, char** argv) {
                 std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
                 if(conservationModelParameters.size() == 1){
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        conservationModels[i] = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];}); // all processes will use the same conservation model
+                    }
                 } else {
                     if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
                     return 1;
@@ -677,6 +683,9 @@ int main(int argc, char** argv) {
             } else {
                 if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
                 conservationModel = new ConservationModel();
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(); // all processes will use the same conservation model
+                }
             }
         } else if (conservationModelName == "random"){
             if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
@@ -691,6 +700,9 @@ int main(int argc, char** argv) {
                         return 1;
                     }
                     conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        conservationModels[i] = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);}); // all processes will use the same conservation model
+                    }
                 } else {
                     if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
                     return 1;
@@ -712,9 +724,15 @@ int main(int argc, char** argv) {
                     logger << ")" << std::endl;
                 }
                 conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(getConservationScalingFunction(conservationModelParameters)); // all processes will use the same conservation model
+                }
             } else {
                 if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 conservationModel = new ConservationModel(getConservationScalingFunction());
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(getConservationScalingFunction()); // all processes will use the same conservation model
+                }
             }
         } else {
             if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
@@ -723,6 +741,9 @@ int main(int argc, char** argv) {
     } else {
         if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
         conservationModel = new ConservationModel([](double time)->double{return 0;});
+        for(int i = 0; i < finalWorkload; ++i){
+            conservationModels[i] = new ConservationModel([](double time)->double{return 0;}); // all processes will use the same conservation model
+        }
     }
 
     //use the number of types for workload to allocate an array of pointers to contain the graph for each type
