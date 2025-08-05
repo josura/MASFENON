@@ -659,12 +659,18 @@ int main(int argc, char** argv) {
         if(dissipationModelName == "none"){
             if(rank==0)logger << "[LOG] dissipation model set to default (none)\n";
             dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
+            for(int i = 0; i < finalWorkload; ++i){
+                dissipationModels[i] = new DissipationModelScaled([](double time)->double{return 0;}); // all processes will use the same dissipation model
+            }
         } else if(dissipationModelName == "power"){
             if (vm.count("dissipationModelParameters")) {
                 if(rank==0)logger << "[LOG] dissipation model parameters for power dissipation were declared to be" << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelPow(dissipationModelParameters[0]);
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelPow(dissipationModelParameters[0]); // all processes will use the same dissipation model
+                    }
                 } else {
                     if(rank==0)logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
                     return 1;
@@ -672,6 +678,9 @@ int main(int argc, char** argv) {
             } else {
                 if(rank==0)logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
                 dissipationModel = new DissipationModelPow(2);
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelPow(2); // all processes will use the same dissipation model
+                }
             }
         } else if(dissipationModelName == "random"){
             if (vm.count("dissipationModelParameters")) {
@@ -680,6 +689,9 @@ int main(int argc, char** argv) {
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 2){
                     dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]); // all processes will use the same dissipation model
+                    }
                 } else {
                     if(rank==0)logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
                     return 1;
@@ -696,6 +708,9 @@ int main(int argc, char** argv) {
                 std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
                 if(dissipationModelParameters.size() == 1){
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];}); // all processes will use the same dissipation model
+                    }
                 } else {
                     if(rank==0)logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
                     return 1;
@@ -703,6 +718,9 @@ int main(int argc, char** argv) {
             } else {
                 if(rank==0)logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
                 dissipationModel = new DissipationModelScaled();
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(); // all processes will use the same dissipation model
+                }
             }
         } else if(dissipationModelName == "periodic"){
             if(rank==0)logger << "[LOG] dissipation model was set to periodic, the function will be a sinusoidal function with amplitude, period and phase" << std::endl;
@@ -712,6 +730,9 @@ int main(int argc, char** argv) {
                     if(rank==0)logger << "[LOG] dissipation model parameters were set to Amplitude:"
                         << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
                     dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);}); // all processes will use the same dissipation model
+                    }
                 } else {
                     if(rank==0)logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
                     return 1;
@@ -735,9 +756,15 @@ int main(int argc, char** argv) {
                     logger << ")" << std::endl;
                 }
                 dissipationModel = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters));
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters)); // all processes will use the same dissipation model
+                }
             } else {
                 if(rank==0)logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(getDissipationScalingFunction()); // all processes will use the same dissipation model
+                }
             }
         } else {
             if(rank==0)logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
@@ -746,6 +773,9 @@ int main(int argc, char** argv) {
     } else { //dissipation model set to default (none)
         if(rank==0)logger << "[LOG] dissipation model was not set. set to default (none)\n";
         dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
+        for(int i = 0; i < finalWorkload; ++i){
+            dissipationModels[i] = new DissipationModelScaled([](double time)->double{return 0;}); // all processes will use the same dissipation model
+        }
     }
 
     //use the number of types for workload to allocate an array of pointers to contain the graph for each type
