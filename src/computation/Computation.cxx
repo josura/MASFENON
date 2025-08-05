@@ -683,6 +683,6 @@ void Computation::freeAugmentedGraphs(){
 //TODO handle the models in a better way
 void Computation::freeFunctions(){
     if(this->propagationModel) delete this->propagationModel;
-    // if(this->conservationModel) delete this->conservationModel;
-    // if(this->dissipationModel) delete this->dissipationModel;
+    if(this->conservationModel) delete this->conservationModel;
+    if(this->dissipationModel) delete this->dissipationModel;
 }
