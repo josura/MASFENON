@@ -948,8 +948,10 @@ int main(int argc, char** argv) {
             logger.printLog(true, "type ", types[i+startIdx], " not found in the initial perturbation files, using zero vector as input");
             std::vector<double> input = std::vector<double>(graphsNodes[i].size(),0);
             Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]);   
-            tmpCompPointer->setDissipationModel(dissipationModel);
-            tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            tmpCompPointer->setConservationModel(conservationModels[i]);
             typeComputations[indexComputation] = tmpCompPointer;
             //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
             // TODO generalize by removing the type granularity in this code, that is by considering only the types that are encoded?
@@ -962,8 +964,10 @@ int main(int argc, char** argv) {
             int index = indexMapGraphTypesToValuesTypes[i+startIdx];
             std::vector<double> input = inputInitials[index];
             Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]); 
-            tmpCompPointer->setDissipationModel(dissipationModel);
-            tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            tmpCompPointer->setConservationModel(conservationModels[i]);
             typeComputations[indexComputation] = tmpCompPointer;
             //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
             if(virtualNodesGranularity == "type"){
@@ -1728,11 +1732,11 @@ int main(int argc, char** argv) {
 
     // delete typeComputations objects
     for(int i = 0; i < finalWorkload; i++){
-        typeComputations[i]->freeFunctions();
+        typeComputations[i]->freeFunctions();  // freeing propagation model, dissipation model and conservation model
         delete typeComputations[i];
     }
-    delete conservationModel; //TO CHANGE
-    delete dissipationModel; // TO CHANGE
+    delete conservationModel; //TO CHANGE, REMOVE
+    delete dissipationModel; // TO CHANGE, REMOVE
     delete[] typeComputations;
     
     // delete the virtual outputs vector of arrays
