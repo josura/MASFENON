@@ -26,6 +26,7 @@ class DissipationModelScaled : public DissipationModel
 {
     private:
         std::function<double(double)> scaleFunction; ///< The function to scale the dissipation term. It takes a double value (time) and returns a double value.
+        std::function<arma::Col<double>(double)> scaleFunctionVectorized; ///< The function to scale the dissipation term for vectorized operations. It takes a double value (time) and returns a vector of double values (scaling values).
     public:
         // default constructor uses scaleFunction = 0.5
         /**
