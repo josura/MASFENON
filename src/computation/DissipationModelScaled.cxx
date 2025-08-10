@@ -24,6 +24,11 @@ DissipationModelScaled::DissipationModelScaled(std::function<double(double)> sca
     this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);};
 }
 
+DissipationModelScaled::DissipationModelScaled(std::function<arma::Col<double>(double)> scaleFun){
+    this->scaleFunctionVectorized = scaleFun;
+    this->numEl = this->scaleFunctionVectorized(0).n_elem; // initialize the number of elements based on the scale function
+}
+
 arma::Col<double> DissipationModelScaled::dissipate(arma::Col<double> input, double time){
     return input - (this->scaleFunction(time)*input);
 }
