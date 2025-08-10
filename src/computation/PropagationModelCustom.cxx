@@ -11,6 +11,9 @@
 
 PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph){
     this->scaleFunction = [](double time)-> double{return 0.5;};
+    //using a vectorized scale function that returns 0.5 for all elements
+    int numElements = graph->getNumNodes();
+    this->scaleFUnctionVectorized = [numElements](double time)-> arma::Col<double>{return arma::ones<arma::Col<double>>(numElements) * 0.5;};
 
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
