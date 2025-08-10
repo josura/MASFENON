@@ -11,6 +11,7 @@
 DissipationModelScaled::DissipationModelScaled(){
     this->scaleFunction = [](double time)-> double{return 0.5;};
     this->numEl = 0;
+    this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);}; // using a column vector with 0 elements as a placeholder
 }
 
 DissipationModelScaled::~DissipationModelScaled(){
@@ -19,6 +20,8 @@ DissipationModelScaled::~DissipationModelScaled(){
 DissipationModelScaled::DissipationModelScaled(std::function<double(double)> scaleFun){
     this->scaleFunction = scaleFun;
     this->numEl = 0;
+    // initialize the vectorized scaled function to be used later when the number of elements is known (to be able to meet a condition when being initialized, like returning a size 0 Matrix)
+    this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);};
 }
 
 arma::Col<double> DissipationModelScaled::dissipate(arma::Col<double> input, double time){
