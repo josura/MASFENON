@@ -47,5 +47,18 @@ arma::Col<double> DissipationModelScaled::dissipate(arma::Col<double> input, dou
 }
 
 arma::Col<double> DissipationModelScaled::dissipationTerm(arma::Col<double> input, double time){
-    return this->scaleFunction(time)*input;
+    uint numElem = input.n_elem;
+    // initializing the vectorized scale function if it was not initialized before (we have the number of elements now in the input)
+    //if (this->scaleFunctionVectorized(0).n_elem == 0) {
+    if (this->scaleFunctionVectorized(0).n_elem != numElem) {
+        //this->scaleFunctionVectorized = [scaleFunction = scaleFunction,input](double time)-> arma::Mat<double>{
+            //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * scaleFunction(time));
+        this->scaleFunctionVectorized = [scaleFunction = scaleFunction, numElem = numElem](double time)-> arma::Col<double>{
+            //arma::Mat<double> scaleMatrix = arma::diagmat(arma::ones<arma::Col<double>>(input.n_elem) * 1.0); // using 1.0 as a placeholder, since we will multiply it later with the scale function value
+            arma::Col<double> scaleValues = arma::ones<arma::Col<double>>(numElem) * scaleFunction(time);
+            return scaleValues;
+        };  
+    }
+    // return this->scaleFunction(time)*input;
+    return this->scaleFunctionVectorized(time) % input;
 }
