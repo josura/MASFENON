@@ -289,6 +289,8 @@ std::vector<double> saturationFileToVector(std::string filename,const std::map<s
  * @details  The file is read using the ifstream function
  * @note    The file must contain the following columns: node, <parameters>
  * @note This function returns the custom dissipation scaling function that is defined in \ref CustomFunctions.hxx
+ * @note The nodes that are not in the orderedNodeNames vector will be ignored
+ * @note The nodes that are not seen in the file will have a scaling function defined with the default one in CustomFunctions.hxx (getDissipationScalingFunction())
  * @throw std::invalid_argument if the file does not exist
  * @throw std::invalid_argument if the file does not contain the node or parameters columns
  * @throw std::runtime_error if the parameters are not valid for the dissipation scaling function (the function expects a specific format for the parameters)
