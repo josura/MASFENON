@@ -1094,6 +1094,20 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
                 throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
             }
         }
+        // find the index of the name in the orderedNodeNames vector
+        auto it = std::find(orderedNodeNames.begin(), orderedNodeNames.end(), name);
+        if (it != orderedNodeNames.end()) {
+            size_t index = std::distance(orderedNodeNames.begin(), it);
+            // create the function and store it in the orderedFunctions vector
+            // try to create the function, if it fails it means that the parameters are not valid for the function
+            try {
+                orderedFunctions[index] = getDissipationScalingFunction(parametersDouble);
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: probably invalid parameters for function " + name + " in file " + filename + ", " + e.what());
+            }
+        } else {
+            throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
+        }
         
     return ret;
 }
