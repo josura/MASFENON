@@ -39,6 +39,7 @@
 #include "data_structures/Matrix.hxx"
 #include "utils/mathUtilities.hxx"
 #include "utils/stringUtilities.hxx"
+#include "CustomFunctions.hxx"
 
 /**
  * @brief print a vector of any type
