@@ -1059,6 +1059,19 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     return ret; 
 }
 
+std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames){
+    if(!file_exists(filename)){
+        throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: file does not exists " + filename);
+    }
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: unable to open file " + filename);
+    }
+    std::function<arma::Col<double>(double)> ret;
+
+    return ret;
+}
+
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
