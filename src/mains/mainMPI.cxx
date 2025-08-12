@@ -270,6 +270,22 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    if(vm.count("dissipationModelParameterFolder") && vm.count("dissipationModelParameters")){
+        //dissipation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("dissipationModelParameterFolder and dissipationModelParameters were both set, only one or 0(default configuration) can be set if dissipation is used, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameterFolder") && vm.count("conservationModelParameters")){
+        //conservation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("conservationModelParameterFolder and conservationModelParameters were both set, only one or 0(default configuration) can be set if conservation is used, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameterFolder") && vm.count("propagationModelParameters")){
+        //propagation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("propagationModelParameterFolder and propagationModelParameters were both set, only one or 0(default configuration) can be set if propagation is used, aborting")<<std::endl;
+        return 1;
+    }
+
     // reading the parameters
 
     if (vm.count("intertypeIterations")) {
