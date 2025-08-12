@@ -1076,7 +1076,9 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     if(entriesHeader.size() < 2 || (entriesHeader[0] != "name" && entriesHeader[1] != "parameters")){
         throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
     }
-
+    // read the rest of the file
+    std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getDissipationScalingFunction());
+    
     return ret;
 }
 
