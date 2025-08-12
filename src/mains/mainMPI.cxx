@@ -252,7 +252,23 @@ int main(int argc, char** argv) {
         //propagation model parameters were set but no propagation model was set
         if(rank==0)logger.printError("propagationModelParameters were set but no propagationModel was set, aborting")<<std::endl;
         return 1;
-    }   
+    }
+
+    if(vm.count("dissipationModelParameterFolder") && !vm.count("dissipationModel")){
+        //dissipation model parameters folder was set but no dissipation model was set
+        if(rank==0)logger.printError("dissipationModelParameterFolder was set but no dissipationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameterFolder") && !vm.count("conservationModel")){
+        //conservation model parameters folder was set but no conservation model was set
+        if(rank==0)logger.printError("conservationModelParameterFolder was set but no conservationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameterFolder") && !vm.count("propagationModel")){
+        //propagation model parameters folder was set but no propagation model was set
+        if(rank==0)logger.printError("propagationModelParameterFolder was set but no propagationModel was set, aborting")<<std::endl;
+        return 1;
+    }
 
     // reading the parameters
 
