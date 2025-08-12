@@ -293,15 +293,16 @@ std::vector<double> saturationFileToVector(std::string filename,const std::map<s
  * @throw std::invalid_argument if the file does not contain the node or parameters columns
  * @throw std::runtime_error if the parameters are not valid for the dissipation scaling function (the function expects a specific format for the parameters)
  */
-std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std::string filename);
+std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames);
 /**
  * @brief Returns a vector of vectorized dissipation scaling functions from a folder
  * @param folderPath the path of the folder
+ * @param typeToOrderedNodeNames the map of the node names <type, vector of node names>
  * @return  the vector of dissipation scaling functions
  * @details  The files are read using the dissipationScalingFunctionFromFile function
  * @see dissipationScalingFunctionFromFile
  */
-std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath);
+std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
 /**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
