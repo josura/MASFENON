@@ -1078,7 +1078,23 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     }
     // read the rest of the file
     std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getDissipationScalingFunction());
-    
+    while (getline(infile, line)) {
+        std::vector<std::string> entries = splitStringIntoVector(line, "\t");
+        if(entries.size() != 2){
+            throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid entry in file " + filename + ", expected two columns, got " + std::to_string(entries.size()));
+        }
+        std::string name = entries[0];
+        std::string parameters = entries[1];
+        std::vector<std::string> parametersVector = splitStringIntoVector(parameters, ",");
+        std::vector<double> parametersDouble;
+        for (const auto& param : parametersVector) {
+            try {
+                parametersDouble.push_back(std::stod(param));
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
+            }
+        }
+        
     return ret;
 }
 
