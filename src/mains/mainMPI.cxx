@@ -238,6 +238,22 @@ int main(int argc, char** argv) {
         }
     } 
 
+    if(vm.count("dissipationModelParameters") && !vm.count("dissipationModel")){
+        //dissipation model parameters were set but no dissipation model was set
+        if(rank==0)logger.printError("dissipationModelParameters were set but no dissipationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameters") && !vm.count("conservationModel")){
+        //conservation model parameters were set but no conservation model was set
+        if(rank==0)logger.printError("conservationModelParameters were set but no conservationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameters") && !vm.count("propagationModel")){
+        //propagation model parameters were set but no propagation model was set
+        if(rank==0)logger.printError("propagationModelParameters were set but no propagationModel was set, aborting")<<std::endl;
+        return 1;
+    }   
+
     // reading the parameters
 
     if (vm.count("intertypeIterations")) {
