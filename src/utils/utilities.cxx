@@ -1111,9 +1111,9 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     }
     infile.close();
     // create the function that takes a double and returns a column vector with the values of the functions for each node
-    ret = [orderedFunctions, orderedNodeNames](double t) -> arma::Col<double> {
-        arma::Col<double> result(orderedNodeNames.size());
-        for (size_t i = 0; i < orderedNodeNames.size(); ++i) {
+    ret = [orderedFunctions](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedFunctions.size());
+        for (size_t i = 0; i < orderedFunctions.size(); ++i) {
             result(i) = orderedFunctions[i](t);
         }
         return result;
