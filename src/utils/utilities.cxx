@@ -1108,6 +1108,16 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
         } else {
             throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
         }
+    }
+    infile.close();
+    // create the function that takes a double and returns a column vector with the values of the functions for each node
+    ret = [orderedFunctions, orderedNodeNames](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedNodeNames.size());
+        for (size_t i = 0; i < orderedNodeNames.size(); ++i) {
+            result(i) = orderedFunctions[i](t);
+        }
+        return result;
+    };
         
     return ret;
 }
