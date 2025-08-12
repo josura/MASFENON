@@ -302,6 +302,7 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
  * @param typeToOrderedNodeNames the map of the node names <type, vector of node names>
  * @return  the vector of dissipation scaling functions
  * @details  The files are read using the dissipationScalingFunctionFromFile function
+ * @details Also handles the case where the file for a specific type does not exist, in which case the default dissipation scaling function is used
  * @see dissipationScalingFunctionFromFile
  */
 std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
