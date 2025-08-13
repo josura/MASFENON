@@ -1123,6 +1123,13 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     return ret;
 }
 
+std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
+    std::vector<std::function<arma::Col<double>(double)>> ret;
+    
+
+    return ret;
+}
+
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
