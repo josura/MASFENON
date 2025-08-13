@@ -305,7 +305,7 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
  * @details Also handles the case where the file for a specific type does not exist, in which case the default dissipation scaling function is used
  * @see dissipationScalingFunctionFromFile
  */
-std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
+std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
 /**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv

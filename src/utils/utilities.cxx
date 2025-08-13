@@ -1123,9 +1123,13 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     return ret;
 }
 
-std::vector<std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
-    std::vector<std::function<arma::Col<double>(double)>> ret;
-    
+std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
+    std::map<std::string, std::function<arma::Col<double>(double)>> ret;
+    std::vector<std::string> typesFromMap;
+    for(const auto& [type, nodeNames] : typeToOrderedNodeNames){
+        typesFromMap.push_back(type);
+    }
+    std::vector<std::string> files = get_all(folderPath, ".tsv");
 
     return ret;
 }
