@@ -98,4 +98,15 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersUn
     for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
         EXPECT_DOUBLE_EQ(result_time5(i), expectedValues_time0[i]) << "Mismatch at index " << i;
     }
+    std::vector<double> expectedValues_time5_1 = {0.0, -1.0, 0.0, 0.5, 0.5, 0.5};
+    arma::Col<double> result_time5_1 = scaleFunction(5.1);
+    EXPECT_EQ(result_time5_1.n_elem, expectedValues_time5_1.size()) << "Result size does not match expected size";
+    for (size_t i = 0; i < expectedValues_time5_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5_1(i), expectedValues_time5_1[i]) << "Mismatch at index " << i;
+    }
+    arma::Col<double> result_time6 = scaleFunction(6);
+    EXPECT_EQ(result_time6.n_elem, expectedValues_time5_1.size()) << "Result size does not match expected size";
+    for (size_t i = 0; i < expectedValues_time5_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time6(i), expectedValues_time5_1[i]) << "Mismatch at index " << i;
+    }
 }
