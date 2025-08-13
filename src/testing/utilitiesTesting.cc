@@ -79,4 +79,23 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersOr
         EXPECT_DOUBLE_EQ(result_time10(i), expectedValues_time6_1[i]) << "Mismatch at index " << i;
     }
 }
-    
+
+TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersUnorderedPartial) {
+    std::string fileName = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersUnorderedPartial/t0.tsv";
+    auto scaleFunction = dissipationScalingFunctionFromFile(fileName, orderedNodeNames_t0);
+    // the custom function will return the following for t0
+    // - first parameter when t<=5, which is 0.0 for the nodes specified in the file (a0, b0, c0) and 0.5(default) for the others (d0, e0, f0)
+    // - second parameter when 5<t<=6, which is (0,-1,0,0.5,0.5,0.5) for the nodes in the order of orderedNodeNames_t0
+    // - third parameter when 6<t<=10, which is (1,2,3,0.5,0.5,0.5) for the nodes in the order of orderedNodeNames_t0
+    std::vector<double> expectedValues_time0 = {0.0, 0.0, 0.0, 0.5, 0.5, 0.5};
+    arma::Col<double> result_time0 = scaleFunction(0.0);
+    EXPECT_EQ(result_time0.n_elem, expectedValues_time0.size()) << "Result size does not match expected size";
+    for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time0(i), expectedValues_time0[i]) << "Mismatch at index " << i;
+    }
+    arma::Col<double> result_time5 = scaleFunction(5.0);
+    EXPECT_EQ(result_time5.n_elem, expectedValues_time0.size()) << "Result size does not match expected size";
+    for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5(i), expectedValues_time0[i]) << "Mismatch at index " << i;
+    }
+}
