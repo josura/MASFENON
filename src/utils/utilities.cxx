@@ -1130,7 +1130,45 @@ std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScali
         typesFromMap.push_back(type);
     }
     std::vector<std::string> files = get_all(folderPath, ".tsv");
-
+    std::vector<std::string> expectedFiles;
+    for(const auto& type : typesFromMap){
+        expectedFiles.push_back(folderPath + "/" + type + ".tsv");
+    }
+    if(files.size() == 0){
+        Logger::getInstance().printWarning("utilities::dissipationScalingFunctionsFromFolder: no files found in folder " + folderPath + ", using default functions for all types");
+        // if no files are found, use the default function for all types
+        for(const auto& type : typesFromMap){
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getDissipationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+                
+        }
+        return ret;
+    }
+    // check if the files are present, if a file is not present, use the default function with the correct number of returned length for the scaling function
+    for(const auto& type : typesFromMap){
+        if(std::find(files.begin(), files.end(), folderPath + "/" + type + ".tsv") == files.end()){
+            Logger::getInstance().printWarning("utilities::dissipationScalingFunctionsFromFolder: file " + folderPath + "/" + type + ".tsv not found, using default function for type " + type);
+            // if the file is not found, use the default function with the correct number of returned length for the scaling function
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getDissipationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+        } else {
+            ret[type] = dissipationScalingFunctionFromFile(folderPath + "/" + type + ".tsv", typeToOrderedNodeNames[type]);
+        }
+    }
     return ret;
 }
 
