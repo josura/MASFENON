@@ -38,7 +38,13 @@ TEST_F(utilitiesTesting, testWorks) {
 }
 
 TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersOrdered) {
-    // std::string fileName = "data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters/t0.tsv";
-    // auto scaleFunction = dissipationScalingFunctionFromFile(fileName, orderedNodeNames_t0);
+    std::string fileName = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters/t0.tsv";
+    auto scaleFunction = dissipationScalingFunctionFromFile(fileName, orderedNodeNames_t0);
+    std::vector<double> expectedValues_time0 = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    arma::Col<double> result = scaleFunction(0.0);
+    EXPECT_EQ(result.n_elem, expectedValues_time0.size()) << "Result size does not match expected size";
+    for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result(i), expectedValues_time0[i]) << "Mismatch at index " << i;
+    }
 }
     
