@@ -339,5 +339,40 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderPartialFiles){
     for (size_t i = 0; i < expectedValues_time6_1.size(); ++i) {
         EXPECT_DOUBLE_EQ(result_time10(i), expectedValues_time6_1[i]) << "Mismatch at index " << i << " for t0 at time 10";
     }
+    // Check if the scaling functions return the expected values for t1, the same logic applies, but the middle values for the scaling function are also 0.0, bigger than 6 is 1,2,3,4,5,6
+    auto scaleFunction_t1 = scalingFunctions["t1"];
+    std::vector<double> expectedValues_time1 = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    arma::Col<double> result_time1 = scaleFunction_t1(0.0);
+    EXPECT_EQ(result_time1.n_elem, expectedValues_time1.size()) << "Result size does not match expected size for t1 at time 0";
+    for (size_t i = 0; i < expectedValues_time1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time1(i), expectedValues_time1[i]) << "Mismatch at index " << i << " for t1 at time 0";
+    }
+    arma::Col<double> result_time5_t1 = scaleFunction_t1(5.0);
+    EXPECT_EQ(result_time5_t1.n_elem, expectedValues_time1.size()) << "Result size does not match expected size for t1 at time 5";
+    for (size_t i = 0; i < expectedValues_time1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5_t1(i), expectedValues_time1[i]) << "Mismatch at index " << i << " for t1 at time 5";
+    }
+    std::vector<double> expectedValues_time5_1_t1 = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    arma::Col<double> result_time5_1_t1 = scaleFunction_t1(5.1);
+    EXPECT_EQ(result_time5_1_t1.n_elem, expectedValues_time5_1_t1.size()) << "Result size does not match expected size for t1 at time 5.1";
+    for (size_t i = 0; i < expectedValues_time5_1_t1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5_1_t1(i), expectedValues_time5_1_t1[i]) << "Mismatch at index " << i << " for t1 at time 5.1";
+    }
+    arma::Col<double> result_time6_t1 = scaleFunction_t1(6);
+    EXPECT_EQ(result_time6_t1.n_elem, expectedValues_time5_1_t1.size()) << "Result size does not match expected size for t1 at time 6";
+    for (size_t i = 0; i < expectedValues_time5_1_t1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time6_t1(i), expectedValues_time5_1_t1[i]) << "Mismatch at index " << i << " for t1 at time 6";
+    }
+    std::vector<double> expectedValues_time6_1_t1 = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    arma::Col<double> result_time6_1_t1 = scaleFunction_t1(6.1);
+    EXPECT_EQ(result_time6_1_t1.n_elem, expectedValues_time6_1_t1.size()) << "Result size does not match expected size for t1 at time 6.1";
+    for (size_t i = 0; i < expectedValues_time6_1_t1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time6_1_t1(i), expectedValues_time6_1_t1[i]) << "Mismatch at index " << i << " for t1 at time 6.1";
+    }
+    arma::Col<double> result_time10_t1 = scaleFunction_t1(10);
+    EXPECT_EQ(result_time10_t1.n_elem, expectedValues_time6_1_t1.size()) << "Result size does not match expected size for t1 at time 10";
+    for (size_t i = 0; i < expectedValues_time6_1_t1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time10_t1(i), expectedValues_time6_1_t1[i]) << "Mismatch at index " << i << " for t1 at time 10";
+    }
     
 }
