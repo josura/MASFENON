@@ -286,6 +286,13 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // control over the dissipation model, since the folder option can only be used with the custom dissipation model(custom dissipation supports both single parameters and parameters in the folder though)
+    if(vm.count("dissipationModel") && vm["dissipationModel"].as<std::string>() != "custom" && vm.count("dissipationModelParameterFolder")){
+        //dissipation model was set but the dissipation model is not custom
+        if(rank==0)logger.printError("dissipationModel was set to a non-custom model, but dissipationModelParameterFolder was set, aborting")<<std::endl;
+        return 1;
+    }
+
     // reading the parameters
 
     if (vm.count("intertypeIterations")) {
