@@ -289,5 +289,55 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderAllFiles){
 }
 
 TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderPartialFiles){
-
+    std::string folderPath = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersUnorderedPartial";
+    std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames = {
+        {"t0", orderedNodeNames_t0},
+        {"t1", orderedNodeNames_t1},
+        {"t2", orderedNodeNames_t2},
+        {"t3", orderedNodeNames_t3}
+    };
+    auto scalingFunctions = dissipationScalingFunctionsFromFolder(folderPath, typeToOrderedNodeNames);
+    // t0 and t1 are defined, t2 and t3 are not defined, so they should have the default values
+    // t0 is the partial file, so it should have the default values for the nodes not defined in the file
+    // t1 is the full file, so it should have the values for all nodes, so same tests as the one before
+    EXPECT_TRUE(scalingFunctions.find("t0") != scalingFunctions.end()) << "Scaling function for t0 not found";
+    EXPECT_TRUE(scalingFunctions.find("t1") != scalingFunctions.end()) << "Scaling function for t1 not found";
+    EXPECT_TRUE(scalingFunctions.find("t2") != scalingFunctions.end()) << "Scaling function for t2 not found";
+    EXPECT_TRUE(scalingFunctions.find("t3") != scalingFunctions.end()) << "Scaling function for t3 not found";
+    // Check if the scaling functions return the expected values for t0
+    auto scaleFunction_t0 = scalingFunctions["t0"];
+    std::vector<double> expectedValues_time0 = {0.0, 0.0, 0.0, 0.5, 0.5, 0.5};
+    arma::Col<double> result_time0 = scaleFunction_t0(0.0);
+    EXPECT_EQ(result_time0.n_elem, expectedValues_time0.size()) << "Result size does not match expected size for t0 at time 0";
+    for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time0(i), expectedValues_time0[i]) << "Mismatch at index " << i << " for t0 at time 0";
+    }
+    arma::Col<double> result_time5 = scaleFunction_t0(5.0);
+    EXPECT_EQ(result_time5.n_elem, expectedValues_time0.size()) << "Result size does not match expected size for t0 at time 5";
+    for (size_t i = 0; i < expectedValues_time0.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5(i), expectedValues_time0[i]) << "Mismatch at index " << i << " for t0 at time 5";
+    }
+    std::vector<double> expectedValues_time5_1 = {0.0, -1.0, 0.0, 0.5, 0.5, 0.5};
+    arma::Col<double> result_time5_1 = scaleFunction_t0(5.1);
+    EXPECT_EQ(result_time5_1.n_elem, expectedValues_time5_1.size()) << "Result size does not match expected size for t0 at time 5.1";
+    for (size_t i = 0; i < expectedValues_time5_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time5_1(i), expectedValues_time5_1[i]) << "Mismatch at index " << i << " for t0 at time 5.1";
+    }
+    arma::Col<double> result_time6 = scaleFunction_t0(6);
+    EXPECT_EQ(result_time6.n_elem, expectedValues_time5_1.size()) << "Result size does not match expected size for t0 at time 6";
+    for (size_t i = 0; i < expectedValues_time5_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time6(i), expectedValues_time5_1[i]) << "Mismatch at index " << i << " for t0 at time 6";
+    }
+    std::vector<double> expectedValues_time6_1 = {1.0, 2.0, 3.0, 0.5, 0.5, 0.5};
+    arma::Col<double> result_time6_1 = scaleFunction_t0(6.1);
+    EXPECT_EQ(result_time6_1.n_elem, expectedValues_time6_1.size()) << "Result size does not match expected size for t0 at time 6.1";
+    for (size_t i = 0; i < expectedValues_time6_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time6_1(i), expectedValues_time6_1[i]) << "Mismatch at index " << i << " for t0 at time 6.1";
+    }
+    arma::Col<double> result_time10 = scaleFunction_t0(10);
+    EXPECT_EQ(result_time10.n_elem, expectedValues_time6_1.size()) << "Result size does not match expected size for t0 at time 10";
+    for (size_t i = 0; i < expectedValues_time6_1.size(); ++i) {
+        EXPECT_DOUBLE_EQ(result_time10(i), expectedValues_time6_1[i]) << "Mismatch at index " << i << " for t0 at time 10";
+    }
+    
 }
