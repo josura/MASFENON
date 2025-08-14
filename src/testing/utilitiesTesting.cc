@@ -80,7 +80,7 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersOr
     }
 }
 
-TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersUnorderedPartial) {
+TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksPartialParametersUnorderedPartial) {
     std::string fileName = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersUnorderedPartial/t0.tsv";
     auto scaleFunction = dissipationScalingFunctionFromFile(fileName, orderedNodeNames_t0);
     // the custom function will return the following for t0
@@ -120,4 +120,19 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileWorksFullParametersUn
     for (size_t i = 0; i < expectedValues_time6_1.size(); ++i) {
         EXPECT_DOUBLE_EQ(result_time10(i), expectedValues_time6_1[i]) << "Mismatch at index " << i;
     }
+}
+
+
+TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileInvalidHeader) {
+    std::string fileName = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/invalidHeaderExample.tsv";
+    // std::string fileName = "/home/josura/Projects/ccc/MASFENON/data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/invalidHeaderExample.tsv";
+    EXPECT_THROW(dissipationScalingFunctionFromFile(fileName, orderedNodeNames_t0), std::invalid_argument);
+}
+
+TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderAllFiles){
+
+}
+
+TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderPartialFiles){
+
 }

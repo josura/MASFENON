@@ -1073,7 +1073,7 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
     getline(infile, line);
     std::vector<std::string> entriesHeader = splitStringIntoVector(line, "\t");
     // check if the header is valid
-    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" && boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
+    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" || boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
         throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
     }
     // read the rest of the file
