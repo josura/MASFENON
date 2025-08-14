@@ -619,6 +619,262 @@ int main(int argc, char** argv) {
         typeToRank[types[i]] = rankType;
     }
 
+    //use the number of types for workload to allocate an array of pointers to contain the graph for each type
+    WeightedEdgeGraph **graphs = new WeightedEdgeGraph*[finalWorkload];
+    std::vector<std::string> typesFromFolder;
+    std::vector<std::vector<std::string>> graphsNodes;
+    std::vector<std::vector<std::string>> graphsNodesAll; // used only in the setup phase to read the initial input values, contains all types
+    std::unordered_map<std::string, std::vector<std::string>> typeToNodeNamesMap; // map from all types to the node names, not only the ones in the workload, no virtual nodes
+    std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>> namesAndEdges;
+    // a single graph is used for all the types in case it is specified by the parameter
+    if(vm.count("fUniqueGraph")){
+        namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(uniqueGraphFilename));
+        graphsNodes.push_back(namesAndEdges[0].first);
+        graphs[0] = new WeightedEdgeGraph(graphsNodes[0]);
+        for(int i = 1; i < finalWorkload; i++){
+            namesAndEdges.push_back(namesAndEdges[0]);
+            graphsNodes.push_back(namesAndEdges[0].first);
+            graphs[i] = graphs[0];
+        }
+        // TODO only use the single graph for the setup phase, without filling all the maps for all the other types, optimize the memory usage
+        for (uint i = 0; i<types.size(); i++){
+            graphsNodesAll.push_back(namesAndEdges[0].first);
+        }
+            
+        // create the map also for the use case of a single graph, TODO only use the map for the single graph case without filling all the maps
+        for(uint i = 0; i < types.size(); i++){
+            typeToNodeNamesMap[types[i]] = namesAndEdges[0].first;
+        }
+
+    } else if (vm.count("graphsFilesFolder")) { // the graphs are in a folder, each graph is a type
+        auto allGraphs = edgesFileToEdgesListAndNodesByNameFromFolder(graphsFilesFolder);  // TODO change the function to return only the set of edges and type names, use another function to get the nodes
+        
+        // control if the types from the edges folder and the types from the values match
+        typesFromFolder = allGraphs.first;
+        auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
+        if(typesFromFolderFiltered.size() != types.size()){
+            if(rank == 0) { // only the master process prints the error
+                logger.printError("types from folder (filtered with subtypes) and types from values do not have the same length: aborting") << std::endl;
+            }
+            return 1;
+        }
+        for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
+            if(typesFromFolderFiltered[i] != types[i]){  // TODO this control can be faulty, since the order of the types is not guaranteed when reading the files
+                if(rank == 0) { // only the master process prints the error
+                    logger.printError("types from folder(filtered with subtypes) and types from file do not match: aborting") << std::endl;
+                }
+                return 1;
+            }
+        }
+        namesAndEdges = allGraphs.second;
+        
+        std::map<std::string, std::vector<std::string>> namesFromFolder;
+        if(nodesDescriptionFolder != ""){        
+            namesFromFolder = nodeNamesFromFolder(nodesDescriptionFolder);
+            auto typesFromNames = getKeys<std::string,std::vector<std::string>>(namesFromFolder);
+            auto typesFromNamesFiltered = vectorsIntersection(typesFromNames, subtypes);
+            if(typesFromNamesFiltered.size() != types.size()){ //TODO change the control over the types read from the graph, since the values can be not expressed for some graphs
+                if(rank == 0) { // only the master process prints the error
+                    logger.printError("types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting") << std::endl;
+                }
+                return 1;
+            }
+            // control over the values and the order is useless since the map is unordered and doesn't guarantee the order of reading the files
+            // for(uint i = 0; i < typesFromNames.size(); i++){
+            //     if(typesFromNames[i] != types[i]){
+            //         logger.printError("types from values(inital perturbation) and types from file do not match: aborting"<<std::endl;
+            //         return 1;
+            //     }
+            // }
+        } else {
+            for(uint i = 0; i < types.size(); i++){
+                //graphsNodesAll.push_back(namesAndEdges[i].first);
+                int namesAndEdgesIdx = 0;
+                for(int tmpidx=0; tmpidx<SizeToInt(typesFromFolder.size()); tmpidx++){
+                    if(typesFromFolder[tmpidx] == types[i]){
+                        namesAndEdgesIdx = tmpidx;
+                        break;
+                    }
+                }
+
+                namesFromFolder[types[i]] = namesAndEdges[namesAndEdgesIdx].first;
+            }
+        }
+
+        // create the graphs and the map for the nodes
+        for(uint i = 0; i < types.size(); i++){
+            std::string tmpType = types[i];
+            graphsNodesAll.push_back(namesFromFolder[tmpType]);
+            auto tmpNodeNames = namesFromFolder[tmpType];
+            
+            typeToNodeNamesMap[tmpType] = tmpNodeNames;
+        }
+        for(int i = startIdx; i < endIdx; i++){
+            //graphsNodes.push_back(namesAndEdges[i].first);
+            graphsNodes.push_back(namesFromFolder[types[i]]);
+            graphs[i-startIdx] = new WeightedEdgeGraph(graphsNodes[i-startIdx]);
+        }
+    } 
+
+    //add the edges to the graphs
+    if(vm.count("fUniqueGraph")){
+        for(auto edge = namesAndEdges[0].second.cbegin() ; edge != namesAndEdges[0].second.cend(); edge++ ){
+            graphs[0]->addEdge(std::get<0> (*edge), std::get<1> (*edge) ,std::get<2>(*edge) ,!undirected);
+        }
+    } else if (vm.count("graphsFilesFolder")) {
+        for(int i = startIdx; i < endIdx; i++){
+            int namesAndEdgesIdx = 0;
+            for(int tmpidx=0; tmpidx<SizeToInt(typesFromFolder.size()); tmpidx++){
+                if(typesFromFolder[tmpidx] == types[i]){
+                    namesAndEdgesIdx = tmpidx;
+                    break;
+                }
+            }
+            for(auto edge = namesAndEdges[namesAndEdgesIdx].second.cbegin() ; edge != namesAndEdges[namesAndEdgesIdx].second.cend(); edge++ ){
+                graphs[i-startIdx]->addEdge(std::get<0> (*edge), std::get<1> (*edge) ,std::get<2>(*edge) ,!undirected);
+            }
+        }
+    }
+
+    //get initial input values
+    std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::vector<double>>> initialValues;
+    std::vector<std::vector<double>> inputInitials;
+    if(vm.count("fInitialPerturbationPerType")){
+        if(rank==0)
+            logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
+        initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
+    } else if (vm.count("initialPerturbationPerTypeFolder")){
+        if(rank==0) logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
+        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes); // TODO change the function to return only the values for the types in the workload
+    } else {
+        if(rank==0) logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
+        return 1;
+    }
+    logger.printLog(true, "perturbation values successfully read for rank ", rank );
+    std::vector<std::string> initialNames = std::get<0>(initialValues);
+    inputInitials = std::get<2>(initialValues);
+    std::vector<std::string> typesFromValues = std::get<1>(initialValues);
+    //this condition should take into account the intersection of the types and the subtypes
+    if(typesFromValues.size() == 0){
+        if(rank==0){
+            logger.printError("types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting")<<std::endl;
+            logger.printError("types specified(subtypes): ");
+            for(auto type: subtypes)
+                std::cerr << type << " "; //TODO handle logger with these
+            std::cerr << std::endl;
+            logger.printError("types from file(from graphs folder or from matrix): ");
+            for(auto type: types)
+                std::cerr << type << " ";
+            std::cerr << std::endl;
+            logger.printError("types from values(from initial values folder or from values matrix) intersected with subtypes: ");
+            for(auto type: typesFromValues)
+                std::cerr << type << " ";
+            std::cerr << std::endl;
+        }
+        return 1;
+    }
+    auto indexMapGraphTypesToValuesTypes = get_indexmap_vector_values_full(types, typesFromValues);
+    if(indexMapGraphTypesToValuesTypes.size() == 0){
+        if(rank==0)logger.printError("types from folder and types from file do not match even on one instance: aborting")<<std::endl;
+        return 1;
+    }
+
+    // TODO get rid of the augment graph function and use the addition of nodes or edges directly
+    Computation** typeComputations = new Computation*[finalWorkload];
+    // I am not convinced what this variable does anymore, 
+    // maybe in the past it was used to store the index of the type in the types vector when considering subtypes
+    // but now it's just a useless vector that goes from 0 to finalWorkload-1, not even a -1 is inside for sure, since subtyping is already done before this point  
+    for(int i = 0; i < finalWorkload; i++){
+        if(indexMapGraphTypesToValuesTypes[i+startIdx] == -1){
+            logger.printLog(true, "type ", types[i+startIdx], " not found in the initial perturbation files, using zero vector as input");
+            std::vector<double> input = std::vector<double>(graphsNodes[i].size(),0);
+            Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]);   
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            // tmpCompPointer->setConservationModel(conservationModels[i]);
+            typeComputations[i] = tmpCompPointer;
+            //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
+            // TODO generalize by removing the type granularity in this code, that is by considering only the types that are encoded?
+            if(virtualNodesGranularity == "type"){
+                typeComputations[i]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
+            } else if (virtualNodesGranularity == "typeAndNode"){
+                typeComputations[i]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
+            }
+        } else {
+            int index = indexMapGraphTypesToValuesTypes[i+startIdx];
+            std::vector<double> input = inputInitials[index];
+            Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]); 
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            // tmpCompPointer->setConservationModel(conservationModels[i]);
+            typeComputations[i] = tmpCompPointer;
+            //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
+            if(virtualNodesGranularity == "type"){
+                typeComputations[i]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
+            } else if (virtualNodesGranularity == "typeAndNode"){
+                typeComputations[i]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
+            }
+        }
+
+    }
+
+    // saturation function for the computation is changed if custom saturation is set
+    if(saturation && customSaturation){
+        if(rank==0)logger << "[LOG] custom saturation function set, using the custom saturation function defined in src/CustomFunctions.cxx"<<std::endl;
+        for(int i = 0; i < finalWorkload;i++){
+            typeComputations[i]->setSaturationFunction(getSaturationFunction());
+        }
+    } else {
+        if(rank==0)logger << "[LOG] custom saturation function not set, using the default saturation function"<<std::endl;
+    }
+
+    logger << "[LOG] loading type interactions for rank "<< rank << std::endl;
+    // TODO test for multiple interaction between two edges in two files
+    auto allFilesInteraction = get_all(typesInteractionFoldername,".tsv");
+    // define the map for the type interactions, an hash function should be defined for the pair of strings used as the identifier of the interaction
+    std::unordered_map<std::pair<std::string, std::string>, std::set<double>, hash_pair_strings> interactionBetweenTypesMap;
+    std::unordered_map<std::tuple<std::string, std::string, std::string, std::string>, std::set<double>, hash_quadruple_strings> interactionBetweenTypesFinerMap;
+    for(auto typeInteractionFilename = allFilesInteraction.cbegin() ; typeInteractionFilename != allFilesInteraction.cend() ; typeInteractionFilename++){
+        std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>,double>>> typeInteractionsEdges;
+        if (subtypes.size() == 0) {
+            // TODO add different contact times inside the network (quite difficult since the structure of the graphs is static)
+            // the above can be implemented with the use of different matrices for every single type(from 1 to max(contactTimes)), where the matrix represent the current state of the network
+            // another possibility is to use two matrices for every type-agent, one for the whole network without contact times and one is used to store the current network state at iteration i 
+            // SOLUTION: granularity
+            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+        } else {
+            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
+        }
+        #pragma omp parallel for
+        for (int i = 0; i < finalWorkload;i++) {
+            if(typeInteractionsEdges.first.contains(types[i+startIdx])){
+                // granularity is already considered in the function that reads from the file previously called
+                typeComputations[i]->addEdgesAndNodes(typeInteractionsEdges.first[types[i+startIdx]], false, false); // no inverse computation since it is done in the propagation model
+            }
+        }
+        for(auto edge = typeInteractionsEdges.second.cbegin() ; edge != typeInteractionsEdges.second.cend(); edge++ ){
+            // first two types are the nodes in the two networks/types ,types are the third and fourth element of the tuple, while the fifth is the set of contact times
+            // startNodeName, endNodeName, startType, endType, contactTimes, weight
+            std::pair<std::string,std::string> keyTypes = std::make_pair(std::get<2> (*edge), std::get<3> (*edge));
+            std::tuple<std::string,std::string,std::string,std::string> keyTypesFiner = std::make_tuple(std::get<0> (*edge), std::get<1> (*edge), std::get<2> (*edge), std::get<3> (*edge));
+            
+            if(interactionBetweenTypesMap.contains(keyTypes)){
+                interactionBetweenTypesMap[keyTypes].insert(std::get<4>(*edge).begin(),std::get<4>(*edge).end()); // directly inserting means the union of the two sets
+            } else {
+                interactionBetweenTypesMap[keyTypes] = std::get<4>(*edge);
+            }
+            
+            if(interactionBetweenTypesFinerMap.contains(keyTypesFiner)){
+                interactionBetweenTypesFinerMap[keyTypesFiner].insert(std::get<4>(*edge).begin(),std::get<4>(*edge).end()); // directly inserting means the union of the two sets
+            } else {
+                interactionBetweenTypesFinerMap[keyTypesFiner] = std::get<4>(*edge);
+            }
+            
+        }
+    }
+
     // conservation model initialization from command line options, since the number of types is not known before, we will be reading the conservation model now instead of when we were reading the parameters
     conservationModels = std::vector<ConservationModel*>(finalWorkload, nullptr); ///< vector of conservation models for each type, initialized to nullptr
     if (vm.count("conservationModel")) {
@@ -820,6 +1076,17 @@ int main(int argc, char** argv) {
                 for(int i = 0; i < finalWorkload; ++i){
                     dissipationModels[i] = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters)); // all processes will use the same dissipation model
                 }
+            } else if(vm.count("dissipationModelParameterFolder")) {
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be in the folder "<<vm["dissipationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string dissipationModelParametersFolder = vm["dissipationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto dissipationModelScalingFunctions = dissipationScalingFunctionsFromFolder(dissipationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(dissipationModelScalingFunctions[types[i+startIdx]]); // all processes will use the same dissipation model with different parameters
+                }
             } else {
                 if(rank==0)logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
@@ -838,264 +1105,10 @@ int main(int argc, char** argv) {
             dissipationModels[i] = new DissipationModelScaled([](double time)->double{return 0;}); // all processes will use the same dissipation model
         }
     }
-
-    //use the number of types for workload to allocate an array of pointers to contain the graph for each type
-    WeightedEdgeGraph **graphs = new WeightedEdgeGraph*[finalWorkload];
-    std::vector<std::string> typesFromFolder;
-    std::vector<std::vector<std::string>> graphsNodes;
-    std::vector<std::vector<std::string>> graphsNodesAll; // used only in the setup phase to read the initial input values, contains all types
-    std::unordered_map<std::string, std::vector<std::string>> typeToNodeNamesMap; // map from all types to the node names, not only the ones in the workload, no virtual nodes
-    std::vector<std::pair<std::vector<std::string>,std::vector<std::tuple<std::string,std::string,double>>>> namesAndEdges;
-    // a single graph is used for all the types in case it is specified by the parameter
-    if(vm.count("fUniqueGraph")){
-        namesAndEdges.push_back(edgesFileToEdgesListAndNodesByName(uniqueGraphFilename));
-        graphsNodes.push_back(namesAndEdges[0].first);
-        graphs[0] = new WeightedEdgeGraph(graphsNodes[0]);
-        for(int i = 1; i < finalWorkload; i++){
-            namesAndEdges.push_back(namesAndEdges[0]);
-            graphsNodes.push_back(namesAndEdges[0].first);
-            graphs[i] = graphs[0];
-        }
-        // TODO only use the single graph for the setup phase, without filling all the maps for all the other types, optimize the memory usage
-        for (uint i = 0; i<types.size(); i++){
-            graphsNodesAll.push_back(namesAndEdges[0].first);
-        }
-            
-        // create the map also for the use case of a single graph, TODO only use the map for the single graph case without filling all the maps
-        for(uint i = 0; i < types.size(); i++){
-            typeToNodeNamesMap[types[i]] = namesAndEdges[0].first;
-        }
-
-    } else if (vm.count("graphsFilesFolder")) { // the graphs are in a folder, each graph is a type
-        auto allGraphs = edgesFileToEdgesListAndNodesByNameFromFolder(graphsFilesFolder);  // TODO change the function to return only the set of edges and type names, use another function to get the nodes
-        
-        // control if the types from the edges folder and the types from the values match
-        typesFromFolder = allGraphs.first;
-        auto typesFromFolderFiltered = vectorsIntersection(typesFromFolder, subtypes);
-        if(typesFromFolderFiltered.size() != types.size()){
-            if(rank == 0) { // only the master process prints the error
-                logger.printError("types from folder (filtered with subtypes) and types from values do not have the same length: aborting") << std::endl;
-            }
-            return 1;
-        }
-        for (uint i = 0; i<typesFromFolderFiltered.size(); i++){ //TODO map the types from the folder to the types from the file
-            if(typesFromFolderFiltered[i] != types[i]){  // TODO this control can be faulty, since the order of the types is not guaranteed when reading the files
-                if(rank == 0) { // only the master process prints the error
-                    logger.printError("types from folder(filtered with subtypes) and types from file do not match: aborting") << std::endl;
-                }
-                return 1;
-            }
-        }
-        namesAndEdges = allGraphs.second;
-        
-        std::map<std::string, std::vector<std::string>> namesFromFolder;
-        if(nodesDescriptionFolder != ""){        
-            namesFromFolder = nodeNamesFromFolder(nodesDescriptionFolder);
-            auto typesFromNames = getKeys<std::string,std::vector<std::string>>(namesFromFolder);
-            auto typesFromNamesFiltered = vectorsIntersection(typesFromNames, subtypes);
-            if(typesFromNamesFiltered.size() != types.size()){ //TODO change the control over the types read from the graph, since the values can be not expressed for some graphs
-                if(rank == 0) { // only the master process prints the error
-                    logger.printError("types from values(initial perturbation, filtered by subtypes) and types from file do not match: aborting") << std::endl;
-                }
-                return 1;
-            }
-            // control over the values and the order is useless since the map is unordered and doesn't guarantee the order of reading the files
-            // for(uint i = 0; i < typesFromNames.size(); i++){
-            //     if(typesFromNames[i] != types[i]){
-            //         logger.printError("types from values(inital perturbation) and types from file do not match: aborting"<<std::endl;
-            //         return 1;
-            //     }
-            // }
-        } else {
-            for(uint i = 0; i < types.size(); i++){
-                //graphsNodesAll.push_back(namesAndEdges[i].first);
-                int namesAndEdgesIdx = 0;
-                for(int tmpidx=0; tmpidx<SizeToInt(typesFromFolder.size()); tmpidx++){
-                    if(typesFromFolder[tmpidx] == types[i]){
-                        namesAndEdgesIdx = tmpidx;
-                        break;
-                    }
-                }
-
-                namesFromFolder[types[i]] = namesAndEdges[namesAndEdgesIdx].first;
-            }
-        }
-
-        // create the graphs and the map for the nodes
-        for(uint i = 0; i < types.size(); i++){
-            std::string tmpType = types[i];
-            graphsNodesAll.push_back(namesFromFolder[tmpType]);
-            auto tmpNodeNames = namesFromFolder[tmpType];
-            
-            typeToNodeNamesMap[tmpType] = tmpNodeNames;
-        }
-        for(int i = startIdx; i < endIdx; i++){
-            //graphsNodes.push_back(namesAndEdges[i].first);
-            graphsNodes.push_back(namesFromFolder[types[i]]);
-            graphs[i-startIdx] = new WeightedEdgeGraph(graphsNodes[i-startIdx]);
-        }
-    } 
-
-    //add the edges to the graphs
-    if(vm.count("fUniqueGraph")){
-        for(auto edge = namesAndEdges[0].second.cbegin() ; edge != namesAndEdges[0].second.cend(); edge++ ){
-            graphs[0]->addEdge(std::get<0> (*edge), std::get<1> (*edge) ,std::get<2>(*edge) ,!undirected);
-        }
-    } else if (vm.count("graphsFilesFolder")) {
-        for(int i = startIdx; i < endIdx; i++){
-            int namesAndEdgesIdx = 0;
-            for(int tmpidx=0; tmpidx<SizeToInt(typesFromFolder.size()); tmpidx++){
-                if(typesFromFolder[tmpidx] == types[i]){
-                    namesAndEdgesIdx = tmpidx;
-                    break;
-                }
-            }
-            for(auto edge = namesAndEdges[namesAndEdgesIdx].second.cbegin() ; edge != namesAndEdges[namesAndEdgesIdx].second.cend(); edge++ ){
-                graphs[i-startIdx]->addEdge(std::get<0> (*edge), std::get<1> (*edge) ,std::get<2>(*edge) ,!undirected);
-            }
-        }
-    }
-
-    //get initial input values
-    std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::vector<double>>> initialValues;
-    std::vector<std::vector<double>> inputInitials;
-    if(vm.count("fInitialPerturbationPerType")){
-        if(rank==0)
-            logger << "[LOG] initial perturbation per type specified, using the file "<<typesInitialPerturbationMatrixFilename<<std::endl;
-        initialValues = valuesMatrixToTypeVectors(typesInitialPerturbationMatrixFilename,graphsNodes[0],subtypes);
-    } else if (vm.count("initialPerturbationPerTypeFolder")){
-        if(rank==0) logger << "[LOG] initial perturbation per type specified, using the folder "<<typeInitialPerturbationFolderFilename<<std::endl;
-        initialValues = valuesVectorsFromFolder(typeInitialPerturbationFolderFilename,types,graphsNodesAll,subtypes); // TODO change the function to return only the values for the types in the workload
-    } else {
-        if(rank==0) logger.printError("no initial perturbation file or folder specified: aborting")<<std::endl;
-        return 1;
-    }
-    logger.printLog(true, "perturbation values successfully read for rank ", rank );
-    std::vector<std::string> initialNames = std::get<0>(initialValues);
-    inputInitials = std::get<2>(initialValues);
-    std::vector<std::string> typesFromValues = std::get<1>(initialValues);
-    //this condition should take into account the intersection of the types and the subtypes
-    if(typesFromValues.size() == 0){
-        if(rank==0){
-            logger.printError("types from the initial values folder are 0, control if the types are the same to the one specified in the matrix, in the graphs folder and in the subtypes: aborting")<<std::endl;
-            logger.printError("types specified(subtypes): ");
-            for(auto type: subtypes)
-                std::cerr << type << " "; //TODO handle logger with these
-            std::cerr << std::endl;
-            logger.printError("types from file(from graphs folder or from matrix): ");
-            for(auto type: types)
-                std::cerr << type << " ";
-            std::cerr << std::endl;
-            logger.printError("types from values(from initial values folder or from values matrix) intersected with subtypes: ");
-            for(auto type: typesFromValues)
-                std::cerr << type << " ";
-            std::cerr << std::endl;
-        }
-        return 1;
-    }
-    auto indexMapGraphTypesToValuesTypes = get_indexmap_vector_values_full(types, typesFromValues);
-    if(indexMapGraphTypesToValuesTypes.size() == 0){
-        if(rank==0)logger.printError("types from folder and types from file do not match even on one instance: aborting")<<std::endl;
-        return 1;
-    }
-
-    // TODO get rid of the augment graph function and use the addition of nodes or edges directly
-    Computation** typeComputations = new Computation*[finalWorkload];
-    int indexComputation = 0;
-    std::vector<int> typesIndexes = std::vector<int>(finalWorkload,-1); 
-    std::vector<int> invertedTypesIndexes = std::vector<int>(finalWorkload,-1); 
+    //initialize the dissipation and conservation models for each computation
     for(int i = 0; i < finalWorkload; i++){
-        if(indexMapGraphTypesToValuesTypes[i+startIdx] == -1){
-            logger.printLog(true, "type ", types[i+startIdx], " not found in the initial perturbation files, using zero vector as input");
-            std::vector<double> input = std::vector<double>(graphsNodes[i].size(),0);
-            Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]);   
-            // tmpCompPointer->setDissipationModel(dissipationModel);
-            // tmpCompPointer->setConservationModel(conservationModel);
-            tmpCompPointer->setDissipationModel(dissipationModels[i]);
-            tmpCompPointer->setConservationModel(conservationModels[i]);
-            typeComputations[indexComputation] = tmpCompPointer;
-            //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
-            // TODO generalize by removing the type granularity in this code, that is by considering only the types that are encoded?
-            if(virtualNodesGranularity == "type"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
-            } else if (virtualNodesGranularity == "typeAndNode"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
-            }
-        } else {
-            int index = indexMapGraphTypesToValuesTypes[i+startIdx];
-            std::vector<double> input = inputInitials[index];
-            Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]); 
-            // tmpCompPointer->setDissipationModel(dissipationModel);
-            // tmpCompPointer->setConservationModel(conservationModel);
-            tmpCompPointer->setDissipationModel(dissipationModels[i]);
-            tmpCompPointer->setConservationModel(conservationModels[i]);
-            typeComputations[indexComputation] = tmpCompPointer;
-            //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
-            if(virtualNodesGranularity == "type"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
-            } else if (virtualNodesGranularity == "typeAndNode"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
-            }
-        }
-        typesIndexes[i] = indexComputation;
-        invertedTypesIndexes[indexComputation] = i;
-        indexComputation++;
-
-    }
-
-    // saturation function for the computation is changed if custom saturation is set
-    if(saturation && customSaturation){
-        if(rank==0)logger << "[LOG] custom saturation function set, using the custom saturation function defined in src/CustomFunctions.cxx"<<std::endl;
-        for(int i = 0; i < finalWorkload;i++){
-            typeComputations[typesIndexes[i]]->setSaturationFunction(getSaturationFunction());
-        }
-    } else {
-        if(rank==0)logger << "[LOG] custom saturation function not set, using the default saturation function"<<std::endl;
-    }
-
-    logger << "[LOG] loading type interactions for rank "<< rank << std::endl;
-    // TODO test for multiple interaction between two edges in two files
-    auto allFilesInteraction = get_all(typesInteractionFoldername,".tsv");
-    // define the map for the type interactions, an hash function should be defined for the pair of strings used as the identifier of the interaction
-    std::unordered_map<std::pair<std::string, std::string>, std::set<double>, hash_pair_strings> interactionBetweenTypesMap;
-    std::unordered_map<std::tuple<std::string, std::string, std::string, std::string>, std::set<double>, hash_quadruple_strings> interactionBetweenTypesFinerMap;
-    for(auto typeInteractionFilename = allFilesInteraction.cbegin() ; typeInteractionFilename != allFilesInteraction.cend() ; typeInteractionFilename++){
-        std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,double>>>,std::vector<std::tuple<std::string, std::string, std::string, std::string, std::set<double>,double>>> typeInteractionsEdges;
-        if (subtypes.size() == 0) {
-            // TODO add different contact times inside the network (quite difficult since the structure of the graphs is static)
-            // the above can be implemented with the use of different matrices for every single type(from 1 to max(contactTimes)), where the matrix represent the current state of the network
-            // another possibility is to use two matrices for every type-agent, one for the whole network without contact times and one is used to store the current network state at iteration i 
-            // SOLUTION: granularity
-            typeInteractionsEdges  = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, types, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
-        } else {
-            typeInteractionsEdges = interactionContinuousContactsFileToEdgesListAndNodesByName(*typeInteractionFilename, subtypes, intertypeIterations*timestep, virtualNodesGranularity, typeToNodeNamesMap, undirectedTypeEdges);
-        }
-        #pragma omp parallel for
-        for (int i = 0; i < finalWorkload;i++) {
-            if(typeInteractionsEdges.first.contains(types[i+startIdx]) && typesIndexes[i] != -1){
-                // granularity is already considered in the function that reads from the file previously called
-                typeComputations[typesIndexes[i]]->addEdgesAndNodes(typeInteractionsEdges.first[types[i+startIdx]], false, false); // no inverse computation since it is done in the propagation model
-            }
-        }
-        for(auto edge = typeInteractionsEdges.second.cbegin() ; edge != typeInteractionsEdges.second.cend(); edge++ ){
-            // first two types are the nodes in the two networks/types ,types are the third and fourth element of the tuple, while the fifth is the set of contact times
-            // startNodeName, endNodeName, startType, endType, contactTimes, weight
-            std::pair<std::string,std::string> keyTypes = std::make_pair(std::get<2> (*edge), std::get<3> (*edge));
-            std::tuple<std::string,std::string,std::string,std::string> keyTypesFiner = std::make_tuple(std::get<0> (*edge), std::get<1> (*edge), std::get<2> (*edge), std::get<3> (*edge));
-            
-            if(interactionBetweenTypesMap.contains(keyTypes)){
-                interactionBetweenTypesMap[keyTypes].insert(std::get<4>(*edge).begin(),std::get<4>(*edge).end()); // directly inserting means the union of the two sets
-            } else {
-                interactionBetweenTypesMap[keyTypes] = std::get<4>(*edge);
-            }
-            
-            if(interactionBetweenTypesFinerMap.contains(keyTypesFiner)){
-                interactionBetweenTypesFinerMap[keyTypesFiner].insert(std::get<4>(*edge).begin(),std::get<4>(*edge).end()); // directly inserting means the union of the two sets
-            } else {
-                interactionBetweenTypesFinerMap[keyTypesFiner] = std::get<4>(*edge);
-            }
-            
-        }
+        typeComputations[i]->setDissipationModel(dissipationModels[i]);
+        typeComputations[i]->setConservationModel(conservationModels[i]);
     }
 
     // create a map that maps couples of strings (source type and target type) to a vector of pairs of strings, representing how the virtual outputs are mapped in the subarray passed to MPI send 
@@ -1425,7 +1438,6 @@ int main(int argc, char** argv) {
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
                         } else if (vm.count("saturationTerm") >= 1) {
                             double saturationTerm = vm["saturationTerm"].as<double>();
-                            //std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
                             std::vector<double> saturationVector = std::vector<double>(typeComputations[i]->getAugmentedGraph()->getNumNodes(),saturationTerm);
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
                         }
