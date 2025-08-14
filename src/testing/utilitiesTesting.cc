@@ -28,6 +28,9 @@ class utilitiesTesting : public ::testing::Test {
         }
         // protected variables here
         std::vector<std::string> orderedNodeNames_t0 = {"a0","b0","c0","e0","d0","f0"}; 
+        std::vector<std::string> orderedNodeNames_t1 = {"a1","b1","c1","e1","d1","f1"};
+        std::vector<std::string> orderedNodeNames_t2 = {"a2","b2","c2","e2","d2","f2"};
+        std::vector<std::string> orderedNodeNames_t3 = {"a3","b3","c3","e3","d3","f3"}; 
 
   
 };
@@ -130,7 +133,13 @@ TEST_F(utilitiesTesting, dissipationScalingFunctionFromFileInvalidHeader) {
 }
 
 TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderAllFiles){
-
+    std::string folderPath = "../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters";
+    std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames = {
+        {"t0", orderedNodeNames_t0},
+        {"t1", orderedNodeNames_t1},
+        {"t2", orderedNodeNames_t2},
+        {"t3", orderedNodeNames_t3}
+    };
 }
 
 TEST_F(utilitiesTesting, dissipationScalingFunctionFromFolderPartialFiles){
