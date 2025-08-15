@@ -40,6 +40,13 @@ class PropagationModelOriginal : public PropagationModel
          */
         PropagationModelOriginal(const WeightedEdgeGraph* graph,std::function<double(double)> scaleFunc);
         /**
+         * @brief Constructor for the PropagationModelOriginal class, with vectorized scaling function.
+         * @param graph The graph to be used for the propagation model.
+         * @param scaleFunc The vectorized scaling function to be used in the propagation model.
+         * @details Initializes the propagation model with the specified scale function and the weighted adjacency matrix of the graph.
+         */
+        PropagationModelOriginal(const WeightedEdgeGraph* graph,std::function<arma::Col<double>(double)> scaleFunc);
+        /**
          * @brief Destructor for the PropagationModelOriginal class.
          * @details Cleans up the resources used by the propagation model.
          */
