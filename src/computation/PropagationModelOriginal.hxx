@@ -23,6 +23,7 @@ class PropagationModelOriginal : public PropagationModel
 {
     private:
         std::function<double(double)> scaleFunction; ///< The function to scale the propagation term. It takes a double value (time) and returns a double value.
+        std::function<arma::Col<double>(double)> scaleFunctionVectorized; ///< The function to scale the propagation term for vectorized operations. It takes a double value (time) and returns a vector of double values (scaling values).
         arma::dmat pseudoinverse; ///< The pseudoinverse of the weighted adjacency matrix of the graph, transposed and normalized by column, as an Armadillo matrix.
     public:
         /**
