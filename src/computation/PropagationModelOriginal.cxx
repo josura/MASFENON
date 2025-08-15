@@ -71,10 +71,11 @@ PropagationModelOriginal::PropagationModelOriginal(const WeightedEdgeGraph* grap
 }
 
 arma::Col<double> PropagationModelOriginal::propagate(arma::Col<double> input, double time){
-    return ( pseudoinverse * input * this->scaleFunction(time));
+    // return ( pseudoinverse * input * this->scaleFunction(time));
+    return this->scaleFunctionVectorized(time) % (pseudoinverse * input);
 }
 
 arma::Col<double> PropagationModelOriginal::propagationTerm(arma::Col<double> input, double time){
     //a propagation term doesn't exist in this case since it is a resolution of the system of equations
-    return pseudoinverse * input * this->scaleFunction(time);
+    return this->scaleFunctionVectorized(time) % (pseudoinverse * input);
 }
