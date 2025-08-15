@@ -50,6 +50,7 @@ include_directories(src)
 set(EXEC_MAIN "src/mains/main.cxx")
 set(EXEC_MPI_MAIN "src/mains/mainMPI.cxx")
 set(EXPERIMENT_MAIN "src/mains/testingPerformance.cxx")
+set(COMPUTATION_MAIN "src/mains/ComputationTesting.cxx")
 set(LIB_SRCS 
     src/data_structures/WeightedEdgeGraph.cxx
     src/utils/utilities.cxx
@@ -113,6 +114,11 @@ target_link_libraries( masfenon-MPI
 
 add_executable( experiments ${EXPERIMENT_MAIN})
 target_link_libraries( experiments 
+                       mysharedlib  
+                       ${lapackblas_libraries})
+
+add_executable( computation ${COMPUTATION_MAIN})
+target_link_libraries( computation 
                        mysharedlib  
                        ${lapackblas_libraries})
 

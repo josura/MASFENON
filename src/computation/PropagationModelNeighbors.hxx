@@ -24,6 +24,7 @@ class PropagationModelNeighbors : public PropagationModel
 {
     private:
         std::function<double(double)> scaleFunction; ///< The function to scale the propagation term. It takes a double value (time) and returns a double value.
+        std::function<arma::Col<double>(double)> scaleFunctionVectorized; ///< The function to scale the propagation term for vectorized operations. It takes a double value (time) and returns a vector of double values (scaling values).
         arma::dmat Wmat; ///< The weighted adjacency matrix of the graph, transposed and normalized by column, as an Armadillo matrix.
     public:
         /**
@@ -39,6 +40,13 @@ class PropagationModelNeighbors : public PropagationModel
          * @details Initializes the propagation model with the specified scale function and the weighted adjacency matrix of the graph.
          */
         PropagationModelNeighbors(const WeightedEdgeGraph* graph,std::function<double(double)> scaleFunc);
+        /**
+         * @brief Constructor for the PropagationModelNeighbors class, with vectorized scaling function.
+         * @param graph The graph to be used for the propagation model.
+         * @param scaleFunc The vectorized scaling function to be used in the propagation model.
+         * @details Initializes the propagation model with the specified scale function and the weighted adjacency matrix of the graph.
+         */
+        PropagationModelNeighbors(const WeightedEdgeGraph* graph,std::function<arma::Col<double>(double)> scaleFunc);
         /**
          * @brief Destructor for the PropagationModelNeighbors class.
          * @details Cleans up the resources used by the propagation model.

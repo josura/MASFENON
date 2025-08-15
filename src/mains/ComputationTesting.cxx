@@ -74,5 +74,9 @@ int main(int argc, char** argv){
     c1->updateInput(perturbation,true);
     auto computationInputAfter = c1->getInputAugmented();
 
+    // testing armadillo
+    arma::Mat<double> diagonalMatrix = arma::diagmat(arma::ones<arma::vec>(6));
+    diagonalMatrix.print("Diagonal Matrix:");
+
     return 0;
 }

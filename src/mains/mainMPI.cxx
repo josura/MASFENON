@@ -68,16 +68,19 @@ int main(int argc, char** argv) {
         ("nodeDescriptionFolder", po::value<std::string>(), "(string) nodes folder, where the files containing the description/nodes for all the graphs are contained, used to read the graph nodes, if not specified the graphs will be built with the edges files(could not contain some isolated nodes) for an example see the folder structure in data/testdata/testHeterogeneousTemporalGraph/nodesDescriptionDifferentStructure")
         ("sameTypeCommunication",po::bool_switch(&sameTypeCommunication),"() use same type communication, since it is not permitted as the standard definition of the model, this adds a virtual node for the same type type")
         ("outputFolder",po::value<std::string>(),"(string) output folder for output of the algorithm at each iteration")
-        ("intertypeIterations",po::value<uint>(),"(positive integer) number of iterations for intertype communication")
-        ("intratypeIterations",po::value<uint>(),"(positive integer) number of iterations for intratype communication")
+        ("intertypeIterations",po::value<int>(),"(positive integer) number of iterations for intertype communication")
+        ("intratypeIterations",po::value<int>(),"(positive integer) number of iterations for intratype communication")
         ("timestep",po::value<double>(),"timestep to use for the iteration, the final time is iterationIntracell*iterationIntercell*timestep")
         ("dissipationModel",po::value<std::string>(),"(string) the dissipation model for the computation, available models are: 'none (default)','power','random','periodic','scaled' and 'custom'")
         ("dissipationModelParameters",po::value<std::vector<double>>()->multitoken(),"(string) the parameters for the dissipation model, for the power dissipation indicate the base, for the random dissipation indicate the min and max value, for the periodic dissipation indicate the period")
+        ("dissipationModelParameterFolder", po::value<std::string>(),"(string) the folder where the parameters for the dissipation model are contained. Only supported with 'custom' dissipation. Each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping. if not specified, the default parameters are used or the parameters in dissipationModelParameters parameter are used")
         ("graphsFilesFolder",po::value<std::string>(),"(string) graphs (pathways or other types of graphs) file folder, for an example see in data data/testdata/testHeterogeneousGraph/graphsDifferentStructure")
         ("conservationModel",po::value<std::string>(),"(string) the conservation model used for the computation, available models are: 'none (default)','scaled','random' and 'custom' ")
         ("conservationModelParameters", po::value<std::vector<double>>()->multitoken(),"(vector<double>) the parameters for the dissipation model, for the scaled parameter the constant used to scale the conservation final results, in the case of random the upper and lower limit (between 0 and 1)")
+        ("conservationModelParameterFolder", po::value<std::string>(),"(string) the folder where the parameters for the conservation model are contained. Only supported with 'custom' conservation. each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping. if not specified, the default parameters are used or the parameters in conservationModelParameters parameter are used")
         ("propagationModel",po::value<std::string>(),"(string) the propagation model used for the computation, available models are: 'default(pseudoinverse creation)','scaled (pseudoinverse * scale parameter)', neighbors(propagate the values only on neighbors at every iteration and scale parameter) and 'customScaling' (pseudoinverse*scalingFunction(parameters)), 'customScalingNeighbors' (neighbors propagation and scalingFunction(parameters)), 'customPropagation' (custom scaling function and custom propagation function defined in src/PropagationModelCustom) ")
         ("propagationModelParameters", po::value<std::vector<double>>()->multitoken(),"(vector<double>) the parameters for the propagation model, for the scaled parameter the constant used to scale the conservation final results")
+        ("propagationModelParameterFolder", po::value<std::string>(),"(string) the folder where the parameters for the propagation model are contained, each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping. if not specified, the default parameters are used or the parameters in propagationModelParameters parameter are used")
         ("saturation",po::bool_switch(&saturation),"use saturation of values, default to 1, if another value is needed, use the saturationTerm")
         ("saturationTerm",po::value<double>(),"defines the limits of the saturation [-saturationTerm,saturationTerm], default to 1, if saturation is not set, this option is not used, if specified the program will stop the execution")
         ("customSaturationFunction",po::bool_switch(&customSaturation),"use custom saturation function defined in src/CustomFunctions.cxx, if this option is not set, the saturation function will be the default one")
@@ -102,10 +105,10 @@ int main(int argc, char** argv) {
     po::variables_map vm; ///< variables map for program options
     // parse the command line arguments
     po::store(
-        po::command_line_parser(argc, argv)    // ✅ use command_line_parser
-        .options(desc)                     // add your options_description
+        po::command_line_parser(argc, argv)    // use command_line_parser
+        .options(desc)                     // add options_description
         .extra_style_parser(&ignore_numbers)  // intercept negatives
-        .run(), vm                            // then parse
+        .run(), vm                            // parse
     );
     // notify the variables map
     // this will throw an exception if there are any errors in the command line arguments
@@ -121,6 +124,11 @@ int main(int argc, char** argv) {
     int intratypeIterations; ///< integer variable to indicate the number of iterations for the intratype communication
     DissipationModel* dissipationModel = nullptr; ///< pointer to the dissipation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
     ConservationModel* conservationModel = nullptr; ///< pointer to the conservation model used for the computation. TODO change to a smart pointer(shared_ptr). Or change it to a list of dissipation models for future customization.
+    std::vector<DissipationModel*> dissipationModels = {}; ///< vector of pointers to the dissipation models used for the computation, in case of multiple dissipation models 
+    std::vector<ConservationModel*> conservationModels = {}; ///< vector of pointers to the conservation models used for the computation, in case of multiple conservation models
+    std::string dissipationModelParametersFolderName; ///< string variable to indicate the folder where the dissipation model parameters are contained, each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping
+    std::string conservationModelParametersFolderName; ///< string variable to indicate the folder where the conservation model parameters are contained, each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping
+    std::string propagationModelParametersFolderName; ///< string variable to indicate the folder where the propagation model parameters are contained, each type can have a parameter file as a mapping of node->parameter(or parameters), if a file is missing for a type, than the parameters for that type will be 0, same can be said about nodes with no mapping
     double timestep = 1; ///< double variable to indicate the timestep to use for the iteration, the final time is iterationIntercell*timestep. The time between to intracell iterations is the timestep divided by the number of intracell iterations.
     // final output matrices if the output format is set to iterationMatrix
     std::map<std::string,Matrix<double>*> outputMatrices; ///< map of the output matrices, where the key is the name of the type, and the value is the matrix of the output values(iteration as columns and nodes values as rows)
@@ -230,17 +238,72 @@ int main(int argc, char** argv) {
         }
     } 
 
+    if(vm.count("dissipationModelParameters") && !vm.count("dissipationModel")){
+        //dissipation model parameters were set but no dissipation model was set
+        if(rank==0)logger.printError("dissipationModelParameters were set but no dissipationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameters") && !vm.count("conservationModel")){
+        //conservation model parameters were set but no conservation model was set
+        if(rank==0)logger.printError("conservationModelParameters were set but no conservationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameters") && !vm.count("propagationModel")){
+        //propagation model parameters were set but no propagation model was set
+        if(rank==0)logger.printError("propagationModelParameters were set but no propagationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+
+    if(vm.count("dissipationModelParameterFolder") && !vm.count("dissipationModel")){
+        //dissipation model parameters folder was set but no dissipation model was set
+        if(rank==0)logger.printError("dissipationModelParameterFolder was set but no dissipationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameterFolder") && !vm.count("conservationModel")){
+        //conservation model parameters folder was set but no conservation model was set
+        if(rank==0)logger.printError("conservationModelParameterFolder was set but no conservationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameterFolder") && !vm.count("propagationModel")){
+        //propagation model parameters folder was set but no propagation model was set
+        if(rank==0)logger.printError("propagationModelParameterFolder was set but no propagationModel was set, aborting")<<std::endl;
+        return 1;
+    }
+
+    if(vm.count("dissipationModelParameterFolder") && vm.count("dissipationModelParameters")){
+        //dissipation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("dissipationModelParameterFolder and dissipationModelParameters were both set, only one or 0(default configuration) can be set if dissipation is used, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("conservationModelParameterFolder") && vm.count("conservationModelParameters")){
+        //conservation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("conservationModelParameterFolder and conservationModelParameters were both set, only one or 0(default configuration) can be set if conservation is used, aborting")<<std::endl;
+        return 1;
+    }
+    if(vm.count("propagationModelParameterFolder") && vm.count("propagationModelParameters")){
+        //propagation model parameters folder and parameters were both set
+        if(rank==0)logger.printError("propagationModelParameterFolder and propagationModelParameters were both set, only one or 0(default configuration) can be set if propagation is used, aborting")<<std::endl;
+        return 1;
+    }
+
+    // control over the dissipation model, since the folder option can only be used with the custom dissipation model(custom dissipation supports both single parameters and parameters in the folder though)
+    if(vm.count("dissipationModel") && vm["dissipationModel"].as<std::string>() != "custom" && vm.count("dissipationModelParameterFolder")){
+        //dissipation model was set but the dissipation model is not custom
+        if(rank==0)logger.printError("dissipationModel was set to a non-custom model, but dissipationModelParameterFolder was set, aborting")<<std::endl;
+        return 1;
+    }
+
     // reading the parameters
 
     if (vm.count("intertypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intertype set to " 
-    << vm["intertypeIterations"].as<uint>() << ".\n";
+    << vm["intertypeIterations"].as<int>() << ".\n";
         int testingIterations = vm["intertypeIterations"].as<int>();
         if(testingIterations <= 0){
             if(rank==0)logger.printError("intertypeIterations must be a positive value, aborting")<<std::endl;
             return 1;
         }
-        intertypeIterations = vm["intertypeIterations"].as<uint>();
+        intertypeIterations = testingIterations; // only assigned when positive
     } else {
         if(rank==0)logger << "[LOG] iterations intertype not set, set to default: 10 iterations \n";
         intertypeIterations = 10;
@@ -248,13 +311,13 @@ int main(int argc, char** argv) {
 
     if (vm.count("intratypeIterations")) {
         if(rank==0)logger << "[LOG] iterations intratype set to " 
-    << vm["intratypeIterations"].as<uint>() << ".\n";
+    << vm["intratypeIterations"].as<int>() << ".\n";
         int testingIterations = vm["intratypeIterations"].as<int>();
         if(testingIterations <= 0){
             if(rank==0)logger.printError("intratypeIterations must be a positive value, aborting")<<std::endl;
             return 1;
         }
-        intratypeIterations = vm["intratypeIterations"].as<uint>();
+        intratypeIterations = testingIterations;
     } else {
         if(rank==0)logger << "[LOG] iterations intratype not set, set to default: 5 iterations \n";
         intratypeIterations = 5;
@@ -434,171 +497,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (vm.count("dissipationModel")) {
-        if(rank==0)logger << "[LOG] dissipation model was set to "
-            << vm["dissipationModel"].as<std::string>() << ".\n";
-        std::string dissipationModelName = vm["dissipationModel"].as<std::string>();
-        if(dissipationModelName == "none"){
-            if(rank==0)logger << "[LOG] dissipation model set to default (none)\n";
-            dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
-        } else if(dissipationModelName == "power"){
-            if (vm.count("dissipationModelParameters")) {
-                if(rank==0)logger << "[LOG] dissipation model parameters for power dissipation were declared to be" << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
-                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                if(dissipationModelParameters.size() == 1){
-                    dissipationModel = new DissipationModelPow(dissipationModelParameters[0]);
-                } else {
-                    if(rank==0)logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
-                dissipationModel = new DissipationModelPow(2);
-            }
-        } else if(dissipationModelName == "random"){
-            if (vm.count("dissipationModelParameters")) {
-                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
-                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["dissipationModelParameters"].as<std::vector<double>>()[1] << ".\n";
-                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                if(dissipationModelParameters.size() == 2){
-                    dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
-                } else {
-                    if(rank==0)logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("dissipation model parameters for random dissipation was not set: aborting")<<std::endl;
-                return 1;
-            }
-        } else if(dissipationModelName == "scaled"){
-            if(rank==0)logger << "[LOG] dissipation model was set to scaled, the function will be a constant function with the value of the parameter" << std::endl;
-            if (vm.count("dissipationModelParameters")) {
-                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
-                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
-                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                if(dissipationModelParameters.size() == 1){
-                    dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];});
-                } else {
-                    if(rank==0)logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
-                dissipationModel = new DissipationModelScaled();
-            }
-        } else if(dissipationModelName == "periodic"){
-            if(rank==0)logger << "[LOG] dissipation model was set to periodic, the function will be a sinusoidal function with amplitude, period and phase" << std::endl;
-            if (vm.count("dissipationModelParameters")) {
-                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                if (dissipationModelParameters.size() == 3) {
-                    if(rank==0)logger << "[LOG] dissipation model parameters were set to Amplitude:"
-                        << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
-                    dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
-                } else {
-                    if(rank==0)logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
-                    return 1;
-                }
-                
-                
-            } else {
-                if(rank==0)logger.printError("dissipation model parameters for periodic dissipation was not set: aborting")<<std::endl;
-                return 1;
-            }
-        } else if(dissipationModelName == "custom"){
-            //control if custom function for dissipation returns double and takes a single parameter as double
-            if(rank==0)logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors" << std::endl;
-            if (vm.count("dissipationModelParameters")) {
-                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
-                if(rank==0){
-                    logger << "[LOG] dissipation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
-                    for (auto param : dissipationModelParameters) {
-                        logger << param << ", ";
-                    }
-                    logger << ")" << std::endl;
-                }
-                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters));
-            } else {
-                if(rank==0)logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
-                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
-            }
-        } else {
-            if(rank==0)logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
-            return 1;
-        }
-    } else { //dissipation model set to default (none)
-        if(rank==0)logger << "[LOG] dissipation model was not set. set to default (none)\n";
-        dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
-    }
 
-
-    if (vm.count("conservationModel")) {
-        if(rank==0)logger << "[LOG] conservation model was set to "
-            << vm["conservationModel"].as<std::string>() << ".\n";
-        std::string conservationModelName = vm["conservationModel"].as<std::string>();
-        if(conservationModelName == "none"){
-            if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
-            conservationModel = new ConservationModel([](double time)->double{return 0;});
-        } else if (conservationModelName == "scaled"){
-            if (vm.count("conservationModelParameters")) {
-                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
-            << vm["conservationModelParameters"].as<std::vector<double>>()[0] << ".\n";
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(conservationModelParameters.size() == 1){
-                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
-                } else {
-                    if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
-                conservationModel = new ConservationModel();
-            }
-        } else if (conservationModelName == "random"){
-            if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
-            if (vm.count("conservationModelParameters")) {
-                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
-                    << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(conservationModelParameters.size() == 2){
-                    //control if lower and upper limits of the random values are within 0 and 1
-                    if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
-                        if(rank==0)logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
-                        return 1;
-                    }
-                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
-                } else {
-                    if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
-                    return 1;
-                }
-            } else {
-                if(rank==0)logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
-                return 1;
-            }
-        } else if(conservationModelName == "custom"){
-            //control if custom function for conservation returns double and takes a single parameter as double
-            if(rank==0)logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
-            if (vm.count("conservationModelParameters")) {
-                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
-                if(rank==0){
-                    logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
-                    for (auto param : conservationModelParameters) {
-                        logger << param << ", ";
-                    }
-                    logger << ")" << std::endl;
-                }
-                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
-            } else {
-                if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
-                conservationModel = new ConservationModel(getConservationScalingFunction());
-            }
-        } else {
-            if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
-            return 1;
-        }
-    } else {
-        if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
-        conservationModel = new ConservationModel([](double time)->double{return 0;});
-    }
 
     //logging if saturation is set and saturation parameters are set
     if (saturation) {
@@ -882,41 +781,42 @@ int main(int argc, char** argv) {
 
     // TODO get rid of the augment graph function and use the addition of nodes or edges directly
     Computation** typeComputations = new Computation*[finalWorkload];
-    int indexComputation = 0;
-    std::vector<int> typesIndexes = std::vector<int>(finalWorkload,-1); 
-    std::vector<int> invertedTypesIndexes = std::vector<int>(finalWorkload,-1); 
+    // I am not convinced what this variable does anymore, 
+    // maybe in the past it was used to store the index of the type in the types vector when considering subtypes
+    // but now it's just a useless vector that goes from 0 to finalWorkload-1, not even a -1 is inside for sure, since subtyping is already done before this point  
     for(int i = 0; i < finalWorkload; i++){
         if(indexMapGraphTypesToValuesTypes[i+startIdx] == -1){
             logger.printLog(true, "type ", types[i+startIdx], " not found in the initial perturbation files, using zero vector as input");
             std::vector<double> input = std::vector<double>(graphsNodes[i].size(),0);
             Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]);   
-            tmpCompPointer->setDissipationModel(dissipationModel);
-            tmpCompPointer->setConservationModel(conservationModel);
-            typeComputations[indexComputation] = tmpCompPointer;
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            // tmpCompPointer->setConservationModel(conservationModels[i]);
+            typeComputations[i] = tmpCompPointer;
             //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
             // TODO generalize by removing the type granularity in this code, that is by considering only the types that are encoded?
             if(virtualNodesGranularity == "type"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
+                typeComputations[i]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
             } else if (virtualNodesGranularity == "typeAndNode"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
+                typeComputations[i]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
             }
         } else {
             int index = indexMapGraphTypesToValuesTypes[i+startIdx];
             std::vector<double> input = inputInitials[index];
             Computation* tmpCompPointer = new Computation(types[i+startIdx],input,graphs[i],graphsNodes[i]); 
-            tmpCompPointer->setDissipationModel(dissipationModel);
-            tmpCompPointer->setConservationModel(conservationModel);
-            typeComputations[indexComputation] = tmpCompPointer;
+            // tmpCompPointer->setDissipationModel(dissipationModel);
+            // tmpCompPointer->setConservationModel(conservationModel);
+            // tmpCompPointer->setDissipationModel(dissipationModels[i]);
+            // tmpCompPointer->setConservationModel(conservationModels[i]);
+            typeComputations[i] = tmpCompPointer;
             //No inverse computation with the augmented graph since virtual nodes edges are not yet inserted
             if(virtualNodesGranularity == "type"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
+                typeComputations[i]->augmentGraphNoComputeInverse(types,std::vector<std::pair<std::string,std::string>>(),std::vector<double>(), true); //self included since the code in MPI needs it
             } else if (virtualNodesGranularity == "typeAndNode"){
-                typeComputations[indexComputation]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
+                typeComputations[i]->augmentGraphNoComputeInverse(std::vector<std::string>(), std::vector<std::pair<std::string,std::string>>(), std::vector<double>(), false); //no types are passed since the virtual nodes will be added to the graph in the interaction section of this code
             }
         }
-        typesIndexes[i] = indexComputation;
-        invertedTypesIndexes[indexComputation] = i;
-        indexComputation++;
 
     }
 
@@ -924,7 +824,7 @@ int main(int argc, char** argv) {
     if(saturation && customSaturation){
         if(rank==0)logger << "[LOG] custom saturation function set, using the custom saturation function defined in src/CustomFunctions.cxx"<<std::endl;
         for(int i = 0; i < finalWorkload;i++){
-            typeComputations[typesIndexes[i]]->setSaturationFunction(getSaturationFunction());
+            typeComputations[i]->setSaturationFunction(getSaturationFunction());
         }
     } else {
         if(rank==0)logger << "[LOG] custom saturation function not set, using the default saturation function"<<std::endl;
@@ -949,9 +849,9 @@ int main(int argc, char** argv) {
         }
         #pragma omp parallel for
         for (int i = 0; i < finalWorkload;i++) {
-            if(typeInteractionsEdges.first.contains(types[i+startIdx]) && typesIndexes[i] != -1){
+            if(typeInteractionsEdges.first.contains(types[i+startIdx])){
                 // granularity is already considered in the function that reads from the file previously called
-                typeComputations[typesIndexes[i]]->addEdgesAndNodes(typeInteractionsEdges.first[types[i+startIdx]], false, false); // no inverse computation since it is done in the propagation model
+                typeComputations[i]->addEdgesAndNodes(typeInteractionsEdges.first[types[i+startIdx]], false, false); // no inverse computation since it is done in the propagation model
             }
         }
         for(auto edge = typeInteractionsEdges.second.cbegin() ; edge != typeInteractionsEdges.second.cend(); edge++ ){
@@ -973,6 +873,253 @@ int main(int argc, char** argv) {
             }
             
         }
+    }
+
+    // conservation model initialization from command line options, since the number of types is not known before, we will be reading the conservation model now instead of when we were reading the parameters
+    conservationModels = std::vector<ConservationModel*>(finalWorkload, nullptr); ///< vector of conservation models for each type, initialized to nullptr
+    if (vm.count("conservationModel")) {
+        if(rank==0)logger << "[LOG] conservation model was set to "
+            << vm["conservationModel"].as<std::string>() << ".\n";
+        std::string conservationModelName = vm["conservationModel"].as<std::string>();
+        if(conservationModelName == "none"){
+            if(rank==0)logger << "[LOG] conservation model set to default (none)\n";
+            conservationModel = new ConservationModel([](double time)->double{return 0;});
+            for(int i = 0; i < finalWorkload; ++i){
+                conservationModels[i] = new ConservationModel([](double time)->double{return 0;}); // all processes will use the same conservation model
+            }
+        } else if (conservationModelName == "scaled"){
+            if (vm.count("conservationModelParameters")) {
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
+            << vm["conservationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(conservationModelParameters.size() == 1){
+                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        conservationModels[i] = new ConservationModel([conservationModelParameters](double time)->double{return conservationModelParameters[0];}); // all processes will use the same conservation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("conservation model parameters for scaled conservation must be one parameter: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("conservation model parameters for scaled conservation was not set: setting to default 0.5 costant")<<std::endl;
+                conservationModel = new ConservationModel();
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(); // all processes will use the same conservation model
+                }
+            }
+        } else if (conservationModelName == "random"){
+            if(rank==0)logger << "[LOG] conservation model was set to random, the function will be a random number between two values defined in the parameters" << std::endl;
+            if (vm.count("conservationModelParameters")) {
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be "
+                    << vm["conservationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["conservationModelParameters"].as<std::vector<double>>()[1] << ".\n";
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(conservationModelParameters.size() == 2){
+                    //control if lower and upper limits of the random values are within 0 and 1
+                    if( (conservationModelParameters[0] < 0) || (conservationModelParameters[0] > 1) || (conservationModelParameters[1] < 0) || (conservationModelParameters[1] > 1) || (conservationModelParameters[0] > conservationModelParameters[1]) ){
+                        if(rank==0)logger.printError("conservation model parameters for random conservation must be between 0 and 1 and must be a < b: aborting")<<std::endl;
+                        return 1;
+                    }
+                    conservationModel = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        conservationModels[i] = new ConservationModel([conservationModelParameters](double time)->double{return randomRealNumber(conservationModelParameters[0],conservationModelParameters[1]);}); // all processes will use the same conservation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("conservation model parameters for random conservation must be two: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("conservation model parameters for random conservation was not set: aborting")<<std::endl;
+                return 1;
+            }
+        } else if(conservationModelName == "custom"){
+            //control if custom function for conservation returns double and takes a single parameter as double
+            if(rank==0)logger << "[LOG] conservation model was set to custom, if the custom function defined for scaling is not correctly implemented, there will be errors" << std::endl;
+            if (vm.count("conservationModelParameters")) {
+                std::vector<double> conservationModelParameters = vm["conservationModelParameters"].as<std::vector<double>>();
+                if(rank==0){
+                    logger << "[LOG] conservation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                    for (auto param : conservationModelParameters) {
+                        logger << param << ", ";
+                    }
+                    logger << ")" << std::endl;
+                }
+                conservationModel = new ConservationModel(getConservationScalingFunction(conservationModelParameters));
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(getConservationScalingFunction(conservationModelParameters)); // all processes will use the same conservation model
+                }
+            } else if(vm.count("conservationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be in the folder "<<vm["conservationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string conservationModelParametersFolder = vm["conservationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto conservationModelScalingFunctions = conservationScalingFunctionsFromFolder(conservationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(conservationModelScalingFunctions[types[i+startIdx]]); // all processes will use the same dissipation model with different parameters
+                }
+            } else {
+                if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                conservationModel = new ConservationModel(getConservationScalingFunction());
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(getConservationScalingFunction()); // all processes will use the same conservation model
+                }
+            }
+        } else {
+            if(rank==0)logger.printError("conservation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
+            return 1;
+        }
+    } else {
+        if(rank==0)logger << "[LOG] conservation model was not set. set to default (none)"<<std::endl;
+        conservationModel = new ConservationModel([](double time)->double{return 0;});
+        for(int i = 0; i < finalWorkload; ++i){
+            conservationModels[i] = new ConservationModel([](double time)->double{return 0;}); // all processes will use the same conservation model
+        }
+    }
+
+    // dissipation model initialization from command line options, same situation as for the conservation model, the number of types is not known before
+    dissipationModels = std::vector<DissipationModel*>(finalWorkload, nullptr); ///< vector of dissipation models for each type, initialized to nullptr
+    if (vm.count("dissipationModel")) {
+        if(rank==0)logger << "[LOG] dissipation model was set to "
+            << vm["dissipationModel"].as<std::string>() << ".\n";
+        std::string dissipationModelName = vm["dissipationModel"].as<std::string>();
+        if(dissipationModelName == "none"){
+            if(rank==0)logger << "[LOG] dissipation model set to default (none)\n";
+            dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
+            for(int i = 0; i < finalWorkload; ++i){
+                dissipationModels[i] = new DissipationModelScaled([](double time)->double{return 0;}); // all processes will use the same dissipation model
+            }
+        } else if(dissipationModelName == "power"){
+            if (vm.count("dissipationModelParameters")) {
+                if(rank==0)logger << "[LOG] dissipation model parameters for power dissipation were declared to be" << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                if(dissipationModelParameters.size() == 1){
+                    dissipationModel = new DissipationModelPow(dissipationModelParameters[0]);
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelPow(dissipationModelParameters[0]); // all processes will use the same dissipation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("dissipation model parameters for power dissipation must be one: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("dissipation model parameters for power dissipation was not set: setting to default (2)")<<std::endl;
+                dissipationModel = new DissipationModelPow(2);
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelPow(2); // all processes will use the same dissipation model
+                }
+            }
+        } else if(dissipationModelName == "random"){
+            if (vm.count("dissipationModelParameters")) {
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
+                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << " & " << vm["dissipationModelParameters"].as<std::vector<double>>()[1] << ".\n";
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                if(dissipationModelParameters.size() == 2){
+                    dissipationModel = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]);
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelRandom(dissipationModelParameters[0],dissipationModelParameters[1]); // all processes will use the same dissipation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("dissipation model parameters for random dissipation must be two: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("dissipation model parameters for random dissipation was not set: aborting")<<std::endl;
+                return 1;
+            }
+        } else if(dissipationModelName == "scaled"){
+            if(rank==0)logger << "[LOG] dissipation model was set to scaled, the function will be a constant function with the value of the parameter" << std::endl;
+            if (vm.count("dissipationModelParameters")) {
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be "
+                    << vm["dissipationModelParameters"].as<std::vector<double>>()[0] << ".\n";
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                if(dissipationModelParameters.size() == 1){
+                    dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0];}); // all processes will use the same dissipation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("dissipation model parameters for scaled dissipation must be one: aborting")<<std::endl;
+                    return 1;
+                }
+            } else {
+                if(rank==0)logger.printError("dissipation model parameters for scaled dissipation was not set: setting to default 0.5 costant")<<std::endl;
+                dissipationModel = new DissipationModelScaled();
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(); // all processes will use the same dissipation model
+                }
+            }
+        } else if(dissipationModelName == "periodic"){
+            if(rank==0)logger << "[LOG] dissipation model was set to periodic, the function will be a sinusoidal function with amplitude, period and phase" << std::endl;
+            if (vm.count("dissipationModelParameters")) {
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                if (dissipationModelParameters.size() == 3) {
+                    if(rank==0)logger << "[LOG] dissipation model parameters were set to Amplitude:"
+                        << dissipationModelParameters[0] << " & period:" << dissipationModelParameters[1] << " & phase: " << dissipationModelParameters[2] << std::endl;
+                    dissipationModel = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);});
+                    for(int i = 0; i < finalWorkload; ++i){
+                        dissipationModels[i] = new DissipationModelScaled([dissipationModelParameters](double time)->double{return dissipationModelParameters[0]*sin(2*arma::datum::pi/dissipationModelParameters[1]*time + dissipationModelParameters[2]);}); // all processes will use the same dissipation model
+                    }
+                } else {
+                    if(rank==0)logger.printError("dissipation model parameters for periodic dissipation must be three for amplitude, period and phase: aborting")<<std::endl;
+                    return 1;
+                }
+                
+                
+            } else {
+                if(rank==0)logger.printError("dissipation model parameters for periodic dissipation was not set: aborting")<<std::endl;
+                return 1;
+            }
+        } else if(dissipationModelName == "custom"){
+            //control if custom function for dissipation returns double and takes a single parameter as double
+            if(rank==0)logger << "[LOG] dissipation model was set to custom, if the function is not correctly defined there will be errors" << std::endl;
+            if (vm.count("dissipationModelParameters")) {
+                std::vector<double> dissipationModelParameters = vm["dissipationModelParameters"].as<std::vector<double>>();
+                if(rank==0){
+                    logger << "[LOG] dissipation model parameters were declared to be: ("; // this section can bring problems with the stream and concurrency
+                    for (auto param : dissipationModelParameters) {
+                        logger << param << ", ";
+                    }
+                    logger << ")" << std::endl;
+                }
+                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters));
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(getDissipationScalingFunction(dissipationModelParameters)); // all processes will use the same dissipation model
+                }
+            } else if(vm.count("dissipationModelParameterFolder")) {
+                if(rank==0)logger << "[LOG] dissipation model parameters were declared to be in the folder "<<vm["dissipationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string dissipationModelParametersFolder = vm["dissipationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto dissipationModelScalingFunctions = dissipationScalingFunctionsFromFolder(dissipationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(dissipationModelScalingFunctions[types[i+startIdx]]); // all processes will use the same dissipation model with different parameters
+                }
+            } else {
+                if(rank==0)logger << "[LOG] dissipation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
+                dissipationModel = new DissipationModelScaled(getDissipationScalingFunction());
+                for(int i = 0; i < finalWorkload; ++i){
+                    dissipationModels[i] = new DissipationModelScaled(getDissipationScalingFunction()); // all processes will use the same dissipation model
+                }
+            }
+        } else {
+            if(rank==0)logger.printError("dissipation model scale function is not any of the types. Conservation model scale functions available are none(default), scaled, random and custom");
+            return 1;
+        }
+    } else { //dissipation model set to default (none)
+        if(rank==0)logger << "[LOG] dissipation model was not set. set to default (none)\n";
+        dissipationModel = new DissipationModelScaled([](double time)->double{return 0;});
+        for(int i = 0; i < finalWorkload; ++i){
+            dissipationModels[i] = new DissipationModelScaled([](double time)->double{return 0;}); // all processes will use the same dissipation model
+        }
+    }
+    //initialize the dissipation and conservation models for each computation
+    for(int i = 0; i < finalWorkload; i++){
+        typeComputations[i]->setDissipationModel(dissipationModels[i]);
+        typeComputations[i]->setConservationModel(conservationModels[i]);
     }
 
     // create a map that maps couples of strings (source type and target type) to a vector of pairs of strings, representing how the virtual outputs are mapped in the subarray passed to MPI send 
@@ -1157,13 +1304,29 @@ int main(int argc, char** argv) {
                     << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
         } else if(propagationModelName == "customScalingNeighbors"){
             if(rank==0)logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
@@ -1172,13 +1335,29 @@ int main(int argc, char** argv) {
                     << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
-            } else{
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
             
         } else if(propagationModelName == "customPropagation"){
@@ -1188,13 +1367,29 @@ int main(int argc, char** argv) {
                 << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;  //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
         
         } else {
@@ -1302,7 +1497,6 @@ int main(int argc, char** argv) {
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
                         } else if (vm.count("saturationTerm") >= 1) {
                             double saturationTerm = vm["saturationTerm"].as<double>();
-                            //std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
                             std::vector<double> saturationVector = std::vector<double>(typeComputations[i]->getAugmentedGraph()->getNumNodes(),saturationTerm);
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
                         }
@@ -1670,11 +1864,11 @@ int main(int argc, char** argv) {
 
     // delete typeComputations objects
     for(int i = 0; i < finalWorkload; i++){
-        typeComputations[i]->freeFunctions();
+        typeComputations[i]->freeFunctions();  // freeing propagation model, dissipation model and conservation model
         delete typeComputations[i];
     }
-    delete conservationModel; //TO CHANGE
-    delete dissipationModel; // TO CHANGE
+    delete conservationModel; //TO CHANGE, REMOVE
+    delete dissipationModel; // TO CHANGE, REMOVE
     delete[] typeComputations;
     
     // delete the virtual outputs vector of arrays

@@ -1059,6 +1059,346 @@ std::pair<std::map<std::string,std::vector<std::tuple<std::string,std::string,do
     return ret; 
 }
 
+std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames){
+    if(!file_exists(filename)){
+        throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: file does not exists " + filename);
+    }
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: unable to open file " + filename);
+    }
+    std::function<arma::Col<double>(double)> ret;
+    //read the first line to get the header
+    std::string line;
+    getline(infile, line);
+    std::vector<std::string> entriesHeader = splitStringIntoVector(line, "\t");
+    // check if the header is valid
+    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" || boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
+        throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
+    }
+    // read the rest of the file
+    std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getDissipationScalingFunction());
+    while (getline(infile, line)) {
+        std::vector<std::string> entries = splitStringIntoVector(line, "\t");
+        if(entries.size() != 2){
+            throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid entry in file " + filename + ", expected two columns, got " + std::to_string(entries.size()));
+        }
+        std::string name = entries[0];
+        std::string parameters = entries[1];
+        std::vector<std::string> parametersVector = splitStringIntoVector(parameters, ",");
+        std::vector<double> parametersDouble;
+        for (const auto& param : parametersVector) {
+            try {
+                parametersDouble.push_back(std::stod(param));
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
+            }
+        }
+        // find the index of the name in the orderedNodeNames vector
+        auto it = std::find(orderedNodeNames.begin(), orderedNodeNames.end(), name);
+        if (it != orderedNodeNames.end()) {
+            size_t index = std::distance(orderedNodeNames.begin(), it);
+            // create the function and store it in the orderedFunctions vector
+            // try to create the function, if it fails it means that the parameters are not valid for the function
+            try {
+                orderedFunctions[index] = getDissipationScalingFunction(parametersDouble);
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: probably invalid parameters for function " + name + " in file " + filename + ", " + e.what());
+            }
+        } else { // if the name is not found in the orderedNodeNames vector, ignore it and print a warning
+            Logger::getInstance().printWarning("utilities::dissipationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector, ignoring it");
+            //throw std::invalid_argument("utilities::dissipationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
+        }
+    }
+    infile.close();
+    // create the function that takes a double and returns a column vector with the values of the functions for each node
+    ret = [orderedFunctions](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedFunctions.size());
+        for (size_t i = 0; i < orderedFunctions.size(); ++i) {
+            result(i) = orderedFunctions[i](t);
+        }
+        return result;
+    };
+        
+    return ret;
+}
+
+std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
+    std::map<std::string, std::function<arma::Col<double>(double)>> ret;
+    std::vector<std::string> typesFromMap;
+    for(const auto& [type, nodeNames] : typeToOrderedNodeNames){
+        typesFromMap.push_back(type);
+    }
+    std::vector<std::string> files = get_all(folderPath, ".tsv");
+    std::vector<std::string> expectedFiles;
+    for(const auto& type : typesFromMap){
+        expectedFiles.push_back(folderPath + "/" + type + ".tsv");
+    }
+    if(files.size() == 0){
+        Logger::getInstance().printWarning("utilities::dissipationScalingFunctionsFromFolder: no files found in folder " + folderPath + ", using default functions for all types");
+        // if no files are found, use the default function for all types
+        for(const auto& type : typesFromMap){
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getDissipationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+                
+        }
+        return ret;
+    }
+    // check if the files are present, if a file is not present, use the default function with the correct number of returned length for the scaling function
+    for(const auto& type : typesFromMap){
+        if(std::find(files.begin(), files.end(), folderPath + "/" + type + ".tsv") == files.end()){
+            Logger::getInstance().printWarning("utilities::dissipationScalingFunctionsFromFolder: file " + folderPath + "/" + type + ".tsv not found, using default function for type " + type);
+            // if the file is not found, use the default function with the correct number of returned length for the scaling function
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getDissipationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+        } else {
+            ret[type] = dissipationScalingFunctionFromFile(folderPath + "/" + type + ".tsv", typeToOrderedNodeNames[type]);
+        }
+    }
+    return ret;
+}
+
+std::function<arma::Col<double>(double)> conservationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames){
+    if(!file_exists(filename)){
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: file does not exists " + filename);
+    }
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: unable to open file " + filename);
+    }
+    std::function<arma::Col<double>(double)> ret;
+    //read the first line to get the header
+    std::string line;
+    getline(infile, line);
+    std::vector<std::string> entriesHeader = splitStringIntoVector(line, "\t");
+    // check if the header is valid
+    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" || boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
+    }
+    // read the rest of the file
+    std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getConservationScalingFunction());
+    while (getline(infile, line)) {
+        std::vector<std::string> entries = splitStringIntoVector(line, "\t");
+        if(entries.size() != 2){
+            throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid entry in file " + filename + ", expected two columns, got " + std::to_string(entries.size()));
+        }
+        std::string name = entries[0];
+        std::string parameters = entries[1];
+        std::vector<std::string> parametersVector = splitStringIntoVector(parameters, ",");
+        std::vector<double> parametersDouble;
+        for (const auto& param : parametersVector) {
+            try {
+                parametersDouble.push_back(std::stod(param));
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
+            }
+        }
+        // find the index of the name in the orderedNodeNames vector
+        auto it = std::find(orderedNodeNames.begin(), orderedNodeNames.end(), name);
+        if (it != orderedNodeNames.end()) {
+            size_t index = std::distance(orderedNodeNames.begin(), it);
+            // create the function and store it in the orderedFunctions vector
+            // try to create the function, if it fails it means that the parameters are not valid for the function
+            try {
+                orderedFunctions[index] = getConservationScalingFunction(parametersDouble);
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: probably invalid parameters for function " + name + " in file " + filename + ", " + e.what());
+            }
+        } else { // if the name is not found in the orderedNodeNames vector, ignore it and print a warning
+            Logger::getInstance().printWarning("utilities::conservationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector, ignoring it");
+            //throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
+        }
+    }
+    infile.close();
+    // create the function that takes a double and returns a column vector with the values of the functions for each node
+    ret = [orderedFunctions](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedFunctions.size());
+        for (size_t i = 0; i < orderedFunctions.size(); ++i) {
+            result(i) = orderedFunctions[i](t);
+        }
+        return result;
+    };
+        
+    return ret;
+}
+
+std::map<std::string, std::function<arma::Col<double>(double)>> conservationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
+    std::map<std::string, std::function<arma::Col<double>(double)>> ret;
+    std::vector<std::string> typesFromMap;
+    for(const auto& [type, nodeNames] : typeToOrderedNodeNames){
+        typesFromMap.push_back(type);
+    }
+    std::vector<std::string> files = get_all(folderPath, ".tsv");
+    std::vector<std::string> expectedFiles;
+    for(const auto& type : typesFromMap){
+        expectedFiles.push_back(folderPath + "/" + type + ".tsv");
+    }
+    if(files.size() == 0){
+        Logger::getInstance().printWarning("utilities::conservationScalingFunctionsFromFolder: no files found in folder " + folderPath + ", using default functions for all types");
+        // if no files are found, use the default function for all types
+        for(const auto& type : typesFromMap){
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getConservationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+                
+        }
+        return ret;
+    }
+    // check if the files are present, if a file is not present, use the default function with the correct number of returned length for the scaling function
+    for(const auto& type : typesFromMap){
+        if(std::find(files.begin(), files.end(), folderPath + "/" + type + ".tsv") == files.end()){
+            Logger::getInstance().printWarning("utilities::conservationScalingFunctionsFromFolder: file " + folderPath + "/" + type + ".tsv not found, using default function for type " + type);
+            // if the file is not found, use the default function with the correct number of returned length for the scaling function
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getConservationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+        } else {
+            ret[type] = conservationScalingFunctionFromFile(folderPath + "/" + type + ".tsv", typeToOrderedNodeNames[type]);
+        }
+    }
+    return ret;
+}
+
+std::function<arma::Col<double>(double)> propagationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames){
+    if(!file_exists(filename)){
+        throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: file does not exists " + filename);
+    }
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: unable to open file " + filename);
+    }
+    std::function<arma::Col<double>(double)> ret;
+    //read the first line to get the header
+    std::string line;
+    getline(infile, line);
+    std::vector<std::string> entriesHeader = splitStringIntoVector(line, "\t");
+    // check if the header is valid
+    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" || boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
+        throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
+    }
+    // read the rest of the file
+    std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getPropagationScalingFunction());
+    while (getline(infile, line)) {
+        std::vector<std::string> entries = splitStringIntoVector(line, "\t");
+        if(entries.size() != 2){
+            throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: invalid entry in file " + filename + ", expected two columns, got " + std::to_string(entries.size()));
+        }
+        std::string name = entries[0];
+        std::string parameters = entries[1];
+        std::vector<std::string> parametersVector = splitStringIntoVector(parameters, ",");
+        std::vector<double> parametersDouble;
+        for (const auto& param : parametersVector) {
+            try {
+                parametersDouble.push_back(std::stod(param));
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
+            }
+        }
+        // find the index of the name in the orderedNodeNames vector
+        auto it = std::find(orderedNodeNames.begin(), orderedNodeNames.end(), name);
+        if (it != orderedNodeNames.end()) {
+            size_t index = std::distance(orderedNodeNames.begin(), it);
+            // create the function and store it in the orderedFunctions vector
+            // try to create the function, if it fails it means that the parameters are not valid for the function
+            try {
+                orderedFunctions[index] = getPropagationScalingFunction(parametersDouble);
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::propagationScalingFunctionFromFile: probably invalid parameters for function " + name + " in file " + filename + ", " + e.what());
+            }
+        } else { // if the name is not found in the orderedNodeNames vector, ignore it and print a warning
+            Logger::getInstance().printWarning("utilities::propagationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector, ignoring it");
+            //throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
+        }
+    }
+    infile.close();
+    // create the function that takes a double and returns a column vector with the values of the functions for each node
+    ret = [orderedFunctions](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedFunctions.size());
+        for (size_t i = 0; i < orderedFunctions.size(); ++i) {
+            result(i) = orderedFunctions[i](t);
+        }
+        return result;
+    };
+        
+    return ret;
+}
+
+std::map<std::string, std::function<arma::Col<double>(double)>> propagationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames){
+    std::map<std::string, std::function<arma::Col<double>(double)>> ret;
+    std::vector<std::string> typesFromMap;
+    for(const auto& [type, nodeNames] : typeToOrderedNodeNames){
+        typesFromMap.push_back(type);
+    }
+    std::vector<std::string> files = get_all(folderPath, ".tsv");
+    std::vector<std::string> expectedFiles;
+    for(const auto& type : typesFromMap){
+        expectedFiles.push_back(folderPath + "/" + type + ".tsv");
+    }
+    if(files.size() == 0){
+        Logger::getInstance().printWarning("utilities::propagationScalingFunctionsFromFolder: no files found in folder " + folderPath + ", using default functions for all types");
+        // if no files are found, use the default function for all types
+        for(const auto& type : typesFromMap){
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getPropagationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+                
+        }
+        return ret;
+    }
+    // check if the files are present, if a file is not present, use the default function with the correct number of returned length for the scaling function
+    for(const auto& type : typesFromMap){
+        if(std::find(files.begin(), files.end(), folderPath + "/" + type + ".tsv") == files.end()){
+            Logger::getInstance().printWarning("utilities::propagationScalingFunctionsFromFolder: file " + folderPath + "/" + type + ".tsv not found, using default function for type " + type);
+            // if the file is not found, use the default function with the correct number of returned length for the scaling function
+            auto orderedNames = typeToOrderedNodeNames[type];
+            ret[type] = [orderedNames](double t) -> arma::Col<double> {
+                arma::Col<double> result(orderedNames.size());
+                #pragma omp parallel for
+                for (size_t i = 0; i < orderedNames.size(); ++i) {
+                    result(i) = getPropagationScalingFunction()(t); // using the default function with the size of the ordered names
+                }
+                return result;
+            };
+        } else {
+            ret[type] = propagationScalingFunctionFromFile(folderPath + "/" + type + ".tsv", typeToOrderedNodeNames[type]);
+        }
+    }
+    return ret;
+}
+
+
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
