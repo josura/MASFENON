@@ -10,6 +10,8 @@
 
 PropagationModelOriginal::PropagationModelOriginal(const WeightedEdgeGraph* graph){
     this->scaleFunction = [](double time)-> double{return 0.5;};
+    int numElements = graph->getNumNodes();
+    this->scaleFunctionVectorized = [numElements](double time)-> arma::Col<double>{return arma::ones<arma::Col<double>>(numElements) * 0.5;};
 
     //pseudoinverse initialization
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
@@ -34,6 +36,11 @@ PropagationModelOriginal::~PropagationModelOriginal(){
 }
 
 PropagationModelOriginal::PropagationModelOriginal(const WeightedEdgeGraph* graph,std::function<double(double)> scaleFunc):scaleFunction(scaleFunc){
+    //using a vectorized scale function that returns the scale function value for all elements
+    int numElements = graph->getNumNodes();
+    this->scaleFunctionVectorized = [scaleFunc, numElements](double time)-> arma::Col<double>{
+        return arma::ones<arma::Col<double>>(numElements) * scaleFunc(time);
+    };
     //pseudoinverse initialization
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
