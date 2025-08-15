@@ -64,5 +64,5 @@ arma::Col<double> PropagationModelCustom::propagate(arma::Col<double> input, dou
 }
 
 arma::Col<double> PropagationModelCustom::propagationTerm(arma::Col<double> input, double time){
-    return (Wmat * input * this->scaleFunction(time));
+    return this->scaleFunctionVectorized(time) % (Wmat * input );
 }
