@@ -13,6 +13,9 @@
 PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* graph){
     this->scaleFunction = [](double time)-> double{return 0.5;};
 
+    int numElements = graph->getNumNodes();
+    this->scaleFunctionVectorized = [numElements](double time)-> arma::Col<double>{return arma::ones<arma::Col<double>>(numElements) * 0.5;};
+
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
@@ -28,6 +31,11 @@ PropagationModelNeighbors::~PropagationModelNeighbors(){
 }
 
 PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* graph, std::function<double(double)> scaleFun):scaleFunction(scaleFun){
+    //using a vectorized scale function that returns the scale function value for all elements
+    int numElements = graph->getNumNodes();
+    this->scaleFunctionVectorized = [scaleFun, numElements](double time)-> arma::Col<double>{
+        return arma::ones<arma::Col<double>>(numElements) * scaleFun(time);
+    };
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
