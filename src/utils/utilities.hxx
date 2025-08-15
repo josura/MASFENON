@@ -285,6 +285,7 @@ std::vector<double> saturationFileToVector(std::string filename,const std::map<s
 /**
  * @brief Read the dissipation scaling function from a file
  * @param filename the name of the file
+ * @param orderedNodeNames the vector of node names in the order they are expected
  * @return  the vectorized dissipation scaling function as a lambda function
  * @details  The file is read using the ifstream function
  * @note    The file must contain the following columns: node, <parameters>
@@ -297,7 +298,7 @@ std::vector<double> saturationFileToVector(std::string filename,const std::map<s
  */
 std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames);
 /**
- * @brief Returns a vector of vectorized dissipation scaling functions from a folder
+ * @brief Returns a map of vectorized dissipation scaling functions from a folder
  * @param folderPath the path of the folder
  * @param typeToOrderedNodeNames the map of the node names <type, vector of node names>
  * @return  the vector of dissipation scaling functions
@@ -306,6 +307,21 @@ std::function<arma::Col<double>(double)> dissipationScalingFunctionFromFile(std:
  * @see dissipationScalingFunctionFromFile
  */
 std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
+/**
+ * @brief   Returns the conservation scaling function from a file
+ * @param filename the name of the file
+ * @param orderedNodeNames the vector of node names in the order they are expected
+ * @return  the vectorized conservation scaling function as a lambda function
+ * @details  The file is read using the ifstream function
+ * @note    The file must contain the following columns: node, <parameters>
+ * @note This function returns the custom conservation scaling function that is defined in \ref CustomFunctions.hxx
+ * @note The nodes that are not in the orderedNodeNames vector will be ignored
+ * @note The nodes that are not seen in the file will have a scaling function defined with the default one in CustomFunctions.hxx (getConservationScalingFunction())
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the node or parameters columns
+ * @throw std::runtime_error if the parameters are not valid for the conservation scaling function (the function expects a specific format for the parameters)
+ */
+std::function<arma::Col<double>(double)> conservationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames);
 /**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
