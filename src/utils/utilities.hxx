@@ -323,6 +323,16 @@ std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScali
  */
 std::function<arma::Col<double>(double)> conservationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames);
 /**
+ * @brief Returns a map of vectorized conservation scaling functions from a folder
+ * @param folderPath the path of the folder
+ * @param typeToOrderedNodeNames the map of the node names <type, vector of node names>
+ * @return  the vector of conservation scaling functions
+ * @details  The files are read using the conservationScalingFunctionFromFile function
+ * @details Also handles the case where the file for a specific type does not exist, in which case the default conservation scaling function is used
+ * @see conservationScalingFunctionFromFile
+ */
+std::map<std::string, std::function<arma::Col<double>(double)>> conservationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
+/**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
  *         the function will return the vector {"A","B","C","D","E"}
