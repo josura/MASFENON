@@ -112,6 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f35db2e37af642d54478a0435d7100c" id="r_a9f35db2e37af642d54478a0435d7100c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelOriginal.html#a9f35db2e37af642d54478a0435d7100c">PropagationModelOriginal</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *graph, std::function&lt; double(double)&gt; scaleFunc)</td></tr>
 <tr class="memdesc:a9f35db2e37af642d54478a0435d7100c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classPropagationModelOriginal.html" title="Class for managing propagation dynamics in MASFENON.">PropagationModelOriginal</a> class, passing a graph and a scale function.  <br /></td></tr>
 <tr class="separator:a9f35db2e37af642d54478a0435d7100c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d63b94efb5e81ad17f1b250d160bcd5" id="r_a8d63b94efb5e81ad17f1b250d160bcd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelOriginal.html#a8d63b94efb5e81ad17f1b250d160bcd5">PropagationModelOriginal</a> (const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *graph, std::function&lt; arma::Col&lt; double &gt;(double)&gt; scaleFunc)</td></tr>
+<tr class="memdesc:a8d63b94efb5e81ad17f1b250d160bcd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classPropagationModelOriginal.html" title="Class for managing propagation dynamics in MASFENON.">PropagationModelOriginal</a> class, with vectorized scaling function.  <br /></td></tr>
+<tr class="separator:a8d63b94efb5e81ad17f1b250d160bcd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2209feba6daa54a6e1325b0834b1ac46" id="r_a2209feba6daa54a6e1325b0834b1ac46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPropagationModelOriginal.html#a2209feba6daa54a6e1325b0834b1ac46">~PropagationModelOriginal</a> () override</td></tr>
 <tr class="memdesc:a2209feba6daa54a6e1325b0834b1ac46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for the <a class="el" href="classPropagationModelOriginal.html" title="Class for managing propagation dynamics in MASFENON.">PropagationModelOriginal</a> class.  <br /></td></tr>
 <tr class="separator:a2209feba6daa54a6e1325b0834b1ac46"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,7 +153,7 @@ Additional Inherited Members</h2></td></tr>
 <p>The propagation function propagates the values in each network, considering the whole network and the weights of the edges connecting them. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad54168fc6674c5bd319da132d7c7afae" name="ad54168fc6674c5bd319da132d7c7afae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad54168fc6674c5bd319da132d7c7afae">&#9670;&#160;</a></span>PropagationModelOriginal() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad54168fc6674c5bd319da132d7c7afae">&#9670;&#160;</a></span>PropagationModelOriginal() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +180,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a id="a9f35db2e37af642d54478a0435d7100c" name="a9f35db2e37af642d54478a0435d7100c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f35db2e37af642d54478a0435d7100c">&#9670;&#160;</a></span>PropagationModelOriginal() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f35db2e37af642d54478a0435d7100c">&#9670;&#160;</a></span>PropagationModelOriginal() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,6 +214,44 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <p>Initializes the propagation model with the specified scale function and the pseudoinverse of the weighted adjacency matrix of the graph. </p>
+
+</div>
+</div>
+<a id="a8d63b94efb5e81ad17f1b250d160bcd5" name="a8d63b94efb5e81ad17f1b250d160bcd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d63b94efb5e81ad17f1b250d160bcd5">&#9670;&#160;</a></span>PropagationModelOriginal() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PropagationModelOriginal::PropagationModelOriginal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classWeightedEdgeGraph.html">WeightedEdgeGraph</a> *&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; arma::Col&lt; double &gt;(double)&gt;&#160;</td>
+          <td class="paramname"><em>scaleFunc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for the <a class="el" href="classPropagationModelOriginal.html" title="Class for managing propagation dynamics in MASFENON.">PropagationModelOriginal</a> class, with vectorized scaling function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>The graph to be used for the propagation model. </td></tr>
+    <tr><td class="paramname">scaleFunc</td><td>The vectorized scaling function to be used in the propagation model.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Initializes the propagation model with the specified scale function and the weighted adjacency matrix of the graph. </p>
 
 </div>
 </div>
