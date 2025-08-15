@@ -47,6 +47,17 @@ PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* gr
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
 }
 
+PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* graph, std::function<arma::Col<double>(double)> scaleFun):scaleFunctionVectorized(scaleFun){   
+    //getting normalization values for the adjacency matrix
+    std::vector<double> normalizationFactors(graph->getNumNodes(),0);
+    for (int i = 0; i < graph->getNumNodes(); i++) {
+        for(int j = 0; j < graph->getNumNodes();j++){
+            normalizationFactors[i] += std::abs(graph->getEdgeWeight(i,j)); 
+        }
+    }
+    this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+}
+
 
 arma::Col<double> PropagationModelNeighbors::propagate(arma::Col<double> input, double time){
     // return input + (Wmat * input * this->scaleFunction(time));
