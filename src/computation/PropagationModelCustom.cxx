@@ -46,10 +46,7 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, s
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
 }
 
-PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, std::function<arma::Col<double>(double)> scaleFun):scaleFunctionVectorized(scaleFun){
-    //using a scale function that returns the scale function value for all elements
-    int numElements = graph->getNumNodes();
-    
+PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, std::function<arma::Col<double>(double)> scaleFun):scaleFunctionVectorized(scaleFun){   
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
@@ -62,7 +59,8 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, s
 
 
 arma::Col<double> PropagationModelCustom::propagate(arma::Col<double> input, double time){
-    return input + (Wmat * input * this->scaleFunction(time));
+    // return input + (Wmat * input * this->scaleFunction(time));
+    return input + this->scaleFunctionVectorized(time) % (Wmat * input) ;
 }
 
 arma::Col<double> PropagationModelCustom::propagationTerm(arma::Col<double> input, double time){
