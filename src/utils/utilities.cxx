@@ -1172,6 +1172,70 @@ std::map<std::string, std::function<arma::Col<double>(double)>> dissipationScali
     return ret;
 }
 
+std::function<arma::Col<double>(double)> conservationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames){
+    if(!file_exists(filename)){
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: file does not exists " + filename);
+    }
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: unable to open file " + filename);
+    }
+    std::function<arma::Col<double>(double)> ret;
+    //read the first line to get the header
+    std::string line;
+    getline(infile, line);
+    std::vector<std::string> entriesHeader = splitStringIntoVector(line, "\t");
+    // check if the header is valid
+    if(entriesHeader.size() < 2 || (boost::algorithm::to_lower_copy(entriesHeader[0]) != "name" || boost::algorithm::to_lower_copy(entriesHeader[1]) != "parameters")){
+        throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid header in file " + filename + ", expected first column to be name, and second column to be parameters");
+    }
+    // read the rest of the file
+    std::vector<std::function<double(double)>> orderedFunctions = std::vector<std::function<double(double)>>(orderedNodeNames.size(), getConservationScalingFunction());
+    while (getline(infile, line)) {
+        std::vector<std::string> entries = splitStringIntoVector(line, "\t");
+        if(entries.size() != 2){
+            throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid entry in file " + filename + ", expected two columns, got " + std::to_string(entries.size()));
+        }
+        std::string name = entries[0];
+        std::string parameters = entries[1];
+        std::vector<std::string> parametersVector = splitStringIntoVector(parameters, ",");
+        std::vector<double> parametersDouble;
+        for (const auto& param : parametersVector) {
+            try {
+                parametersDouble.push_back(std::stod(param));
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: invalid parameter in file " + filename + ", expected a real number, got " + param);
+            }
+        }
+        // find the index of the name in the orderedNodeNames vector
+        auto it = std::find(orderedNodeNames.begin(), orderedNodeNames.end(), name);
+        if (it != orderedNodeNames.end()) {
+            size_t index = std::distance(orderedNodeNames.begin(), it);
+            // create the function and store it in the orderedFunctions vector
+            // try to create the function, if it fails it means that the parameters are not valid for the function
+            try {
+                orderedFunctions[index] = getConservationScalingFunction(parametersDouble);
+            } catch (const std::invalid_argument& e) {
+                throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: probably invalid parameters for function " + name + " in file " + filename + ", " + e.what());
+            }
+        } else { // if the name is not found in the orderedNodeNames vector, ignore it and print a warning
+            Logger::getInstance().printWarning("utilities::conservationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector, ignoring it");
+            //throw std::invalid_argument("utilities::conservationScalingFunctionFromFile: name " + name + " not found in orderedNodeNames vector");
+        }
+    }
+    infile.close();
+    // create the function that takes a double and returns a column vector with the values of the functions for each node
+    ret = [orderedFunctions](double t) -> arma::Col<double> {
+        arma::Col<double> result(orderedFunctions.size());
+        for (size_t i = 0; i < orderedFunctions.size(); ++i) {
+            result(i) = orderedFunctions[i](t);
+        }
+        return result;
+    };
+        
+    return ret;
+}
+
 std::map<std::string, std::vector<std::string>> getFullNodesDescription(std::string filename){
     string line;
     // schema is #Id	Name	Type	Aliases
