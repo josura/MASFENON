@@ -1304,13 +1304,29 @@ int main(int argc, char** argv) {
                     << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelOriginal(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
         } else if(propagationModelName == "customScalingNeighbors"){
             if(rank==0)logger << "[LOG] propagation model set to custom scaling neighbors propagation (with neighbors propagation model)\n";
@@ -1319,13 +1335,29 @@ int main(int argc, char** argv) {
                     << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl; //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
-            } else{
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom scaling neighbors propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelNeighbors(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
             
         } else if(propagationModelName == "customPropagation"){
@@ -1335,13 +1367,29 @@ int main(int argc, char** argv) {
                 << vm["propagationModelParameters"].as<std::vector<double>>()[0] << std::endl;  //TODO change the logger to print the whole vector
                 std::vector<double> propagationModelParameters = vm["propagationModelParameters"].as<std::vector<double>>();
                 propagationScalingFunction = getPropagationScalingFunction(propagationModelParameters);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
+            } else if(vm.count("propagationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] propagation model parameters were declared to be in the folder "<<vm["propagationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string propagationModelParametersFolder = vm["propagationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto propagationModelScalingFunctions = propagationScalingFunctionsFromFolder(propagationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload ;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationModelScalingFunctions[types[i+startIdx]]);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             } else {
                 if(rank==0)logger.printError("[LOG] propagation model parameters for custom propagation was not set: setting to default custom function (no parameters passed)")<<std::endl;
                 propagationScalingFunction = getPropagationScalingFunction();
-            }
-            for(int i = 0; i < finalWorkload;i++ ){
-                PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
-                typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                for(int i = 0; i < finalWorkload;i++ ){
+                    PropagationModel* tmpPropagationModel = new PropagationModelCustom(typeComputations[i]->getAugmentedGraph(),propagationScalingFunction);
+                    typeComputations[i]->setPropagationModel(tmpPropagationModel);
+                }
             }
         
         } else {
