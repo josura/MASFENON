@@ -49,9 +49,10 @@ PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* gr
 
 
 arma::Col<double> PropagationModelNeighbors::propagate(arma::Col<double> input, double time){
-    return input + (Wmat * input * this->scaleFunction(time));
+    // return input + (Wmat * input * this->scaleFunction(time));
+    return input + this->scaleFunctionVectorized(time) % (Wmat * input) ;
 }
 
 arma::Col<double> PropagationModelNeighbors::propagationTerm(arma::Col<double> input, double time){
-    return (Wmat * input * this->scaleFunction(time));
+    return this->scaleFunctionVectorized(time) % (Wmat * input) ;
 }
