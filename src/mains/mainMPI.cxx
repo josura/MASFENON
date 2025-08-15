@@ -948,6 +948,17 @@ int main(int argc, char** argv) {
                 for(int i = 0; i < finalWorkload; ++i){
                     conservationModels[i] = new ConservationModel(getConservationScalingFunction(conservationModelParameters)); // all processes will use the same conservation model
                 }
+            } else if(vm.count("conservationModelParameterFolder")){
+                if(rank==0)logger << "[LOG] conservation model parameters were declared to be in the folder "<<vm["conservationModelParameterFolder"].as<std::string>()<<std::endl;
+                std::string conservationModelParametersFolder = vm["conservationModelParameterFolder"].as<std::string>();
+                std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames;
+                for(int i = 0; i < finalWorkload; ++i){
+                    typeToOrderedNodeNames[types[i+startIdx]] = typeComputations[i]->getAugmentedGraph()->getNodeNames();
+                }
+                auto conservationModelScalingFunctions = conservationScalingFunctionsFromFolder(conservationModelParametersFolder,typeToOrderedNodeNames);
+                for(int i = 0; i < finalWorkload; ++i){
+                    conservationModels[i] = new ConservationModel(conservationModelScalingFunctions[types[i+startIdx]]); // all processes will use the same dissipation model with different parameters
+                }
             } else {
                 if(rank==0)logger << "[LOG] conservation model parameters were not set, using the default scaling function (defined in the custom functions)" << std::endl;
                 conservationModel = new ConservationModel(getConservationScalingFunction());
