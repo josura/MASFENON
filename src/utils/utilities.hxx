@@ -333,6 +333,21 @@ std::function<arma::Col<double>(double)> conservationScalingFunctionFromFile(std
  */
 std::map<std::string, std::function<arma::Col<double>(double)>> conservationScalingFunctionsFromFolder(std::string folderPath, std::map<std::string, std::vector<std::string>> typeToOrderedNodeNames);
 /**
+ * @brief Returns the propagation scaling function from a file
+ * @param filename the name of the file
+ * @param orderedNodeNames the vector of node names in the order they are expected
+ * @return  the vectorized propagation scaling function as a lambda function
+ * @details  The file is read using the ifstream function
+ * @note    The file must contain the following columns: node, <parameters>
+ * @note This function returns the custom propagation scaling function that is defined in \ref CustomFunctions.hxx
+ * @note The nodes that are not in the orderedNodeNames vector will be ignored
+ * @note The nodes that are not seen in the file will have a scaling function defined with the default one in CustomFunctions.hxx (getPropagationScalingFunction())
+ * @throw std::invalid_argument if the file does not exist
+ * @throw std::invalid_argument if the file does not contain the node or parameters columns
+ * @throw std::runtime_error if the parameters are not valid for the propagation scaling function (the function expects a specific format for the parameters)
+ */
+std::function<arma::Col<double>(double)> propagationScalingFunctionFromFile(std::string filename, std::vector<std::string> orderedNodeNames);
+/**
  * @brief   Return the types taken from the file names in a folder with the extension .tsv
  *          that is if the folder contains the files: A.tsv, B.tsv, C.tsv, D.tsv, E.tsv
  *         the function will return the vector {"A","B","C","D","E"}
