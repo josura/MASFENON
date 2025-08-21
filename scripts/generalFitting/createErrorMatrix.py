@@ -100,3 +100,64 @@ def make_error(sim_path: str, real_path: str, out_path: str, node_col: str, keep
     err.index.name = sim.index.name  # should be node_col
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     err.to_csv(out_path, sep="\t", float_format="%.10g")  # avoid scientific unless needed
+
+
+
+def find_matching_files(sim_dir: str, real_dir: str, suffix: str) -> List[Tuple[str, str, str]]:
+    sim_files = {f for f in os.listdir(sim_dir) if f.endswith(suffix) and os.path.isfile(os.path.join(sim_dir, f))}
+    real_files = {f for f in os.listdir(real_dir) if f.endswith(suffix) and os.path.isfile(os.path.join(real_dir, f))}
+    both = sorted(sim_files & real_files, key=natural_key)
+    missing_in_real = sorted(sim_files - real_files, key=natural_key)
+    missing_in_sim = sorted(real_files - sim_files, key=natural_key)
+
+    if missing_in_real:
+        print(f"[warn] Files present in sim but missing in real ({len(missing_in_real)}): {missing_in_real}", file=sys.stderr)
+    if missing_in_sim:
+        print(f"[warn] Files present in real but missing in sim ({len(missing_in_sim)}): {missing_in_sim}", file=sys.stderr)
+
+    pairs = [(os.path.join(sim_dir, f), os.path.join(real_dir, f), f) for f in both]
+    return pairs
+
+
+def main():
+    p = argparse.ArgumentParser(description="Create signed error matrices (simulation - real) from MASFENON-style TSVs.")
+    p.add_argument("--sim-dir", required=True, help="Directory with simulation TSVs (e.g., t0.tsv, t1.tsv, ...)")
+    p.add_argument("--real-dir", required=True, help="Directory with real data TSVs (matching filenames).")
+    p.add_argument("--out-dir", required=True, help="Directory to write error TSVs.")
+    p.add_argument("--prefix", default="", help="Optional filename prefix for outputs (default: '').")
+    p.add_argument("--pattern", default=".tsv", help="Process files ending with this suffix (default: .tsv).")
+    p.add_argument("--node-col", default="nodeNames", help="Name of node column (default: nodeNames).")
+    p.add_argument("--keep-all", action="store_true",
+                   help="Use union of nodes/timepoints (keeps NaNs where missing). Default: intersection only.")
+    args = p.parse_args()
+
+    for d in (args.sim_dir, args.real_dir):
+        if not os.path.isdir(d):
+            print(f"[error] Not a directory: {d}", file=sys.stderr)
+            sys.exit(2)
+
+    pairs = find_matching_files(args.sim_dir, args.real_dir, args.pattern)
+    if not pairs:
+        print("[error] No matching files to process.", file=sys.stderr)
+        sys.exit(1)
+
+    os.makedirs(args.out_dir, exist_ok=True)
+
+    processed = 0
+    for sim_path, real_path, fname in pairs:
+        out_name = args.prefix + fname
+        out_path = os.path.join(args.out_dir, out_name)
+        try:
+            make_error(sim_path, real_path, out_path, node_col=args.node_col, keep_all=args.keep_all)
+            processed += 1
+            print(f"[ok] Wrote {out_path}")
+        except Exception as e:
+            print(f"[fail] {fname}: {e}", file=sys.stderr)
+
+    if processed == 0:
+        print("[error] No files were successfully processed.", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
