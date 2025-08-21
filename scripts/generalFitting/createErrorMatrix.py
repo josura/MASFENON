@@ -33,6 +33,30 @@ Optional:
     --keep-all                   # keep union of timepoints/nodes; NaNs where missing (default: intersection)
 """
 
+import argparse
 import os
 import sys
+from typing import List, Tuple
 import pandas as pd
+import re
+
+
+def natural_key(s: str):
+    #Sort strings by embedded numbers: 't2' < 't10'.
+    return [int(text) if text.isdigit() else text.lower() for text in re.split(r"(\d+)", str(s))]
+
+
+def read_tsv(path: str, node_col: str) -> pd.DataFrame:
+    df = pd.read_csv(path, sep="\t", dtype=str)  # read as str first to preserve headers faithfully
+    if node_col not in df.columns:
+        raise ValueError(f"{os.path.basename(path)} is missing required column '{node_col}'. Found: {list(df.columns)}")
+    # Coerce numeric timepoint cols; keep node_col as index
+    time_cols = [c for c in df.columns if c != node_col]
+    # Try to convert; non-numeric becomes NaN
+    for c in time_cols:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    df.set_index(node_col, inplace=True)
+    # Sort timepoints naturally for stability
+    df = df[sorted(time_cols, key=natural_key)]
+    return df
+
