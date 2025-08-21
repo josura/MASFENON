@@ -60,3 +60,43 @@ def read_tsv(path: str, node_col: str) -> pd.DataFrame:
     df = df[sorted(time_cols, key=natural_key)]
     return df
 
+
+def align_frames(sim: pd.DataFrame, real: pd.DataFrame, keep_all: bool = False) -> Tuple[pd.DataFrame, pd.DataFrame, List[str], List[str]]:
+    if keep_all:
+        # Union, aligning with NaNs where missing
+        all_cols = sorted(list(set(sim.columns) | set(real.columns)), key=natural_key)
+        all_idx = sorted(list(set(sim.index) | set(real.index)))
+        sim2 = sim.reindex(index=all_idx, columns=all_cols)
+        real2 = real.reindex(index=all_idx, columns=all_cols)
+        dropped_cols = []
+        dropped_rows = []
+    else:
+        # Intersection only
+        common_cols = sorted(list(set(sim.columns) & set(real.columns)), key=natural_key)
+        common_idx = sorted(list(set(sim.index) & set(real.index)))
+        dropped_cols = sorted(list((set(sim.columns) ^ set(real.columns))), key=natural_key)
+        dropped_rows = sorted(list((set(sim.index) ^ set(real.index))))
+        sim2 = sim.reindex(index=common_idx, columns=common_cols)
+        real2 = real.reindex(index=common_idx, columns=common_cols)
+    return sim2, real2, dropped_cols, dropped_rows
+
+
+def make_error(sim_path: str, real_path: str, out_path: str, node_col: str, keep_all: bool) -> None:
+    sim = read_tsv(sim_path, node_col)
+    real = read_tsv(real_path, node_col)
+
+    sim_al, real_al, dropped_cols, dropped_rows = align_frames(sim, real, keep_all=keep_all)
+
+    if not keep_all:
+        if dropped_cols:
+            print(f"[warn] {os.path.basename(sim_path)}: dropped timepoints not common to both: {dropped_cols}", file=sys.stderr)
+        if dropped_rows:
+            print(f"[warn] {os.path.basename(sim_path)}: dropped nodes not common to both (|Δ|={len(dropped_rows)}).", file=sys.stderr)
+
+    # Signed error: simulation - real
+    err = sim_al.subtract(real_al)
+
+    # Write TSV, keep index name as node_col
+    err.index.name = sim.index.name  # should be node_col
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    err.to_csv(out_path, sep="\t", float_format="%.10g")  # avoid scientific unless needed
