@@ -152,6 +152,99 @@ def main():
 
     os.makedirs(args.out_dir, exist_ok=True)
 
+    processed = 0
+    for typ in types:
+        nodes_path = os.path.join(args.nodes_dir, typ + args.suffix)
+        try:
+            node_list, time_cols = read_nodes(nodes_path, args.node_col)
+        except Exception as e:
+            print(f"[fail] {typ}: cannot read nodes file: {e}", file=sys.stderr)
+            continue
+
+        # Determine time axis / length
+        time_len = len(time_cols)
+
+        # Errors (optional)
+        err_df = None
+        if args.errors_dir:
+            err_path = os.path.join(args.errors_dir, typ + args.suffix)
+            if os.path.isfile(err_path):
+                try:
+                    err_df = read_errors(err_path, args.node_col)
+                    # Align error columns to node time columns (intersection, ordered)
+                    common_cols = [c for c in time_cols if c in err_df.columns]
+                    if not common_cols:
+                        print(f"[warn] {typ}: no overlapping timepoints between nodes and errors; skipping updates.", file=sys.stderr)
+                        err_df = None
+                    else:
+                        if len(common_cols) != len(time_cols):
+                            missing = [c for c in time_cols if c not in err_df.columns]
+                            if missing:
+                                print(f"[warn] {typ}: missing error for timepoints {missing}; treating as 0.", file=sys.stderr)
+                        # Reindex errors to nodes/timepoints; fill missing with 0
+                        err_df = err_df.reindex(index=node_list.astype(str), columns=time_cols)
+                        err_df = err_df.fillna(0.0)
+                except Exception as e:
+                    print(f"[warn] {typ}: cannot read/align errors: {e}; skipping updates.", file=sys.stderr)
+                    err_df = None
+            else:
+                print(f"[warn] {typ}: no error file found; skipping updates.", file=sys.stderr)
+
+        # Old params (optional)
+        old_params_map: Dict[str, List[float]] = {}
+        if args.params_dir:
+            param_path = os.path.join(args.params_dir, typ + args.suffix)
+            if os.path.isfile(param_path):
+                try:
+                    old_params_map = read_params(param_path)
+                except Exception as e:
+                    print(f"[warn] {typ}: cannot read old params: {e}; initializing.", file=sys.stderr)
+                    old_params_map = {}
+            else:
+                print(f"[warn] {typ}: no old params file found; initializing.", file=sys.stderr)
+
+        # Decide length for initialization
+        init_len = args.num_params if args.num_params is not None else time_len
+        if init_len <= 0:
+            print(f"[fail] {typ}: invalid parameter length (computed {init_len}).", file=sys.stderr)
+            continue
+
+        new_params_map: Dict[str, List[float]] = {}
+        for name in node_list.astype(str):
+            # get existing vector or initialize
+            vec = old_params_map.get(name, None)
+            if vec is None or len(vec) == 0:
+                vec = [args.init_value] * init_len
+            # match to time axis length
+            target_len = time_len if time_len > 0 else len(vec)
+            if args.num_params is not None:
+                # If user forced num-params, honor it when no timepoints in nodes
+                target_len = time_len if time_len > 0 else args.num_params
+            vec = ensure_length(vec, target_len, args.init_value)
+
+            # apply update if errors available
+            if err_df is not None and target_len == len(time_cols):
+                # errors row for this node (already aligned/fillna=0)
+                e = err_df.loc[name].to_numpy(dtype=float, copy=False)
+                # gradient-descent-like step
+                vec = (np.asarray(vec, dtype=float) - args.lr * e).tolist()
+
+            new_params_map[name] = vec
+
+        out_path = os.path.join(args.out_dir, typ + args.suffix)
+        try:
+            write_params(out_path, new_params_map)
+            processed += 1
+            print(f"[ok] Wrote {out_path}")
+        except Exception as e:
+            print(f"[fail] {typ}: cannot write output: {e}", file=sys.stderr)
+
+    if processed == 0:
+        print("[error] No files were successfully processed.", file=sys.stderr)
+        sys.exit(1)
+
+
+
 
 if __name__ == "__main__":
     main()
