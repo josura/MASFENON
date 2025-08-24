@@ -96,3 +96,12 @@ def read_params(path: str) -> Dict[str, List[float]]:
             raise ValueError(f"Bad parameters list for '{name}' in {os.path.basename(path)}: {raw!r}")
         result[name] = vec
     return result
+
+def write_params(path: str, mapping: Dict[str, List[float]]):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    rows = []
+    for name, vec in mapping.items():
+        param_str = ",".join(format(x, ".10g") for x in vec)
+        rows.append({"name": name, "parameters": param_str})
+    out_df = pd.DataFrame(rows, columns=["name", "parameters"])
+    out_df.to_csv(path, sep="\t", index=False)
