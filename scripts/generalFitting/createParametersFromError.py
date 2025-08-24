@@ -51,3 +51,13 @@ import re
 def natural_key(s: str):
     """Sort strings with embedded numbers (e.g., t2 < t10)."""
     return [int(t) if t.isdigit() else t.lower() for t in re.split(r"(\d+)", str(s))]
+
+def read_nodes(path: str, node_col: str) -> Tuple[pd.Index, List[str]]:
+    df = pd.read_csv(path, sep="\t", dtype=str)
+    if node_col not in df.columns:
+        raise ValueError(f"{os.path.basename(path)} missing '{node_col}' column.")
+    # timepoint columns are everything except node_col
+    time_cols = [c for c in df.columns if c != node_col]
+    time_cols = sorted(time_cols, key=natural_key)
+    nodes = df[node_col].astype(str)
+    return nodes, time_cols
