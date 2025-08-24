@@ -134,6 +134,23 @@ def main():
     ap.add_argument("--num-params", type=int, help="Used ONLY when initializing without old params; if omitted, uses #timepoints.")
     ap.add_argument("--init-value", type=float, default=0.0, help="Initial value for parameters and padding. Default: 0.0")
     args = ap.parse_args()
+    # Validate dirs
+    if not os.path.isdir(args.nodes_dir):
+        print(f"[error] --nodes-dir is not a directory: {args.nodes_dir}", file=sys.stderr)
+        sys.exit(2)
+    if args.params_dir and not os.path.isdir(args.params_dir):
+        print(f"[warn] --params-dir not found, will initialize parameters: {args.params_dir}", file=sys.stderr)
+        args.params_dir = None
+    if args.errors_dir and not os.path.isdir(args.errors_dir):
+        print(f"[warn] --errors-dir not found, no updates will be applied: {args.errors_dir}", file=sys.stderr)
+        args.errors_dir = None
+
+    types = get_types(args.nodes_dir, args.suffix)
+    if not types:
+        print("[error] No <type>.tsv files found in --nodes-dir.", file=sys.stderr)
+        sys.exit(1)
+
+    os.makedirs(args.out_dir, exist_ok=True)
 
 
 if __name__ == "__main__":
