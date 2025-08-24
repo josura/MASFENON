@@ -47,3 +47,7 @@ from typing import Dict, List, Tuple
 import pandas as pd
 import numpy as np
 import re
+
+def natural_key(s: str):
+    """Sort strings with embedded numbers (e.g., t2 < t10)."""
+    return [int(t) if t.isdigit() else t.lower() for t in re.split(r"(\d+)", str(s))]
