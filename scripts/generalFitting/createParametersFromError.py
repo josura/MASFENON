@@ -121,3 +121,20 @@ def get_types(nodes_dir: str, suffix: str) -> List[str]:
          if f.endswith(suffix) and os.path.isfile(os.path.join(nodes_dir, f))],
         key=natural_key
     )
+
+def main():
+    ap = argparse.ArgumentParser(description="Update/init per-node parameters using error matrices (gradient-descent-like).")
+    ap.add_argument("--nodes-dir", required=True, help="Directory with <type>.tsv files containing 'nodeNames' and timepoint columns.")
+    ap.add_argument("--params-dir", help="Directory with old <type>.tsv (columns: name, parameters).")
+    ap.add_argument("--errors-dir", help="Directory with error matrices <type>.tsv (index: nodeNames; columns: timepoints).")
+    ap.add_argument("--out-dir", required=True, help="Output directory for updated <type>.tsv (columns: name, parameters).")
+    ap.add_argument("--node-col", default="nodeNames", help="Name of the node column in nodes and error files. Default: nodeNames")
+    ap.add_argument("--suffix", default=".tsv", help="Suffix for all per-type files. Default: .tsv")
+    ap.add_argument("--lr", type=float, default=0.1, help="Learning rate for parameter update. Default: 0.1")
+    ap.add_argument("--num-params", type=int, help="Used ONLY when initializing without old params; if omitted, uses #timepoints.")
+    ap.add_argument("--init-value", type=float, default=0.0, help="Initial value for parameters and padding. Default: 0.0")
+    args = ap.parse_args()
+
+
+if __name__ == "__main__":
+    main()
