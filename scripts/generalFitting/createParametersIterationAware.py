@@ -23,7 +23,7 @@ Notes:
 - Division is stabilized by --eps (default 1e-12). You can also clip the scale term via --max-scale.
 
 Example:
-  python update_params_fdscale.py \
+  python createParametersIterationAware.py \
     --nodes-dir data/nodes \
     --params-dir data/params_t \
     --prev-params-dir data/params_t-1 \

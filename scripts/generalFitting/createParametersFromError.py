@@ -25,7 +25,7 @@ Behavior:
     * Final files include only nodes listed in the <type>.tsv from --nodes-dir.
 
 Usage example:
-    python update_params.py \
+    python createParametersFromError.py \
         --nodes-dir data/nodes \
         --params-dir data/old_params \
         --errors-dir data/errors \
@@ -33,7 +33,7 @@ Usage example:
         --lr 0.05
 
 Initialization-only (no prior params, no errors):
-    python update_params.py \
+    python createParametersFromError.py \
         --nodes-dir data/nodes \
         --out-dir data/new_params \
         --num-params 10 \
