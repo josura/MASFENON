@@ -61,3 +61,15 @@ def read_nodes(path: str, node_col: str) -> Tuple[pd.Index, List[str]]:
     time_cols = sorted(time_cols, key=natural_key)
     nodes = df[node_col].astype(str)
     return nodes, time_cols
+
+def read_errors(path: str, node_col: str) -> pd.DataFrame:
+    df = pd.read_csv(path, sep="\t", dtype=str)
+    if node_col not in df.columns:
+        raise ValueError(f"{os.path.basename(path)} (errors) missing '{node_col}'.")
+    df.set_index(node_col, inplace=True)
+    # Ensure numeric
+    for c in df.columns:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    # Natural sort columns
+    df = df[sorted(df.columns, key=natural_key)]
+    return df
