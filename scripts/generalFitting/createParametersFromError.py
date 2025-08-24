@@ -105,3 +105,19 @@ def write_params(path: str, mapping: Dict[str, List[float]]):
         rows.append({"name": name, "parameters": param_str})
     out_df = pd.DataFrame(rows, columns=["name", "parameters"])
     out_df.to_csv(path, sep="\t", index=False)
+
+
+def ensure_length(vec: List[float], length: int, fill: float) -> List[float]:
+    if len(vec) == length:
+        return vec
+    if len(vec) > length:
+        return vec[:length]
+    return vec + [fill] * (length - len(vec))
+
+
+def get_types(nodes_dir: str, suffix: str) -> List[str]:
+    return sorted(
+        [f[:-len(suffix)] for f in os.listdir(nodes_dir)
+         if f.endswith(suffix) and os.path.isfile(os.path.join(nodes_dir, f))],
+        key=natural_key
+    )
