@@ -73,3 +73,26 @@ def read_errors(path: str, node_col: str) -> pd.DataFrame:
     # Natural sort columns
     df = df[sorted(df.columns, key=natural_key)]
     return df
+
+def read_params(path: str) -> Dict[str, List[float]]:
+    """Read name,parameters TSV -> dict[name] = list[float]."""
+    df = pd.read_csv(path, sep="\t", dtype=str)
+    cols = [c.lower() for c in df.columns]
+    try:
+        name_col = df.columns[cols.index("name")]
+        params_col = df.columns[cols.index("parameters")]
+    except ValueError:
+        raise ValueError(f"{os.path.basename(path)} must have columns 'name' and 'parameters'.")
+    result = {}
+    for _, row in df.iterrows():
+        name = str(row[name_col])
+        raw = str(row[params_col]) if pd.notna(row[params_col]) else ""
+        if raw.strip() == "":
+            result[name] = []
+            continue
+        try:
+            vec = [float(x) for x in raw.split(",")]
+        except Exception:
+            raise ValueError(f"Bad parameters list for '{name}' in {os.path.basename(path)}: {raw!r}")
+        result[name] = vec
+    return result
