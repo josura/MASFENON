@@ -4,6 +4,14 @@ The fitting process is composed of more steps:
 - create error matrix
 - generate the parameters with default values, or update them based on old parameters and errors
 
+# PRELIMINARY STEPS
+Preparing the environment
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements
+```
+
 # TESTING
 To test the single scripts and their own functionalities run the following parts
 
@@ -25,4 +33,33 @@ Creating error matrix for a defined simulation:
                      --verbose \
                      --outputFormat iterationMatrix \
                      --outputFolder /tmp/testingCustomFunctionsVectorizedFinal
+```
+- then create the error matrix
+```bash
+python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal/iterationMatrices --real-dir ../../data/testFitting/syntheticTimeSeries --out-dir /tmp/testingErrors 
+```
+- let's also create another error matrix for another simulation since we will be using it to train initially the framework
+```bash
+../../build/masfenon-MPI --graphsFilesFolder  ../../data/testdata/testHeterogeneousGraph/graphs \
+                     --initialPerturbationPerTypeFolder  ../../data/testdata/testHeterogeneousGraph/initialValuesPartialTypes \
+                     --typeInteractionFolder  ../../data/testdata/testHeterogeneousGraph/interactions \
+                     --propagationModel customPropagation \
+                     --propagationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/propagationParameters \
+                     --dissipationModel custom \
+                     --dissipationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters \
+                     --conservationModel custom \
+                     --conservationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/conservationParameters \
+                     --virtualNodesGranularity typeAndNode \
+                     --saturation \
+                     --verbose \
+                     --outputFormat iterationMatrix \
+                     --outputFolder /tmp/testingCustomFunctionsVectorizedFinal-2
+```
+- and create another error matrix
+```bash
+python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal-2/iterationMatrices --real-dir ../../data/testFitting/syntheticTimeSeries --out-dir /tmp/testingErrors-2 
+```
+## CREATING THE NEW PARAMETERS (PARAMETERS AWARE)
+```bash
+python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal-2/iterationMatrices --real-dir ../../data/testFitting/syntheticTimeSeries --out-dir /tmp/testingErrors-2 
 ```
