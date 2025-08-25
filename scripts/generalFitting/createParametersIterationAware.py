@@ -30,6 +30,8 @@ Example:
     --errors-dir data/errors_t \
     --prev-errors-dir data/errors_t-1 \
     --out-dir data/params_t+1 \
+    --nodes-name-col Name \
+    --errors-name-col nodeNames \
     --lr 0.05
 """
 
@@ -46,27 +48,35 @@ def natural_key(s: str):
     return [int(t) if t.isdigit() else t.lower() for t in re.split(r"(\d+)", str(s))]
 
 
-def read_nodes(path: str, node_col: str) -> Tuple[pd.Index, List[str]]:
+def list_types(nodes_dir: str, suffix: str) -> List[str]:
+    return sorted(
+        [f[:-len(suffix)] for f in os.listdir(nodes_dir)
+         if f.endswith(suffix) and os.path.isfile(os.path.join(nodes_dir, f))],
+        key=natural_key
+    )
+
+
+def read_node_names(path: str, nodes_name_col: str) -> pd.Index:
     df = pd.read_csv(path, sep="\t", dtype=str)
-    if node_col not in df.columns:
-        raise ValueError(f"{os.path.basename(path)} missing '{node_col}'.")
-    time_cols = sorted([c for c in df.columns if c != node_col], key=natural_key)
-    return df[node_col].astype(str), time_cols
+    if nodes_name_col not in df.columns:
+        raise ValueError(f"{os.path.basename(path)} missing '{nodes_name_col}'. Found: {list(df.columns)}")
+    return df[nodes_name_col].astype(str)
 
 
-def read_errors(path: str, node_col: str, time_cols: List[str], nodes: pd.Index) -> pd.DataFrame:
-    """Read errors; align to nodes/time_cols; missing -> 0.0"""
+def read_errors(path: str, errors_name_col: str) -> pd.DataFrame:
+    """Read an error matrix TSV; returns empty DataFrame if file missing."""
     if not os.path.isfile(path):
-        # return all-zeros aligned frame
-        return pd.DataFrame(0.0, index=nodes, columns=time_cols)
+        return pd.DataFrame()
     df = pd.read_csv(path, sep="\t", dtype=str)
-    if node_col not in df.columns:
-        raise ValueError(f"{os.path.basename(path)} (errors) missing '{node_col}'.")
-    df.set_index(node_col, inplace=True)
+    if errors_name_col not in df.columns:
+        raise ValueError(f"{os.path.basename(path)} (errors) missing '{errors_name_col}'.")
+    df.set_index(errors_name_col, inplace=True)
+    # coerce numeric timepoint columns
     for c in df.columns:
         df[c] = pd.to_numeric(df[c], errors="coerce")
-    df = df.reindex(index=nodes, columns=time_cols)
-    return df.fillna(0.0)
+    # natural sort timepoints
+    df = df[sorted(df.columns, key=natural_key)]
+    return df
 
 
 def read_params_map(path: str) -> Dict[str, List[float]]:
@@ -74,11 +84,11 @@ def read_params_map(path: str) -> Dict[str, List[float]]:
     if not os.path.isfile(path):
         return {}
     df = pd.read_csv(path, sep="\t", dtype=str)
-    cols = [c.lower() for c in df.columns]
-    if "name" not in cols or "parameters" not in cols:
+    cols_lower = [c.lower() for c in df.columns]
+    if "name" not in cols_lower or "parameters" not in cols_lower:
         raise ValueError(f"{os.path.basename(path)} must have columns 'name' and 'parameters'.")
-    name_col = df.columns[cols.index("name")]
-    par_col  = df.columns[cols.index("parameters")]
+    name_col = df.columns[cols_lower.index("name")]
+    par_col  = df.columns[cols_lower.index("parameters")]
     out: Dict[str, List[float]] = {}
     for _, r in df.iterrows():
         name = str(r[name_col])
@@ -102,29 +112,22 @@ def write_params(path: str, mapping: Dict[str, List[float]]):
     pd.DataFrame(rows, columns=["name", "parameters"]).to_csv(path, sep="\t", index=False)
 
 
-def list_types(nodes_dir: str, suffix: str) -> List[str]:
-    return sorted(
-        [f[:-len(suffix)] for f in os.listdir(nodes_dir)
-         if f.endswith(suffix) and os.path.isfile(os.path.join(nodes_dir, f))],
-        key=natural_key
-    )
-
-
 def main():
-    ap = argparse.ArgumentParser(description="Parameter update: p_new = p - lr * e_t * (Δp / (Δs + eps)).")
-    ap.add_argument("--nodes-dir", required=True, help="Folder with <type>.tsv having 'nodeNames' + timepoints.")
+    ap = argparse.ArgumentParser(description="p_new = p_t - lr * e_t * (Δp / (Δs + eps)); nodes from nodes-dir, timepoints from errors.")
+    ap.add_argument("--nodes-dir", required=True, help="Folder with <type>.tsv containing node column (default 'Name').")
     ap.add_argument("--params-dir", required=True, help="CURRENT params dir (<type>.tsv with columns: name, parameters).")
     ap.add_argument("--prev-params-dir", required=True, help="PREVIOUS params dir.")
-    ap.add_argument("--errors-dir", required=True, help="CURRENT errors dir (<type>.tsv, index=nodeNames, columns=timepoints).")
+    ap.add_argument("--errors-dir", required=True, help="CURRENT errors dir (<type>.tsv, index=<errors-name-col>, columns=timepoints).")
     ap.add_argument("--prev-errors-dir", required=True, help="PREVIOUS errors dir.")
     ap.add_argument("--out-dir", required=True, help="Output dir for updated params.")
-    ap.add_argument("--node-col", default="nodeNames")
     ap.add_argument("--suffix", default=".tsv")
-    ap.add_argument("--init-value", type=float, default=0.0, help="Fill when a node lacks previous params.")
+    ap.add_argument("--nodes-name-col", default="Name", help="Node column in nodes-dir files (default: Name).")
+    ap.add_argument("--errors-name-col", default="nodeNames", help="Node column in error files (default: nodeNames).")
+    ap.add_argument("--init-value", type=float, default=0.0, help="Fill when a node lacks previous/current params.")
     ap.add_argument("--eps", type=float, default=1e-12, help="Small number added to Δs to avoid divide-by-zero.")
     ap.add_argument("--lr", type=float, default=0.1, help="Learning rate η.")
     ap.add_argument("--max-scale", type=float, default=None,
-                    help="Optional clip for |Δp/(Δs+eps)| to avoid extreme updates (set e.g. 1e3).")
+                    help="Optional clip for |Δp/(Δs+eps)| to avoid extreme updates (e.g., 1e3).")
     args = ap.parse_args()
 
     # Validate dirs
@@ -142,30 +145,47 @@ def main():
 
     processed = 0
     for typ in types:
+        # 1) Node list from nodes-dir
         nodes_path = os.path.join(args.nodes_dir, typ + args.suffix)
         try:
-            node_list, time_cols = read_nodes(nodes_path, args.node_col)
+            nodes = read_node_names(nodes_path, args.nodes_name_col)  # <-- will fix var name below
         except Exception as e:
             print(f"[fail] {typ}: nodes read error: {e}", file=sys.stderr)
             continue
+        nodes = nodes.astype(str)
 
-        L = len(time_cols)
-        if L == 0:
-            print(f"[warn] {typ}: no timepoints; skipping.", file=sys.stderr)
-            continue
-
-        # Errors: current and previous
+        # 2) Read current & previous errors (timepoints from current errors)
+        e_t_path   = os.path.join(args.errors_dir, typ + args.suffix)
+        e_tm1_path = os.path.join(args.prev_errors_dir, typ + args.suffix)
         try:
-            e_t   = read_errors(os.path.join(args.errors_dir, typ + args.suffix), args.node_col, time_cols, node_list)
-            e_tm1 = read_errors(os.path.join(args.prev_errors_dir, typ + args.suffix), args.node_col, time_cols, node_list)
+            e_t_df = read_errors(e_t_path, args.errors_name_col)
         except Exception as e:
-            print(f"[fail] {typ}: error matrix read error: {e}", file=sys.stderr)
+            print(f"[fail] {typ}: current errors read error: {e}", file=sys.stderr)
+            continue
+        if e_t_df.empty:
+            print(f"[warn] {typ}: no current error file; skipping.", file=sys.stderr)
             continue
 
-        # Δs = e_t - e_{t-1}
-        delta_s = (e_t - e_tm1).to_numpy(dtype=float)
+        # Timepoints from current errors
+        time_cols = list(e_t_df.columns)
+        # Reindex current errors to nodes/timepoints; fill missing with 0
+        e_t_df = e_t_df.reindex(index=nodes, columns=time_cols).fillna(0.0)
 
-        # Params: current and previous
+        # Previous errors (optional but required by formula; if missing, treated as 0)
+        try:
+            e_tm1_df = read_errors(e_tm1_path, args.errors_name_col)
+        except Exception as e:
+            print(f"[warn] {typ}: prev errors read error: {e}; treating as zeros.", file=sys.stderr)
+            e_tm1_df = pd.DataFrame()
+        if e_tm1_df.empty:
+            e_tm1_df = pd.DataFrame(0.0, index=nodes, columns=time_cols)
+        else:
+            e_tm1_df = e_tm1_df.reindex(index=nodes, columns=time_cols).fillna(0.0)
+
+        # Δs
+        delta_s = (e_t_df - e_tm1_df).to_numpy(dtype=float)
+
+        # 3) Read current & previous params
         try:
             p_t_map   = read_params_map(os.path.join(args.params_dir, typ + args.suffix))
             p_tm1_map = read_params_map(os.path.join(args.prev_params_dir, typ + args.suffix))
@@ -173,29 +193,23 @@ def main():
             print(f"[fail] {typ}: params read error: {e}", file=sys.stderr)
             continue
 
+        L = len(time_cols)
         out_map: Dict[str, List[float]] = {}
 
-        for name in node_list.astype(str):
-            p_t   = p_t_map.get(name, [args.init_value]*L)
-            p_tm1 = p_tm1_map.get(name, [args.init_value]*L)
-            p_t   = np.asarray(ensure_len(p_t,   L, args.init_value), dtype=float)
-            p_tm1 = np.asarray(ensure_len(p_tm1, L, args.init_value), dtype=float)
+        # For fast row access
+        e_t_np = e_t_df.to_numpy(dtype=float)
 
-            # Current error for this node
-            e_cur = e_t.loc[name].to_numpy(dtype=float) if name in e_t.index else np.zeros(L, dtype=float)
+        for i, name in enumerate(nodes):
+            p_t   = np.asarray(ensure_len(p_t_map.get(name,   []), L, args.init_value), dtype=float)
+            p_tm1 = np.asarray(ensure_len(p_tm1_map.get(name, []), L, args.init_value), dtype=float)
 
-            # Δp
             delta_p = p_t - p_tm1
-
-            # scale = Δp / (Δs + eps)
-            denom = delta_s[e_t.index.get_loc(name)] + args.eps  # row aligned with same node order
-            scale = delta_p / denom
-
-            # Optional clipping to avoid huge steps if Δs ≈ 0
+            denom   = delta_s[i, :] + args.eps
+            scale   = delta_p / denom
             if args.max_scale is not None:
                 scale = np.clip(scale, -args.max_scale, args.max_scale)
 
-            # Update
+            e_cur = e_t_np[i, :]
             p_new = p_t - args.lr * e_cur * scale
 
             out_map[name] = p_new.tolist()
