@@ -59,11 +59,11 @@ python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal
 ```bash
 python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal-2/iterationMatrices --real-dir ../../data/testFitting/syntheticTimeSeries --out-dir /tmp/testingErrors-2 
 ```
-## CREATING THE NEW PARAMETERS (ITERATION AWARE)
+## CREATING THE NEW PARAMETERS FOR DISSIPATION(ITERATION AWARE)
 ```bash
 python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure \
-    --params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/propagationParameters \
-    --prev-params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/propagationParametersAllEqual \
+    --params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters \
+    --prev-params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersAllEqual \ 
     --errors-dir /tmp/testingErrors \
     --prev-errors-dir /tmp/testingErrors-2 \
     --out-dir /tmp/testingNewParams \
