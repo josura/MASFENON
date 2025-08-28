@@ -1,10 +1,17 @@
 var searchData=
 [
-  ['weighted_5fgraph_5fmetrics_0',['weighted_graph_metrics',['../namespaceweighted__graph__metrics.html',1,'']]],
-  ['weightededgegraph_1',['weightededgegraph',['../classWeightedEdgeGraph.html',1,'WeightedEdgeGraph'],['../classWeightedEdgeGraph.html#ab1523d1fe59886ee43c26e15fcd58d55',1,'WeightedEdgeGraph::WeightedEdgeGraph()'],['../classWeightedEdgeGraph.html#a46e8ec9dc0aebd35818be4555c111bdd',1,'WeightedEdgeGraph::WeightedEdgeGraph(int numNodes)'],['../classWeightedEdgeGraph.html#adda55d58f9e50f27158bbf243a46d8f2',1,'WeightedEdgeGraph::WeightedEdgeGraph(std::vector&lt; std::string &gt; &amp;nodeNames)'],['../classWeightedEdgeGraph.html#a6e1267e5cc0534ecc6565f600595270c',1,'WeightedEdgeGraph::WeightedEdgeGraph(std::vector&lt; std::string &gt; &amp;nodeNames, std::vector&lt; double &gt; &amp;nodeVal)'],['../classWeightedEdgeGraph.html#ab574c12b8823863bb8570c0ad3e62579',1,'WeightedEdgeGraph::WeightedEdgeGraph(const Matrix&lt; double &gt; &amp;_adjMatrix)']]],
-  ['weightededgegraph_2ecxx_2',['WeightedEdgeGraph.cxx',['../WeightedEdgeGraph_8cxx.html',1,'']]],
-  ['weightededgegraph_2ehxx_3',['WeightedEdgeGraph.hxx',['../WeightedEdgeGraph_8hxx.html',1,'']]],
-  ['weightedglobalclustering_4',['weightedGlobalClustering',['../namespaceweighted__graph__metrics.html#a157d69078092126c6a3d6951d5142ec2',1,'weighted_graph_metrics']]],
-  ['weightedlocalclustering_5',['weightedLocalClustering',['../namespaceweighted__graph__metrics.html#a7635c03f5832977b527061802a107cea',1,'weighted_graph_metrics']]],
-  ['weightedpathweight_6',['weightedPathWeight',['../namespaceweighted__graph__metrics.html#a2f66cbd1b3b4ce938a2996328ad4bc41',1,'weighted_graph_metrics']]]
+  ['randombooleanarray_0',['randomBooleanArray',['../mathUtilities_8hxx.html#aaf9ce1ffcdb0e7c5e79fd41f4d73b988',1,'mathUtilities.hxx']]],
+  ['randomnumber_1',['randomnumber',['../mathUtilities_8cxx.html#a221d185be3302082e06b9e004bb18c4b',1,'randomNumber(int min, int max):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a221d185be3302082e06b9e004bb18c4b',1,'randomNumber(int min, int max):&#160;mathUtilities.cxx']]],
+  ['randomrealnumber_2',['randomrealnumber',['../mathUtilities_8cxx.html#a8bb08c65c0127512433ffba2f85aca26',1,'randomRealNumber(double min, double max):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a8bb08c65c0127512433ffba2f85aca26',1,'randomRealNumber(double min, double max):&#160;mathUtilities.cxx']]],
+  ['randomvector_3',['randomVector',['../mathUtilities_8hxx.html#aa530faa6617911b3236d3aae08d22094',1,'mathUtilities.hxx']]],
+  ['required_20scripts_4',['B.3.2 Required Scripts',['../GeneralDocumentation.html#autotoc_md38',1,'']]],
+  ['requirements_5',['B.3.5 Environment Requirements',['../GeneralDocumentation.html#autotoc_md41',1,'']]],
+  ['resetvirtualoutputs_6',['resetVirtualOutputs',['../classComputation.html#ab813459d7172f3192249ea6d28e21a99',1,'Computation']]],
+  ['results_7',['results',['../Visualization.html#autotoc_md67',1,'Visualization of simulation results'],['../Visualization.html',1,'Visualization of simulation results']]],
+  ['robustness_20and_20runtime_20controls_8',['B.2.7 Logging, Robustness, and Runtime Controls',['../GeneralDocumentation.html#autotoc_md27',1,'']]],
+  ['routes_9',['B.4.1.3 Server Routes',['../GeneralDocumentation.html#autotoc_md50',1,'']]],
+  ['rowreducegaussian_10',['rowReduceGaussian',['../classMatrix.html#a26da670506296e091a068d7d49793cf3',1,'Matrix']]],
+  ['rows_5f_11',['rows_',['../classMatrix.html#afb06909dde9fadca52d4f6afacc9b644',1,'Matrix']]],
+  ['run_12',['run',['../GeneralDocumentation.html#autotoc_md43',1,'B.3.7 Example Run'],['../index.html#autotoc_md63',1,'Example Run'],['../optimization_8cxx.html#ad6db996856b894d43455d2618a593f3c',1,'run():&#160;optimization.cxx']]],
+  ['runtime_20controls_13',['B.2.7 Logging, Robustness, and Runtime Controls',['../GeneralDocumentation.html#autotoc_md27',1,'']]]
 ];

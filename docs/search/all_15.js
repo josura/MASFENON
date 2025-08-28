@@ -1,6 +1,15 @@
 var searchData=
 [
-  ['testingperformance_2ecxx_0',['testingPerformance.cxx',['../testingPerformance_8cxx.html',1,'']]],
-  ['todo_20list_1',['Todo List',['../todo.html',1,'']]],
-  ['transpose_2',['transpose',['../classMatrix.html#a650078c4e68d8c618e56c55951997470',1,'Matrix']]]
+  ['network_20visualization_0',['B.4.1 Web Application for Multi-Network Visualization',['../GeneralDocumentation.html#autotoc_md47',1,'']]],
+  ['node_20error_20based_20adjustment_20script_1',['B.3.8 Per-Node Error-Based Adjustment Script',['../GeneralDocumentation.html#autotoc_md44',1,'']]],
+  ['nodenamesfromfolder_2',['nodenamesfromfolder',['../utilities_8cxx.html#a839385fb2f5b8f414cff986ab17810a5',1,'nodeNamesFromFolder(std::string folderPath):&#160;utilities.cxx'],['../utilities_8hxx.html#a839385fb2f5b8f414cff986ab17810a5',1,'nodeNamesFromFolder(std::string folderPath):&#160;utilities.cxx']]],
+  ['nodes_3',['B.2.6 Topology and Virtual Nodes',['../GeneralDocumentation.html#autotoc_md25',1,'']]],
+  ['norm_20constraints_4',['B.2.5 Saturation and Norm Constraints',['../GeneralDocumentation.html#autotoc_md23',1,'']]],
+  ['normalize1columns_5',['normalize1columns',['../armaUtilities_8cxx.html#a50ef6251c7e0274e26da5e04f7986b72',1,'normalize1Columns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a9cc4a2e1abd43d110bf82021145a23c1',1,'normalize1Columns(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a50ef6251c7e0274e26da5e04f7986b72',1,'normalize1Columns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
+  ['normalize1rows_6',['normalize1rows',['../armaUtilities_8hxx.html#ad85c5cbfe0933e5ca14b81a9f83e0ca5',1,'normalize1Rows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a1a3d9ef69f093bd8753ef023b4acbf80',1,'normalize1Rows(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#ad85c5cbfe0933e5ca14b81a9f83e0ca5',1,'normalize1Rows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
+  ['normalizebyvectorcolumn_7',['normalizeByVectorColumn',['../classMatrix.html#a64dea861295fac9e1613133cd0e591b3',1,'Matrix']]],
+  ['normalizebyvectorrow_8',['normalizeByVectorRow',['../classMatrix.html#a432e4eb47f4c9bbe14d754b43683f92a',1,'Matrix']]],
+  ['normalizecolumns_9',['normalizecolumns',['../armaUtilities_8cxx.html#a29272083872781f02af4dfd2fd40e351',1,'normalizeColumns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a5899f3970414939c64d2cfaf7fc79db5',1,'normalizeColumns(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a29272083872781f02af4dfd2fd40e351',1,'normalizeColumns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
+  ['normalizerows_10',['normalizerows',['../armaUtilities_8cxx.html#a005ff84f48b638c095ce0dafd54454c1',1,'normalizeRows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#ae8348c738cc75daf965718c0fc20ecb7',1,'normalizeRows(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a005ff84f48b638c095ce0dafd54454c1',1,'normalizeRows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
+  ['numel_11',['numel',['../classDissipationModelVectorized.html#ae7c418329c6e3e56051cae8133c50abf',1,'DissipationModelVectorized::numEl'],['../classDissipationModel.html#acd6e88f6344afd7b3aac2b45858431fb',1,'DissipationModel::numEl']]]
 ];

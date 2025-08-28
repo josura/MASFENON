@@ -107,201 +107,162 @@ B.1.2 File Structure</h3>
 <div class="line">\|-- src/                     # Source code</div>
 <div class="line">\|-- data/                    # Sample/test datasets</div>
 <div class="line">\-- scripts/                  # Bash and Python helper scripts</div>
-<div class="line"> </div>
-<div class="line">````</div>
-<div class="line"> </div>
-<div class="line">### B.1.3 Build</div>
-</div><!-- fragment --><p> bash cmake -B build cd build make </p><div class="fragment"><div class="line">### B.1.4 Usage</div>
-<div class="line"> </div>
-<div class="line">**Help Message:**</div>
-<div class="line"> </div>
-<div class="line">```bash</div>
-<div class="line">./build/masfenon-MPI --help</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Example Run:**</div>
-<div class="line"> </div>
-<div class="line">```bash</div>
-<div class="line">./build/masfenon-MPI \</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+B.1.3 Build</h3>
+<div class="fragment"><div class="line">cmake -B build</div>
+<div class="line">cd build</div>
+<div class="line">make</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
+B.1.4 Usage</h3>
+<p><b>Help Message:</b></p>
+<div class="fragment"><div class="line">./build/masfenon-MPI --help</div>
+</div><!-- fragment --><p><b>Example Run:</b></p>
+<div class="fragment"><div class="line">./build/masfenon-MPI \</div>
 <div class="line">  --fUniqueGraph graph.tsv \</div>
 <div class="line">  --fInitialPerturbationPerType matrix.tsv \</div>
 <div class="line">  --typeInteractionFolder typesInteractionFolder/</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">### B.1.5 Parameter Customization</div>
-<div class="line"> </div>
-<div class="line">Custom scaling functions (dissipation, conservation, etc.) can be modified in `src/CustomFunctions`.</div>
-<div class="line"> </div>
-<div class="line">### B.1.6 Propagation Function Customization</div>
-<div class="line"> </div>
-<div class="line">Propagation functions can be customized in `src/computation/PropagationModelCustom`.</div>
-<div class="line"> </div>
-<div class="line">### B.1.7 License</div>
-<div class="line"> </div>
-<div class="line">This project is released under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).</div>
-<div class="line"> </div>
-<div class="line">For issues, please use the GitHub issues page: [https://github.com/josura/MASFENON/issues](https://github.com/josura/MASFENON/issues)</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">## B.2 Inputs and Parameters of the Framework</div>
-<div class="line"> </div>
-<div class="line">This section documents the command-line interface (CLI) inputs, expected file formats, and configuration parameters of the **MASFENON** framework. Options are provided via Boost.Program\_options. Boolean switches are disabled by default unless explicitly set.</div>
-<div class="line"> </div>
-<div class="line">### B.2.1 Data Inputs and File Formats</div>
-<div class="line"> </div>
-<div class="line">At minimum, the framework requires:</div>
-<div class="line"> </div>
-<div class="line">* A graph (unique file or a folder of graphs), and</div>
-<div class="line">* An initial perturbation matrix (unique file or a folder of matrices).</div>
-<div class="line"> </div>
-<div class="line">Exactly one of the following must be specified for graphs:</div>
-<div class="line"> </div>
-<div class="line">* `--fUniqueGraph &lt;file&gt;` **OR** `--graphsFilesFolder &lt;folder&gt;`</div>
-<div class="line"> </div>
-<div class="line">Exactly one of the following should be specified for perturbations:</div>
-<div class="line"> </div>
-<div class="line">* `--fInitialPerturbationPerType &lt;file&gt;` **OR** `--initialPerturbationPerTypeFolder &lt;folder&gt;`</div>
-<div class="line"> </div>
-<div class="line">Optionally, inter-type interactions, node descriptions, and a list of subtypes can be provided.</div>
-<div class="line"> </div>
-<div class="line">#### File Schemas</div>
-<div class="line"> </div>
-<div class="line">**Graph (edge list):** `graph.tsv`</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line">start    end    weight</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+B.1.5 Parameter Customization</h3>
+<p>Custom scaling functions (dissipation, conservation, etc.) can be modified in <code>src/CustomFunctions</code>.</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+B.1.6 Propagation Function Customization</h3>
+<p>Propagation functions can be customized in <code>src/computation/PropagationModelCustom</code>.</p>
+<h3><a class="anchor" id="autotoc_md11"></a>
+B.1.7 License</h3>
+<p>This project is released under the <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<p>For issues, please use the GitHub issues page: <a href="https://github.com/josura/MASFENON/issues">https://github.com/josura/MASFENON/issues</a></p>
+<hr  />
+<h2><a class="anchor" id="autotoc_md13"></a>
+B.2 Inputs and Parameters of the Framework</h2>
+<p>This section documents the command-line interface (CLI) inputs, expected file formats, and configuration parameters of the <b>MASFENON</b> framework. Options are provided via Boost.Program_options. Boolean switches are disabled by default unless explicitly set.</p>
+<h3><a class="anchor" id="autotoc_md14"></a>
+B.2.1 Data Inputs and File Formats</h3>
+<p>At minimum, the framework requires:</p>
+<ul>
+<li>A graph (unique file or a folder of graphs), and</li>
+<li>An initial perturbation matrix (unique file or a folder of matrices).</li>
+</ul>
+<p>Exactly one of the following must be specified for graphs:</p>
+<ul>
+<li><code>--fUniqueGraph &lt;file&gt;</code> <b>OR</b> <code>--graphsFilesFolder &lt;folder&gt;</code></li>
+</ul>
+<p>Exactly one of the following should be specified for perturbations:</p>
+<ul>
+<li><code>--fInitialPerturbationPerType &lt;file&gt;</code> <b>OR</b> <code>--initialPerturbationPerTypeFolder &lt;folder&gt;</code></li>
+</ul>
+<p>Optionally, inter-type interactions, node descriptions, and a list of subtypes can be provided.</p>
+<h4><a class="anchor" id="autotoc_md15"></a>
+File Schemas</h4>
+<p><b>Graph (edge list):</b> <code>graph.tsv</code></p>
+<div class="fragment"><div class="line">start    end    weight</div>
 <div class="line">geneA    geneB  0.123</div>
 <div class="line">...</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Initial perturbation (homogeneous):** `initialPerturbationHomogeneous.tsv`</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line">name    type1          type2        ...    typeN</div>
+</div><!-- fragment --><p><b>Initial perturbation (homogeneous):</b> <code>initialPerturbationHomogeneous.tsv</code></p>
+<div class="fragment"><div class="line">name    type1          type2        ...    typeN</div>
 <div class="line">gene1   lfc_type1:g1   lfc_type2:g1 ...    lfc_typeN:g1</div>
 <div class="line">gene2   lfc_type1:g2   lfc_type2:g2 ...    lfc_typeN:g2</div>
 <div class="line">...</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Initial perturbation (heterogeneous):** `initialPerturbation-typeN.tsv`</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line">name    value</div>
+</div><!-- fragment --><p><b>Initial perturbation (heterogeneous):</b> <code>initialPerturbation-typeN.tsv</code></p>
+<div class="fragment"><div class="line">name    value</div>
 <div class="line">gene1   lfc_typeN:g1</div>
 <div class="line">gene2   lfc_typeN:g2</div>
 <div class="line">...</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Inter-type interactions:** `typesInteraction.tsv`</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line">startType  startNodeName  endType  endNodeName  weight</div>
+</div><!-- fragment --><p><b>Inter-type interactions:</b> <code>typesInteraction.tsv</code></p>
+<div class="fragment"><div class="line">startType  startNodeName  endType  endNodeName  weight</div>
 <div class="line">type0      gene-e         type1    gene-a       1.0</div>
 <div class="line">...</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Subtypes list (optional):** `subtypes.txt`</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line">type1</div>
+</div><!-- fragment --><p><b>Subtypes list (optional):</b> <code>subtypes.txt</code></p>
+<div class="fragment"><div class="line">type1</div>
 <div class="line">type3</div>
 <div class="line">...</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">**Node descriptions (optional)**:</div>
-<div class="line"> </div>
-<div class="line">* Single file: `--nodeDescriptionFile &lt;file&gt;`</div>
-<div class="line">* Per-graph folder: `--nodeDescriptionFolder &lt;folder&gt;`</div>
-<div class="line"> </div>
-<div class="line">Each file should list node identifiers (and optionally annotations). If not provided, nodes are inferred from edges.</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.2 Input Locations</div>
-<div class="line"> </div>
-<div class="line">* `--fUniqueGraph &lt;string&gt;`</div>
-<div class="line">* `--graphsFilesFolder &lt;string&gt;`</div>
-<div class="line">* `--fInitialPerturbationPerType &lt;string&gt;`</div>
-<div class="line">* `--initialPerturbationPerTypeFolder &lt;string&gt;`</div>
-<div class="line">* `--typeInteractionFolder &lt;string&gt;`</div>
-<div class="line">* `--nodeDescriptionFile &lt;string&gt;`</div>
-<div class="line">* `--nodeDescriptionFolder &lt;string&gt;`</div>
-<div class="line">* `--subtypes &lt;string&gt;`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.3 Dynamics and Time Discretization</div>
-<div class="line"> </div>
-<div class="line">* `--intratypeIterations &lt;int&gt;`</div>
-<div class="line">* `--intertypeIterations &lt;int&gt;`</div>
-<div class="line">* `--timestep &lt;double&gt;` → Δt</div>
-<div class="line">  Total simulated time: `T = I_inter × Δt`</div>
-<div class="line">* `--quantizationMethod &lt;string&gt;` (`single` or `multiple`)</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.4 Physical/Computational Models and Parameters</div>
-<div class="line"> </div>
-<div class="line">**Dissipation**</div>
-<div class="line"> </div>
-<div class="line">* `--dissipationModel &lt;string&gt;`: `none | power | random | periodic | scaled | custom`</div>
-<div class="line">* `--dissipationModelParameters &lt;vector&lt;double&gt;&gt;`</div>
-<div class="line"> </div>
-<div class="line">**Conservation**</div>
-<div class="line"> </div>
-<div class="line">* `--conservationModel &lt;string&gt;`: `none | scaled | random | custom`</div>
-<div class="line">* `--conservationModelParameters &lt;vector&lt;double&gt;&gt;`</div>
-<div class="line"> </div>
-<div class="line">**Propagation**</div>
-<div class="line"> </div>
-<div class="line">* `--propagationModel &lt;string&gt;`: `default | scaled | neighbors | customScaling | customScalingNeighbors | customPropagation`</div>
-<div class="line">* `--propagationModelParameters &lt;vector&lt;double&gt;&gt;`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.5 Saturation and Norm Constraints</div>
-<div class="line"> </div>
-<div class="line">* `--saturation`</div>
-<div class="line">* `--saturationTerm &lt;double&gt;` → bounds \[-s, s]</div>
-<div class="line">* `--customSaturationFunction`</div>
-<div class="line">* `--conservateInitialNorm`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.6 Topology and Virtual Nodes</div>
-<div class="line"> </div>
-<div class="line">* `--undirectedEdges`</div>
-<div class="line">* `--undirectedTypeEdges`</div>
-<div class="line">* `--sameTypeCommunication`</div>
-<div class="line">* `--virtualNodesGranularity &lt;string&gt;` (`type`, `node`, `typeAndNode`)</div>
-<div class="line">* `--virtualNodesGranularityParameters &lt;vector&lt;string&gt;&gt;`</div>
-<div class="line">* `--resetVirtualOutputs`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.7 Logging, Robustness, and Runtime Controls</div>
-<div class="line"> </div>
-<div class="line">* `--loggingOptions &lt;string&gt;`: `all` (default) or `none`</div>
-<div class="line">* `--verbose`</div>
-<div class="line">* `--treatWarningAsError`</div>
-<div class="line">* `--resumeCheckpoint`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.8 Outputs and Performance Tracking</div>
-<div class="line"> </div>
-<div class="line">* `--outputFolder &lt;string&gt;`</div>
-<div class="line">* `--outputFormat &lt;string&gt;` (`singleIteration` or `iterationMatrix`)</div>
-<div class="line">* `--saveAugmentedNetworks`</div>
-<div class="line">* `--savePerformance &lt;string&gt;`</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.9 Example CLI Invocation</div>
-<div class="line"> </div>
-<div class="line">```bash</div>
-<div class="line">./masfenon-MPI \</div>
+</div><!-- fragment --><p><b>Node descriptions (optional)</b>:</p>
+<ul>
+<li>Single file: <code>--nodeDescriptionFile &lt;file&gt;</code></li>
+<li>Per-graph folder: <code>--nodeDescriptionFolder &lt;folder&gt;</code></li>
+</ul>
+<p>Each file should list node identifiers (and optionally annotations). If not provided, nodes are inferred from edges.</p>
+<hr  />
+<h3><a class="anchor" id="autotoc_md17"></a>
+B.2.2 Input Locations</h3>
+<ul>
+<li><code>--fUniqueGraph &lt;string&gt;</code></li>
+<li><code>--graphsFilesFolder &lt;string&gt;</code></li>
+<li><code>--fInitialPerturbationPerType &lt;string&gt;</code></li>
+<li><code>--initialPerturbationPerTypeFolder &lt;string&gt;</code></li>
+<li><code>--typeInteractionFolder &lt;string&gt;</code></li>
+<li><code>--nodeDescriptionFile &lt;string&gt;</code></li>
+<li><code>--nodeDescriptionFolder &lt;string&gt;</code></li>
+<li><code>--subtypes &lt;string&gt;</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md19"></a>
+B.2.3 Dynamics and Time Discretization</h3>
+<ul>
+<li><code>--intratypeIterations &lt;int&gt;</code></li>
+<li><code>--intertypeIterations &lt;int&gt;</code></li>
+<li><code>--timestep &lt;double&gt;</code> → Δt Total simulated time: <code>T = I_inter × Δt</code></li>
+<li><code>--quantizationMethod &lt;string&gt;</code> (<code>single</code> or <code>multiple</code>)</li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md21"></a>
+B.2.4 Physical/Computational Models and Parameters</h3>
+<p><b>Dissipation</b></p>
+<ul>
+<li><code>--dissipationModel &lt;string&gt;</code>: <code>none | power | random | periodic | scaled | custom</code></li>
+<li><code>--dissipationModelParameters &lt;vector&lt;double&gt;&gt;</code></li>
+</ul>
+<p><b>Conservation</b></p>
+<ul>
+<li><code>--conservationModel &lt;string&gt;</code>: <code>none | scaled | random | custom</code></li>
+<li><code>--conservationModelParameters &lt;vector&lt;double&gt;&gt;</code></li>
+</ul>
+<p><b>Propagation</b></p>
+<ul>
+<li><code>--propagationModel &lt;string&gt;</code>: <code>default | scaled | neighbors | customScaling | customScalingNeighbors | customPropagation</code></li>
+<li><code>--propagationModelParameters &lt;vector&lt;double&gt;&gt;</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md23"></a>
+B.2.5 Saturation and Norm Constraints</h3>
+<ul>
+<li><code>--saturation</code></li>
+<li><code>--saturationTerm &lt;double&gt;</code> → bounds [-s, s]</li>
+<li><code>--customSaturationFunction</code></li>
+<li><code>--conservateInitialNorm</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md25"></a>
+B.2.6 Topology and Virtual Nodes</h3>
+<ul>
+<li><code>--undirectedEdges</code></li>
+<li><code>--undirectedTypeEdges</code></li>
+<li><code>--sameTypeCommunication</code></li>
+<li><code>--virtualNodesGranularity &lt;string&gt;</code> (<code>type</code>, <code>node</code>, <code>typeAndNode</code>)</li>
+<li><code>--virtualNodesGranularityParameters &lt;vector&lt;string&gt;&gt;</code></li>
+<li><code>--resetVirtualOutputs</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md27"></a>
+B.2.7 Logging, Robustness, and Runtime Controls</h3>
+<ul>
+<li><code>--loggingOptions &lt;string&gt;</code>: <code>all</code> (default) or <code>none</code></li>
+<li><code>--verbose</code></li>
+<li><code>--treatWarningAsError</code></li>
+<li><code>--resumeCheckpoint</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md29"></a>
+B.2.8 Outputs and Performance Tracking</h3>
+<ul>
+<li><code>--outputFolder &lt;string&gt;</code></li>
+<li><code>--outputFormat &lt;string&gt;</code> (<code>singleIteration</code> or <code>iterationMatrix</code>)</li>
+<li><code>--saveAugmentedNetworks</code></li>
+<li><code>--savePerformance &lt;string&gt;</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md31"></a>
+B.2.9 Example CLI Invocation</h3>
+<div class="fragment"><div class="line">./masfenon-MPI \</div>
 <div class="line">  --fUniqueGraph data/testdata/testGraph/edges-Graph1-general.tsv \</div>
 <div class="line">  --fInitialPerturbationPerType data/testdata/testGraph/initialValues-general.tsv \</div>
 <div class="line">  --typeInteractionFolder data/testdata/testHeterogeneousGraph/interactions \</div>
@@ -320,219 +281,256 @@ B.1.2 File Structure</h3>
 <div class="line">  --outputFormat iterationMatrix \</div>
 <div class="line">  --savePerformance out/run1/perf.tsv \</div>
 <div class="line">  --loggingOptions all --verbose</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.10 Tabular Summary of Options</div>
-<div class="line"> </div>
-<div class="line">| Option                              | Type           | Default         | Notes                                            |</div>
-<div class="line">| ----------------------------------- | -------------- | --------------- | ------------------------------------------------ |</div>
-<div class="line">| `fUniqueGraph`                      | string         | —               | Single graph file; XOR with `graphsFilesFolder`. |</div>
-<div class="line">| `graphsFilesFolder`                 | string         | —               | Folder of graphs.                                |</div>
-<div class="line">| `fInitialPerturbationPerType`       | string         | —               | Single perturbation file.                        |</div>
-<div class="line">| `initialPerturbationPerTypeFolder`  | string         | —               | Folder of perturbation files.                    |</div>
-<div class="line">| `typeInteractionFolder`             | string         | —               | Inter-type edges folder.                         |</div>
-<div class="line">| `nodeDescriptionFile`               | string         | —               | Node names (common graph).                       |</div>
-<div class="line">| `nodeDescriptionFolder`             | string         | —               | Node names (per-graph).                          |</div>
-<div class="line">| `subtypes`                          | string         | —               | Optional subtype list.                           |</div>
-<div class="line">| `intratypeIterations`               | int            | —               | &gt;0                                               |</div>
-<div class="line">| `intertypeIterations`               | int            | —               | &gt;0                                               |</div>
-<div class="line">| `timestep`                          | double         | —               | Δt                                               |</div>
-<div class="line">| `quantizationMethod`                | string         | —               | single \| multiple                               |</div>
-<div class="line">| `dissipationModel`                  | string         | none            | See list above.                                  |</div>
-<div class="line">| `dissipationModelParameters`        | vector&lt;double&gt; | —               | Model-dependent.                                 |</div>
-<div class="line">| `conservationModel`                 | string         | none            | See list above.                                  |</div>
-<div class="line">| `conservationModelParameters`       | vector&lt;double&gt; | —               | Model-dependent.                                 |</div>
-<div class="line">| `propagationModel`                  | string         | default         | See list above.                                  |</div>
-<div class="line">| `propagationModelParameters`        | vector&lt;double&gt; | —               | Model-dependent.                                 |</div>
-<div class="line">| `saturation`                        | flag           | off             | Enable clipping.                                 |</div>
-<div class="line">| `saturationTerm`                    | double         | 1.0             | Requires `--saturation`.                         |</div>
-<div class="line">| `customSaturationFunction`          | flag           | off             | User-defined.                                    |</div>
-<div class="line">| `conservateInitialNorm`             | flag           | off             | Norm constraint.                                 |</div>
-<div class="line">| `undirectedEdges`                   | flag           | off             | Intra-graph undirected.                          |</div>
-<div class="line">| `undirectedTypeEdges`               | flag           | off             | Inter-type undirected.                           |</div>
-<div class="line">| `sameTypeCommunication`             | flag           | off             | Same-type virtual node.                          |</div>
-<div class="line">| `resetVirtualOutputs`               | flag           | off             | Zeroed each iteration.                           |</div>
-<div class="line">| `virtualNodesGranularity`           | string         | type            | type \| node \| typeAndNode                      |</div>
-<div class="line">| `virtualNodesGranularityParameters` | vector&lt;string&gt; | —               | Reserved.                                        |</div>
-<div class="line">| `loggingOptions`                    | string         | all             | all \| none                                      |</div>
-<div class="line">| `verbose`                           | flag           | off             | Extra logs.                                      |</div>
-<div class="line">| `treatWarningAsError`               | flag           | off             | Fail on warning.                                 |</div>
-<div class="line">| `resumeCheckpoint`                  | flag           | off             | Resume run.                                      |</div>
-<div class="line">| `outputFolder`                      | string         | —               | Required for outputs.                            |</div>
-<div class="line">| `outputFormat`                      | string         | singleIteration | Iteration output mode.                           |</div>
-<div class="line">| `saveAugmentedNetworks`             | flag           | off             | Save augmented graphs.                           |</div>
-<div class="line">| `savePerformance`                   | string         | off             | Save runtime summary.                            |</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">### B.2.11 Additional considerations</div>
-<div class="line"> </div>
-<div class="line">If there are problems with the options, file, or consistency, the program will throw exceptions with explanatory error messages, or print warnings. Use `--verbose` for more details.</div>
-<div class="line"> </div>
-<div class="line">## B.3 Fitting Procedure and Scripts</div>
-<div class="line"> </div>
-<div class="line">In addition to the general-purpose simulation parameters, **MASFENON** includes a dedicated fitting workflow for calibrating the simulation to experimental single-cell data. In the current implementation, this process has been applied to fit the model to the *AT1* cell metabolite layer in scRNA-seq data.</div>
-<div class="line"> </div>
-<div class="line">### B.3.1 Overview</div>
-<div class="line"> </div>
-<div class="line">The fitting pipeline iteratively adjusts the **dissipation**, **propagation**, and **conservation** model parameters to minimize the mean squared error (MSE) between simulated outputs and experimental data at specific timepoints. The process is controlled by a main Bash script, which:</div>
-<div class="line"> </div>
-<div class="line">1. Sets the fitting mode (manual parameter ranges or resume from previous results).</div>
-<div class="line">2. Runs multiple **epochs**, each consisting of:</div>
-<div class="line">   - Executing the MASFENON simulation with the current parameter ranges.</div>
-<div class="line">   - Computing MSE values for each experiment/timepoint.</div>
-<div class="line">   - Generating updated parameter ranges for the next epoch, based on MSE ranking.</div>
-<div class="line">3. Saves all intermediate results, MSE tables, and updated parameter ranges in a user-defined output folder.</div>
-<div class="line"> </div>
-<div class="line">### B.3.2 Required Scripts</div>
-<div class="line"> </div>
-<div class="line">The fitting workflow depends on the following scripts:</div>
-<div class="line"> </div>
-<div class="line">- **`simulation_custom_parameters.sh`**  </div>
-<div class="line">  Runs a MASFENON simulation with explicit dissipation, propagation, and conservation parameter ranges.  </div>
-<div class="line">  Parameters:  </div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">minDiss maxDiss dissSteps minProp maxProp propSteps minCons maxCons consSteps</div>
-<div class="line"> </div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">- **`compute-MSE-metabolites.py`**  </div>
-<div class="line">Computes the MSE between simulation outputs and experimental data for each available timepoint (e.g., 6h, 7h, 10h).  </div>
-<div class="line">Outputs an MSE-sorted table in the format:</div>
-<div class="line">```</div>
-<div class="line"> </div>
-<div class="line">MSE    experiment</div>
+</div><!-- fragment --><hr  />
+<h3><a class="anchor" id="autotoc_md33"></a>
+B.2.10 Tabular Summary of Options</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Default   </th><th class="markdownTableHeadNone">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>fUniqueGraph</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Single graph file; XOR with <code>graphsFilesFolder</code>.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>graphsFilesFolder</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Folder of graphs.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>fInitialPerturbationPerType</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Single perturbation file.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>initialPerturbationPerTypeFolder</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Folder of perturbation files.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>typeInteractionFolder</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Inter-type edges folder.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>nodeDescriptionFile</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Node names (common graph).    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>nodeDescriptionFolder</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Node names (per-graph).    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>subtypes</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Optional subtype list.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>intratypeIterations</code>   </td><td class="markdownTableBodyNone">int   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">&gt;0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>intertypeIterations</code>   </td><td class="markdownTableBodyNone">int   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">&gt;0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>timestep</code>   </td><td class="markdownTableBodyNone">double   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Δt    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>quantizationMethod</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">single | multiple    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>dissipationModel</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">none   </td><td class="markdownTableBodyNone">See list above.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>dissipationModelParameters</code>   </td><td class="markdownTableBodyNone">vector&lt;double&gt;   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Model-dependent.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>conservationModel</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">none   </td><td class="markdownTableBodyNone">See list above.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>conservationModelParameters</code>   </td><td class="markdownTableBodyNone">vector&lt;double&gt;   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Model-dependent.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>propagationModel</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">default   </td><td class="markdownTableBodyNone">See list above.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>propagationModelParameters</code>   </td><td class="markdownTableBodyNone">vector&lt;double&gt;   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Model-dependent.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>saturation</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Enable clipping.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>saturationTerm</code>   </td><td class="markdownTableBodyNone">double   </td><td class="markdownTableBodyNone">1.0   </td><td class="markdownTableBodyNone">Requires <code>--saturation</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>customSaturationFunction</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">User-defined.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>conservateInitialNorm</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Norm constraint.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>undirectedEdges</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Intra-graph undirected.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>undirectedTypeEdges</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Inter-type undirected.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>sameTypeCommunication</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Same-type virtual node.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>resetVirtualOutputs</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Zeroed each iteration.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>virtualNodesGranularity</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">type   </td><td class="markdownTableBodyNone">type | node | typeAndNode    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>virtualNodesGranularityParameters</code>   </td><td class="markdownTableBodyNone">vector&lt;string&gt;   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Reserved.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>loggingOptions</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">all   </td><td class="markdownTableBodyNone">all | none    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>verbose</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Extra logs.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>treatWarningAsError</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Fail on warning.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>resumeCheckpoint</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Resume run.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>outputFolder</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">Required for outputs.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>outputFormat</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">singleIteration   </td><td class="markdownTableBodyNone">Iteration output mode.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>saveAugmentedNetworks</code>   </td><td class="markdownTableBodyNone">flag   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Save augmented graphs.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>savePerformance</code>   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">off   </td><td class="markdownTableBodyNone">Save runtime summary.   </td></tr>
+</table>
+<hr  />
+<h3><a class="anchor" id="autotoc_md35"></a>
+B.2.11 Additional considerations</h3>
+<p>If there are problems with the options, file, or consistency, the program will throw exceptions with explanatory error messages, or print warnings. Use <code>--verbose</code> for more details.</p>
+<h2><a class="anchor" id="autotoc_md36"></a>
+B.3 Fitting Procedure and Scripts</h2>
+<p>In addition to the general-purpose simulation parameters, <b>MASFENON</b> includes a dedicated fitting workflow for calibrating the simulation to experimental single-cell data. In the current implementation, this process has been applied to fit the model to the <em>AT1</em> cell metabolite layer in scRNA-seq data.</p>
+<h3><a class="anchor" id="autotoc_md37"></a>
+B.3.1 Overview</h3>
+<p>The fitting pipeline iteratively adjusts the <b>dissipation</b>, <b>propagation</b>, and <b>conservation</b> model parameters to minimize the mean squared error (MSE) between simulated outputs and experimental data at specific timepoints. The process is controlled by a main Bash script, which:</p>
+<ol type="1">
+<li>Sets the fitting mode (manual parameter ranges or resume from previous results).</li>
+<li>Runs multiple <b>epochs</b>, each consisting of:<ul>
+<li>Executing the MASFENON simulation with the current parameter ranges.</li>
+<li>Computing MSE values for each experiment/timepoint.</li>
+<li>Generating updated parameter ranges for the next epoch, based on MSE ranking.</li>
+</ul>
+</li>
+<li>Saves all intermediate results, MSE tables, and updated parameter ranges in a user-defined output folder.</li>
+</ol>
+<h3><a class="anchor" id="autotoc_md38"></a>
+B.3.2 Required Scripts</h3>
+<p>The fitting workflow depends on the following scripts:</p>
+<ul>
+<li>**<code>simulation_custom_parameters.sh</code>** <br  />
+ Runs a MASFENON simulation with explicit dissipation, propagation, and conservation parameter ranges. <br  />
+ Parameters: <br  />
+ <div class="fragment"><div class="line">minDiss maxDiss dissSteps minProp maxProp propSteps minCons maxCons consSteps</div>
+</div><!-- fragment --></li>
+<li>**<code>compute-MSE-metabolites.py</code>** <br  />
+ Computes the MSE between simulation outputs and experimental data for each available timepoint (e.g., 6h, 7h, 10h). <br  />
+ Outputs an MSE-sorted table in the format: <div class="fragment"><div class="line">MSE    experiment</div>
 <div class="line">0.012  dissipation\_&lt;d&gt;-propagation\_&lt;p&gt;-conservation\_&lt;c&gt;</div>
 <div class="line">...</div>
-</div><!-- fragment --><p> This script is part of the <a href="https://github.com/josura/c2c-sepia">c2c-sepia repository</a>.</p>
-<ul>
+</div><!-- fragment --> This script is part of the <a href="https://github.com/josura/c2c-sepia">c2c-sepia repository</a>.</li>
 <li>**<code>createNewParametersFromMSEtable.sh</code>** <br  />
  Reads an MSE table and generates new parameter ranges around the best-performing configurations, for use in the next fitting epoch.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md39"></a>
 B.3.3 Execution Modes</h3>
 <p>The main fitting script supports two execution modes:</p>
 <p><b>Manual Range Mode</b> </p><div class="fragment"><div class="line">./fit-and-run-simulation.sh &lt;epochs&gt; &lt;OutputFolder&gt; &lt;minParam&gt; &lt;maxParam&gt; &lt;intervals&gt;</div>
-<div class="line">````</div>
-<div class="line"> </div>
-<div class="line">All three parameter families (dissipation, propagation, conservation) share the same starting min, max, and number of intervals.</div>
-<div class="line"> </div>
-<div class="line">**Resume Mode**</div>
-</div><!-- fragment --><p> bash ./fit-and-run-simulation.sh &lt;epochs&gt; &lt;OutputFolder&gt; </p><div class="fragment"><div class="line">Reads previous simulation results from `&lt;OutputFolder&gt;`, computes the MSE tables, and generates new ranges from them. Useful to continue fitting without restarting from scratch.</div>
-<div class="line"> </div>
-<div class="line">### B.3.4 Epoch Loop and Parameter Update</div>
-<div class="line"> </div>
-<div class="line">Each epoch proceeds as follows:</div>
-<div class="line"> </div>
-<div class="line">1. Create an `epoch_&lt;n&gt;` subfolder inside `&lt;OutputFolder&gt;`.</div>
-<div class="line">2. Run the simulation with current parameter ranges:</div>
-</div><!-- fragment --><p> bash bash simulation_custom_parameters.sh \ minDiss maxDiss dissSteps \ minProp maxProp propSteps \ minCons maxCons consSteps </p><div class="fragment"><div class="line">3. Compute MSE values for each timepoint:</div>
-</div><!-- fragment --><p> bash python3 compute-MSE-metabolites.py epoch_&lt;n&gt; </p><div class="fragment"><div class="line">4. From the MSE table of the selected fitting timepoint (e.g., 10h), extract top configurations and generate updated parameter ranges:</div>
-</div><!-- fragment --><p> bash bash createNewParametersFromMSEtable.sh \ epoch_&lt;n&gt;/mse_10h.tsv \ 5 \ &lt;intervals&gt; \ epoch_&lt;n&gt;/newParams_mse_10h.txt </p><div class="fragment"><div class="line">5. Update `min`, `max`, and `intervals` for each parameter family from the generated file.</div>
-<div class="line"> </div>
-<div class="line">### B.3.5 Environment Requirements</div>
-<div class="line"> </div>
-<div class="line">The fitting process requires:</div>
-<div class="line"> </div>
-<div class="line">* A Python virtual environment with dependencies for `compute-MSE-metabolites.py`. The main script activates it via:</div>
-</div><!-- fragment --><p> bash source /path/to/venv/bin/activate </p><div class="fragment"><div class="line">* The [c2c-sepia repository](https://github.com/josura/c2c-sepia) for MSE computation scripts.</div>
-<div class="line">* The **MASFENON** repository for simulation scripts.</div>
-<div class="line"> </div>
-<div class="line">### B.3.6 Outputs</div>
-<div class="line"> </div>
-<div class="line">For each epoch, the output folder contains:</div>
-<div class="line"> </div>
-<div class="line">* Simulation outputs from the current parameters.</div>
-<div class="line">* MSE tables for all fitted timepoints.</div>
-<div class="line">* Updated parameter range files for the next epoch.</div>
-<div class="line"> </div>
-<div class="line">### B.3.7 Example Run</div>
-<div class="line"> </div>
-<div class="line">Example: 3-epoch manual range fitting starting from 0.1–1.0 with 5 intervals:</div>
-</div><!-- fragment --><p> bash ./fit-and-run-simulation.sh 3 out_fitting 0.1 1.0 5 </p><div class="fragment"><div class="line">The final MSE results and the best parameters are stored in `out_fitting`.</div>
-<div class="line"> </div>
-<div class="line">### B.3.8 Per-Node Error-Based Adjustment Script</div>
-<div class="line"> </div>
-<div class="line">In addition to the global fitting workflow, a second (non-public) script exists for fine-grained parameter tuning.</div>
-<div class="line">Instead of computing MSE on aggregated outputs, this script:</div>
-<div class="line"> </div>
-<div class="line">1. Selects a specific network or subnetwork.</div>
-<div class="line">2. Computes error **per individual node** with respect to experimental data.</div>
-<div class="line">3. Aggregates per-node errors to identify parameter sensitivities.</div>
-<div class="line">4. Adjusts dissipation, propagation, and conservation parameters independently.</div>
-<div class="line"> </div>
-<div class="line">This method is useful for:</div>
-<div class="line"> </div>
-<div class="line">* Networks with heterogeneous dynamics.</div>
-<div class="line">* Subsets of nodes representing critical biological processes.</div>
-<div class="line">* Iterative localized parameter tuning.</div>
-<div class="line"> </div>
-<div class="line">---</div>
-<div class="line"> </div>
-<div class="line">## B.4 Visualization</div>
-<div class="line"> </div>
-<div class="line">In addition to numerical outputs, **MASFENON** includes interactive visualization tools for exploring simulation results.</div>
-<div class="line"> </div>
-<div class="line">Two visualization scripts are available:</div>
-<div class="line"> </div>
-<div class="line">1. A single-network plotter for node time series (in `c2c-sepia/scripts/python/temporalSingleCell/plotResults_withLR.py`).</div>
-<div class="line">2. A web-based multi-network explorer using Flask and Plotly (in `MASFENON/scripts/python/visualization/visualizationWebPageComplete.py`).</div>
-<div class="line"> </div>
-<div class="line">### B.4.1 Web Application for Multi-Network Visualization</div>
-<div class="line"> </div>
-<div class="line">This tool provides an interactive web interface for visualizing all simulated networks and their temporal evolution.</div>
-<div class="line">Implemented in **Flask** and **Plotly**, it allows:</div>
-<div class="line"> </div>
-<div class="line">* Selecting a network (*type*) from outputs.</div>
-<div class="line">* Selecting a timepoint to visualize.</div>
-<div class="line">* Inspecting node attributes and edge weights interactively.</div>
-<div class="line">* Color mapping and node size scaling based on values.</div>
-<div class="line"> </div>
-<div class="line">#### B.4.1.1 Data Sources</div>
-<div class="line"> </div>
-<div class="line">The app uses:</div>
-<div class="line"> </div>
-<div class="line">1. **Iteration matrices**: `&lt;OutputDirectory&gt;/&lt;type&gt;.tsv`</div>
-<div class="line">2. **Augmented graph files**: `&lt;AugmentedGraphDirectory&gt;/&lt;type&gt;.tsv`</div>
-<div class="line">3. **Initial node values**: `&lt;InputValuesDirectory&gt;/&lt;type&gt;.tsv`</div>
-<div class="line"> </div>
-<div class="line">#### B.4.1.2 Preprocessing and Caching</div>
-<div class="line"> </div>
-<div class="line">At startup, the app:</div>
-<div class="line"> </div>
-<div class="line">* Reads all `.tsv` output files.</div>
-<div class="line">* Loads node value series and graph structure.</div>
-<div class="line">* Generates a static **networkx spring layout**.</div>
-<div class="line">* Creates Plotly traces for edges and nodes for every timepoint.</div>
-<div class="line">* Saves pickled caches:</div>
-<div class="line"> </div>
-<div class="line">  * `node_traces_for_networks.pkl`</div>
-<div class="line">  * `edge_traces_for_networks.pkl`</div>
-<div class="line">  * `dict_for_plot.pkl`</div>
-<div class="line"> </div>
-<div class="line">#### B.4.1.3 Server Routes</div>
-<div class="line"> </div>
-<div class="line">* `/` → main interface with slider</div>
-<div class="line">* `/read_types` → list of network types</div>
-<div class="line">* `/types/&lt;type&gt;` → set active network</div>
-<div class="line">* `/plot/&lt;timepoint&gt;` → figure JSON for current type at timepoint</div>
-<div class="line">* `/plot_singular/&lt;type&gt;/&lt;timepoint&gt;` → figure JSON for specific type/timepoint</div>
-<div class="line"> </div>
-<div class="line">#### B.4.1.4 Visualization Details</div>
-<div class="line"> </div>
-<div class="line">* **Edges**: thin gray lines (`#888`), hover = weight</div>
-<div class="line">* **Nodes**: `YlGnBu` reversed scale, size ∈ \[4,22]</div>
-<div class="line">* **Layout**: fixed `spring_layout`</div>
-<div class="line">* **Annotations**: fixed parameter settings shown</div>
-<div class="line"> </div>
-<div class="line">#### B.4.1.5 Workflow Summary</div>
-</div><!-- fragment --><p> bash python3 visualizationWebPageComplete.py ```</p>
-<p>Then open <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a> in a browser.</p>
+</div><!-- fragment --><p>All three parameter families (dissipation, propagation, conservation) share the same starting min, max, and number of intervals.</p>
+<p><b>Resume Mode</b></p>
+<div class="fragment"><div class="line">./fit-and-run-simulation.sh &lt;epochs&gt; &lt;OutputFolder&gt;</div>
+</div><!-- fragment --><p>Reads previous simulation results from <code>&lt;OutputFolder&gt;</code>, computes the MSE tables, and generates new ranges from them. Useful to continue fitting without restarting from scratch.</p>
+<h3><a class="anchor" id="autotoc_md40"></a>
+B.3.4 Epoch Loop and Parameter Update</h3>
+<p>Each epoch proceeds as follows:</p>
+<ol type="1">
+<li>Create an <code>epoch_&lt;n&gt;</code> subfolder inside <code>&lt;OutputFolder&gt;</code>.</li>
+<li><p class="startli">Run the simulation with current parameter ranges:</p>
+<div class="fragment"><div class="line">bash simulation_custom_parameters.sh \</div>
+<div class="line">    minDiss maxDiss dissSteps \</div>
+<div class="line">    minProp maxProp propSteps \</div>
+<div class="line">    minCons maxCons consSteps</div>
+</div><!-- fragment --></li>
+<li><p class="startli">Compute MSE values for each timepoint:</p>
+<div class="fragment"><div class="line">python3 compute-MSE-metabolites.py epoch_&lt;n&gt;</div>
+</div><!-- fragment --></li>
+<li><p class="startli">From the MSE table of the selected fitting timepoint (e.g., 10h), extract top configurations and generate updated parameter ranges:</p>
+<div class="fragment"><div class="line">bash createNewParametersFromMSEtable.sh \</div>
+<div class="line">    epoch_&lt;n&gt;/mse_10h.tsv \</div>
+<div class="line">    5 \</div>
+<div class="line">    &lt;intervals&gt; \</div>
+<div class="line">    epoch_&lt;n&gt;/newParams_mse_10h.txt</div>
+</div><!-- fragment --></li>
+<li>Update <code>min</code>, <code>max</code>, and <code>intervals</code> for each parameter family from the generated file.</li>
+</ol>
+<h3><a class="anchor" id="autotoc_md41"></a>
+B.3.5 Environment Requirements</h3>
+<p>The fitting process requires:</p>
+<ul>
+<li><p class="startli">A Python virtual environment with dependencies for <code>compute-MSE-metabolites.py</code>. The main script activates it via:</p>
+<div class="fragment"><div class="line">source /path/to/venv/bin/activate</div>
+</div><!-- fragment --></li>
+<li>The <a href="https://github.com/josura/c2c-sepia">c2c-sepia repository</a> for MSE computation scripts.</li>
+<li>The <b>MASFENON</b> repository for simulation scripts.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md42"></a>
+B.3.6 Outputs</h3>
+<p>For each epoch, the output folder contains:</p>
+<ul>
+<li>Simulation outputs from the current parameters.</li>
+<li>MSE tables for all fitted timepoints.</li>
+<li>Updated parameter range files for the next epoch.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md43"></a>
+B.3.7 Example Run</h3>
+<p>Example: 3-epoch manual range fitting starting from 0.1–1.0 with 5 intervals:</p>
+<div class="fragment"><div class="line">./fit-and-run-simulation.sh 3 out_fitting 0.1 1.0 5</div>
+</div><!-- fragment --><p>The final MSE results and the best parameters are stored in <code>out_fitting</code>.</p>
+<h3><a class="anchor" id="autotoc_md44"></a>
+B.3.8 Per-Node Error-Based Adjustment Script</h3>
+<p>In addition to the global fitting workflow, a second (non-public) script exists for fine-grained parameter tuning. Instead of computing MSE on aggregated outputs, this script:</p>
+<ol type="1">
+<li>Selects a specific network or subnetwork.</li>
+<li>Computes error <b>per individual node</b> with respect to experimental data.</li>
+<li>Aggregates per-node errors to identify parameter sensitivities.</li>
+<li>Adjusts dissipation, propagation, and conservation parameters independently.</li>
+</ol>
+<p>This method is useful for:</p>
+<ul>
+<li>Networks with heterogeneous dynamics.</li>
+<li>Subsets of nodes representing critical biological processes.</li>
+<li>Iterative localized parameter tuning.</li>
+</ul>
 <hr  />
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
+B.4 Visualization</h2>
+<p>In addition to numerical outputs, <b>MASFENON</b> includes interactive visualization tools for exploring simulation results.</p>
+<p>Two visualization scripts are available:</p>
+<ol type="1">
+<li>A single-network plotter for node time series (in <code>c2c-sepia/scripts/python/temporalSingleCell/plotResults_withLR.py</code>).</li>
+<li>A web-based multi-network explorer using Flask and Plotly (in <code>MASFENON/scripts/python/visualization/visualizationWebPageComplete.py</code>).</li>
+</ol>
+<h3><a class="anchor" id="autotoc_md47"></a>
+B.4.1 Web Application for Multi-Network Visualization</h3>
+<p>This tool provides an interactive web interface for visualizing all simulated networks and their temporal evolution. Implemented in <b>Flask</b> and <b>Plotly</b>, it allows:</p>
+<ul>
+<li>Selecting a network (<em>type</em>) from outputs.</li>
+<li>Selecting a timepoint to visualize.</li>
+<li>Inspecting node attributes and edge weights interactively.</li>
+<li>Color mapping and node size scaling based on values.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md48"></a>
+B.4.1.1 Data Sources</h4>
+<p>The app uses:</p>
+<ol type="1">
+<li><b>Iteration matrices</b>: <code>&lt;OutputDirectory&gt;/&lt;type&gt;.tsv</code></li>
+<li><b>Augmented graph files</b>: <code>&lt;AugmentedGraphDirectory&gt;/&lt;type&gt;.tsv</code></li>
+<li><b>Initial node values</b>: <code>&lt;InputValuesDirectory&gt;/&lt;type&gt;.tsv</code></li>
+</ol>
+<h4><a class="anchor" id="autotoc_md49"></a>
+B.4.1.2 Preprocessing and Caching</h4>
+<p>At startup, the app:</p>
+<ul>
+<li>Reads all <code>.tsv</code> output files.</li>
+<li>Loads node value series and graph structure.</li>
+<li>Generates a static <b>networkx spring layout</b>.</li>
+<li>Creates Plotly traces for edges and nodes for every timepoint.</li>
+<li>Saves pickled caches:<ul>
+<li><code>node_traces_for_networks.pkl</code></li>
+<li><code>edge_traces_for_networks.pkl</code></li>
+<li><code>dict_for_plot.pkl</code></li>
+</ul>
+</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md50"></a>
+B.4.1.3 Server Routes</h4>
+<ul>
+<li><code>/</code> → main interface with slider</li>
+<li><code>/read_types</code> → list of network types</li>
+<li><code>/types/&lt;type&gt;</code> → set active network</li>
+<li><code>/plot/&lt;timepoint&gt;</code> → figure JSON for current type at timepoint</li>
+<li><code>/plot_singular/&lt;type&gt;/&lt;timepoint&gt;</code> → figure JSON for specific type/timepoint</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md51"></a>
+B.4.1.4 Visualization Details</h4>
+<ul>
+<li><b>Edges</b>: thin gray lines (<code>#888</code>), hover = weight</li>
+<li><b>Nodes</b>: <code>YlGnBu</code> reversed scale, size ∈ [4,22]</li>
+<li><b>Layout</b>: fixed <code>spring_layout</code></li>
+<li><b>Annotations</b>: fixed parameter settings shown</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md52"></a>
+B.4.1.5 Workflow Summary</h4>
+<div class="fragment"><div class="line">python3 visualizationWebPageComplete.py</div>
+</div><!-- fragment --><p>Then open <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a> in a browser.</p>
+<hr  />
+<h2><a class="anchor" id="autotoc_md54"></a>
 B.5 Legacy Framework: c2c-SEPIA</h2>
 <p>Before the standalone release of <b>MASFENON</b>, its initial development and related experiments, scripts, and input preparation pipelines were maintained in the <a href="https://github.com/josura/c2c-sepia">c2c-sepia repository</a>.</p>
 <p>This legacy repository still contains:</p>
@@ -544,7 +542,7 @@ B.5 Legacy Framework: c2c-SEPIA</h2>
 </ul>
 <p>It was designed for <b>cell-to-cell communication simulations with enriched pathways</b>, using annotated scRNA-seq data and multi-agent system (MAS) principles, extended with parallel and distributed computation.</p>
 <p>Dependencies and build process are nearly identical to MASFENON. The legacy repo now mainly contains domain-specific scripts for CCC simulation.</p>
-<h3><a class="anchor" id="autotoc_md10"></a>
+<h3><a class="anchor" id="autotoc_md55"></a>
 Additional Scripts and Utilities</h3>
 <p>The <b>MASFENON</b> repository also provides scripts for:</p>
 <ul>
