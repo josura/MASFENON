@@ -1,3 +1,5 @@
+General framework documentation           {#GeneralDocumentation}
+==============
 # Framework Documentation
 
 This part of the documentation serves as a practical guide for users who wish to explore the technical details of the **MASFENON** framework and learn how to operate it effectively. Here we provide an overview of MASFENON usage, including:
