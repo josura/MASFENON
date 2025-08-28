@@ -1,24 +1,6 @@
 var searchData=
 [
-  ['_7echeckpoint_0',['~Checkpoint',['../classCheckpoint.html#a7fff1a4a6a71c2150a969fbe40d01c34',1,'Checkpoint']]],
-  ['_7ecomputation_1',['~Computation',['../classComputation.html#aad14e9593597150e351ee5d3a9a87ebe',1,'Computation']]],
-  ['_7econservationmodel_2',['~ConservationModel',['../classConservationModel.html#ab184b9813ef2a169af0ca5e9bc061e23',1,'ConservationModel']]],
-  ['_7econservationmodelvectorized_3',['~ConservationModelVectorized',['../classConservationModelVectorized.html#ac21282f1608522d9e6a0428a8f421536',1,'ConservationModelVectorized']]],
-  ['_7edissipationmodel_4',['~DissipationModel',['../classDissipationModel.html#a077037b5b86b69f6f68ff1077e238b32',1,'DissipationModel']]],
-  ['_7edissipationmodelperiodic_5',['~DissipationModelPeriodic',['../classDissipationModelPeriodic.html#ac46feac17493871cab8fbb9ac47c373b',1,'DissipationModelPeriodic']]],
-  ['_7edissipationmodelpow_6',['~DissipationModelPow',['../classDissipationModelPow.html#aaaa3b31c3daf114cdab0992ca3f64a39',1,'DissipationModelPow']]],
-  ['_7edissipationmodelrandom_7',['~DissipationModelRandom',['../classDissipationModelRandom.html#a3c31cf8270fd54c405db9b7e98308833',1,'DissipationModelRandom']]],
-  ['_7edissipationmodelscaled_8',['~DissipationModelScaled',['../classDissipationModelScaled.html#acc442c81dc02780c108eedd49161c99a',1,'DissipationModelScaled']]],
-  ['_7edissipationmodelscaledvectorized_9',['~DissipationModelScaledVectorized',['../classDissipationModelScaledVectorized.html#ac9147ac07d0f6614811b28abb5ac90fe',1,'DissipationModelScaledVectorized']]],
-  ['_7edissipationmodelvectorized_10',['~DissipationModelVectorized',['../classDissipationModelVectorized.html#ad955be6bbc06b5d6b1f337001019c59e',1,'DissipationModelVectorized']]],
-  ['_7ematrix_11',['~Matrix',['../classMatrix.html#a57b949796e0385682b835c4cfba75c08',1,'Matrix']]],
-  ['_7epropagationmodel_12',['~PropagationModel',['../classPropagationModel.html#a14837287c62e82d882512f92c6a1b0fc',1,'PropagationModel']]],
-  ['_7epropagationmodelcustom_13',['~PropagationModelCustom',['../classPropagationModelCustom.html#a6f1a673c911bcf164925fde4bdeb92d9',1,'PropagationModelCustom']]],
-  ['_7epropagationmodelcustomvectorized_14',['~PropagationModelCustomVectorized',['../classPropagationModelCustomVectorized.html#a4f83e2c9e931240208b6209f3754e5ca',1,'PropagationModelCustomVectorized']]],
-  ['_7epropagationmodelneighbors_15',['~PropagationModelNeighbors',['../classPropagationModelNeighbors.html#aa4439f0ca7373babe692094727f72d8f',1,'PropagationModelNeighbors']]],
-  ['_7epropagationmodelneighborsvectorized_16',['~PropagationModelNeighborsVectorized',['../classPropagationModelNeighborsVectorized.html#a47abc88f066de64fb043c89a27582c4e',1,'PropagationModelNeighborsVectorized']]],
-  ['_7epropagationmodeloriginal_17',['~PropagationModelOriginal',['../classPropagationModelOriginal.html#a2209feba6daa54a6e1325b0834b1ac46',1,'PropagationModelOriginal']]],
-  ['_7epropagationmodeloriginalvectorized_18',['~PropagationModelOriginalVectorized',['../classPropagationModelOriginalVectorized.html#a18c7b6782ef08635ee7ee7d8071ab6a0',1,'PropagationModelOriginalVectorized']]],
-  ['_7epropagationmodelvectorized_19',['~PropagationModelVectorized',['../classPropagationModelVectorized.html#a0cbed120177fdd664723bf5b6d9b4048',1,'PropagationModelVectorized']]],
-  ['_7eweightededgegraph_20',['~WeightedEdgeGraph',['../classWeightedEdgeGraph.html#a43bb43eb23adc27906e698767a3d4f92',1,'WeightedEdgeGraph']]]
+  ['testingperformance_2ecxx_0',['testingPerformance.cxx',['../testingPerformance_8cxx.html',1,'']]],
+  ['todo_20list_1',['Todo List',['../todo.html',1,'']]],
+  ['transpose_2',['transpose',['../classMatrix.html#a650078c4e68d8c618e56c55951997470',1,'Matrix']]]
 ];

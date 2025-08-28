@@ -1,11 +1,15 @@
 var searchData=
 [
-  ['lerping_0',['lerping',['../mathUtilities_8cxx.html#a239543690a7f56e890609eb7ced7ebf5',1,'lerping(double a, double b, double t):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#a239543690a7f56e890609eb7ced7ebf5',1,'lerping(double a, double b, double t):&#160;mathUtilities.cxx']]],
-  ['license_1',['license',['../index.html#autotoc_md12',1,'📄 License'],['../LICENSE.html',1,'(Global Namespace)']]],
-  ['list_2',['Todo List',['../todo.html',1,'']]],
-  ['listfiles_3',['listfiles',['../utilities_8cxx.html#a2d7147d4204a3e905d0232f5ad6f3761',1,'listFiles(const std::string &amp;folderPath, bool noHiddenFiles, bool noFolders):&#160;utilities.cxx'],['../utilities_8hxx.html#a138dc4d0ce74d503f4c911f2a913c54e',1,'listFiles(const std::string &amp;folderPath, bool noHiddenFiles=true, bool noFolders=true):&#160;utilities.cxx']]],
-  ['loadstate_4',['loadState',['../classCheckpoint.html#ac0e349427d5614a5bf3a0237e90da2cb',1,'Checkpoint']]],
-  ['logger_5',['logger',['../classLogger.html',1,'Logger'],['../classLogger.html#add0f34d4c753c86af8074840a72366b3',1,'Logger::Logger()']]],
-  ['logger_2ecxx_6',['Logger.cxx',['../Logger_8cxx.html',1,'']]],
-  ['logger_2ehxx_7',['Logger.hxx',['../Logger_8hxx.html',1,'']]]
+  ['file_20structure_0',['file structure',['../index.html#autotoc_md14',1,'📁 File Structure'],['../GeneralDocumentation.html#autotoc_md6',1,'B.1.2 File Structure']]],
+  ['file_5fexists_1',['file_exists',['../utilities_8cxx.html#a21c316078b61e50c3a0037a7aaa6b3bf',1,'file_exists(const std::string &amp;name):&#160;utilities.cxx'],['../utilities_8hxx.html#a21c316078b61e50c3a0037a7aaa6b3bf',1,'file_exists(const std::string &amp;name):&#160;utilities.cxx']]],
+  ['fileexistspath_2',['fileexistspath',['../utilities_8cxx.html#a71b4a6a9c4e1836bb9b454023fd2ca6a',1,'fileExistsPath(const std::string &amp;filePath):&#160;utilities.cxx'],['../utilities_8hxx.html#a71b4a6a9c4e1836bb9b454023fd2ca6a',1,'fileExistsPath(const std::string &amp;filePath):&#160;utilities.cxx']]],
+  ['fitting_20of_20single_20cell_20experiments_3',['fitting of single cell experiments',['../FittingSingleCell.html#autotoc_md1',1,'Fitting of single cell experiments'],['../FittingSingleCell.html',1,'Fitting of single cell experiments']]],
+  ['fitting_2emd_4',['fitting.md',['../fitting_8md.html',1,'']]],
+  ['folderexists_5',['folderexists',['../utilities_8hxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx'],['../utilities_8cxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx']]],
+  ['framework_20documentation_6',['framework documentation',['../GeneralDocumentation.html#autotoc_md2',1,'Framework Documentation'],['../GeneralDocumentation.html',1,'General framework documentation']]],
+  ['framework_3a_20c2c_20sepia_7',['B.5 Legacy Framework: c2c-SEPIA',['../GeneralDocumentation.html#autotoc_md9',1,'']]],
+  ['freeaugmentedgraphs_8',['freeAugmentedGraphs',['../classComputation.html#aef8db370a06370ddb1f7ced489a4e686',1,'Computation']]],
+  ['freefunctions_9',['freeFunctions',['../classComputation.html#a65dfcb9d377f0413559f7898f29adb36',1,'Computation']]],
+  ['full_10',['Full',['../namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0abbd47109890259c0127154db1af26c75',1,'weighted_graph_metrics']]],
+  ['function_20customization_11',['📊 Propagation function customization',['../index.html#autotoc_md20',1,'']]]
 ];

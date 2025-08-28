@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['nodenamesfromfolder_0',['nodenamesfromfolder',['../utilities_8cxx.html#a839385fb2f5b8f414cff986ab17810a5',1,'nodeNamesFromFolder(std::string folderPath):&#160;utilities.cxx'],['../utilities_8hxx.html#a839385fb2f5b8f414cff986ab17810a5',1,'nodeNamesFromFolder(std::string folderPath):&#160;utilities.cxx']]],
-  ['normalize1columns_1',['normalize1columns',['../armaUtilities_8cxx.html#a50ef6251c7e0274e26da5e04f7986b72',1,'normalize1Columns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a9cc4a2e1abd43d110bf82021145a23c1',1,'normalize1Columns(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a50ef6251c7e0274e26da5e04f7986b72',1,'normalize1Columns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
-  ['normalize1rows_2',['normalize1rows',['../armaUtilities_8hxx.html#ad85c5cbfe0933e5ca14b81a9f83e0ca5',1,'normalize1Rows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a1a3d9ef69f093bd8753ef023b4acbf80',1,'normalize1Rows(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#ad85c5cbfe0933e5ca14b81a9f83e0ca5',1,'normalize1Rows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
-  ['normalizebyvectorcolumn_3',['normalizeByVectorColumn',['../classMatrix.html#a64dea861295fac9e1613133cd0e591b3',1,'Matrix']]],
-  ['normalizebyvectorrow_4',['normalizeByVectorRow',['../classMatrix.html#a432e4eb47f4c9bbe14d754b43683f92a',1,'Matrix']]],
-  ['normalizecolumns_5',['normalizecolumns',['../armaUtilities_8cxx.html#a29272083872781f02af4dfd2fd40e351',1,'normalizeColumns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#a5899f3970414939c64d2cfaf7fc79db5',1,'normalizeColumns(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a29272083872781f02af4dfd2fd40e351',1,'normalizeColumns(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
-  ['normalizerows_6',['normalizerows',['../armaUtilities_8cxx.html#a005ff84f48b638c095ce0dafd54454c1',1,'normalizeRows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8cxx.html#ae8348c738cc75daf965718c0fc20ecb7',1,'normalizeRows(arma::Mat&lt; double &gt; matr):&#160;armaUtilities.cxx'],['../armaUtilities_8hxx.html#a005ff84f48b638c095ce0dafd54454c1',1,'normalizeRows(arma::Mat&lt; T &gt; matr):&#160;armaUtilities.cxx']]],
-  ['numel_7',['numel',['../classDissipationModelVectorized.html#ae7c418329c6e3e56051cae8133c50abf',1,'DissipationModelVectorized::numEl'],['../classDissipationModel.html#acd6e88f6344afd7b3aac2b45858431fb',1,'DissipationModel::numEl']]]
+  ['hascycle_0',['hasCycle',['../namespaceweighted__graph__metrics.html#a76129222e905c1e6a03022164b7dcba3',1,'weighted_graph_metrics']]],
+  ['hascycleutil_1',['hasCycleUtil',['../namespaceweighted__graph__metrics.html#a486039a812ae40f1fa75ed4334829f7a',1,'weighted_graph_metrics']]],
+  ['hasedge_2',['hasEdge',['../classWeightedEdgeGraph.html#af23237478cef594d6c9e07f2f9fa2acc',1,'WeightedEdgeGraph']]],
+  ['hash_5fpair_5fints_3',['hash_pair_ints',['../structhash__pair__ints.html',1,'']]],
+  ['hash_5fpair_5fstrings_4',['hash_pair_strings',['../structhash__pair__strings.html',1,'']]],
+  ['hash_5fquadruple_5fstrings_5',['hash_quadruple_strings',['../structhash__quadruple__strings.html',1,'']]],
+  ['hasnegativeweights_6',['hasNegativeWeights',['../namespaceweighted__graph__metrics.html#ad8549350ecd60d73a291f4f5ee09f32b',1,'weighted_graph_metrics']]],
+  ['help_20message_7',['Help Message',['../index.html#autotoc_md17',1,'']]],
+  ['hyperbolictangentscaled_8',['hyperbolictangentscaled',['../mathUtilities_8cxx.html#aeb3b2708b82230b09da514f59ae608cf',1,'hyperbolicTangentScaled(double xInput, double scaleFactor):&#160;mathUtilities.cxx'],['../mathUtilities_8hxx.html#aeb3b2708b82230b09da514f59ae608cf',1,'hyperbolicTangentScaled(double xInput, double scaleFactor):&#160;mathUtilities.cxx']]]
 ];

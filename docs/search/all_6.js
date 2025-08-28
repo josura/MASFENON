@@ -1,13 +1,14 @@
 var searchData=
 [
-  ['file_20structure_0',['📁 File Structure',['../index.html#autotoc_md5',1,'']]],
-  ['file_5fexists_1',['file_exists',['../utilities_8cxx.html#a21c316078b61e50c3a0037a7aaa6b3bf',1,'file_exists(const std::string &amp;name):&#160;utilities.cxx'],['../utilities_8hxx.html#a21c316078b61e50c3a0037a7aaa6b3bf',1,'file_exists(const std::string &amp;name):&#160;utilities.cxx']]],
-  ['fileexistspath_2',['fileexistspath',['../utilities_8cxx.html#a71b4a6a9c4e1836bb9b454023fd2ca6a',1,'fileExistsPath(const std::string &amp;filePath):&#160;utilities.cxx'],['../utilities_8hxx.html#a71b4a6a9c4e1836bb9b454023fd2ca6a',1,'fileExistsPath(const std::string &amp;filePath):&#160;utilities.cxx']]],
-  ['fitting_20of_20single_20cell_20experiments_3',['fitting of single cell experiments',['../FittingSingleCell.html',1,'Fitting of single cell experiments'],['../FittingSingleCell.html#autotoc_md1',1,'Fitting of single cell experiments']]],
-  ['fitting_2emd_4',['fitting.md',['../fitting_8md.html',1,'']]],
-  ['folderexists_5',['folderexists',['../utilities_8cxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx'],['../utilities_8hxx.html#a71f365c34e922036f4e81eb37cb7722a',1,'folderExists(const std::string &amp;folderPath):&#160;utilities.cxx']]],
-  ['freeaugmentedgraphs_6',['freeAugmentedGraphs',['../classComputation.html#aef8db370a06370ddb1f7ced489a4e686',1,'Computation']]],
-  ['freefunctions_7',['freeFunctions',['../classComputation.html#a65dfcb9d377f0413559f7898f29adb36',1,'Computation']]],
-  ['full_8',['Full',['../namespaceweighted__graph__metrics.html#adc62972d56e6dfca8d9d83b6e80a2bf0abbd47109890259c0127154db1af26c75',1,'weighted_graph_metrics']]],
-  ['function_20customization_9',['📊 Propagation function customization',['../index.html#autotoc_md11',1,'']]]
+  ['b_201_201_20dependencies_0',['B.1.1 Dependencies',['../GeneralDocumentation.html#autotoc_md5',1,'']]],
+  ['b_201_202_20file_20structure_1',['B.1.2 File Structure',['../GeneralDocumentation.html#autotoc_md6',1,'']]],
+  ['b_201_20introduction_2',['B.1 Introduction',['../GeneralDocumentation.html#autotoc_md4',1,'']]],
+  ['b_203_203_20execution_20modes_3',['B.3.3 Execution Modes',['../GeneralDocumentation.html#autotoc_md7',1,'']]],
+  ['b_205_20legacy_20framework_3a_20c2c_20sepia_4',['B.5 Legacy Framework: c2c-SEPIA',['../GeneralDocumentation.html#autotoc_md9',1,'']]],
+  ['bandsolve_5',['bandSolve',['../classMatrix.html#a27a44eff4fe04ada0b4711d459e58458',1,'Matrix']]],
+  ['boost_5fignore_5fnumbers_5fparser_2ecxx_6',['boost_ignore_numbers_parser.cxx',['../boost__ignore__numbers__parser_8cxx.html',1,'']]],
+  ['boost_5fignore_5fnumbers_5fparser_2ehxx_7',['boost_ignore_numbers_parser.hxx',['../boost__ignore__numbers__parser_8hxx.html',1,'']]],
+  ['build_8',['BUILD',['../Building.html#autotoc_md0',1,'']]],
+  ['building_9',['Building',['../Building.html',1,'']]],
+  ['building_2emd_10',['building.md',['../building_8md.html',1,'']]]
 ];
