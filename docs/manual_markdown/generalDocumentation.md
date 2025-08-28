@@ -42,7 +42,7 @@ This online resource provides detailed developer-oriented documentation, includi
 \|-- data/                    # Sample/test datasets
 \-- scripts/                  # Bash and Python helper scripts
 
-````
+```
 
 ### B.1.3 Build
 
@@ -50,7 +50,7 @@ This online resource provides detailed developer-oriented documentation, includi
 cmake -B build
 cd build
 make
-````
+```
 
 ### B.1.4 Usage
 
@@ -349,7 +349,7 @@ MSE    experiment
 0.012  dissipation\_<d>-propagation\_<p>-conservation\_<c>
 ...
 
-````
+```
 This script is part of the [c2c-sepia repository](https://github.com/josura/c2c-sepia).
 
 - **`createNewParametersFromMSEtable.sh`**  
@@ -362,7 +362,7 @@ The main fitting script supports two execution modes:
 **Manual Range Mode**
 ```bash
 ./fit-and-run-simulation.sh <epochs> <OutputFolder> <minParam> <maxParam> <intervals>
-````
+```
 
 All three parameter families (dissipation, propagation, conservation) share the same starting min, max, and number of intervals.
 
