@@ -62,6 +62,16 @@ LR=0.1
 EPS=1e-12
 MAX_SCALE=""      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
 
+# Data conventions
+SUFFIX=".tsv"
+NODES_NAME_COL="Name"      # column in --nodes files
+REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
+
+# Defaults for auto-generated initial params (when A/B not supplied)
+DEFAULT_A=0.5
+DEFAULT_B=0.6
+
+
 
 # printing configuration
 echo "-----------------------------"
