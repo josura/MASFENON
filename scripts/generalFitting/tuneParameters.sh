@@ -60,8 +60,13 @@ import numpy as np
 
 # ---------- Utilities ----------
 
+# Run a command and exit if it fails
 def run(cmd: List[str], cwd: str | None = None) -> None:
     print("[cmd]", " ".join(cmd))
     res = subprocess.run(cmd, cwd=cwd)
     if res.returncode != 0:
         sys.exit(res.returncode)
+
+# Ensure a directory exists
+def ensure_dir(p: Path) -> None:
+    p.mkdir(parents=True, exist_ok=True)
