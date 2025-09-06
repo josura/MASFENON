@@ -107,10 +107,24 @@ while [[ $# -gt 0 ]]; do
     --init-params-b) INIT_B="$2"; shift 2;;
     -h|--help) usage; exit 0;;
     *) echo "[error] Unknown arg: $1"; usage; exit 2;;
-  endesac
+  esac
 done
 
 # printing configuration
 echo "-----------------------------"
 echo "MAS Fitting Driver"
+echo "-----------------------------"
+echo "Epochs: $EPOCHS"
+echo "Graphs: $GRAPHS"
+echo "Nodes: $NODES"
+echo "Interactions: $INTERACTIONS"
+echo "Real data: $REAL_DIR"
+echo "Output root: $OUT_ROOT"
+if [[ -n "$INIT_A" && -n "$INIT_B" ]]; then
+  echo "Init params A: $INIT_A"
+  echo "Init params B: $INIT_B"
+else
+  echo "Init params A: (auto-generated)"
+  echo "Init params B: (auto-generated)"
+fi
 echo "-----------------------------"
