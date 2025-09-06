@@ -2,7 +2,7 @@
 """
 MASFENON fitting driver.
 
-Pipeline per your spec:
+Pipeline overview:
 1) Inputs: epochs; graph/nodes/interactions folders; optional two initial parameter folders
    OR auto-generate 0.5/0.6 parameter sets; script paths; real data for error calc.
 2) If no initial parameter folders are provided:
