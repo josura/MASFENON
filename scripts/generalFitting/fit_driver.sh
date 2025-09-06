@@ -52,6 +52,11 @@ OUTPUT_FORMAT="iterationMatrix"
 USE_SATURATION=0
 USE_VERBOSE=1
 
+# Helper python scripts (paths)
+SCRIPT_ERROR="createErrorMatrix.py"
+SCRIPT_PARAMS="createParametersIterationAware.py"
+SCRIPT_RMSE="computeRMSE-fromErrorMatrix.py"
+
 # printing configuration
 echo "-----------------------------"
 echo "MAS Fitting Driver"
