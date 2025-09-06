@@ -71,7 +71,44 @@ REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
 DEFAULT_A=0.5
 DEFAULT_B=0.6
 
+# ===========================
+#  CLI (only IO & epochs)
+# ===========================
+usage() {
+  cat <<EOF
+Usage:
+  $(basename "$0") --epochs N \\
+    --graphs /path/graphs \\
+    --nodes  /path/nodes \\
+    --interactions /path/interactions \\
+    --real-data-dir /path/real_series \\
+    --out /path/output \\
+    [--init-params-a /path/paramsA --init-params-b /path/paramsB]
 
+Notes:
+- Only IO and epoch count are CLI-configurable; edit constants at the top for everything else.
+- Params folders must contain subdirs:
+    propagationParameters/ dissipationParameters/ conservationParameters/
+EOF
+}
+
+EPOCHS="" GRAPHS="" NODES="" INTERACTIONS="" REAL_DIR="" OUT_ROOT=""
+INIT_A="" INIT_B=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --epochs) EPOCHS="$2"; shift 2;;
+    --graphs) GRAPHS="$2"; shift 2;;
+    --nodes) NODES="$2"; shift 2;;
+    --interactions) INTERACTIONS="$2"; shift 2;;
+    --real-data-dir) REAL_DIR="$2"; shift 2;;
+    --out) OUT_ROOT="$2"; shift 2;;
+    --init-params-a) INIT_A="$2"; shift 2;;
+    --init-params-b) INIT_B="$2"; shift 2;;
+    -h|--help) usage; exit 0;;
+    *) echo "[error] Unknown arg: $1"; usage; exit 2;;
+  endesac
+done
 
 # printing configuration
 echo "-----------------------------"
