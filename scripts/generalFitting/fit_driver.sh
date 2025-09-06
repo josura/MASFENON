@@ -128,3 +128,16 @@ else
   echo "Init params B: (auto-generated)"
 fi
 echo "-----------------------------"
+
+
+# Validate the necessary options
+for v in EPOCHS GRAPHS NODES INTERACTIONS REAL_DIR OUT_ROOT; do
+  [[ -n "${!v}" ]] || { echo "[error] missing --${v,,}"; usage; exit 2; }
+done
+for d in "$GRAPHS" "$NODES" "$INTERACTIONS" "$REAL_DIR"; do
+  [[ -d "$d" ]] || { echo "[error] not a directory: $d"; exit 2; }
+done
+[[ -f "$SCRIPT_ERROR" ]] || { echo "[error] missing $SCRIPT_ERROR"; exit 2; }
+[[ -f "$SCRIPT_PARAMS" ]] || { echo "[error] missing $SCRIPT_PARAMS"; exit 2; }
+[[ -f "$SCRIPT_RMSE"   ]] || { echo "[error] missing $SCRIPT_RMSE";   exit 2; }
+[[ -x "$SIMULATOR" || -f "$SIMULATOR" ]] || { echo "[error] simulator not found: $SIMULATOR"; exit 2; }
