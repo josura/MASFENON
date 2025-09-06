@@ -33,6 +33,7 @@ Example:
     --nodes-name-col Name \
     --errors-name-col nodeNames \
     --lr 0.05
+TODO there is a problem in case the previous parameter and the current parameter are the same, because then delta_p = 0 and no update is done. This can be fixed by adding a small random noise to the previous parameters when reading them.
 """
 
 import argparse
