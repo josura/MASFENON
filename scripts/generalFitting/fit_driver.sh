@@ -46,7 +46,11 @@ MPIRUN_BIN="mpirun"
 MPIRUN_NP=8
 MPIRUN_EXTRA="--mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0"
 
-
+# Fixed simulator flags (edit here if needed)
+VNG="typeAndNode"
+OUTPUT_FORMAT="iterationMatrix"
+USE_SATURATION=0
+USE_VERBOSE=1
 
 # printing configuration
 echo "-----------------------------"
