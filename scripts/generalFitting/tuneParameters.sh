@@ -57,3 +57,11 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 import pandas as pd
 import numpy as np
+
+# ---------- Utilities ----------
+
+def run(cmd: List[str], cwd: str | None = None) -> None:
+    print("[cmd]", " ".join(cmd))
+    res = subprocess.run(cmd, cwd=cwd)
+    if res.returncode != 0:
+        sys.exit(res.returncode)
