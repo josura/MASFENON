@@ -52,10 +52,16 @@ OUTPUT_FORMAT="iterationMatrix"
 USE_SATURATION=0
 USE_VERBOSE=1
 
-# Helper python scripts (paths)
+# Helper python scripts (relative or full paths)
 SCRIPT_ERROR="createErrorMatrix.py"
 SCRIPT_PARAMS="createParametersIterationAware.py"
 SCRIPT_RMSE="computeRMSE-fromErrorMatrix.py"
+
+# Parameter update settings
+LR=0.1
+EPS=1e-12
+MAX_SCALE=""      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
+
 
 # printing configuration
 echo "-----------------------------"
