@@ -163,3 +163,23 @@ count_timepoints_from_real() {
 }
 
 join_by_comma() { awk -v v="$1" -v n="$2" 'BEGIN{for(i=1;i<=n;i++){printf "%s",v; if(i<n) printf ","} printf "\n"}'; }
+
+
+write_uniform_params_for_type() {
+  # $1=out_model_dir $2=type $3=value
+  local dir="$1" typ="$2" val="$3"
+  local nodes_file="$NODES/$typ$SUFFIX"
+  local real_file="$REAL_DIR/$typ$SUFFIX"
+  [[ -f "$nodes_file" ]] || { echo "[error] nodes missing: $nodes_file"; exit 2; }
+  [[ -f "$real_file"  ]] || { echo "[error] real missing:  $real_file";  exit 2; }
+  local L; L=$(count_timepoints_from_real "$real_file")
+  [[ "$L" -gt 0 ]] || { echo "[error] no timepoints in $real_file"; exit 2; }
+  mkdir -p "$dir"
+  local line; line=$(join_by_comma "$val" "$L")
+  {
+    printf "name\tparameters\n"
+    extract_node_names "$nodes_file" | while IFS= read -r nm; do
+      printf "%s\t%s\n" "$nm" "$line"
+    done
+  } > "$dir/$typ$SUFFIX"
+}
