@@ -112,7 +112,7 @@ done
 
 # printing configuration
 echo "-----------------------------"
-echo "MAS Fitting Driver"
+echo "MASFENON Fitting Driver"
 echo "-----------------------------"
 echo "Epochs: $EPOCHS"
 echo "Graphs: $GRAPHS"
@@ -149,4 +149,10 @@ natural_sort() { sort -V; }
 
 list_types() {
   find "$NODES" -maxdepth 1 -type f -name "*$SUFFIX" -printf "%f\n" | sed "s/$SUFFIX$//" | natural_sort
+}
+
+extract_node_names() {
+  # $1=nodes_file
+  awk -v col="$NODES_NAME_COL" 'BEGIN{FS=OFS="\t"} NR==1{for(i=1;i<=NF;i++) if($i==col) c=i; next}
+                                 {if(c) print $c}' "$1"
 }
