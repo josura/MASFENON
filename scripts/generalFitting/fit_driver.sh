@@ -236,3 +236,11 @@ run_sim_and_errors() {
   ERR_DIR="$EPOCH_DIR/errors"; mkdir -p "$ERR_DIR"
   python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
 }
+
+sum_rmse_in_folder() {
+  # $1=errors_dir -> echo sum
+  local d="$1"
+  find "$d" -maxdepth 1 -type f -name "*$SUFFIX" -print0 \
+    | xargs -0 -I{} python3 "$SCRIPT_RMSE" --file "{}" --node-col "$REAL_NODE_COL" \
+    | awk '{s+=$1} END{printf "%.10g\n", s+0}'
+}
