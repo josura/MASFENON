@@ -244,3 +244,11 @@ sum_rmse_in_folder() {
     | xargs -0 -I{} python3 "$SCRIPT_RMSE" --file "{}" --node-col "$REAL_NODE_COL" \
     | awk '{s+=$1} END{printf "%.10g\n", s+0}'
 }
+
+# ==============
+# Prep output
+# ==============
+mkdir -p "$OUT_ROOT"
+FITTING_ROOT="${OUT_ROOT%/}/fittingProcess"
+mkdir -p "$FITTING_ROOT"
+RMSE_TSV="$FITTING_ROOT/RMSE.tsv"
