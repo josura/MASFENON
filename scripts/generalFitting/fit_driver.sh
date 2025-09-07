@@ -45,6 +45,8 @@ SIMULATOR="/home/josura/Projects/ccc/MASFENON/build/masfenon-MPI"     # <- chang
 MPIRUN_BIN="mpirun"
 MPIRUN_NP=8
 MPIRUN_EXTRA="--mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0"
+VIRTUAL_ENV="/home/josura/Projects/ccc/MASFENON/scripts/generalFitting/venv"
+source "$VIRTUAL_ENV/bin/activate"
 
 # Fixed simulator flags (edit here if needed)
 VNG="typeAndNode"
