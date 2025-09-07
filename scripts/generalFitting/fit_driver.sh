@@ -220,3 +220,17 @@ sim_cmd() {
   [[ "$USE_VERBOSE"    -eq 1 ]] && cmd+=(--verbose)
   printf '%q ' "${cmd[@]}"
 }
+
+run_sim_and_errors() {
+  # $1=tag  $2=params_root -> sets globals: EPOCH_DIR, ERR_DIR
+  local tag="$1" params="$2"
+  EPOCH_DIR="$FITTING_ROOT/$tag"
+  mkdir -p "$EPOCH_DIR"
+  local SIM_OUT="$EPOCH_DIR/sim_output"; mkdir -p "$SIM_OUT"
+  # sim
+  echo "[cmd] $(sim_cmd "$params" "$SIM_OUT")"
+  eval "$(sim_cmd "$params" "$SIM_OUT")"
+  # errors
+  ERR_DIR="$EPOCH_DIR/errors"; mkdir -p "$ERR_DIR"
+  python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
+}
