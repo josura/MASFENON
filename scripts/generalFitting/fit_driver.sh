@@ -194,3 +194,29 @@ generate_uniform_param_set() {
     write_uniform_params_for_type "$out/conservationParameters" "$typ" "$val"
   done
 }
+
+copy_params_tree() { rm -rf "$2"; mkdir -p "$2"; cp -r "$1"/. "$2"/; }
+
+sim_cmd() {
+  # $1=params_root  $2=sim_out_dir
+  local p="$1" out="$2"
+  local cmd=()
+  cmd+=("$MPIRUN_BIN" -np "$MPIRUN_NP")
+  [[ -n "$MPIRUN_EXTRA" ]] && cmd+=($MPIRUN_EXTRA)
+  cmd+=("$SIMULATOR"
+        --graphsFilesFolder "$GRAPHS"
+        --initialPerturbationPerTypeFolder "$NODES"
+        --typeInteractionFolder "$INTERACTIONS"
+        --propagationModel customPropagation
+        --propagationModelParameterFolder "$p/propagationParameters"
+        --dissipationModel custom
+        --dissipationModelParameterFolder "$p/dissipationParameters"
+        --conservationModel custom
+        --conservationModelParameterFolder "$p/conservationParameters"
+        --virtualNodesGranularity "$VNG"
+        --outputFormat "$OUTPUT_FORMAT"
+        --outputFolder "$out")
+  [[ "$USE_SATURATION" -eq 1 ]] && cmd+=(--saturation)
+  [[ "$USE_VERBOSE"    -eq 1 ]] && cmd+=(--verbose)
+  printf '%q ' "${cmd[@]}"
+}
