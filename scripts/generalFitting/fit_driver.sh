@@ -252,3 +252,22 @@ mkdir -p "$OUT_ROOT"
 FITTING_ROOT="${OUT_ROOT%/}/fittingProcess"
 mkdir -p "$FITTING_ROOT"
 RMSE_TSV="$FITTING_ROOT/RMSE.tsv"
+
+# ==============
+# Initial params
+# ==============
+INIT_A_DIR="$FITTING_ROOT/init_A"
+INIT_B_DIR="$FITTING_ROOT/init_B"
+if [[ -n "$INIT_A" || -n "$INIT_B" ]]; then
+  [[ -n "$INIT_A" && -n "$INIT_B" ]] || { echo "[error] provide both --init-params-a and --init-params-b"; exit 2; }
+  copy_params_tree "$INIT_A" "$INIT_A_DIR"
+  copy_params_tree "$INIT_B" "$INIT_B_DIR"
+else
+  echo "[info] Auto-generating initial parameter sets A=$DEFAULT_A, B=$DEFAULT_B"
+  generate_uniform_param_set "$INIT_A_DIR" "$DEFAULT_A"
+  generate_uniform_param_set "$INIT_B_DIR" "$DEFAULT_B"
+fi
+
+# ====================
+# Preliminary runs A/B
+# ====================
