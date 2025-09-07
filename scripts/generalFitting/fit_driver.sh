@@ -183,3 +183,14 @@ write_uniform_params_for_type() {
     done
   } > "$dir/$typ$SUFFIX"
 }
+
+generate_uniform_param_set() {
+  # $1=out_root $2=value
+  local out="$1" val="$2"
+  mkdir -p "$out"/{propagationParameters,dissipationParameters,conservationParameters}
+  list_types | while read -r typ; do
+    write_uniform_params_for_type "$out/propagationParameters" "$typ" "$val"
+    write_uniform_params_for_type "$out/dissipationParameters"  "$typ" "$val"
+    write_uniform_params_for_type "$out/conservationParameters" "$typ" "$val"
+  done
+}
