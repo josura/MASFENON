@@ -69,3 +69,15 @@ python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHet
     --out-dir /tmp/testingNewParams \
     --lr 0.05
 ```
+
+
+# FITTING THE MODEL
+To fit the model to the synthetic time series data run the following script:
+```bash
+bash fit_driver.sh --graphs ../../data/testdata/testHeterogeneousGraph/graphs \ 
+                   --nodes ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure \
+                   --interactions ../../data/testdata/testHeterogeneousGraph/interactions \
+                   --real-data-dir ../../data/testFitting/syntheticTimeSeries \
+                   --out /tmp/testingFittingDriver \
+                   --epochs 5
+```
