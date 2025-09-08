@@ -72,12 +72,12 @@ python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHet
 
 
 # FITTING THE MODEL
-To fit the model to the synthetic time series data run the following script:
+To fit the model with some default initial parameters (all 0.5 for the first parameter and all 0.6 for the second parameter)to the synthetic time series data run the following script:
 ```bash
-bash fit_driver.sh --graphs ../../data/testdata/testHeterogeneousGraph/graphs \ 
-                   --nodes ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure \
-                   --interactions ../../data/testdata/testHeterogeneousGraph/interactions \
-                   --real-data-dir ../../data/testFitting/syntheticTimeSeries \
-                   --out /tmp/testingFittingDriver \
-                   --epochs 5
+bash fit_driver.sh --graphs ../../data/testdata/testHeterogeneousGraph/graphs --nodes ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure --interactions ../../data/testdata/testHeterogeneousGraph/interactions --real-data-dir ../../data/testFitting/syntheticTimeSeries --out /tmp/testingFittingDriver --epochs 5
+```
+
+To fit the model with some vectorized parameters (all 0.2,0.2,-0.2 for the first set of parameter, and all 0.4,0.4,-0.4 for the second set of parameters) to the synthetic time series data run the following script:
+```bash
+bash fit_driver.sh --graphs ../../data/testdata/testHeterogeneousGraph/graphs --nodes ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure --interactions ../../data/testdata/testHeterogeneousGraph/interactions --real-data-dir ../../data/testFitting/syntheticTimeSeries --out /tmp/testingFittingDriver --epochs 5 --init-params-a ../../data/testFitting/parameters --init-params-b ../../data/testFitting/parameters-2
 ```
