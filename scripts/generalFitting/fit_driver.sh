@@ -43,7 +43,7 @@ set -euo pipefail
 # Simulator + mpirun
 SIMULATOR="/home/josura/Projects/ccc/MASFENON/build/masfenon-MPI"     # <- change here if needed for the simulator path
 MPIRUN_BIN="mpirun"
-MPIRUN_NP=8
+MPIRUN_NP=4
 MPIRUN_EXTRA="--mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0"
 VIRTUAL_ENV="/home/josura/Projects/ccc/MASFENON/scripts/generalFitting/venv"
 source "$VIRTUAL_ENV/bin/activate"
@@ -81,7 +81,8 @@ usage() {
 Usage:
   $(basename "$0") --epochs N \\
     --graphs /path/graphs \\
-    --nodes  /path/nodes \\
+    --nodes  /path/node_descriptions \\
+    --initial /path/initial_values \\
     --interactions /path/interactions \\
     --real-data-dir /path/real_series \\
     --out /path/output \\
@@ -89,19 +90,26 @@ Usage:
 
 Notes:
 - Only IO and epoch count are CLI-configurable; edit constants at the top for everything else.
+- Simulator receives:
+    --nodeDescriptionFolder      (from --nodes)
+    --initialPerturbationPerTypeFolder (from --initial)
+    --graphsFilesFolder (from --graphs)
+    --typeInteractionFolder (from --interactions)
+- Optionally, the simulator 
 - Params folders must contain subdirs:
     propagationParameters/ dissipationParameters/ conservationParameters/
 EOF
 }
 
-EPOCHS="" GRAPHS="" NODES="" INTERACTIONS="" REAL_DIR="" OUT_ROOT=""
+EPOCHS="" GRAPHS="" NODES="" INITIAL="" INTERACTIONS="" REAL_DIR="" OUT_ROOT=""
 INIT_A="" INIT_B=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --epochs) EPOCHS="$2"; shift 2;;
     --graphs) GRAPHS="$2"; shift 2;;
-    --nodes) NODES="$2"; shift 2;;
+    --nodes) NODES="$2"; shift 2;;          # node descriptions (no values)
+    --initial) INITIAL="$2"; shift 2;;      # initial node values for the sim
     --interactions) INTERACTIONS="$2"; shift 2;;
     --real-data-dir) REAL_DIR="$2"; shift 2;;
     --out) OUT_ROOT="$2"; shift 2;;
@@ -271,3 +279,9 @@ fi
 # ====================
 # Preliminary runs A/B
 # ====================
+echo "[info] Running preliminary simulations..."
+run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERRORS="$ERR_DIR"
+run_sim_and_errors "prelim_B" "$INIT_B_DIR"; CURR_PARAMS="$INIT_B_DIR";  CURR_ERRORS="$ERR_DIR"
+
+# RMSE header
+printf "epoch\tRMSE\n" > "$RMSE_TSV"
