@@ -242,9 +242,12 @@ run_sim_and_errors() {
   # sim
   echo "[cmd] $(sim_cmd "$params" "$SIM_OUT")"
   eval "$(sim_cmd "$params" "$SIM_OUT")"
+  local SIM_OUT_IterationMatrix="$SIM_OUT/iterationMatrices"
+  [[ -d "$SIM_OUT_IterationMatrix" ]] || { echo "[error] sim output iteration matrices missing"; exit 2; }
   # errors
   ERR_DIR="$EPOCH_DIR/errors"; mkdir -p "$ERR_DIR"
-  python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
+  python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT_IterationMatrix" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
+  # python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
 }
 
 sum_rmse_in_folder() {
@@ -282,8 +285,57 @@ fi
 # Preliminary runs A/B
 # ====================
 echo "[info] Running preliminary simulations..."
+echo "[info]   first simulation with initial params A"
 run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERRORS="$ERR_DIR"
+echo "[info]   second simulation with initial params B"
 run_sim_and_errors "prelim_B" "$INIT_B_DIR"; CURR_PARAMS="$INIT_B_DIR";  CURR_ERRORS="$ERR_DIR"
 
 # RMSE header
 printf "epoch\tRMSE\n" > "$RMSE_TSV"
+
+
+
+# TO TEST
+# ===========
+# Epoch loop
+# ===========
+
+# for ((epoch=1; epoch<=EPOCHS; epoch++)); do
+#   echo "[info] Epoch $epoch"
+#   epoch_dir="$FITTING_ROOT/epoch_$epoch"
+#   mkdir -p "$epoch_dir"
+#   NEXT_PARAMS="$epoch_dir/parameters"; mkdir -p "$NEXT_PARAMS"
+
+#   # Create next params (Δp/(Δs+eps) rule)
+#   cmd=(python3 "$SCRIPT_PARAMS"
+#        --nodes-dir "$NODES"
+#        --params-dir "$CURR_PARAMS"
+#        --prev-params-dir "$PREV_PARAMS"
+#        --errors-dir "$CURR_ERRORS"
+#        --prev-errors-dir "$PREV_ERRORS"
+#        --out-dir "$NEXT_PARAMS"
+#        --nodes-name-col "$NODES_NAME_COL"
+#        --errors-name-col "$REAL_NODE_COL"
+#        --suffix "$SUFFIX"
+#        --lr "$LR"
+#        --eps "$EPS")
+#   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+#   echo "[cmd] ${cmd[*]}"
+#   "${cmd[@]}"
+
+#   # Sim + errors for this epoch
+#   run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
+
+#   # Sum RMSE across types
+#   RMSE_SUM=$(sum_rmse_in_folder "$ERR_DIR")
+#   printf "%d\t%s\n" "$epoch" "$RMSE_SUM" >> "$RMSE_TSV"
+#   echo "[info] Epoch $epoch RMSE_sum = $RMSE_SUM"
+
+#   # Slide windows
+#   PREV_PARAMS="$CURR_PARAMS"; PREV_ERRORS="$CURR_ERRORS"
+#   CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
+# done
+
+# echo "[done] Fitting finished."
+# echo "      Results at: $FITTING_ROOT"
+# echo "      RMSE per epoch: $RMSE_TSV"
