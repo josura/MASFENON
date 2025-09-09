@@ -127,6 +127,7 @@ echo "-----------------------------"
 echo "Epochs: $EPOCHS"
 echo "Graphs: $GRAPHS"
 echo "Nodes: $NODES"
+echo "Initial values: $INITIAL"
 echo "Interactions: $INTERACTIONS"
 echo "Real data: $REAL_DIR"
 echo "Output root: $OUT_ROOT"
@@ -141,10 +142,10 @@ echo "-----------------------------"
 
 
 # Validate the necessary options
-for v in EPOCHS GRAPHS NODES INTERACTIONS REAL_DIR OUT_ROOT; do
+for v in EPOCHS GRAPHS NODES INITIAL INTERACTIONS REAL_DIR OUT_ROOT; do
   [[ -n "${!v}" ]] || { echo "[error] missing --${v,,}"; usage; exit 2; }
 done
-for d in "$GRAPHS" "$NODES" "$INTERACTIONS" "$REAL_DIR"; do
+for d in "$GRAPHS" "$NODES" "$INITIAL" "$INTERACTIONS" "$REAL_DIR"; do
   [[ -d "$d" ]] || { echo "[error] not a directory: $d"; exit 2; }
 done
 [[ -f "$SCRIPT_ERROR" ]] || { echo "[error] missing $SCRIPT_ERROR"; exit 2; }
@@ -215,7 +216,8 @@ sim_cmd() {
   [[ -n "$MPIRUN_EXTRA" ]] && cmd+=($MPIRUN_EXTRA)
   cmd+=("$SIMULATOR"
         --graphsFilesFolder "$GRAPHS"
-        --initialPerturbationPerTypeFolder "$NODES"
+        --nodeDescriptionFolder "$NODES"                        # nodes (no values)
+        --initialPerturbationPerTypeFolder "$INITIAL"           # initial values
         --typeInteractionFolder "$INTERACTIONS"
         --propagationModel customPropagation
         --propagationModelParameterFolder "$p/propagationParameters"
