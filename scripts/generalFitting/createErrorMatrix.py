@@ -112,8 +112,12 @@ def find_matching_files(sim_dir: str, real_dir: str, suffix: str) -> List[Tuple[
 
     if missing_in_real:
         print(f"[warn] Files present in sim but missing in real ({len(missing_in_real)}): {missing_in_real}", file=sys.stderr)
+        print(f"[warn] real data directory: {real_dir}", file=sys.stderr)
+        print(f"[warn] sim data directory: {sim_dir}", file=sys.stderr)
     if missing_in_sim:
         print(f"[warn] Files present in real but missing in sim ({len(missing_in_sim)}): {missing_in_sim}", file=sys.stderr)
+        print(f"[warn] real data directory: {real_dir}", file=sys.stderr)
+        print(f"[warn] sim data directory: {sim_dir}", file=sys.stderr)
 
     pairs = [(os.path.join(sim_dir, f), os.path.join(real_dir, f), f) for f in both]
     return pairs
