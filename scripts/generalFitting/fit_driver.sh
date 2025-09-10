@@ -306,22 +306,42 @@ for ((epoch=1; epoch<=EPOCHS; epoch++)); do
   mkdir -p "$epoch_dir"
   NEXT_PARAMS="$epoch_dir/parameters"; mkdir -p "$NEXT_PARAMS"
 
-  # Create next params (Δp/(Δs+eps) rule)
-  cmd=(python3 "$SCRIPT_PARAMS"
-       --nodes-dir "$NODES"
-       --params-dir "$CURR_PARAMS"
-       --prev-params-dir "$PREV_PARAMS"
-       --errors-dir "$CURR_ERRORS"
-       --prev-errors-dir "$PREV_ERRORS"
-       --out-dir "$NEXT_PARAMS"
-       --nodes-name-col "$NODES_NAME_COL"
-       --errors-name-col "$REAL_NODE_COL"
-       --suffix "$SUFFIX"
-       --lr "$LR"
-       --eps "$EPS")
-  [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
-  echo "[cmd] ${cmd[*]}"
-  "${cmd[@]}"
+  # Create next params (Δp/(Δs+eps) rule), for dissipation, conservation and propagation
+  echo "[info] Creating next parameters set"
+  mechanismFolders=(propagationParameters dissipationParameters conservationParameters)
+  for mech in "${mechanismFolders[@]}"; do
+    mkdir -p "$NEXT_PARAMS/$mech"
+    cmd=(python3 "$SCRIPT_PARAMS"
+        --nodes-dir "$NODES"
+        --params-dir "$CURR_PARAMS/$mech"
+        --prev-params-dir "$PREV_PARAMS/$mech"
+        --errors-dir "$CURR_ERRORS"
+        --prev-errors-dir "$PREV_ERRORS"
+        --out-dir "$NEXT_PARAMS/$mech"
+        --nodes-name-col "$NODES_NAME_COL"
+        --errors-name-col "$REAL_NODE_COL"
+        --suffix "$SUFFIX"
+        --lr "$LR"
+        --eps "$EPS")
+    [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+    echo "[cmd] ${cmd[*]}"
+    "${cmd[@]}"
+  done
+  # cmd=(python3 "$SCRIPT_PARAMS"
+  #      --nodes-dir "$NODES"
+  #      --params-dir "$CURR_PARAMS"
+  #      --prev-params-dir "$PREV_PARAMS"
+  #      --errors-dir "$CURR_ERRORS"
+  #      --prev-errors-dir "$PREV_ERRORS"
+  #      --out-dir "$NEXT_PARAMS"
+  #      --nodes-name-col "$NODES_NAME_COL"
+  #      --errors-name-col "$REAL_NODE_COL"
+  #      --suffix "$SUFFIX"
+  #      --lr "$LR"
+  #      --eps "$EPS")
+  # [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+  # echo "[cmd] ${cmd[*]}"
+  # "${cmd[@]}"
 
   # Sim + errors for this epoch
   run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
