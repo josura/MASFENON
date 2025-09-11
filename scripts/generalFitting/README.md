@@ -23,11 +23,11 @@ Creating error matrix for a defined simulation:
                      --initialPerturbationPerTypeFolder  ../../data/testdata/testHeterogeneousGraph/initialValuesPartialTypes \
                      --typeInteractionFolder  ../../data/testdata/testHeterogeneousGraph/interactions \
                      --propagationModel customPropagation \
-                     --propagationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/propagationParametersAllEqual \
+                     --propagationModelParameterFolder ../../data/testFitting/parameters/propagationParameters \
                      --dissipationModel custom \
-                     --dissipationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersAllEqual \
+                     --dissipationModelParameterFolder ../../data/testFitting/parameters/dissipationParameters \
                      --conservationModel custom \
-                     --conservationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/conservationParametersAllEqual \
+                     --conservationModelParameterFolder ../../data/testFitting/parameters/conservationParameters \
                      --virtualNodesGranularity typeAndNode \
                      --saturation \
                      --verbose \
@@ -44,11 +44,11 @@ python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal
                      --initialPerturbationPerTypeFolder  ../../data/testdata/testHeterogeneousGraph/initialValuesPartialTypes \
                      --typeInteractionFolder  ../../data/testdata/testHeterogeneousGraph/interactions \
                      --propagationModel customPropagation \
-                     --propagationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/propagationParameters \
+                     --propagationModelParameterFolder ../../data/testFitting/parameters-2/propagationParameters \
                      --dissipationModel custom \
-                     --dissipationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters \
+                     --dissipationModelParameterFolder ../../data/testFitting/parameters-2/dissipationParameters \
                      --conservationModel custom \
-                     --conservationModelParameterFolder ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/conservationParameters \
+                     --conservationModelParameterFolder ../../data/testFitting/parameters-2/conservationParameters \
                      --virtualNodesGranularity typeAndNode \
                      --saturation \
                      --verbose \
@@ -61,13 +61,7 @@ python createErrorMatrix.py --sim-dir /tmp/testingCustomFunctionsVectorizedFinal
 ```
 ## CREATING THE NEW PARAMETERS FOR DISSIPATION(ITERATION AWARE)
 ```bash
-python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure \
-    --params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters \
-    --prev-params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersAllEqual \ 
-    --errors-dir /tmp/testingErrors \
-    --prev-errors-dir /tmp/testingErrors-2 \
-    --out-dir /tmp/testingNewParams \
-    --lr 0.05
+python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/nodesDescriptionDifferentStructure --params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParameters --prev-params-dir ../../data/testdata/testHeterogeneousTemporalGraphMultipleInteractions/parameters/dissipationParametersAllEqual --errors-dir /tmp/testingErrors --prev-errors-dir /tmp/testingErrors-2 --out-dir /tmp/testingNewParams --lr 0.05
 ```
 
 
