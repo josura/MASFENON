@@ -209,7 +209,12 @@ def main():
 
             delta_p = p_t - p_tm1
             denom   = delta_s[i, :] + args.eps
-            scale   = delta_p / denom
+            # control if delta_s is zero and if delta_p is larger than zero, in that case set the scale to zero
+            # this is to avoid extreme updates when delta_s is zero and delta_p is not zero
+            if np.all(denom == args.eps) and np.any(delta_p != 0):
+                scale = 0.0
+            else:
+                scale   = delta_p / denom
             if args.max_scale is not None:
                 scale = np.clip(scale, -args.max_scale, args.max_scale)
 
