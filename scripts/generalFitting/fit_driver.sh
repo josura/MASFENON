@@ -344,6 +344,7 @@ for ((epoch=1; epoch<=EPOCHS; epoch++)); do
   # "${cmd[@]}"
 
   # Sim + errors for this epoch
+  echo "[info] Running simulation with updated parameters for epoch $epoch"
   run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
 
   # Sum RMSE across types
