@@ -42,9 +42,16 @@ def main():
     if vals.size == 0:
         print("[error] No numeric error values found.", file=sys.stderr)
         sys.exit(1)
-
-    rmse = np.sqrt(np.mean(vals**2))
-    print(f"{rmse:.10g}")
+    # also control the case when there is a runtimeWarning due to overflow in the square
+    with np.errstate(over='raise'):
+        try:
+            rmse = np.sqrt(np.mean(np.square(vals)))
+        except FloatingPointError as e:
+            print(f"[error] Numerical error during RMSE computation: {e}", file=sys.stderr)
+            print(f"[error] This may be due to extremely large error values causing overflow.", file=sys.stderr)
+            print(f"[error] Consider checking the input file {args.file} for unusually large values.", file=sys.stderr)
+            sys.exit(1)
+    return 0
 
 
 if __name__ == "__main__":
