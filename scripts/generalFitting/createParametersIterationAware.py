@@ -35,6 +35,8 @@ Example:
     --lr 0.05
 TODO there is a problem in case the previous parameter and the current parameter are the same, because then delta_p = 0 and no update is done. This can be fixed by adding a small random noise to the previous parameters when reading them.
 TODO The problem if the errors are the same is less severe, because then delta_s = 0 and the update becomes p_{t+1} = p_t - lr * e_t * (delta_p / eps), which is still an update.
+TODO In reality, the problem is a lot worse if the error is the same, while the parameters are different, because then delta_p / delta_s becomes very large and the update becomes very large. This cannot be fixed by clipping or adding eps. 
+TODO These cases where the values are the same are coming from nodes that have no predecessors and probably other cases. we need to address this since it is directly affecting even the example to the general fitting model. 
 """
 
 import argparse
