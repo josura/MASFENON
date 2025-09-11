@@ -212,6 +212,10 @@ copy_params_tree() { rm -rf "$2"; mkdir -p "$2"; cp -r "$1"/. "$2"/; }
 sim_cmd() {
   # $1=params_root  $2=sim_out_dir
   local p="$1" out="$2"
+  # make the output directory if it does not exist, to avoid simulator errors
+  mkdir -p "$out"
+  # also make the iterationMatrices subdir to avoid simulator errors
+  mkdir -p "$out/iterationMatrices"
   local cmd=()
   cmd+=("$MPIRUN_BIN" -np "$MPIRUN_NP")
   [[ -n "$MPIRUN_EXTRA" ]] && cmd+=($MPIRUN_EXTRA)
