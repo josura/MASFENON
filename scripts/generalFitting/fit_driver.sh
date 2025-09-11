@@ -34,7 +34,6 @@ set -euo pipefail
 # - params folders contain subfolders:
 #       propagationParameters/ dissipationParameters/ conservationParameters/
 #   each with per-type TSV files (name, parameters).
-# TODO - handle errors when creating the directories during the simulation by pre-creating them
 # -----------------------------
 
 
