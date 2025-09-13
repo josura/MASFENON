@@ -35,6 +35,7 @@ set -euo pipefail
 #       propagationParameters/ dissipationParameters/ conservationParameters/
 #   each with per-type TSV files (name, parameters).
 # TODO fix fitting process to consider partial derivatives instead of what is doing at the moment since it's not really using partial dervivatives
+# TODO also try to change the initial way of initializing the parameters, especially because prelim_A parameters are used as the starting point, while prelim_B is used to control the perturbation, that is on singular mechanics(it's not a good way of encoding these kind of fitting model at the moment)
 # -----------------------------
 
 
@@ -290,10 +291,13 @@ fi
 # Preliminary runs A/B
 # ====================
 echo "[info] Running preliminary simulations..."
-echo "[info]   first simulation with initial params A"
+echo "[info]   first simulation with initial params A, only one since it is simulating some original parameters already known"
 run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERRORS="$ERR_DIR"
-echo "[info]   second simulation with initial params B"
-run_sim_and_errors "prelim_B" "$INIT_B_DIR"; CURR_PARAMS="$INIT_B_DIR";  CURR_ERRORS="$ERR_DIR"
+
+
+echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
+echo "[info] simulation A: dissipation only change"
+mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
 
 # RMSE header
 printf "epoch\tRMSE\n" > "$RMSE_TSV"
@@ -313,13 +317,13 @@ for ((epoch=1; epoch<=EPOCHS; epoch++)); do
 
   # Create next params (Δp/(Δs+eps) rule), for dissipation, conservation and propagation
   echo "[info] Creating next parameters set"
-  mechanismFolders=(propagationParameters dissipationParameters conservationParameters)
+  mechanism=(propagation dissipation conservation)
   for mech in "${mechanismFolders[@]}"; do
     mkdir -p "$NEXT_PARAMS/$mech"
     cmd=(python3 "$SCRIPT_PARAMS"
         --nodes-dir "$NODES"
-        --params-dir "$CURR_PARAMS/$mech"
-        --prev-params-dir "$PREV_PARAMS/$mech"
+        --params-dir "$CURR_PARAMS/${mech}Parameters"
+        --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
         --errors-dir "$CURR_ERRORS"
         --prev-errors-dir "$PREV_ERRORS"
         --out-dir "$NEXT_PARAMS/$mech"
@@ -332,6 +336,25 @@ for ((epoch=1; epoch<=EPOCHS; epoch++)); do
     echo "[cmd] ${cmd[*]}"
     "${cmd[@]}"
   done
+  # mechanismFolders=(propagationParameters dissipationParameters conservationParameters)
+  # for mech in "${mechanismFolders[@]}"; do
+  #   mkdir -p "$NEXT_PARAMS/$mech"
+  #   cmd=(python3 "$SCRIPT_PARAMS"
+  #       --nodes-dir "$NODES"
+  #       --params-dir "$CURR_PARAMS/$mech"
+  #       --prev-params-dir "$PREV_PARAMS/$mech"
+  #       --errors-dir "$CURR_ERRORS"
+  #       --prev-errors-dir "$PREV_ERRORS"
+  #       --out-dir "$NEXT_PARAMS/$mech"
+  #       --nodes-name-col "$NODES_NAME_COL"
+  #       --errors-name-col "$REAL_NODE_COL"
+  #       --suffix "$SUFFIX"
+  #       --lr "$LR"
+  #       --eps "$EPS")
+  #   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+  #   echo "[cmd] ${cmd[*]}"
+  #   "${cmd[@]}"
+  # done
   # cmd=(python3 "$SCRIPT_PARAMS"
   #      --nodes-dir "$NODES"
   #      --params-dir "$CURR_PARAMS"
