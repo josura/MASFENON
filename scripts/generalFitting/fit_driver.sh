@@ -298,6 +298,12 @@ run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERR
 echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
 echo "[info] simulation A: dissipation only change"
 mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
+mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+cp $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+cp $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_A/experiment_dissipation
+cp $INIT_B_DIR/propagationParameters ${OUT_ROOT}/prelim_A/experiment_dissipation
+
+
 
 # RMSE header
 printf "epoch\tRMSE\n" > "$RMSE_TSV"
