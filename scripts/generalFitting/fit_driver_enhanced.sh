@@ -36,8 +36,6 @@ set -euo pipefail
 #       propagationParameters/ dissipationParameters/ conservationParameters/
 #   each with per-type TSV files (name, parameters).
 # TODO fix fitting process to consider partial derivatives instead of what is doing at the moment since it's not really using partial dervivatives
-# TODO also try to change the initial way of initializing the parameters, especially because prelim_A parameters are used as the starting point, while prelim_B is used to control the perturbation, that is on singular mechanics(it's not a good way of encoding these kind of fitting model at the moment)
-# TODO prelim_b seems to be causing a lot of issues since if it is a bad parameter set, the fitting will be bad from the beginning. I think that maybe initially we should just use prelim_A as the starting point, and some small perturbation of the parameters from prelim_A to compute the partial derivatives
 # -----------------------------
 
 
@@ -75,8 +73,7 @@ NODES_NAME_COL="Name"      # column in --nodes files
 REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
 
 # Defaults for auto-generated initial params (when A/B not supplied)
-DEFAULT_A=0.01
-DEFAULT_B=0.1
+DEFAULT_PARAMS=0.01
 
 # ===========================
 #  CLI (only IO & epochs)
@@ -91,10 +88,6 @@ Usage:
     --interactions /path/interactions \\
     --real-data-dir /path/real_series \\
     --out /path/output \\
-    [--simulator /path/to/masfenon_exe] \\
-    [--mpirun-np N] [--mpirun-extra "args"] \\
-    [--saturation] [--verbose] \\
-    [--gradient-step-size FLOAT] \\
     [--init-params /path/params]
 
 Notes:
@@ -111,7 +104,7 @@ EOF
 }
 
 EPOCHS="" GRAPHS="" NODES="" INITIAL="" INTERACTIONS="" REAL_DIR="" OUT_ROOT=""
-INIT_A="" INIT_B=""
+INIT_PARAMS="" # initial params folder (optional)
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -122,8 +115,7 @@ while [[ $# -gt 0 ]]; do
     --interactions) INTERACTIONS="$2"; shift 2;;
     --real-data-dir) REAL_DIR="$2"; shift 2;;
     --out) OUT_ROOT="$2"; shift 2;;
-    --init-params-a) INIT_A="$2"; shift 2;;
-    --init-params-b) INIT_B="$2"; shift 2;;
+    --init-params) INIT_PARAMS="$2"; shift 2;;
     -h|--help) usage; exit 0;;
     *) echo "[error] Unknown arg: $1"; usage; exit 2;;
   esac
@@ -140,12 +132,10 @@ echo "Initial values: $INITIAL"
 echo "Interactions: $INTERACTIONS"
 echo "Real data: $REAL_DIR"
 echo "Output root: $OUT_ROOT"
-if [[ -n "$INIT_A" && -n "$INIT_B" ]]; then
-  echo "Init params A: $INIT_A"
-  echo "Init params B: $INIT_B"
+if [[ -n "$INIT_PARAMS" ]]; then
+  echo "Init params: $INIT_PARAMS"
 else
-  echo "Init params A: (auto-generated)"
-  echo "Init params B: (auto-generated)"
+  echo "Init params: (auto-generated)"
 fi
 echo "-----------------------------"
 
@@ -282,16 +272,12 @@ RMSE_TSV="$FITTING_ROOT/RMSE.tsv"
 # ==============
 # Initial params
 # ==============
-INIT_A_DIR="$FITTING_ROOT/init_A"
-INIT_B_DIR="$FITTING_ROOT/init_B"
-if [[ -n "$INIT_A" || -n "$INIT_B" ]]; then
-  [[ -n "$INIT_A" && -n "$INIT_B" ]] || { echo "[error] provide both --init-params-a and --init-params-b"; exit 2; }
-  copy_params_tree "$INIT_A" "$INIT_A_DIR"
-  copy_params_tree "$INIT_B" "$INIT_B_DIR"
+INIT_PARAMS_DIR="$FITTING_ROOT/init_Params"
+if [[ -n "$INIT_PARAMS" ]]; then
+  copy_params_tree "$INIT_PARAMS" "$INIT_PARAMS_DIR"
 else
-  echo "[info] Auto-generating initial parameter sets A=$DEFAULT_A, B=$DEFAULT_B"
-  generate_uniform_param_set "$INIT_A_DIR" "$DEFAULT_A"
-  generate_uniform_param_set "$INIT_B_DIR" "$DEFAULT_B"
+  echo "[info] Auto-generating initial parameter sets PARAMS=$DEFAULT_PARAMS"
+  generate_uniform_param_set "$INIT_PARAMS_DIR" "$DEFAULT_PARAMS"
 fi
 
 # ====================
