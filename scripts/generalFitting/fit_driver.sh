@@ -322,6 +322,33 @@ run_sim_and_errors "prelim_B/experiment_propagation" "${OUT_ROOT}/prelim_B/exper
 echo "[info] Running simulation with updated parameters for experiment_conservation"
 run_sim_and_errors "prelim_B/experiment_conservation" "${OUT_ROOT}/prelim_B/experiment_conservation"
 
+# generate the new parameters from the three different experiments
+echo "[info] Creating next parameters set (for initially starting the epoch) from the experiments"
+# , combining the three different experiments (taking the parameter to fit from each experiment, 
+# meaning that the dissipation parameters are taken from the experiment_dissipation, 
+# the propagation parameters from the experiment_propagation and 
+# the conservation parameters from the experiment_conservation)
+mechanismFolders=(propagation dissipation conservation)
+NEXT_PARAMS="$FITTING_ROOT/epoch_0/parameters"; mkdir -p "$NEXT_PARAMS"
+for mech in "${mechanismFolders[@]}"; do
+  mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+  cmd=(python3 "$SCRIPT_PARAMS"
+      --nodes-dir "$NODES"
+      --params-dir "${OUT_ROOT}/prelim_B/experiment_${mech}/${mech}Parameters"
+      --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
+      --errors-dir "${OUT_ROOT}/fittingProcess/prelim_B/experiment_${mech}/errors"
+      --prev-errors-dir "$PREV_ERRORS"
+      --out-dir "$NEXT_PARAMS/${mech}Parameters"
+      --nodes-name-col "$NODES_NAME_COL"
+      --errors-name-col "$REAL_NODE_COL"
+      --suffix "$SUFFIX"
+      --lr "$LR"
+      --eps "$EPS")
+  [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+  echo "[cmd] ${cmd[*]}"
+  "${cmd[@]}"
+done
+
 
 # RMSE header
 printf "epoch\tRMSE\n" > "$RMSE_TSV"
