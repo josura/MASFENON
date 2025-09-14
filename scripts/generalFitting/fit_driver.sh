@@ -25,7 +25,7 @@ set -euo pipefail
 #     --mpirun-extra "--mca pml ob1 --mca btl tcp,self --mca btl_tcp_if_include wlan0" \
 #     --saturation --verbose
 #
-# Optional: provide two initial parameter folders (skips 0.5/0.6 auto-gen):
+# Optional: provide two initial parameter folders (skips 0.01/0.1 auto-gen):
 #   --init-params-a /path/paramsA --init-params-b /path/paramsB
 #
 # Notes:
@@ -72,8 +72,8 @@ NODES_NAME_COL="Name"      # column in --nodes files
 REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
 
 # Defaults for auto-generated initial params (when A/B not supplied)
-DEFAULT_A=0.5
-DEFAULT_B=0.6
+DEFAULT_A=0.01
+DEFAULT_B=0.1
 
 # ===========================
 #  CLI (only IO & epochs)
@@ -300,20 +300,27 @@ echo "[info] simulation A: dissipation only change"
 mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
 # dissipation perturbed only
 mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
-cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+cp -r $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
 cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
 # propagation perturbed only
 mkdir -p "${OUT_ROOT}/prelim_B/experiment_propagation"  #folder containing the only propagation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
-cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+cp -r $INIT_B_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
 cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
 # conservation perturbed only
 mkdir -p "${OUT_ROOT}/prelim_B/experiment_conservation"  #folder containing the only conservation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
-cp -r $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
 cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
 
+# running the different experiments
+echo "[info] Running simulation with updated parameters for experiment_dissipation"
+run_sim_and_errors "prelim_B/experiment_dissipation" "${OUT_ROOT}/prelim_B/experiment_dissipation"
+echo "[info] Running simulation with updated parameters for experiment_propagation"
+run_sim_and_errors "prelim_B/experiment_propagation" "${OUT_ROOT}/prelim_B/experiment_propagation"
+echo "[info] Running simulation with updated parameters for experiment_conservation"
+run_sim_and_errors "prelim_B/experiment_conservation" "${OUT_ROOT}/prelim_B/experiment_conservation"
 
 
 # RMSE header
