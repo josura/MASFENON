@@ -66,7 +66,7 @@ python createParametersIterationAware.py --nodes-dir ../../data/testdata/testHet
 
 
 # FITTING THE MODEL
-To fit the model with some default initial parameters (all 0.5 for the first parameter and all 0.6 for the second parameter)to the synthetic time series data run the following script:
+To fit the model with some default initial parameters (all 0.01 for the first parameter and all 0.1 for the second parameter)to the synthetic time series data run the following script:
 ```bash
 bash fit_driver.sh --graphs ../../data/testFitting/graphs --nodes ../../data/testFitting/nodesDescriptionDifferentStructure  --initial ../../data/testFitting/initialValues --interactions ../../data/testFitting/interactions --real-data-dir ../../data/testFitting/syntheticTimeSeries --out /tmp/testingFittingDriver --epochs 5
 ```
