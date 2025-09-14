@@ -298,10 +298,21 @@ run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERR
 echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
 echo "[info] simulation A: dissipation only change"
 mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
+# dissipation perturbed only
 mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
 cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
 cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
 cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+# propagation perturbed only
+mkdir -p "${OUT_ROOT}/prelim_B/experiment_propagation"  #folder containing the only propagation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+# conservation perturbed only
+mkdir -p "${OUT_ROOT}/prelim_B/experiment_conservation"  #folder containing the only conservation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+cp -r $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
 
 
 
