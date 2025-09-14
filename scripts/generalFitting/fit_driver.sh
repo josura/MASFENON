@@ -299,9 +299,9 @@ echo "[info]   second simulation with initial params B, selecting one parameter 
 echo "[info] simulation A: dissipation only change"
 mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
 mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
-cp $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_A/experiment_dissipation
-cp $INIT_B_DIR/propagationParameters ${OUT_ROOT}/prelim_A/experiment_dissipation
+cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
 
 
 
@@ -315,82 +315,82 @@ printf "epoch\tRMSE\n" > "$RMSE_TSV"
 # Epoch loop
 # ===========
 
-for ((epoch=1; epoch<=EPOCHS; epoch++)); do
-  echo "[info] Epoch $epoch"
-  epoch_dir="$FITTING_ROOT/epoch_$epoch"
-  mkdir -p "$epoch_dir"
-  NEXT_PARAMS="$epoch_dir/parameters"; mkdir -p "$NEXT_PARAMS"
+# for ((epoch=1; epoch<=EPOCHS; epoch++)); do
+#   echo "[info] Epoch $epoch"
+#   epoch_dir="$FITTING_ROOT/epoch_$epoch"
+#   mkdir -p "$epoch_dir"
+#   NEXT_PARAMS="$epoch_dir/parameters"; mkdir -p "$NEXT_PARAMS"
 
-  # Create next params (Δp/(Δs+eps) rule), for dissipation, conservation and propagation
-  echo "[info] Creating next parameters set"
-  mechanism=(propagation dissipation conservation)
-  for mech in "${mechanismFolders[@]}"; do
-    mkdir -p "$NEXT_PARAMS/$mech"
-    cmd=(python3 "$SCRIPT_PARAMS"
-        --nodes-dir "$NODES"
-        --params-dir "$CURR_PARAMS/${mech}Parameters"
-        --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
-        --errors-dir "$CURR_ERRORS"
-        --prev-errors-dir "$PREV_ERRORS"
-        --out-dir "$NEXT_PARAMS/$mech"
-        --nodes-name-col "$NODES_NAME_COL"
-        --errors-name-col "$REAL_NODE_COL"
-        --suffix "$SUFFIX"
-        --lr "$LR"
-        --eps "$EPS")
-    [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
-    echo "[cmd] ${cmd[*]}"
-    "${cmd[@]}"
-  done
-  # mechanismFolders=(propagationParameters dissipationParameters conservationParameters)
-  # for mech in "${mechanismFolders[@]}"; do
-  #   mkdir -p "$NEXT_PARAMS/$mech"
-  #   cmd=(python3 "$SCRIPT_PARAMS"
-  #       --nodes-dir "$NODES"
-  #       --params-dir "$CURR_PARAMS/$mech"
-  #       --prev-params-dir "$PREV_PARAMS/$mech"
-  #       --errors-dir "$CURR_ERRORS"
-  #       --prev-errors-dir "$PREV_ERRORS"
-  #       --out-dir "$NEXT_PARAMS/$mech"
-  #       --nodes-name-col "$NODES_NAME_COL"
-  #       --errors-name-col "$REAL_NODE_COL"
-  #       --suffix "$SUFFIX"
-  #       --lr "$LR"
-  #       --eps "$EPS")
-  #   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
-  #   echo "[cmd] ${cmd[*]}"
-  #   "${cmd[@]}"
-  # done
-  # cmd=(python3 "$SCRIPT_PARAMS"
-  #      --nodes-dir "$NODES"
-  #      --params-dir "$CURR_PARAMS"
-  #      --prev-params-dir "$PREV_PARAMS"
-  #      --errors-dir "$CURR_ERRORS"
-  #      --prev-errors-dir "$PREV_ERRORS"
-  #      --out-dir "$NEXT_PARAMS"
-  #      --nodes-name-col "$NODES_NAME_COL"
-  #      --errors-name-col "$REAL_NODE_COL"
-  #      --suffix "$SUFFIX"
-  #      --lr "$LR"
-  #      --eps "$EPS")
-  # [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
-  # echo "[cmd] ${cmd[*]}"
-  # "${cmd[@]}"
+#   # Create next params (Δp/(Δs+eps) rule), for dissipation, conservation and propagation
+#   echo "[info] Creating next parameters set"
+#   mechanism=(propagation dissipation conservation)
+#   for mech in "${mechanismFolders[@]}"; do
+#     mkdir -p "$NEXT_PARAMS/$mech"
+#     cmd=(python3 "$SCRIPT_PARAMS"
+#         --nodes-dir "$NODES"
+#         --params-dir "$CURR_PARAMS/${mech}Parameters"
+#         --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
+#         --errors-dir "$CURR_ERRORS"
+#         --prev-errors-dir "$PREV_ERRORS"
+#         --out-dir "$NEXT_PARAMS/$mech"
+#         --nodes-name-col "$NODES_NAME_COL"
+#         --errors-name-col "$REAL_NODE_COL"
+#         --suffix "$SUFFIX"
+#         --lr "$LR"
+#         --eps "$EPS")
+#     [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+#     echo "[cmd] ${cmd[*]}"
+#     "${cmd[@]}"
+#   done
+#   # mechanismFolders=(propagationParameters dissipationParameters conservationParameters)
+#   # for mech in "${mechanismFolders[@]}"; do
+#   #   mkdir -p "$NEXT_PARAMS/$mech"
+#   #   cmd=(python3 "$SCRIPT_PARAMS"
+#   #       --nodes-dir "$NODES"
+#   #       --params-dir "$CURR_PARAMS/$mech"
+#   #       --prev-params-dir "$PREV_PARAMS/$mech"
+#   #       --errors-dir "$CURR_ERRORS"
+#   #       --prev-errors-dir "$PREV_ERRORS"
+#   #       --out-dir "$NEXT_PARAMS/$mech"
+#   #       --nodes-name-col "$NODES_NAME_COL"
+#   #       --errors-name-col "$REAL_NODE_COL"
+#   #       --suffix "$SUFFIX"
+#   #       --lr "$LR"
+#   #       --eps "$EPS")
+#   #   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+#   #   echo "[cmd] ${cmd[*]}"
+#   #   "${cmd[@]}"
+#   # done
+#   # cmd=(python3 "$SCRIPT_PARAMS"
+#   #      --nodes-dir "$NODES"
+#   #      --params-dir "$CURR_PARAMS"
+#   #      --prev-params-dir "$PREV_PARAMS"
+#   #      --errors-dir "$CURR_ERRORS"
+#   #      --prev-errors-dir "$PREV_ERRORS"
+#   #      --out-dir "$NEXT_PARAMS"
+#   #      --nodes-name-col "$NODES_NAME_COL"
+#   #      --errors-name-col "$REAL_NODE_COL"
+#   #      --suffix "$SUFFIX"
+#   #      --lr "$LR"
+#   #      --eps "$EPS")
+#   # [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+#   # echo "[cmd] ${cmd[*]}"
+#   # "${cmd[@]}"
 
-  # Sim + errors for this epoch
-  echo "[info] Running simulation with updated parameters for epoch $epoch"
-  run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
+#   # Sim + errors for this epoch
+#   echo "[info] Running simulation with updated parameters for epoch $epoch"
+#   run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
 
-  # Sum RMSE across types
-  RMSE_SUM=$(sum_rmse_in_folder "$ERR_DIR")
-  printf "%d\t%s\n" "$epoch" "$RMSE_SUM" >> "$RMSE_TSV"
-  echo "[info] Epoch $epoch RMSE_sum = $RMSE_SUM"
+#   # Sum RMSE across types
+#   RMSE_SUM=$(sum_rmse_in_folder "$ERR_DIR")
+#   printf "%d\t%s\n" "$epoch" "$RMSE_SUM" >> "$RMSE_TSV"
+#   echo "[info] Epoch $epoch RMSE_sum = $RMSE_SUM"
 
-  # Slide windows
-  PREV_PARAMS="$CURR_PARAMS"; PREV_ERRORS="$CURR_ERRORS"
-  CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
-done
+#   # Slide windows
+#   PREV_PARAMS="$CURR_PARAMS"; PREV_ERRORS="$CURR_ERRORS"
+#   CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
+# done
 
-echo "[done] Fitting finished."
-echo "      Results at: $FITTING_ROOT"
-echo "      RMSE per epoch: $RMSE_TSV"
+# echo "[done] Fitting finished."
+# echo "      Results at: $FITTING_ROOT"
+# echo "      RMSE per epoch: $RMSE_TSV"
