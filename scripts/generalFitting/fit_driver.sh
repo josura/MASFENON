@@ -36,6 +36,7 @@ set -euo pipefail
 #   each with per-type TSV files (name, parameters).
 # TODO fix fitting process to consider partial derivatives instead of what is doing at the moment since it's not really using partial dervivatives
 # TODO also try to change the initial way of initializing the parameters, especially because prelim_A parameters are used as the starting point, while prelim_B is used to control the perturbation, that is on singular mechanics(it's not a good way of encoding these kind of fitting model at the moment)
+# TODO prelim_b seems to be causing a lot of issues since if it is a bad parameter set, the fitting will be bad from the beginning. I think that maybe initially we should just use prelim_A as the starting point, and some small perturbation of the parameters from prelim_A to compute the partial derivatives
 # -----------------------------
 
 
@@ -348,6 +349,13 @@ for mech in "${mechanismFolders[@]}"; do
   echo "[cmd] ${cmd[*]}"
   "${cmd[@]}"
 done
+# run simulation and errors for the new parameters generated from the experiments
+echo "[info] Running simulation with updated parameters for epoch 0"
+run_sim_and_errors "epoch_0" "$NEXT_PARAMS"
+CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
+echo "[info] also running the simulation for the prelim_B all, to have a previous parames and error to compare with"
+run_sim_and_errors "prelim_B/all" "$INIT_B_DIR"
+PREV_PARAMS="$INIT_B_DIR"; PREV_ERRORS="$ERR_DIR"
 
 
 # RMSE header
