@@ -285,7 +285,7 @@ fi
 # ====================
 echo "[info] Running preliminary simulations..."
 echo "[info]   first simulation with initial params A, only one since it is simulating some original parameters already known"
-run_sim_and_errors "prelim_A" "$INIT_A_DIR"; PREV_PARAMS="$INIT_A_DIR"; PREV_ERRORS="$ERR_DIR"
+run_sim_and_errors "prelim_A" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
 
 
 echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
