@@ -325,72 +325,72 @@ echo "[info]   first simulation with initial params"
 run_sim_and_errors "prelim_A" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
 
 # Generation for the perturbations parameter folders
+generate_perturbed_param_set "$INIT_PARAMS_DIR" "$FITTING_ROOT/prelim_B" "$GRADIENT_STEP_SIZE"
+
+# echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
+# echo "[info] simulation A: dissipation only change"
+# mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
+# # dissipation perturbed only
+# mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+# cp -r $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+# cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+# cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
+# # propagation perturbed only
+# mkdir -p "${OUT_ROOT}/prelim_B/experiment_propagation"  #folder containing the only propagation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+# cp -r $INIT_B_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+# cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+# cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
+# # conservation perturbed only
+# mkdir -p "${OUT_ROOT}/prelim_B/experiment_conservation"  #folder containing the only conservation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
+# cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+# cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+# cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
+
+# # running the different experiments
+# echo "[info] Running simulation with updated parameters for experiment_dissipation"
+# run_sim_and_errors "prelim_B/experiment_dissipation" "${OUT_ROOT}/prelim_B/experiment_dissipation"
+# echo "[info] Running simulation with updated parameters for experiment_propagation"
+# run_sim_and_errors "prelim_B/experiment_propagation" "${OUT_ROOT}/prelim_B/experiment_propagation"
+# echo "[info] Running simulation with updated parameters for experiment_conservation"
+# run_sim_and_errors "prelim_B/experiment_conservation" "${OUT_ROOT}/prelim_B/experiment_conservation"
+
+# # generate the new parameters from the three different experiments
+# echo "[info] Creating next parameters set (for initially starting the epoch) from the experiments"
+# # , combining the three different experiments (taking the parameter to fit from each experiment, 
+# # meaning that the dissipation parameters are taken from the experiment_dissipation, 
+# # the propagation parameters from the experiment_propagation and 
+# # the conservation parameters from the experiment_conservation)
+# mechanismFolders=(propagation dissipation conservation)
+# NEXT_PARAMS="$FITTING_ROOT/epoch_0/parameters"; mkdir -p "$NEXT_PARAMS"
+# for mech in "${mechanismFolders[@]}"; do
+#   mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+#   cmd=(python3 "$SCRIPT_PARAMS"
+#       --nodes-dir "$NODES"
+#       --params-dir "${OUT_ROOT}/prelim_B/experiment_${mech}/${mech}Parameters"
+#       --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
+#       --errors-dir "${OUT_ROOT}/fittingProcess/prelim_B/experiment_${mech}/errors"
+#       --prev-errors-dir "$PREV_ERRORS"
+#       --out-dir "$NEXT_PARAMS/${mech}Parameters"
+#       --nodes-name-col "$NODES_NAME_COL"
+#       --errors-name-col "$REAL_NODE_COL"
+#       --suffix "$SUFFIX"
+#       --lr "$LR"
+#       --eps "$EPS")
+#   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+#   echo "[cmd] ${cmd[*]}"
+#   "${cmd[@]}"
+# done
+# # run simulation and errors for the new parameters generated from the experiments
+# echo "[info] Running simulation with updated parameters for epoch 0"
+# run_sim_and_errors "epoch_0" "$NEXT_PARAMS"
+# CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
+# echo "[info] also running the simulation for the prelim_B all, to have a previous parames and error to compare with"
+# run_sim_and_errors "prelim_B/all" "$INIT_B_DIR"
+# PREV_PARAMS="$INIT_B_DIR"; PREV_ERRORS="$ERR_DIR"
 
 
-echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
-echo "[info] simulation A: dissipation only change"
-mkdir -p "${OUT_ROOT}/prelim_B" #general folder that contains the different experiment parameters change
-# dissipation perturbed only
-mkdir -p "${OUT_ROOT}/prelim_B/experiment_dissipation"  #folder containing the only dissipation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_B_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
-cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
-cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_dissipation
-# propagation perturbed only
-mkdir -p "${OUT_ROOT}/prelim_B/experiment_propagation"  #folder containing the only propagation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_B_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
-cp -r $INIT_A_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
-cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_propagation
-# conservation perturbed only
-mkdir -p "${OUT_ROOT}/prelim_B/experiment_conservation"  #folder containing the only conservation perturbed parameters, copied from INIT_B, the other parameters are copied from INIT_A
-cp -r $INIT_B_DIR/conservationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
-cp -r $INIT_A_DIR/dissipationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
-cp -r $INIT_A_DIR/propagationParameters ${OUT_ROOT}/prelim_B/experiment_conservation
-
-# running the different experiments
-echo "[info] Running simulation with updated parameters for experiment_dissipation"
-run_sim_and_errors "prelim_B/experiment_dissipation" "${OUT_ROOT}/prelim_B/experiment_dissipation"
-echo "[info] Running simulation with updated parameters for experiment_propagation"
-run_sim_and_errors "prelim_B/experiment_propagation" "${OUT_ROOT}/prelim_B/experiment_propagation"
-echo "[info] Running simulation with updated parameters for experiment_conservation"
-run_sim_and_errors "prelim_B/experiment_conservation" "${OUT_ROOT}/prelim_B/experiment_conservation"
-
-# generate the new parameters from the three different experiments
-echo "[info] Creating next parameters set (for initially starting the epoch) from the experiments"
-# , combining the three different experiments (taking the parameter to fit from each experiment, 
-# meaning that the dissipation parameters are taken from the experiment_dissipation, 
-# the propagation parameters from the experiment_propagation and 
-# the conservation parameters from the experiment_conservation)
-mechanismFolders=(propagation dissipation conservation)
-NEXT_PARAMS="$FITTING_ROOT/epoch_0/parameters"; mkdir -p "$NEXT_PARAMS"
-for mech in "${mechanismFolders[@]}"; do
-  mkdir -p "$NEXT_PARAMS/${mech}Parameters"
-  cmd=(python3 "$SCRIPT_PARAMS"
-      --nodes-dir "$NODES"
-      --params-dir "${OUT_ROOT}/prelim_B/experiment_${mech}/${mech}Parameters"
-      --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
-      --errors-dir "${OUT_ROOT}/fittingProcess/prelim_B/experiment_${mech}/errors"
-      --prev-errors-dir "$PREV_ERRORS"
-      --out-dir "$NEXT_PARAMS/${mech}Parameters"
-      --nodes-name-col "$NODES_NAME_COL"
-      --errors-name-col "$REAL_NODE_COL"
-      --suffix "$SUFFIX"
-      --lr "$LR"
-      --eps "$EPS")
-  [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
-  echo "[cmd] ${cmd[*]}"
-  "${cmd[@]}"
-done
-# run simulation and errors for the new parameters generated from the experiments
-echo "[info] Running simulation with updated parameters for epoch 0"
-run_sim_and_errors "epoch_0" "$NEXT_PARAMS"
-CURR_PARAMS="$NEXT_PARAMS";  CURR_ERRORS="$ERR_DIR"
-echo "[info] also running the simulation for the prelim_B all, to have a previous parames and error to compare with"
-run_sim_and_errors "prelim_B/all" "$INIT_B_DIR"
-PREV_PARAMS="$INIT_B_DIR"; PREV_ERRORS="$ERR_DIR"
-
-
-# RMSE header
-printf "epoch\tRMSE\n" > "$RMSE_TSV"
+# # RMSE header
+# printf "epoch\tRMSE\n" > "$RMSE_TSV"
 
 
 
