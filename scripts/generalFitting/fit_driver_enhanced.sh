@@ -228,15 +228,15 @@ generate_perturbed_param_set() { # generating three different parameter sets, on
   list_types | while read -r typ; do
     # propagation perturbed
     perturb_parameters_in_file "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_propagation/propagationParameters/$typ$SUFFIX" "$pert"
-    cpy "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_propagation/dissipationParameters/$typ$SUFFIX"
-    cpy "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_propagation/conservationParameters/$typ$SUFFIX"
+    cp "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_propagation/dissipationParameters/$typ$SUFFIX"
+    cp "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_propagation/conservationParameters/$typ$SUFFIX"
     # dissipation perturbed
-    cpy "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_dissipation/propagationParameters/$typ$SUFFIX"
+    cp "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_dissipation/propagationParameters/$typ$SUFFIX"
     perturb_parameters_in_file "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_dissipation/dissipationParameters/$typ$SUFFIX" "$pert"
-    cpy "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_dissipation/conservationParameters/$typ$SUFFIX"
+    cp "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_dissipation/conservationParameters/$typ$SUFFIX"
     # conservation perturbed
-    cpy "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_conservation/propagationParameters/$typ$SUFFIX"
-    cpy "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_conservation/dissipationParameters/$typ$SUFFIX"
+    cp "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_conservation/propagationParameters/$typ$SUFFIX"
+    cp "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_conservation/dissipationParameters/$typ$SUFFIX"
     perturb_parameters_in_file "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_conservation/conservationParameters/$typ$SUFFIX" "$pert"
   done
 }
