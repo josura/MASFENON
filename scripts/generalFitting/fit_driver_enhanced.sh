@@ -212,6 +212,36 @@ generate_uniform_param_set() {
   done
 }
 
+generate_perturbed_param_set() { # generating three different parameter sets, one for each mechanism that is perturbed
+  # $1=initial_params_root  $2=out_root  $3=perturbation_value
+  local init="$1" out="$2" pert="$3"
+  mkdir -p "$out"/{experiment_propagation,experiment_dissipation,experiment_conservation}
+  mkdir -p "$out/experiment_propagation/propagationParameters"
+  mkdir -p "$out/experiment_propagation/dissipationParameters"
+  mkdir -p "$out/experiment_propagation/conservationParameters"
+  mkdir -p "$out/experiment_dissipation/propagationParameters"
+  mkdir -p "$out/experiment_dissipation/dissipationParameters"
+  mkdir -p "$out/experiment_dissipation/conservationParameters"
+  mkdir -p "$out/experiment_conservation/propagationParameters"
+  mkdir -p "$out/experiment_conservation/dissipationParameters"
+  mkdir -p "$out/experiment_conservation/conservationParameters"
+  list_types | while read -r typ; do
+    # propagation perturbed
+    perturb_parameters_in_file "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_propagation/propagationParameters/$typ$SUFFIX" "$pert"
+    cpy "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_propagation/dissipationParameters/$typ$SUFFIX"
+    cpy "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_propagation/conservationParameters/$typ$SUFFIX"
+    # dissipation perturbed
+    cpy "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_dissipation/propagationParameters/$typ$SUFFIX"
+    perturb_parameters_in_file "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_dissipation/dissipationParameters/$typ$SUFFIX" "$pert"
+    cpy "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_dissipation/conservationParameters/$typ$SUFFIX"
+    # conservation perturbed
+    cpy "$init/propagationParameters/$typ$SUFFIX" "$out/experiment_conservation/propagationParameters/$typ$SUFFIX"
+    cpy "$init/dissipationParameters/$typ$SUFFIX"  "$out/experiment_conservation/dissipationParameters/$typ$SUFFIX"
+    perturb_parameters_in_file "$init/conservationParameters/$typ$SUFFIX" "$out/experiment_conservation/conservationParameters/$typ$SUFFIX" "$pert"
+  done
+}
+
+
 copy_params_tree() { rm -rf "$2"; mkdir -p "$2"; cp -r "$1"/. "$2"/; }
 
 sim_cmd() {
