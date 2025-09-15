@@ -196,9 +196,19 @@ write_uniform_params_for_type() {
 
 perturb_parameters_in_file() {
   # $1=in_file $2=out_file $3=perturbation_value
+  # every parameter (separated by commas) is increased by perturbation_value
+  # the first column (name) is not changed, feature columns are tab-separated
   local in="$1" out="$2" pert="$3"
   awk -v p="$pert" 'BEGIN{FS=OFS="\t"} NR==1{print; next}
-                    {for(i=2;i<=NF;i++) $i=$i+p; print}' "$in" > "$out"
+                   {printf "%s", $1; for(i=2;i<=NF;i++){
+                     n=split($i, a, ",");
+                     printf "\t";
+                     for(j=1;j<=n;j++){
+                       a[j]=a[j]+p;
+                       printf "%s", a[j];
+                       if(j<n) printf ",";
+                     }
+                   } printf "\n"}' "$in" > "$out"
 }
 
 generate_uniform_param_set() {
@@ -325,7 +335,10 @@ echo "[info]   first simulation with initial params"
 run_sim_and_errors "prelim_A" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
 
 # Generation for the perturbations parameter folders
+echo "[info]   generating perturbed parameters sets for prelim_B"
 generate_perturbed_param_set "$INIT_PARAMS_DIR" "$FITTING_ROOT/prelim_B" "$GRADIENT_STEP_SIZE"
+echo "[info]   perturbed parameters sets generated in folder $FITTING_ROOT/prelim_B"
+
 
 # echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
 # echo "[info] simulation A: dissipation only change"
