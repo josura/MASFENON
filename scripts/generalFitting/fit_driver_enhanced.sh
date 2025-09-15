@@ -194,6 +194,13 @@ write_uniform_params_for_type() {
   } > "$dir/$typ$SUFFIX"
 }
 
+perturb_parameters_in_file() {
+  # $1=in_file $2=out_file $3=perturbation_value
+  local in="$1" out="$2" pert="$3"
+  awk -v p="$pert" 'BEGIN{FS=OFS="\t"} NR==1{print; next}
+                    {for(i=2;i<=NF;i++) $i=$i+p; print}' "$in" > "$out"
+}
+
 generate_uniform_param_set() {
   # $1=out_root $2=value
   local out="$1" val="$2"
@@ -281,11 +288,13 @@ else
 fi
 
 # ====================
-# Preliminary runs A/B
+# Preliminary runs for initial params and perturbations
 # ====================
 echo "[info] Running preliminary simulations..."
-echo "[info]   first simulation with initial params A, only one since it is simulating some original parameters already known"
+echo "[info]   first simulation with initial params"
 run_sim_and_errors "prelim_A" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
+
+# Generation for the perturbations parameter folders
 
 
 echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
