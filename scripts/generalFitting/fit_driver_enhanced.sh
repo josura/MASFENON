@@ -339,6 +339,39 @@ echo "[info]   generating perturbed parameters sets for prelim_B"
 generate_perturbed_param_set "$INIT_PARAMS_DIR" "$FITTING_ROOT/prelim_B" "$GRADIENT_STEP_SIZE"
 echo "[info]   perturbed parameters sets generated in folder $FITTING_ROOT/prelim_B"
 
+# Run the simulations for each of the perturbed parameter sets
+echo "[info]   running simulations for the perturbed parameter sets"
+echo "[info] simulation B: dissipation only simulation"
+run_sim_and_errors "prelim_B/experiment_dissipation" "$FITTING_ROOT/prelim_B/experiment_dissipation"
+echo "[info] simulation B: propagation only simulation"
+run_sim_and_errors "prelim_B/experiment_propagation" "$FITTING_ROOT/prelim_B/experiment_propagation"
+echo "[info] simulation B: conservation only simulation"
+run_sim_and_errors "prelim_B/experiment_conservation" "$FITTING_ROOT/prelim_B/experiment_conservation"
+echo "[info]   preliminary simulations for the perturbed parameter sets done."
+
+# Generate the next parameters set from the three different experiments (epoch 0)
+echo "[info] Creating next parameters set (for initially starting the epoch) from the experiments"
+mechanismFolders=(propagation dissipation conservation)
+NEXT_PARAMS="$FITTING_ROOT/epoch_0/parameters"; mkdir -p "$NEXT_PARAMS"
+for mech in "${mechanismFolders[@]}"; do
+  mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+  cmd=(python3 "$SCRIPT_PARAMS"
+      --nodes-dir "$NODES"
+      --params-dir "$FITTING_ROOT/prelim_B/experiment_${mech}/${mech}Parameters"
+      --prev-params-dir "$PREV_PARAMS/${mech}Parameters"
+      --errors-dir "$FITTING_ROOT/prelim_B/experiment_${mech}/errors"
+      --prev-errors-dir "$PREV_ERRORS"
+      --out-dir "$NEXT_PARAMS/${mech}Parameters"
+      --nodes-name-col "$NODES_NAME_COL"
+      --errors-name-col "$REAL_NODE_COL"
+      --suffix "$SUFFIX"
+      --lr "$LR"
+      --eps "$EPS")
+  [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+  echo "[cmd] ${cmd[*]}"
+  #"${cmd[@]}"
+done
+ 
 
 # echo "[info]   second simulation with initial params B, selecting one parameter mechanics at a time, this is because we need to see the individual changes in the simulation"
 # echo "[info] simulation A: dissipation only change"
