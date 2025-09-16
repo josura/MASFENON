@@ -369,7 +369,7 @@ for mech in "${mechanismFolders[@]}"; do
       --eps "$EPS")
   [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
   echo "[cmd] ${cmd[*]}"
-  #"${cmd[@]}"
+  "${cmd[@]}"
 done
  
 
