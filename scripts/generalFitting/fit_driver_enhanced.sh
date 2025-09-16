@@ -386,3 +386,58 @@ echo "[info] epoch 0: RMSE = $epoch0_rmse"
 # ===========
 # Epoch loop
 # ===========
+
+for((epoch=1; epoch<=EPOCHS; epoch++)); do
+  echo "[info] Epoch $epoch"
+  epoch_dir="$FITTING_ROOT/epoch_$epoch"
+  mkdir -p "$epoch_dir"
+  NEXT_PARAMS="$epoch_dir/parameters"; mkdir -p "$NEXT_PARAMS"
+  # generate the three different experiments from the gradient step size
+  echo "[info] Generating perturbed parameters sets for epoch $epoch"
+  generate_perturbed_param_set "$CURR_PARAMS" "$epoch_dir/experiment_B" "$GRADIENT_STEP_SIZE"
+  echo "[info] epoch $epoch: Perturbed parameters sets generated in folder $epoch_dir/experiment_B"
+  # Run the simulations for each of the perturbed parameter sets
+  echo "[info] epoch $epoch: Running simulations for the perturbed parameter sets"
+  echo "[info] epoch $epoch: Simulation B: dissipation only simulation"
+  run_sim_and_errors "epoch_$epoch/experiment_B/experiment_dissipation" "$epoch_dir/experiment_B/experiment_dissipation"
+  echo "[info] epoch $epoch: Simulation B: propagation only simulation"
+  run_sim_and_errors "epoch_$epoch/experiment_B/experiment_propagation" "$epoch_dir/experiment_B/experiment_propagation"
+  echo "[info] epoch $epoch: Simulation B: conservation only simulation"
+  run_sim_and_errors "epoch_$epoch/experiment_B/experiment_conservation" "$epoch_dir/experiment_B/experiment_conservation"
+  echo "[info] epoch $epoch: Simulations for the perturbed parameter sets done."
+
+  # Generate the next parameters set from the three different experiments
+  echo "[info] epoch $epoch: Creating next parameters set from the experiments"
+  CURR_PARAMS="$FITTING_ROOT/epoch_$((epoch-1))/parameters"
+  for mech in "${mechanismFolders[@]}"; do
+    mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+    cmd=(python3 "$SCRIPT_PARAMS"
+        --nodes-dir "$NODES"
+        --params-dir "$epoch_dir/experiment_B/experiment_${mech}/${mech}Parameters"
+        --prev-params-dir "$CURR_PARAMS/${mech}Parameters"
+        --errors-dir "$epoch_dir/experiment_B/experiment_${mech}/errors"
+        --prev-errors-dir "$PREV_ERRORS"
+        --out-dir "$NEXT_PARAMS/${mech}Parameters"
+        --nodes-name-col "$NODES_NAME_COL"
+        --errors-name-col "$REAL_NODE_COL"
+        --suffix "$SUFFIX"
+        --lr "$LR"
+        --eps "$EPS")
+    [[ -n "$MAX_SCALE" ]] && cmd+=(--max-scale "$MAX_SCALE")
+    echo "[cmd] ${cmd[*]}"
+    "${cmd[@]}"
+  done
+
+  # Run the simulation with the new parameters to get the errors for the next epoch
+  echo "[info] epoch $epoch: Running simulation with the new parameters to get the errors for the next epoch"
+  run_sim_and_errors "epoch_$epoch" "$NEXT_PARAMS"
+  PREV_ERRORS="$ERR_DIR"
+  # Compute and log RMSE
+  epoch_rmse=$(sum_rmse_in_folder "$PREV_ERRORS")
+  echo -e "$epoch\t$epoch_rmse" >> "$RMSE_TSV"
+  echo "[info] epoch $epoch: RMSE = $epoch_rmse"
+done
+
+echo "[done] Fitting finished."
+echo "      Results at: $FITTING_ROOT"
+echo "      RMSE per epoch: $RMSE_TSV"
