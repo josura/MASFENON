@@ -83,3 +83,8 @@ To fit the model starting from a single set of parameters (all 0.01 for the para
 ```bash
 bash fit_driver_enhanced.sh --graphs ../../data/testFitting/graphs --nodes ../../data/testFitting/nodesDescriptionDifferentStructure  --initial ../../data/testFitting/initialValues --interactions ../../data/testFitting/interactions --real-data-dir ../../data/testFitting/syntheticTimeSeries --out /tmp/testingFittingDriver --epochs 5
 ```
+
+To fit the model starting from a set of vectorized parameters (all 0.2,0.2,-0.2 for all of the initial parameters), with a default gradient step size of 0.01, to some small example time series data run the following script:
+```bash
+bash fit_driver_enhanced.sh --graphs ../../data/testFitting/graphs --nodes ../../data/testFitting/nodesDescriptionDifferentStructure  --initial ../../data/testFitting/initialValues --interactions ../../data/testFitting/interactions --real-data-dir ../../data/testFitting/syntheticTimeSeries --out /tmp/testingFittingDriver --epochs 5 --init-params ../../data/testFitting/parameters
+```
