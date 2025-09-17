@@ -219,7 +219,8 @@ def main():
                 scale = np.clip(scale, -args.max_scale, args.max_scale)
 
             e_cur = e_t_np[i, :]
-            p_new = p_t - args.lr * e_cur * scale
+            # p_new = p_t - args.lr * e_cur * scale
+            p_new = p_tm1 - args.lr * e_cur * scale
 
             out_map[name] = p_new.tolist()
 
