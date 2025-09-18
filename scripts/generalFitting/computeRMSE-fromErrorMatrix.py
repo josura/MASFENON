@@ -51,6 +51,7 @@ def main():
             print(f"[error] This may be due to extremely large error values causing overflow.", file=sys.stderr)
             print(f"[error] Consider checking the input file {args.file} for unusually large values.", file=sys.stderr)
             sys.exit(1)
+    print(rmse)
     return 0
 
 
