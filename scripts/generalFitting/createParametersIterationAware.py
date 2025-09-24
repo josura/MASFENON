@@ -124,6 +124,7 @@ def main():
     ap.add_argument("--errors-dir", required=True, help="CURRENT errors dir (<type>.tsv, index=<errors-name-col>, columns=timepoints).")
     ap.add_argument("--prev-errors-dir", required=True, help="PREVIOUS errors dir.")
     ap.add_argument("--out-dir", required=True, help="Output dir for updated params.")
+    ap.add_argument("--out-dir-gradients", help="Optional output dir for gradients (for testing).")
     ap.add_argument("--suffix", default=".tsv")
     ap.add_argument("--nodes-name-col", default="Name", help="Node column in nodes-dir files (default: Name).")
     ap.add_argument("--errors-name-col", default="nodeNames", help="Node column in error files (default: nodeNames).")
@@ -220,6 +221,8 @@ def main():
 
             e_cur = e_t_np[i, :]
             # p_new = p_t - args.lr * e_cur * scale
+            gradient = e_cur * scale
+            # for TESTING, save the gradient in a folder, defaults to ${out_dir}_gradients
             p_new = p_tm1 - args.lr * e_cur * scale
 
             out_map[name] = p_new.tolist()
