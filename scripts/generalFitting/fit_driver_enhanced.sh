@@ -62,8 +62,8 @@ SCRIPT_PARAMS="createParametersIterationAware.py"
 SCRIPT_RMSE="computeRMSE-fromErrorMatrix.py"
 
 # Parameter update settings
-LR=0.1
-GRADIENT_STEP_SIZE=0.01  # step size for the gradient (Δs) when computing parameter updates
+LR=0.001
+GRADIENT_STEP_SIZE=0.0001  # step size for the gradient (Δs) when computing parameter updates
 EPS=1e-12
 MAX_SCALE=""      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
 
@@ -353,8 +353,10 @@ echo "[info]   preliminary simulations for the perturbed parameter sets done."
 echo "[info] Creating next parameters set (for initially starting the epoch) from the experiments"
 mechanismFolders=(propagation dissipation conservation)
 NEXT_PARAMS="$FITTING_ROOT/epoch_0/parameters"; mkdir -p "$NEXT_PARAMS"
+mkdir -p "$FITTING_ROOT//epoch_0/gradients"
 for mech in "${mechanismFolders[@]}"; do
   mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+  mkdir -p "$FITTING_ROOT/epoch_0/gradients/${mech}"
   cmd=(python3 "$SCRIPT_PARAMS"
       --nodes-dir "$NODES"
       --params-dir "$FITTING_ROOT/prelim_B/experiment_${mech}/${mech}Parameters"
@@ -364,6 +366,7 @@ for mech in "${mechanismFolders[@]}"; do
       --out-dir "$NEXT_PARAMS/${mech}Parameters"
       --nodes-name-col "$NODES_NAME_COL"
       --errors-name-col "$REAL_NODE_COL"
+      --out-dir-gradients "$FITTING_ROOT/epoch_0/gradients/${mech}"
       --suffix "$SUFFIX"
       --lr "$LR"
       --eps "$EPS")
@@ -405,12 +408,13 @@ for((epoch=1; epoch<=EPOCHS; epoch++)); do
   echo "[info] epoch $epoch: Simulation B: conservation only simulation"
   run_sim_and_errors "epoch_$epoch/experiment_B/experiment_conservation" "$epoch_dir/experiment_B/experiment_conservation"
   echo "[info] epoch $epoch: Simulations for the perturbed parameter sets done."
-
   # Generate the next parameters set from the three different experiments
   echo "[info] epoch $epoch: Creating next parameters set from the experiments"
   CURR_PARAMS="$FITTING_ROOT/epoch_$((epoch-1))/parameters"
+  mkdir -p "$FITTING_ROOT/epoch_$((epoch-1))/gradients"
   for mech in "${mechanismFolders[@]}"; do
     mkdir -p "$NEXT_PARAMS/${mech}Parameters"
+    mkdir -p "$FITTING_ROOT/epoch_$((epoch-1))/gradients/${mech}"
     cmd=(python3 "$SCRIPT_PARAMS"
         --nodes-dir "$NODES"
         --params-dir "$epoch_dir/experiment_B/experiment_${mech}/${mech}Parameters"
@@ -418,6 +422,7 @@ for((epoch=1; epoch<=EPOCHS; epoch++)); do
         --errors-dir "$epoch_dir/experiment_B/experiment_${mech}/errors"
         --prev-errors-dir "$PREV_ERRORS"
         --out-dir "$NEXT_PARAMS/${mech}Parameters"
+        --out-dir-gradients "$FITTING_ROOT/epoch_$((epoch-1))/gradients/${mech}"
         --nodes-name-col "$NODES_NAME_COL"
         --errors-name-col "$REAL_NODE_COL"
         --suffix "$SUFFIX"
