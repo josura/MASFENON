@@ -203,6 +203,7 @@ def main():
 
         # For fast row access
         e_t_np = e_t_df.to_numpy(dtype=float)
+        out_gradients_map: Dict[str, List[float]] = {}
 
         for i, name in enumerate(nodes):
             p_t   = np.asarray(ensure_len(p_t_map.get(name,   []), L, args.init_value), dtype=float)
@@ -226,8 +227,17 @@ def main():
             p_new = p_tm1 - args.lr * e_cur * scale
 
             out_map[name] = p_new.tolist()
+            out_gradients_map[name] = gradient.tolist()
 
         out_path = os.path.join(args.out_dir, typ + args.suffix)
+        if args.out_dir_gradients:
+            os.makedirs(args.out_dir_gradients, exist_ok=True)
+            out_grad_path = os.path.join(args.out_dir_gradients, typ + args.suffix)
+            try:
+                write_params(out_grad_path, out_gradients_map)
+                print(f"[ok] {typ}: wrote gradients {out_grad_path}")
+            except Exception as e:
+                print(f"[fail] {typ}: write gradients error: {e}", file=sys.stderr)
         try:
             write_params(out_path, out_map)
             processed += 1
