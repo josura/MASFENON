@@ -65,7 +65,7 @@ SCRIPT_RMSE="computeRMSE-fromErrorMatrix.py"
 LR=0.001
 GRADIENT_STEP_SIZE=0.0001  # step size for the gradient (Δs) when computing parameter updates
 EPS=1e-12
-MAX_SCALE=""      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
+MAX_SCALE=1000      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
 
 # Data conventions
 SUFFIX=".tsv"
