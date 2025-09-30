@@ -411,11 +411,13 @@ std::tuple<std::vector<std::string>,std::vector<std::string>,std::vector<std::ve
                 // }
             }
             myfile.close();
-            Logger::getInstance().printLog("discarding values for the nodes not in the graph for type " + cellName + ", the nodes discarded are:");
-            for(auto iter = discardedNodes.cbegin();iter!=discardedNodes.cend();iter++){
-                std::cout << "," << *iter;
+            if(discardedNodes.size()>0){
+                Logger::getInstance().printLog("discarding values for the nodes not in the graph for type " + cellName + ", the nodes discarded are:");
+                for(auto iter = discardedNodes.cbegin();iter!=discardedNodes.cend();iter++){
+                    std::cout << "," << *iter;
+                }
+                std::cout << std::endl;
             }
-            std::cout << std::endl;
             ret.push_back(cellValues);
 
         
