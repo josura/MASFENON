@@ -218,6 +218,9 @@ def main():
             else:
                 scale   = delta_p / denom
             if args.max_scale is not None:
+                # control if any of the values in scale is larger than max_scale, and print a warning
+                if np.any(np.abs(scale) > args.max_scale):
+                    print(f"[WARNING creating parameters] {typ}/{name}: clipping scale (max_scale={args.max_scale})", file=sys.stderr)
                 scale = np.clip(scale, -args.max_scale, args.max_scale)
 
             e_cur = e_t_np[i, :]
