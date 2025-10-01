@@ -54,7 +54,7 @@ source "$VIRTUAL_ENV/bin/activate"
 VNG="typeAndNode"
 OUTPUT_FORMAT="iterationMatrix"
 USE_SATURATION=0
-USE_VERBOSE=1
+USE_VERBOSE=0
 
 # Helper python scripts (relative or full paths)
 SCRIPT_ERROR="createErrorMatrix.py"
