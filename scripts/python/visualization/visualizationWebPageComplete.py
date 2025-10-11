@@ -10,9 +10,13 @@ import copy
 app = Flask(__name__)
 
 # TODO these are variables that will be read from the config file in the future
-OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
-AugmentedGraphDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs/"
-InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
+# OutputDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/multipleOutputsWithLR/dissipation_0.3-propagation_0.3-conservation_0.3/iterationMatrices/"
+# AugmentedGraphDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/outputWithLR/augmentedGraphs/"
+# InputValuesDirectory = "/home/josura/Projects/ccc/datiIdo/inputGraphs/1h/nodeValuesWithLR/"
+## from the README example
+OutputDirectory = "/tmp/testingFittingDriver/fittingProcess/epoch_50/sim_output/iterationMatrices/"
+AugmentedGraphDirectory = "../../../data/testFitting/graphs/"
+InputValuesDirectory = "../../../data/testFitting/initialValues/"
 
 # create the list of available types in the folder
 types = []
@@ -69,11 +73,9 @@ def read_timeseries_data(directoryTimeSeries, directoryInitialInput, type):
     # temp_iterationMatrix['time'] = timepoints
     ## change index name to be 'time'
     timeSeries_df.index.name = 'time'
-
     # reading node_values for the first timepoint
     nodesValuesFile = directoryInitialInput + type +  ".tsv"
     nodes_values_df = pd.read_csv(nodesValuesFile, sep="\t")
-
     ## adding the 1h real values to the simulated data, since it's the first timepoint
     ### shifting all the timepoints by the minimum interval between them (that is the intra timestep)
     timestep = timeSeries_df.index.astype(float)[1] - timeSeries_df.index.astype(float)[0]
@@ -104,12 +106,16 @@ allNodes = timeSeries_df.columns.tolist()
 #     edges_df.rename(columns={'Source': 'Start', 'Target': 'End'}, inplace=True)
 if 'Source' in edges_df.columns:
     edges_df.rename(columns={'Source': 'Start'}, inplace=True)
+
 if 'Target' in edges_df.columns:
     edges_df.rename(columns={'Target': 'End'}, inplace=True)
+
 if 'weight' in edges_df.columns:
     edges_df.rename(columns={'weight': 'Weight'}, inplace=True)
+
 if 'source' in edges_df.columns:
     edges_df.rename(columns={'source': 'Start'}, inplace=True)
+
 if 'target' in edges_df.columns:
     edges_df.rename(columns={'target': 'End'}, inplace=True)
 # also for 
@@ -123,12 +129,14 @@ dict_size = {}
 for i in range(0,len(allNodes)):
   val = timeSeries_df.iloc[0,i]
   dict_size[allNodes[i]] = val
+
 nx.set_node_attributes(nx_graph, dict_size, 'size')
 # add the values to the nodes as attribute
 dict_attr = {}
 for i in range(0,len(allNodes)):
   val = timeSeries_df.iloc[0,i]
   dict_attr[allNodes[i]] = val
+
 nx.set_node_attributes(nx_graph, dict_attr, 'value')
 
 # add edges to the graph, the relevant features are Start, End and Weight
@@ -222,7 +230,6 @@ node_sizes_every_timepoint_dict = {}
 node_text_every_timepoint_dict = {}
 for i in range(0,len(timepoints)):
     node_values_every_timepoint_dict[timepoints[i]] = timeSeries_df.iloc[i,:].tolist() 
-    # node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  + 1) * 10).tolist()
     # normalize the values  of the sizes to be between 4 and 22, but take the absolute value of the values so that the size is big even if the value is negative
     node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:].abs()  - timeSeries_df.iloc[i,:].abs().min()) / (timeSeries_df.iloc[i,:].abs().max() - timeSeries_df.iloc[i,:].abs().min()) * 18 + 4).tolist()
     #node_sizes_every_timepoint_dict[timepoints[i]] = ((timeSeries_df.iloc[i,:]  - timeSeries_df.iloc[i,:].min()) / (timeSeries_df.iloc[i,:].max() - timeSeries_df.iloc[i,:].min()) * 18 + 2).tolist()
@@ -374,12 +381,12 @@ def create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDi
 
 
 # create the node traces and edge traces by calling the function, only once, then commented for now, TODO implement a control to check if the files are already created
-# node_traces_for_networks, edge_traces_for_networks = create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory)
-# # save the traces in two files
-# with open('node_traces_for_networks.pkl', 'wb') as f:
-#     pickle.dump(node_traces_for_networks, f)
-# with open('edge_traces_for_networks.pkl', 'wb') as f:
-#     pickle.dump(edge_traces_for_networks, f)
+node_traces_for_networks, edge_traces_for_networks = create_all_node_traces_and_edge_traces(types, OutputDirectory, InputValuesDirectory, AugmentedGraphDirectory)
+# save the traces in two files
+with open('node_traces_for_networks.pkl', 'wb') as f:
+    pickle.dump(node_traces_for_networks, f)
+with open('edge_traces_for_networks.pkl', 'wb') as f:
+    pickle.dump(edge_traces_for_networks, f)
       
 node_traces_for_networks = {}
 edge_traces_for_networks = {}
@@ -421,10 +428,10 @@ def create_dict_for_plot():
             dict_for_plot[type + "_" + str(timepoints[i])] = fig.to_dict()
     return dict_for_plot
 
-# dict_for_plot = create_dict_for_plot()
-# # save the dict for the plot
-# with open('dict_for_plot.pkl', 'wb') as f:
-#     pickle.dump(dict_for_plot, f)
+dict_for_plot = create_dict_for_plot()
+# save the dict for the plot
+with open('dict_for_plot.pkl', 'wb') as f:
+    pickle.dump(dict_for_plot, f)
 # load the dict for the plot
 with open('dict_for_plot.pkl', 'rb') as f:
     dict_for_plot = pickle.load(f)
