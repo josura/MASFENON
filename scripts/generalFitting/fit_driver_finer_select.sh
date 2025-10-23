@@ -42,3 +42,11 @@ LR=0.001
 GRADIENT_STEP_SIZE=0.0001  # step size for the gradient (Δs) when computing parameter updates
 EPS=1e-12
 MAX_SCALE=1000      # e.g., 1000 to clip |Δp/(Δs+eps)|; leave empty to disable
+
+# Data conventions
+SUFFIX=".tsv"
+NODES_NAME_COL="Name"      # column in --nodes files
+REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
+
+# Defaults for auto-generated initial params (when initial parameter not supplied)
+DEFAULT_PARAMS=0.01
