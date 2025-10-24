@@ -50,3 +50,49 @@ REAL_NODE_COL="nodeNames"  # row index column in real data & error matrices
 
 # Defaults for auto-generated initial params (when initial parameter not supplied)
 DEFAULT_PARAMS=0.01
+
+# ===========================
+#  CLI (only IO & epochs)
+# ===========================
+usage() {
+  cat <<EOF
+Usage:
+  $(basename "$0") --epochs N \\
+    --graphs /path/graphs \\
+    --nodes  /path/node_descriptions \\
+    --initial /path/initial_values \\
+    --interactions /path/interactions \\
+    --real-data-dir /path/real_series \\
+    --out /path/output \\
+    [--init-params /path/params]
+
+Notes:
+- Only IO and epoch count are CLI-configurable; edit constants at the top for everything else.
+- Simulator receives:
+    --nodeDescriptionFolder      (from --nodes)
+    --initialPerturbationPerTypeFolder (from --initial)
+    --graphsFilesFolder (from --graphs)
+    --typeInteractionFolder (from --interactions)
+- Optionally, the simulator 
+- Params folders must contain subdirs:
+    propagationParameters/ dissipationParameters/ conservationParameters/
+EOF
+}
+
+EPOCHS="" GRAPHS="" NODES="" INITIAL="" INTERACTIONS="" REAL_DIR="" OUT_ROOT=""
+INIT_PARAMS="" # initial params folder (optional)
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --epochs) EPOCHS="$2"; shift 2;;
+    --graphs) GRAPHS="$2"; shift 2;;
+    --nodes) NODES="$2"; shift 2;;          # node descriptions (no values)
+    --initial) INITIAL="$2"; shift 2;;      # initial node values for the sim
+    --interactions) INTERACTIONS="$2"; shift 2;;
+    --real-data-dir) REAL_DIR="$2"; shift 2;;
+    --out) OUT_ROOT="$2"; shift 2;;
+    --init-params) INIT_PARAMS="$2"; shift 2;;
+    -h|--help) usage; exit 0;;
+    *) echo "[error] Unknown arg: $1"; usage; exit 2;;
+  esac
+done
