@@ -96,3 +96,23 @@ while [[ $# -gt 0 ]]; do
     *) echo "[error] Unknown arg: $1"; usage; exit 2;;
   esac
 done
+
+
+# printing configuration
+echo "-----------------------------"
+echo "MASFENON Fitting Driver"
+echo "-----------------------------"
+echo "Epochs: $EPOCHS"
+echo "Graphs: $GRAPHS"
+echo "Nodes: $NODES"
+echo "Initial values: $INITIAL"
+echo "Interactions: $INTERACTIONS"
+echo "Real data: $REAL_DIR"
+echo "Output root: $OUT_ROOT"
+if [[ -n "$INIT_PARAMS" ]]; then
+  echo "Init params: $INIT_PARAMS"
+else
+  echo "Init params: (auto-generated)"
+fi
+echo "-----------------------------"
+
