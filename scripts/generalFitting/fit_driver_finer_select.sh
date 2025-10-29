@@ -137,3 +137,16 @@ natural_sort() { sort -V; }
 list_types() {
   find "$NODES" -maxdepth 1 -type f -name "*$SUFFIX" -printf "%f\n" | sed "s/$SUFFIX$//" | natural_sort
 }
+
+extract_node_names() {
+  # $1=nodes_file
+  awk -v col="$NODES_NAME_COL" 'BEGIN{FS=OFS="\t"} NR==1{for(i=1;i<=NF;i++) if($i==col) c=i; next}
+                                 {if(c) print $c}' "$1"
+}
+
+count_timepoints_from_real() {
+  # $1=real_file -> number of timepoint columns (excludes REAL_NODE_COL)
+  awk -v col="$REAL_NODE_COL" 'BEGIN{FS=OFS="\t"} NR==1{n=0; for(i=1;i<=NF;i++) if($i!=col) n++; print n; exit}' "$1"
+}
+
+join_by_comma() { awk -v v="$1" -v n="$2" 'BEGIN{for(i=1;i<=n;i++){printf "%s",v; if(i<n) printf ","} printf "\n"}'; }
