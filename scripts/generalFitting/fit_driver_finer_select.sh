@@ -178,3 +178,6 @@ perturb_single_parameter_in_a_file(){
     {if($1==nn){$ti+ss} print}' "$input_file" > "$output_file"
   
 }
+
+generate_perturbed_param_set() { # generating all the parameter sets with single parameter perturbations, for dissipation, propagation, conservation
+}
