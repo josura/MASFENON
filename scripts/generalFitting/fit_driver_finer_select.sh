@@ -180,4 +180,31 @@ perturb_single_parameter_in_a_file(){
 }
 
 generate_perturbed_param_set() { # generating all the parameter sets with single parameter perturbations, for dissipation, propagation, conservation
+  # $1=base_params_dir $2=out_params_dir
+  local base_dir="$1" out_dir="$2"
+  mkdir -p "$out_dir/propagationParameters"
+  mkdir -p "$out_dir/dissipationParameters"
+  mkdir -p "$out_dir/conservationParameters"
+
+  for param_type in propagation dissipation conservation; do
+    local base_param_subdir="$base_dir/${param_type}Parameters"
+    local out_param_subdir="$out_dir/${param_type}Parameters"
+    for type in $(list_types); do
+      local base_file="$base_param_subdir/$type$SUFFIX"
+      [[ -f "$base_file" ]] || { echo "[error] missing base param file: $base_file"; exit 2; }
+      local nodes_file="$NODES/$type$SUFFIX"
+      [[ -f "$nodes_file" ]] || { echo "[error] missing nodes file: $nodes_file"; exit 2; }
+      local real_file="$REAL_DIR/$type$SUFFIX"
+      [[ -f "$real_file" ]] || { echo "[error] missing real data file: $real_file"; exit 2; }
+
+      # for each node and timepoint, create a perturbed param file
+      extract_node_names "$nodes_file" | while IFS= read -r nm; do
+        local num_timepoints; num_timepoints=$(count_timepoints_from_real "$real_file")
+        for ((ti=2; ti<=num_timepoints+1; ti++)); do   # +1 because first col is node name
+          local out_file="$out_param_subdir/${type}__${nm}__tp${ti}.tsv"
+          perturb_single_parameter_in_a_file "$base_file" "$out_file" "$nm" "$ti" "$GRADIENT_STEP_SIZE"
+        done
+      done
+    done
+  done
 }
