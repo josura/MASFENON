@@ -208,3 +208,34 @@ generate_perturbed_param_set() { # generating all the parameter sets with single
     done
   done
 }
+
+copy_params_tree() { rm -rf "$2"; mkdir -p "$2"; cp -r "$1"/. "$2"/; }
+
+sim_cmd() {
+  # $1=params_root  $2=sim_out_dir
+  local p="$1" out="$2"
+  # make the output directory if it does not exist, to avoid simulator errors
+  mkdir -p "$out"
+  # also make the iterationMatrices subdir to avoid simulator errors
+  mkdir -p "$out/iterationMatrices"
+  local cmd=()
+  cmd+=("$MPIRUN_BIN" -np "$MPIRUN_NP")
+  [[ -n "$MPIRUN_EXTRA" ]] && cmd+=($MPIRUN_EXTRA)
+  cmd+=("$SIMULATOR"
+        --graphsFilesFolder "$GRAPHS"
+        --nodeDescriptionFolder "$NODES"                        # nodes (no values)
+        --initialPerturbationPerTypeFolder "$INITIAL"           # initial values
+        --typeInteractionFolder "$INTERACTIONS"
+        --propagationModel customPropagation
+        --propagationModelParameterFolder "$p/propagationParameters"
+        --dissipationModel custom
+        --dissipationModelParameterFolder "$p/dissipationParameters"
+        --conservationModel custom
+        --conservationModelParameterFolder "$p/conservationParameters"
+        --virtualNodesGranularity "$VNG"
+        --outputFormat "$OUTPUT_FORMAT"
+        --outputFolder "$out")
+  [[ "$USE_SATURATION" -eq 1 ]] && cmd+=(--saturation)
+  [[ "$USE_VERBOSE"    -eq 1 ]] && cmd+=(--verbose)
+  printf '%q ' "${cmd[@]}"
+}
