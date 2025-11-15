@@ -239,3 +239,29 @@ sim_cmd() {
   [[ "$USE_VERBOSE"    -eq 1 ]] && cmd+=(--verbose)
   printf '%q ' "${cmd[@]}"
 }
+
+run_sim_and_errors() {
+  # $1=tag  $2=params_root -> sets globals: EPOCH_DIR, ERR_DIR
+  local tag="$1" params="$2"
+  EPOCH_DIR="$FITTING_ROOT/$tag"
+  mkdir -p "$EPOCH_DIR"
+  local SIM_OUT="$EPOCH_DIR/sim_output"; mkdir -p "$SIM_OUT"
+  # sim
+  echo "[cmd] $(sim_cmd "$params" "$SIM_OUT")"
+  eval "$(sim_cmd "$params" "$SIM_OUT")"
+  local SIM_OUT_IterationMatrix="$SIM_OUT/iterationMatrices"
+  [[ -d "$SIM_OUT_IterationMatrix" ]] || { echo "[error] sim output iteration matrices missing"; exit 2; }
+  # errors
+  ERR_DIR="$EPOCH_DIR/errors"; mkdir -p "$ERR_DIR"
+  python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT_IterationMatrix" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
+  # python3 "$SCRIPT_ERROR" --sim-dir "$SIM_OUT" --real-dir "$REAL_DIR" --out-dir "$ERR_DIR"
+}
+
+sum_rmse_in_folder() {
+  # $1=errors_dir -> echo sum
+  local d="$1"
+  find "$d" -maxdepth 1 -type f -name "*$SUFFIX" -print0 \
+    | xargs -0 -I{} python3 "$SCRIPT_RMSE" --file "{}" --node-col "$REAL_NODE_COL" \
+    | awk '{s+=$1} END{printf "%.10g\n", s+0}'
+}
+
