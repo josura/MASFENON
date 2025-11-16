@@ -265,3 +265,11 @@ sum_rmse_in_folder() {
     | awk '{s+=$1} END{printf "%.10g\n", s+0}'
 }
 
+
+# ==============
+# Prep output
+# ==============
+mkdir -p "$OUT_ROOT"
+FITTING_ROOT="${OUT_ROOT%/}/fittingProcess"
+mkdir -p "$FITTING_ROOT"
+RMSE_TSV="$FITTING_ROOT/RMSE.tsv"
