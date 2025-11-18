@@ -273,3 +273,15 @@ mkdir -p "$OUT_ROOT"
 FITTING_ROOT="${OUT_ROOT%/}/fittingProcess"
 mkdir -p "$FITTING_ROOT"
 RMSE_TSV="$FITTING_ROOT/RMSE.tsv"
+
+
+# ==============
+# Initial params
+# ==============
+INIT_PARAMS_DIR="$FITTING_ROOT/init_Params"
+if [[ -n "$INIT_PARAMS" ]]; then
+  copy_params_tree "$INIT_PARAMS" "$INIT_PARAMS_DIR"
+else
+  echo "[info] Auto-generating initial parameter sets PARAMS=$DEFAULT_PARAMS"
+  generate_uniform_param_set "$INIT_PARAMS_DIR" "$DEFAULT_PARAMS"
+fi
