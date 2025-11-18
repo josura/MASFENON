@@ -285,3 +285,12 @@ else
   echo "[info] Auto-generating initial parameter sets PARAMS=$DEFAULT_PARAMS"
   generate_uniform_param_set "$INIT_PARAMS_DIR" "$DEFAULT_PARAMS"
 fi
+
+# ===============
+# Preliminary simulation with initial params, also having the different perturbations for gradient computation(one simulation for every pair of mechanism+node)
+# ===============
+echo "[info] Running preliminary simulation with initial parameters..."
+PRELIM_TAG="epoch_0_initialParams"
+run_sim_and_errors "$PRELIM_TAG" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
+
+
