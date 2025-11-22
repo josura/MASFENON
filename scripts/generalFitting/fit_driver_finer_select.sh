@@ -296,3 +296,4 @@ run_sim_and_errors "$PRELIM_TAG" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_D
 
 
 # Generation for the perturbations parameter folders TODO testing here
+PERTURBED_PARAMS_DIR="$FITTING_ROOT/perturbed_Params"
