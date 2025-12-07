@@ -4,7 +4,7 @@
 [![Language](https://img.shields.io/github/languages/top/josura/MASFENON)](https://github.com/search?q=repo%3Ajosura%2FMASFENON++language%3AC%2B%2B&type=code)
 
 
-Standalone project for the framework behind [c2c-sepia](https://github.com/josura/c2c-sepia), containing only the most recent version of the MASFENON framework. The meaning of the acronym is **M**ultiagent **A**daptive **S**imulation **F**ramework for **E**volution in **N**etworks **o**f **N**etworks
+Standalone project for the framework behind [c2c-sepia](https://github.com/josura/c2c-sepia), containing only the most recent version of the MASFENON framework. The meaning of the acronym is **M**ultiagent **A**daptive **S**imulation **F**ramework for **E**volution in **N**etworks **o**f **N**etworks. Simulating the communication dynamics in complex systems represented as networks of networks. Encoding temporal communication between agents as perturbations that spread through the system according to predefined interaction rules.
 
 ## DEPENDENCIES
 - [armadillo](https://arma.sourceforge.net/)
