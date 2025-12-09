@@ -46,6 +46,9 @@ The custom functions used for the scaling of the perturbation values (dissipatio
 ./build/masfenon-MPI --fUniqueGraph [graph].tsv --fInitialPerturbationPerType [matrix].tsv --typeInteractionFolder [typesInteractionFolder]
 ```
 
+### FITTING PROCEDURE
+The fitting procedure is driven by the scripts in the `scripts/generalFitting` folder. The main driver script is `fit_driver.sh`, which calls other scripts to perform the fitting. Please refer to the comments in the scripts for more details on how to use them.
+
 # LICENSE
 
 Under development, if any problems arise open an issue in the [repository](https://github.com/josura/MASFENON/issues)
