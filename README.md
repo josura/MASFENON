@@ -47,7 +47,7 @@ The custom functions used for the scaling of the perturbation values (dissipatio
 ```
 
 ### FITTING PROCEDURE
-The fitting procedure is driven by the scripts in the `scripts/generalFitting` folder. The main driver script is `fit_driver.sh`, which calls other scripts to perform the fitting. Please refer to the comments in the scripts for more details on how to use them. Also, refer to the latest script version since there are multiple versions and ways to fit the data.
+The fitting procedure is driven by the scripts in the `scripts/generalFitting` folder. The main driver script is `fit_driver.sh`, which calls other scripts to perform the fitting. Please refer to the comments in the scripts for more details on how to use them. Also, refer to the latest script version since there are multiple versions and ways to fit the data. Single parameter tuning is currently under development.
 
 # LICENSE
 
