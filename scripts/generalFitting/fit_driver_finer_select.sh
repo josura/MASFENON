@@ -298,7 +298,7 @@ else
 fi
 
 # ===============
-# Preliminary simulation with initial params, also having the different perturbations for gradient computation(one simulation for every pair of mechanism+node)
+# Preliminary simulation with initial params (epoch 0), also having the different perturbations for gradient computation(one simulation for every pair of mechanism+node)
 # ===============
 echo "[info] Running base simulation (Epoch 0)..."
 PRELIM_TAG="epoch_0_base"
@@ -308,7 +308,81 @@ CURR_PARAMS="$INIT_PARAMS_DIR"
 
 
 
-# Generation for the perturbations parameter folders TODO testing here
-PERTURBED_PARAMS_DIR="$FITTING_ROOT/perturbed_Params"
-# generate_perturbed_param_set "$PREV_PARAMS" "$PERTURBED_PARAMS_DIR"
-echo "[info] Generated perturbed parameter sets at: $PERTURBED_PARAMS_DIR"
+# ==============
+# 2. Main Epoch Loop
+# ==============
+for ((epoch=1; epoch<=EPOCHS; epoch++)); do
+  echo "-----------------------------"
+  echo "Starting Epoch $epoch"
+  echo "-----------------------------"
+  
+  EPOCH_DIR="$FITTING_ROOT/epoch_$epoch"
+  NEXT_PARAMS="$EPOCH_DIR/next_params"
+  GRADIENTS_DIR="$EPOCH_DIR/gradients"
+  mkdir -p "$NEXT_PARAMS" "$GRADIENTS_DIR"
+
+  # We iterate through each mechanism to calculate partial derivatives
+  for mech in propagation dissipation conservation; do
+    echo "[info] Processing mechanism: $mech"
+    MECH_OUT="$NEXT_PARAMS/${mech}Parameters"
+    mkdir -p "$MECH_OUT"
+
+    # PER-TYPE LOOP
+    for type in $(list_types); do
+      base_file="$CURR_PARAMS/${mech}Parameters/$type$SUFFIX"
+      nodes_file="$NODES/$type$SUFFIX"
+      real_file="$REAL_DIR/$type$SUFFIX"
+      
+      # We must run a simulation for every single perturbation 
+      # Note: This is computationally expensive. 
+      # If the simulator supports batching, that would be preferred.
+      
+      extract_node_names "$nodes_file" | while IFS= read -r nm; do
+        num_tp=$(count_timepoints_from_real "$real_file")
+        
+        for ((ti=2; ti<=num_tp+1; ti++)); do
+          # Create a specific folder for this single-parameter perturbation experiment
+          PERTURB_TAG="epoch_${epoch}_${mech}_${nm}_tp${ti}"
+          PERTURB_DIR="$EPOCH_DIR/perturbations/$mech/$nm/tp$ti"
+          mkdir -p "$PERTURB_DIR/params/${mech}Parameters"
+          
+          # Copy current state and apply one perturbation
+          copy_params_tree "$CURR_PARAMS" "$PERTURB_DIR/params"
+          perturb_single_parameter_in_a_file "$base_file" \
+            "$PERTURB_DIR/params/${mech}Parameters/$type$SUFFIX" \
+            "$nm" "$ti" "$GRADIENT_STEP_SIZE"
+          
+          # Run simulation for this specific perturbation
+          run_sim_and_errors "$PERTURB_TAG" "$PERTURB_DIR/params"
+          
+          # Now we use the Python script to compare:
+          # BASE_ERRORS vs current perturbation ERR_DIR
+          python3 "$SCRIPT_PARAMS" \
+            --nodes-dir "$NODES" \
+            --params-dir "$PERTURB_DIR/params/${mech}Parameters" \
+            --prev-params-dir "$CURR_PARAMS/${mech}Parameters" \
+            --errors-dir "$ERR_DIR" \
+            --prev-errors-dir "$BASE_ERRORS" \
+            --out-dir "$MECH_OUT" \
+            --lr "$LR" \
+            --eps "$EPS" \
+            --max-scale "$MAX_SCALE"
+        done
+      done
+    done
+  done
+  # ==============
+  # 3. Finalizing Epoch
+  # ==============
+  # Run the "Gold" simulation with all updated parameters for the next epoch
+  run_sim_and_errors "epoch_${epoch}_final" "$NEXT_PARAMS"
+  BASE_ERRORS="$ERR_DIR"
+  CURR_PARAMS="$NEXT_PARAMS"
+  
+  # Log RMSE
+  current_rmse=$(sum_rmse_in_folder "$BASE_ERRORS")
+  echo -e "$epoch\t$current_rmse" >> "$RMSE_TSV"
+  echo "[info] Epoch $epoch complete. RMSE: $current_rmse"
+done
+
+echo "[done] Fitting finished. Results in $FITTING_ROOT"
