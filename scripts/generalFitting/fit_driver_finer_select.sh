@@ -265,6 +265,17 @@ sum_rmse_in_folder() {
     | awk '{s+=$1} END{printf "%.10g\n", s+0}'
 }
 
+generate_uniform_param_set() {
+  # $1=out_root $2=value
+  local out="$1" val="$2"
+  mkdir -p "$out"/{propagationParameters,dissipationParameters,conservationParameters}
+  list_types | while read -r typ; do
+    write_uniform_params_for_type "$out/propagationParameters" "$typ" "$val"
+    write_uniform_params_for_type "$out/dissipationParameters"  "$typ" "$val"
+    write_uniform_params_for_type "$out/conservationParameters" "$typ" "$val"
+  done
+}
+
 
 # ==============
 # Prep output
@@ -289,9 +300,11 @@ fi
 # ===============
 # Preliminary simulation with initial params, also having the different perturbations for gradient computation(one simulation for every pair of mechanism+node)
 # ===============
-echo "[info] Running preliminary simulation with initial parameters..."
-PRELIM_TAG="epoch_0_initialParams"
-run_sim_and_errors "$PRELIM_TAG" "$INIT_PARAMS_DIR"; PREV_PARAMS="$INIT_PARAMS_DIR"; PREV_ERRORS="$ERR_DIR"
+echo "[info] Running base simulation (Epoch 0)..."
+PRELIM_TAG="epoch_0_base"
+run_sim_and_errors "$PRELIM_TAG" "$INIT_PARAMS_DIR"
+BASE_ERRORS="$ERR_DIR"
+CURR_PARAMS="$INIT_PARAMS_DIR"
 
 
 
