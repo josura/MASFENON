@@ -174,8 +174,12 @@ perturb_single_parameter_in_a_file(){
   # $1=input_file $2=output_file $3=node_name $4=timepoint_index $5=step_size
   local input_file="$1" output_file="$2" node_name="$3" timepoint_index="$4" step_size="$5"
   awk -v nn="$node_name" -v ti="$timepoint_index" -v ss="$step_size" 'BEGIN{FS=OFS="\t"} 
-    NR==1{print; next} 
-    {if($1==nn){$ti+ss} print}' "$input_file" > "$output_file"
+  NR==1{print; next} 
+  {if($1==nn){ 
+    split($2, a, ","); 
+    a[ti-1] = a[ti-1] + ss; # ti-1 because index 2 in TSV is index 1 in the comma-list
+    $2=""; for(j=1;j<=length(a);j++) $2 = $2 (j==1?"":",") a[j];
+  } print}' "$input_file" > "$output_file"
   
 }
 
