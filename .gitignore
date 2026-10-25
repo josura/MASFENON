@@ -12,3 +12,5 @@ _deps
 CMakeUserPresets.json
 .vscode
 checkpoints
+build-cpu
+build-cuda

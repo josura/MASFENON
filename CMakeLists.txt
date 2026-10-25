@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(masfenon)
+project(masfenon LANGUAGES CXX)
+
+option(USE_CUDA "Enable CUDA acceleration" OFF)
+
+if(USE_CUDA)
+  enable_language(CUDA)
+  find_package(CUDAToolkit REQUIRED)
+endif()
 
 #if (UNIX)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -fopenmp")   #  -lblas -llapack are included directly #blas is very fast for me on this machine
@@ -81,12 +88,6 @@ set(LIB_SRCS
     src/checkpoint/Checkpoint.cxx
 )
 
-if(CUDAavailable)
-#using CUDA implementation
-elseif(OpenCLavailable)
-#using OpenCL implementation
-endif(CUDAavailable)
-
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -98,6 +99,13 @@ FetchContent_MakeAvailable(googletest)
 
 add_library( mysharedlib SHARED ${LIB_SRCS} )
 
+if(USE_CUDA)
+  target_sources(mysharedlib PRIVATE src/computation/PropagationCUDA.cu)
+  target_compile_definitions(mysharedlib PUBLIC USE_CUDA)
+  target_link_libraries(mysharedlib PRIVATE CUDA::cudart)
+  set_target_properties(mysharedlib PROPERTIES CUDA_STANDARD 20 CUDA_STANDARD_REQUIRED ON)
+endif()
+
 add_executable( masfenon ${EXEC_MAIN} )
 target_link_libraries( masfenon 
                        mysharedlib
@@ -107,10 +115,13 @@ target_link_libraries( masfenon
 
 add_executable( masfenon-MPI ${EXEC_MPI_MAIN} )
 target_link_libraries( masfenon-MPI 
-                        mysharedlib
-                        ${lapackblas_libraries}
-                        ${Boost_LIBRARIES}
-                        MPI::MPI_CXX)
+                         mysharedlib
+                         ${lapackblas_libraries}
+                         ${Boost_LIBRARIES}
+                         MPI::MPI_CXX)
+if(USE_CUDA)
+  target_link_libraries(masfenon-MPI CUDA::cudart)
+endif()
 
 add_executable( experiments ${EXPERIMENT_MAIN})
 target_link_libraries( experiments 
@@ -199,6 +210,18 @@ target_link_libraries(
   ${lapackblas_libraries}
 )
 
+if(USE_CUDA)
+  add_executable(PropagationCUDATesting "src/testing/PropagationCUDATesting.cu")
+  target_link_libraries(
+    PropagationCUDATesting
+    GTest::gtest_main
+    mysharedlib
+    CUDA::cudart
+    ${lapackblas_libraries}
+  )
+  set_target_properties(PropagationCUDATesting PROPERTIES CUDA_STANDARD 20 CUDA_STANDARD_REQUIRED ON)
+endif()
+
 add_executable(graphUtilitiesTesting  "src/testing/graphUtilitiesTesting.cc")
 target_link_libraries(
   graphUtilitiesTesting
@@ -218,3 +241,6 @@ gtest_discover_tests(ComputationTestingPerturbation)
 gtest_discover_tests(armaUtilitiesTesting)
 gtest_discover_tests(utilitiesTesting)
 gtest_discover_tests(PropagationModelTesting)
+if(USE_CUDA)
+  gtest_discover_tests(PropagationCUDATesting)
+endif()
