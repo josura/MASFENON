@@ -44,6 +44,9 @@ class DissipationModel{
          * @details This function is used to compute the dissipation term of the input vector.
          */
         virtual arma::Col<double> dissipationTerm(arma::Col<double> input, double time) = 0;
+#ifdef USE_CUDA
+        virtual bool supportsCudaPipeline() const { return false; }
+#endif
         /**
          * @brief Get the number of elements in the dissipation model.
          * @return The number of elements in the dissipation model.

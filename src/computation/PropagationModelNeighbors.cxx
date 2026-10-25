@@ -25,12 +25,18 @@ PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* gr
     }
 
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 PropagationModelNeighbors::~PropagationModelNeighbors(){
 }
 
 PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* graph, std::function<double(double)> scaleFun):scaleFunction(scaleFun){
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     //using a vectorized scale function that returns the scale function value for all elements
     int numElements = graph->getNumNodes();
     this->scaleFunctionVectorized = [scaleFun, numElements](double time)-> arma::Col<double>{
@@ -45,9 +51,15 @@ PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* gr
     }
 
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* graph, std::function<arma::Col<double>(double)> scaleFun):scaleFunctionVectorized(scaleFun){   
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     //getting normalization values for the adjacency matrix
     std::vector<double> normalizationFactors(graph->getNumNodes(),0);
     for (int i = 0; i < graph->getNumNodes(); i++) {
@@ -56,14 +68,25 @@ PropagationModelNeighbors::PropagationModelNeighbors(const WeightedEdgeGraph* gr
         }
     }
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 
 arma::Col<double> PropagationModelNeighbors::propagate(arma::Col<double> input, double time){
     // return input + (Wmat * input * this->scaleFunction(time));
+#ifdef USE_CUDA
+    return input + this->scaleFunctionVectorized(time) % runCudaPropagationStep(input);
+#else
     return input + this->scaleFunctionVectorized(time) % (Wmat * input) ;
+#endif
 }
 
 arma::Col<double> PropagationModelNeighbors::propagationTerm(arma::Col<double> input, double time){
+#ifdef USE_CUDA
+    return this->scaleFunctionVectorized(time) % runCudaPropagationStep(input);
+#else
     return this->scaleFunctionVectorized(time) % (Wmat * input) ;
+#endif
 }

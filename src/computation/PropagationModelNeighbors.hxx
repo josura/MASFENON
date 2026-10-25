@@ -74,4 +74,11 @@ class PropagationModelNeighbors : public PropagationModel
          * @details This function is used to get the scale function value at a certain time.
          */
         double getScale(double time){return scaleFunction(time);}
+#ifdef USE_CUDA
+        bool supportsCudaPipeline() const override { return cudaPipelineCompatible; }
+#endif
+    private:
+#ifdef USE_CUDA
+        bool cudaPipelineCompatible = true;
+#endif
 };

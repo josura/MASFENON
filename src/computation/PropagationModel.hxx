@@ -26,12 +26,31 @@
 class PropagationModel{
     protected:
         std::function<double(double)> scaleFunction; ///< The function to scale the propagation term. It takes a double value (time) and returns a double value.
+#ifdef USE_CUDA
+        float* d_interactionMatrix = nullptr;
+        double* d_currentState = nullptr;
+        double* d_nextState = nullptr;
+        double* d_conservation = nullptr;
+        int cudaNumNodes = 0;
+
+        void initializeCudaPropagation(const arma::dmat& interactionMatrix);
+        arma::Col<double> runCudaPropagationStep(const arma::Col<double>& input) const;
+#endif
     public:
         /**
          * @brief Default destructor for the PropagationModel class. (needed even if the class is abstract)
          * @details Initializes the propagation model with a default scale function.
          */
-        virtual ~PropagationModel(){}
+        virtual ~PropagationModel();
+#ifdef USE_CUDA
+        virtual bool supportsCudaPipeline() const { return false; }
+        void uploadCudaState(const arma::Col<double>& input);
+        void setCudaConservation(const arma::Col<double>& conservation);
+        void runCudaFusedStep(int dissipationMode, double dissipationParameter, double propagationScale,
+                              double conservationScale, bool saturation, double saturationValue);
+        arma::Col<double> downloadCudaState() const;
+        const double* cudaStatePointer() const { return d_currentState; }
+#endif
         //using the scale function as a parameter itself, dependency injection
         /**
          * @brief Propagate the input vector.

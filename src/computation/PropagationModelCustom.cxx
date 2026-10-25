@@ -24,6 +24,9 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph){
     }
 
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 PropagationModelCustom::~PropagationModelCustom(){
@@ -44,6 +47,9 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, s
     }
 
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, std::function<arma::Col<double>(double)> scaleFun):scaleFunctionVectorized(scaleFun){   
@@ -55,14 +61,25 @@ PropagationModelCustom::PropagationModelCustom(const WeightedEdgeGraph* graph, s
         }
     }
     this->Wmat = graph->adjMatrix.transpose().normalizeByVectorColumn(normalizationFactors).asArmadilloMatrix();
+#ifdef USE_CUDA
+    initializeCudaPropagation(Wmat);
+#endif
 }
 
 
 arma::Col<double> PropagationModelCustom::propagate(arma::Col<double> input, double time){
     // return input + (Wmat * input * this->scaleFunction(time));
+#ifdef USE_CUDA
+    return input + this->scaleFunctionVectorized(time) % runCudaPropagationStep(input);
+#else
     return input + this->scaleFunctionVectorized(time) % (Wmat * input) ;
+#endif
 }
 
 arma::Col<double> PropagationModelCustom::propagationTerm(arma::Col<double> input, double time){
+#ifdef USE_CUDA
+    return this->scaleFunctionVectorized(time) % runCudaPropagationStep(input);
+#else
     return this->scaleFunctionVectorized(time) % (Wmat * input );
+#endif
 }

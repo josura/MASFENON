@@ -18,6 +18,9 @@ DissipationModelScaled::~DissipationModelScaled(){
 }
 
 DissipationModelScaled::DissipationModelScaled(std::function<double(double)> scaleFun){
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     this->scaleFunction = scaleFun;
     this->numEl = 0;
     // initialize the vectorized scaled function to be used later when the number of elements is known (to be able to meet a condition when being initialized, like returning a size 0 Matrix)
@@ -25,6 +28,9 @@ DissipationModelScaled::DissipationModelScaled(std::function<double(double)> sca
 }
 
 DissipationModelScaled::DissipationModelScaled(std::function<arma::Col<double>(double)> scaleFun){
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     this->scaleFunctionVectorized = scaleFun;
     this->numEl = this->scaleFunctionVectorized(0).n_elem; // initialize the number of elements based on the scale function
 }

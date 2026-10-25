@@ -58,5 +58,8 @@ class DissipationModelPow : public DissipationModel
          * @return The power factor.
          * @details This function returns the power factor used in the power dissipation model.
          */
-        double getPower(){return this->power;}
+        double getPower() const {return this->power;}
+#ifdef USE_CUDA
+        bool supportsCudaPipeline() const override { return true; }
+#endif
 };

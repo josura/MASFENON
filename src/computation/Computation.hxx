@@ -52,6 +52,11 @@ class Computation{
         PropagationModel* propagationModel = nullptr;     /**< Pointer to propagation model. */
 
         std::function<double(double,double)> saturationFunction; /**< Function to apply saturation logic to computed values. */
+#ifdef USE_CUDA
+        bool cudaStateDirty = false;
+        bool cudaStateInitialized = false;
+        void syncCudaStateToHost();
+#endif
 
     public:
         /**
@@ -234,6 +239,12 @@ class Computation{
          * @note This function is the most general one, allowing for the use of all the models and functions defined in the class.
          */
         std::vector<double> computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>()); //all the models
+#ifdef USE_CUDA
+        bool advanceAugmentedPerturbationOnDevice(double timeStep, bool saturation = true, const std::vector<double>& saturationsVector = std::vector<double>(),const std::vector<double>& qVector = std::vector<double>());
+        void syncToHost();
+        const double* getDeviceNodeValuePointer(const std::string& nodeName) const;
+        bool copyDeviceValueToNode(const std::string& nodeName, const double* source, double scale = 1.0);
+#endif
         /**
          * @brief Returns the map of virtual outputs to cell inputs
          * @details The function will return the map of virtual outputs to cell inputs.
@@ -268,13 +279,23 @@ class Computation{
          * @details These functions provide access to the private members of the class, allowing read-only access to the data.
          * @return The corresponding private member.
          */
-        std::vector<double> getInputAugmented()const{return inputAugmented;}
+        std::vector<double> getInputAugmented()const{
+#ifdef USE_CUDA
+            const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
+            return inputAugmented;
+        }
         /**
          * @brief Getting output augmented of the Computation object
          * @details These functions provide access to the private members of the class, allowing read-only access to the data.
          * @return The corresponding private member.
          */
-        std::vector<double> getOutputAugmented()const{return outputAugmented;}
+        std::vector<double> getOutputAugmented()const{
+#ifdef USE_CUDA
+            const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
+            return outputAugmented;
+        }
         /**
          * @brief Getting the graph pointer of the Computation object
          * @details These functions provide access to the private members of the class, allowing read-only access to the data.
@@ -341,6 +362,9 @@ class Computation{
          * @return double: the value of the node in the graph
         */
         double getOutputNodeValue(std::string nodeName)const{
+#ifdef USE_CUDA
+            const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
             if(nodeToIndex.find(nodeName) == nodeToIndex.end()){
                 throw std::out_of_range("Computation::getOutputNodeValue: the node name is not in the graph");
             }
@@ -353,6 +377,9 @@ class Computation{
          * @return double: the value of the node in the graph
          */
         double getInputNodeValue(std::string nodeName)const{
+#ifdef USE_CUDA
+            const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
             if(nodeToIndex.find(nodeName) == nodeToIndex.end())
                 throw std::out_of_range("Computation::getInputNodeValue: the node name is not in the graph");
             int index = nodeToIndex.at(nodeName);
@@ -364,6 +391,9 @@ class Computation{
          * @return double: the value of the node in the graph
          */
         double getInputNodeValueArma(std::string nodeName)const{
+#ifdef USE_CUDA
+            const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
             if(nodeToIndex.find(nodeName) == nodeToIndex.end())
                 throw std::out_of_range("Computation::getInputNodeValueArma: the node name is not in the graph");
             int index = nodeToIndex.at(nodeName);
@@ -375,6 +405,10 @@ class Computation{
          * @param value: the value to set
          */
         void setInputNodeValue(std::string nodeName, double value){
+#ifdef USE_CUDA
+            syncCudaStateToHost();
+            cudaStateInitialized = false;
+#endif
             if(nodeToIndex.find(nodeName) == nodeToIndex.end())
                 throw std::out_of_range("Computation::setInputNodeValue: the node name is not in the graph");
             int index = nodeToIndex.at(nodeName);

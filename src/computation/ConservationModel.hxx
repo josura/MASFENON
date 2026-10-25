@@ -69,6 +69,9 @@ class ConservationModel{
          * @details The conservation term is computed as the product of the scale function, the matrix Wstar, and the input vector.
          */
         virtual arma::Col<double> conservationTerm(arma::Col<double> input,arma::Mat<double> Wstar, double time, std::vector<double> q = std::vector<double>());
+#ifdef USE_CUDA
+        bool supportsCudaPipeline() const { return cudaPipelineCompatible; }
+#endif
 
         //getters and setters
         /**
@@ -83,4 +86,8 @@ class ConservationModel{
          * @details This function sets the scale function used in the conservation model.
          */
         void setScaleFunction(std::function<double(double)> scaleFunction){this->scaleFunction = scaleFunction;}
+    private:
+#ifdef USE_CUDA
+        bool cudaPipelineCompatible = true;
+#endif
 };

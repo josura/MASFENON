@@ -9,6 +9,11 @@
 #include "data_structures/WeightedEdgeGraph.hxx"
 #include "utils/armaUtilities.hxx"
 #include "utils/mathUtilities.hxx"
+#ifdef USE_CUDA
+#include "computation/DissipationModelPow.hxx"
+#include "computation/DissipationModelScaled.hxx"
+#include "computation/PropagationCUDA.cuh"
+#endif
 #include <cstdlib>
 #include <iostream>
 #include <map>
@@ -460,6 +465,12 @@ std::vector<double> Computation::computeAugmentedPerturbationEnhanced3(double ti
 
 
 std::vector<double> Computation::computeAugmentedPerturbationEnhanced4(double timeStep, bool saturation, const std::vector<double>& saturationsVector, const std::vector<double>& qVector){
+#ifdef USE_CUDA
+    if (advanceAugmentedPerturbationOnDevice(timeStep, saturation, saturationsVector, qVector)) {
+        syncCudaStateToHost();
+        return outputAugmented;
+    }
+#endif
     //control over the various models
     if (dissipationModel == nullptr) {
         throw std::invalid_argument("[ERROR] Computation::computeAugmentedPerturbationEnhanced4: dissipationModel is not set. abort");
@@ -520,6 +531,78 @@ std::vector<double> Computation::computeAugmentedPerturbationEnhanced4(double ti
     }
 }
 
+#ifdef USE_CUDA
+bool Computation::advanceAugmentedPerturbationOnDevice(double timeStep, bool saturation,
+                                                       const std::vector<double>& saturationsVector,
+                                                       const std::vector<double>& qVector) {
+    if (dissipationModel == nullptr || conservationModel == nullptr || propagationModel == nullptr || augmentedGraph == nullptr ||
+        !dissipationModel->supportsCudaPipeline() || !conservationModel->supportsCudaPipeline() ||
+        !propagationModel->supportsCudaPipeline() || !qVector.empty()) {
+        return false;
+    }
+
+    double saturationValue = 1.0;
+    if (saturation && !saturationsVector.empty()) {
+        saturationValue = saturationsVector.front();
+        for (const double value : saturationsVector) {
+            if (value != saturationValue) return false;
+        }
+    }
+
+    int dissipationMode = 0;
+    double dissipationParameter = 0.0;
+    if (const auto* model = dynamic_cast<DissipationModelPow*>(dissipationModel)) {
+        dissipationMode = 1;
+        dissipationParameter = model->getPower();
+    } else if (dynamic_cast<DissipationModelScaled*>(dissipationModel) != nullptr) {
+        dissipationMode = 2;
+        dissipationParameter = 0.5;
+    } else {
+        return false;
+    }
+
+    if (!cudaStateInitialized) {
+        const arma::Col<double> conservation = normalize1Rows(augmentedGraph->adjMatrix.asArmadilloMatrix()) * arma::ones<arma::Col<double>>(InputAugmentedArma.n_elem);
+        propagationModel->uploadCudaState(InputAugmentedArma);
+        propagationModel->setCudaConservation(conservation);
+        cudaStateInitialized = true;
+    }
+    propagationModel->runCudaFusedStep(dissipationMode, dissipationParameter, 0.5, 0.5, saturation, saturationValue);
+    cudaStateDirty = true;
+    return true;
+}
+
+void Computation::syncCudaStateToHost() {
+    if (cudaStateDirty && propagationModel != nullptr) {
+        InputAugmentedArma = propagationModel->downloadCudaState();
+        outputAugmented = armaColumnToVector(InputAugmentedArma);
+        inputAugmented = outputAugmented;
+        cudaStateDirty = false;
+    }
+}
+
+void Computation::syncToHost() {
+    syncCudaStateToHost();
+}
+
+const double* Computation::getDeviceNodeValuePointer(const std::string& nodeName) const {
+    const auto iterator = nodeToIndex.find(nodeName);
+    if (iterator == nodeToIndex.end() || !cudaStateInitialized || propagationModel == nullptr) return nullptr;
+    const double* state = propagationModel->cudaStatePointer();
+    return state == nullptr ? nullptr : state + iterator->second;
+}
+
+bool Computation::copyDeviceValueToNode(const std::string& nodeName, const double* source, double scale) {
+    const auto iterator = nodeToIndex.find(nodeName);
+    if (iterator == nodeToIndex.end() || !cudaStateInitialized || propagationModel == nullptr || source == nullptr) return false;
+    const double* state = propagationModel->cudaStatePointer();
+    if (state == nullptr) return false;
+    runCudaScaleCopy(source, const_cast<double*>(state) + iterator->second, scale);
+    cudaStateDirty = true;
+    return true;
+}
+#endif
+
         
 
 double Computation::getVirtualInputForType(std::string type, std::string sourceNode)const{
@@ -532,6 +615,9 @@ double Computation::getVirtualInputForType(std::string type, std::string sourceN
 
 }
 double Computation::getVirtualOutputForType(std::string type, std::string targetNode)const{
+#ifdef USE_CUDA
+    const_cast<Computation*>(this)->syncCudaStateToHost();
+#endif
     if(targetNode != ""){
         type = type + "_" + targetNode;
     }
@@ -541,6 +627,10 @@ double Computation::getVirtualOutputForType(std::string type, std::string target
 }
 
 void Computation::setInputVinForType(std::string type, double value, std::string sourceNode){
+#ifdef USE_CUDA
+    syncCudaStateToHost();
+    cudaStateInitialized = false;
+#endif
     //TODO if the augmented graph is deleted, switch to a direct map saved before deleting the graph
     //int index = augmentedGraph->getIndexFromName("v-in:" + type);
     std::string vinName = "v-in:" + type;
@@ -556,6 +646,10 @@ void Computation::setInputVinForType(std::string type, double value, std::string
 
 }
 void Computation::setInputVoutForType(std::string type, double value, std::string targetNode){
+#ifdef USE_CUDA
+    syncCudaStateToHost();
+    cudaStateInitialized = false;
+#endif
     //int index = augmentedGraph->getIndexFromName("v-out:" + type);
     std::string voutName = "v-out:" + type;
     if(targetNode != ""){
@@ -571,14 +665,26 @@ void Computation::setInputVoutForType(std::string type, double value, std::strin
 
 void Computation::setDissipationModel(DissipationModel *dissipationModel){
     this->dissipationModel = dissipationModel;
+#ifdef USE_CUDA
+    cudaStateInitialized = false;
+    cudaStateDirty = false;
+#endif
 }
 
 void Computation::setConservationModel(ConservationModel *conservationModel){
     this->conservationModel = conservationModel;
+#ifdef USE_CUDA
+    cudaStateInitialized = false;
+    cudaStateDirty = false;
+#endif
 }
 
 void Computation::setPropagationModel(PropagationModel *propagationModel){
     this->propagationModel = propagationModel;
+#ifdef USE_CUDA
+    cudaStateInitialized = false;
+    cudaStateDirty = false;
+#endif
 }
 
 
@@ -586,10 +692,18 @@ void Computation::setInputAugmented(const std::vector<double>& newInputAugmented
     if(newInputAugmented.size() == inputAugmented.size()){
         inputAugmented = newInputAugmented;
         InputAugmentedArma = arma::Col<double>(newInputAugmented);
+#ifdef USE_CUDA
+        cudaStateInitialized = false;
+        cudaStateDirty = false;
+#endif
     }
 }
 
 void Computation::resetVirtualOutputs(){
+#ifdef USE_CUDA
+    syncCudaStateToHost();
+    cudaStateInitialized = false;
+#endif
     //virtual outputs have the names starting with v-out:
     for(auto it = nodeToIndex.cbegin(); it!=nodeToIndex.cend();it++){
         if(it->first.find("v-out:") != std::string::npos){
@@ -612,6 +726,11 @@ void Computation::updateInput(const std::vector<double>& newInp, bool augmented)
             }
         }
     } else {
+#ifdef USE_CUDA
+        if (cudaStateDirty && newInp.empty()) {
+            return;
+        }
+#endif
         if (newInp.size() == 0) {
             InputAugmentedArma = arma::Col<double>(outputAugmented);
             inputAugmented = outputAugmented;    
@@ -620,6 +739,10 @@ void Computation::updateInput(const std::vector<double>& newInp, bool augmented)
             if(newInp.size() == inputAugmented.size()){
                 InputAugmentedArma = arma::Col<double>(newInp);
                 inputAugmented = newInp;
+#ifdef USE_CUDA
+                cudaStateInitialized = false;
+                cudaStateDirty = false;
+#endif
             }
         }
     }

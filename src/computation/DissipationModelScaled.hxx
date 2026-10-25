@@ -73,4 +73,11 @@ class DissipationModelScaled : public DissipationModel
          * @details This function returns the scale function used in the scaled dissipation model.
          */
         double getScale(double time){return scaleFunction(time);}
+#ifdef USE_CUDA
+        bool supportsCudaPipeline() const override { return cudaPipelineCompatible; }
+#endif
+    private:
+#ifdef USE_CUDA
+        bool cudaPipelineCompatible = true;
+#endif
 };

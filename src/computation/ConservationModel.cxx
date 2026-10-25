@@ -17,12 +17,18 @@ ConservationModel::ConservationModel(){
 }
 
 ConservationModel::ConservationModel(std::function<double(double)> scaleFunction){
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     this->scaleFunction = scaleFunction;
     // initialize the vectorized scaled function to be used later when the number of elements is known (to be able to meet a condition when being initialized, like returning a size 0 Matrix)
     this->scaleFunctionVectorized = [](double time)-> arma::Col<double>{return arma::Mat<double>(0,0);};
 }
 
 ConservationModel::ConservationModel(std::function<arma::Col<double>(double)> scaleFunction){
+#ifdef USE_CUDA
+    cudaPipelineCompatible = false;
+#endif
     this->scaleFunctionVectorized = scaleFunction;
 }
 
@@ -91,5 +97,4 @@ arma::Col<double> ConservationModel::conservationTerm(arma::Col<double> input, a
         return outputArma;
     }
 }
-
 
