@@ -14,3 +14,4 @@ CMakeUserPresets.json
 checkpoints
 build-cpu
 build-cuda
+*.nsys-rep
