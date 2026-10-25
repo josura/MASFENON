@@ -8,7 +8,12 @@
  * @todo Move the Agent related code and logic to separate files and classes.
  */
 #include <mpi.h>
+#ifdef USE_CUDA
+#include <cuda_runtime.h>
+#include "computation/PropagationCUDA.cuh"
+#endif
 #include <iostream>
+#include <thread>
 #include <vector>
 #include <string>
 #include <boost/program_options/value_semantic.hpp>
@@ -151,6 +156,21 @@ int main(int argc, char** argv) {
     auto start = std::chrono::steady_clock::now();
     // initialize MPI
     MPI_Init(&argc, &argv);
+
+#ifdef USE_CUDA
+    MPI_Comm localCommunicator;
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &localCommunicator);
+    int localRank;
+    MPI_Comm_rank(localCommunicator, &localRank);
+    int numDevices;
+    cudaGetDeviceCount(&numDevices);
+    if (numDevices == 0) {
+        std::cerr << "CUDA was enabled but no CUDA device is available" << std::endl;
+        MPI_Abort(MPI_COMM_WORLD, 1);
+    }
+    cudaSetDevice(localRank % numDevices);
+    MPI_Comm_free(&localCommunicator);
+#endif
 
     int numProcesses, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &numProcesses);
@@ -1417,7 +1437,13 @@ int main(int argc, char** argv) {
                 currentWorkload = workloadPerProcess;
             }
             rankVirtualInputsSizes[i] = finalWorkload * currentWorkload;
-            rankVirtualInputsBuffer.push_back(new double[finalWorkload * currentWorkload]);   // the array contains all the virtual outputs for the process types
+#ifdef USE_CUDA
+            double* buffer = nullptr;
+            cudaMalloc(&buffer, rankVirtualInputsSizes[i] * sizeof(double));
+            rankVirtualInputsBuffer.push_back(buffer);
+#else
+            rankVirtualInputsBuffer.push_back(new double[finalWorkload * currentWorkload]);
+#endif
         }
     } else if (virtualNodesGranularity == "typeAndNode"){
         // allocate the buffer for the virtual outputs for the combination of types and nodes
@@ -1429,7 +1455,13 @@ int main(int argc, char** argv) {
                 rankVirtualInputsSizes[sourceRank] = 0;
             }
             // allocate the array for the virtual inputs directed to the local rank types
+#ifdef USE_CUDA
+            double* buffer = nullptr;
+            cudaMalloc(&buffer, rankVirtualInputsSizes[sourceRank] * sizeof(double));
+            rankVirtualInputsBuffer.push_back(buffer);
+#else
             rankVirtualInputsBuffer.push_back(new double[rankVirtualInputsSizes[sourceRank]]);
+#endif
         }
             
     }
@@ -1447,7 +1479,13 @@ int main(int argc, char** argv) {
                     currentWorkload = workloadPerProcess;
                 }
                 rankVirtualOutputsSizes[i] = currentWorkload * finalWorkload;
-                virtualOutputs.push_back(new double[rankVirtualOutputsSizes[i]]);   // the array contains all the virtual outputs for the process types
+#ifdef USE_CUDA
+                double* buffer = nullptr;
+                cudaMalloc(&buffer, rankVirtualOutputsSizes[i] * sizeof(double));
+                virtualOutputs.push_back(buffer);
+#else
+                virtualOutputs.push_back(new double[rankVirtualOutputsSizes[i]]);
+#endif
             }
         } else if (virtualNodesGranularity == "typeAndNode"){ // finer granularity, one array for each type and node representing virtual nodes for each type and node (as a couple)
             
@@ -1461,12 +1499,29 @@ int main(int argc, char** argv) {
                 }
 
                 // allocate the array for the virtual outputs directed to the target rank types
-                virtualOutputs.push_back(new double[rankVirtualOutputsSizes[targetRank]]);                        
+#ifdef USE_CUDA
+                double* buffer = nullptr;
+                cudaMalloc(&buffer, rankVirtualOutputsSizes[targetRank] * sizeof(double));
+                virtualOutputs.push_back(buffer);
+#else
+                virtualOutputs.push_back(new double[rankVirtualOutputsSizes[targetRank]]);
+#endif
             }
         } else {
             if(rank==0)logger.printError("virtual nodes granularity is not any of the types. virtual nodes granularity available are type and typeAndNode");
             return 1;
         }
+
+#ifdef USE_CUDA
+    std::vector<cudaStream_t> mpiPackingStreams(numProcesses);
+    std::vector<std::vector<double>> mpiPackingHostStaging(numProcesses);
+    for (int targetRank = 0; targetRank < numProcesses; ++targetRank) {
+        mpiPackingHostStaging[targetRank].resize(rankVirtualOutputsSizes[targetRank]);
+    }
+    for (int targetRank = 0; targetRank < numProcesses; ++targetRank) {
+        cudaStreamCreateWithFlags(&mpiPackingStreams[targetRank], cudaStreamNonBlocking);
+    }
+#endif
 
     // load checkpoint if resumeCheckpoint parameter is set
     int startingInterIteration = 0;
@@ -1494,14 +1549,32 @@ int main(int argc, char** argv) {
                 {
                     if (saturation) {
                         if(vm.count("saturationTerm") == 0){
+#ifdef USE_CUDA
+                            if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true)) {
+                                typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
+                            }
+#else
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true);
+#endif
                         } else if (vm.count("saturationTerm") >= 1) {
                             double saturationTerm = vm["saturationTerm"].as<double>();
                             std::vector<double> saturationVector = std::vector<double>(typeComputations[i]->getAugmentedGraph()->getNumNodes(),saturationTerm);
+#ifdef USE_CUDA
+                            if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector)) {
+                                typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
+                            }
+#else
                             std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = true, saturationVector);
+#endif
                         }
                     } else{
+#ifdef USE_CUDA
+                        if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = false)) {
+                            typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = false);
+                        }
+#else
                         std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*(timestep/intratypeIterations), saturation = false);
+#endif
                     }
                 }
                 catch(const std::exception& e)
@@ -1571,8 +1644,17 @@ int main(int argc, char** argv) {
                 int targetPosition = i - targetRank * workloadPerProcess;
                 for(int j = 0; j < finalWorkload; j++ ){
                     int virtualOutputPosition = targetPosition + j * targetWorkload;
-                    
+#ifdef USE_CUDA
+                    const double* source = typeComputations[j]->getDeviceNodeValuePointer("v-out:" + types[i]);
+                    if (source != nullptr) {
+                        runCudaScaleCopyAsync(source, virtualOutputs[targetRank] + virtualOutputPosition, 1.0, mpiPackingStreams[targetRank]);
+                    } else {
+                        mpiPackingHostStaging[targetRank][virtualOutputPosition] = typeComputations[j]->getVirtualOutputForType(types[i]);
+                        cudaMemcpyAsync(virtualOutputs[targetRank] + virtualOutputPosition, &mpiPackingHostStaging[targetRank][virtualOutputPosition], sizeof(double), cudaMemcpyHostToDevice, mpiPackingStreams[targetRank]);
+                    }
+#else
                     virtualOutputs[targetRank][virtualOutputPosition] = typeComputations[j]->getVirtualOutputForType(types[i]);
+#endif
                 }
                 
             }
@@ -1598,8 +1680,18 @@ int main(int argc, char** argv) {
                                 logger.printError("source type not found in the types vector: aborting") << std::endl;
                                 return 1;
                             }
+#ifdef USE_CUDA
+                            const double* source = typeComputations[sourceTypePosition]->getDeviceNodeValuePointer(virtualNode.first);
+                            if (source != nullptr) {
+                                runCudaScaleCopyAsync(source, virtualOutputs[targetRank] + i, 1.0, mpiPackingStreams[targetRank]);
+                            } else {
+                                mpiPackingHostStaging[targetRank][i] = typeComputations[sourceTypePosition]->getOutputNodeValue(virtualNode.first);
+                                cudaMemcpyAsync(virtualOutputs[targetRank] + i, &mpiPackingHostStaging[targetRank][i], sizeof(double), cudaMemcpyHostToDevice, mpiPackingStreams[targetRank]);
+                            }
+#else
                             double virtualOutputValue = typeComputations[sourceTypePosition]->getOutputNodeValue(virtualNode.first);
                             virtualOutputs[targetRank][i] = virtualOutputValue;
+#endif
                         } else {
                             logger.printError("virtual node string is not in the correct format: aborting") << std::endl;
                             return 1;
@@ -1630,6 +1722,7 @@ int main(int argc, char** argv) {
         
         // receive the virtual outputs from the other processes
         MPI_Request request[numProcesses];
+        MPI_Request sendRequest[numProcesses];
         for(int i = 0; i < numProcesses; i++){
             int sourceRank = i;
             // receive only the virtual outputs for the types granularity (v-out for each type), or the full vectors for each pair of source type and target type
@@ -1659,7 +1752,10 @@ int main(int argc, char** argv) {
                 if(ranksPairMappedVirtualNodesVectors.contains(keyRanks)){
                     try
                     {
-                        MPI_Send(virtualOutputs.at(targetRank), rankVirtualOutputsSizes[targetRank], MPI_DOUBLE, targetRank, 0, MPI_COMM_WORLD);
+#ifdef USE_CUDA
+                        cudaStreamSynchronize(mpiPackingStreams[targetRank]);
+#endif
+                        MPI_Isend(virtualOutputs.at(targetRank), rankVirtualOutputsSizes[targetRank], MPI_DOUBLE, targetRank, 0, MPI_COMM_WORLD, &sendRequest[targetRank]);
                     }
                     catch(const std::exception& e)
                     {
@@ -1680,7 +1776,11 @@ int main(int argc, char** argv) {
             if(ranksPairMappedVirtualNodesVectors.contains(ranksPair)){
                 logger.printLog(true,"receiving virtuals outputs from process ", sourceRank, " to process ", rank);
                 try{
-                    MPI_Wait(&request[sourceRank], MPI_STATUS_IGNORE);
+                    int completed = 0;
+                    while (!completed) {
+                        MPI_Test(&request[sourceRank], &completed, MPI_STATUS_IGNORE);
+                        if (!completed) std::this_thread::yield();
+                    }
                 } catch(const std::exception& e){
                     std::cerr << e.what() << std::endl;
                     logger.printError("error in waiting for virtual outputs from process ") << sourceRank << " to process " << rank << std::endl;
@@ -1711,20 +1811,51 @@ int main(int argc, char** argv) {
                                 // } 
                                 // logger << std::endl;
                                 if(localTypePosition==sourceTypePosition){
-                                    if(sameTypeCommunication) typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank][virtualInputPosition]);
+                                    if(sameTypeCommunication) {
+#ifdef USE_CUDA
+                                        if (!typeComputations[ilocal]->copyDeviceValueToNode("v-in:" + types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank] + virtualInputPosition)) {
+                                            double value;
+                                            cudaMemcpy(&value, rankVirtualInputsBuffer[sourceRank] + virtualInputPosition, sizeof(double), cudaMemcpyDeviceToHost);
+                                            typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], value);
+                                        }
+#else
+                                        typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank][virtualInputPosition]);
+#endif
+                                    }
                                 } else {
+#ifdef USE_CUDA
+                                    if (!typeComputations[ilocal]->copyDeviceValueToNode("v-in:" + types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank] + virtualInputPosition)) {
+                                        double value;
+                                        cudaMemcpy(&value, rankVirtualInputsBuffer[sourceRank] + virtualInputPosition, sizeof(double), cudaMemcpyDeviceToHost);
+                                        typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], value);
+                                    }
+#else
                                     typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank][virtualInputPosition]);
+#endif
                                 }
                             }
                         }else if(quantizationMethod=="multiple"){
                             int countIntervalWidth = setDoubleIntervalWidth(interactionBetweenTypesMap[keyTypes], iterationInterType* timestep, (iterationInterType + 1)* timestep);
                             if(countIntervalWidth>0){
+#ifdef USE_CUDA
+                                if (typeComputations[ilocal]->copyDeviceValueToNode("v-in:" + types[sourceTypePosition], rankVirtualInputsBuffer[sourceRank] + virtualInputPosition, countIntervalWidth)) {
+                                    continue;
+                                }
+                                {
+                                    double newValue;
+                                    cudaMemcpy(&newValue, rankVirtualInputsBuffer[sourceRank] + virtualInputPosition, sizeof(double), cudaMemcpyDeviceToHost);
+                                    newValue *= countIntervalWidth;
+#else
                                 double newValue = rankVirtualInputsBuffer[sourceRank][virtualInputPosition]*countIntervalWidth;
+#endif
                                 if(localTypePosition==sourceTypePosition){
                                     if(sameTypeCommunication) typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], newValue);
                                 } else {
                                     typeComputations[ilocal]->setInputVinForType(types[sourceTypePosition], newValue);
                                 }
+#ifdef USE_CUDA
+                                }
+#endif
                             }
                         } else {
                             logger.printError("quantization method is not any of the types. quantization method available are single and multiple");
@@ -1773,7 +1904,15 @@ int main(int argc, char** argv) {
                         if(interactionBetweenTypesFinerMap.contains(interactionKey)){
                             if(quantizationMethod=="single"){
                                 if(setDoubleContainsInterval(interactionBetweenTypesFinerMap[interactionKey], iterationInterType* timestep, (iterationInterType + 1)* timestep)){
+#ifdef USE_CUDA
+                                    if (typeComputations[targetTypeIndex]->copyDeviceValueToNode(virtualInputNodeName, rankVirtualInputsBuffer[sourceRank] + i)) {
+                                        continue;
+                                    }
+                                    double newValue;
+                                    cudaMemcpy(&newValue, rankVirtualInputsBuffer[sourceRank] + i, sizeof(double), cudaMemcpyDeviceToHost);
+#else
                                     double newValue = rankVirtualInputsBuffer[sourceRank][i];
+#endif
                                     try{
                                         if(sourceType == targetType){
                                             if(sameTypeCommunication) typeComputations[targetTypeIndex ]->setInputNodeValue(virtualInputNodeName, newValue);
@@ -1793,7 +1932,16 @@ int main(int argc, char** argv) {
                             } else if(quantizationMethod=="multiple"){
                                 int countIntervalWidth = setDoubleIntervalWidth(interactionBetweenTypesFinerMap[interactionKey], iterationInterType* timestep, (iterationInterType + 1)* timestep);
                                 if(countIntervalWidth>0){
+#ifdef USE_CUDA
+                                    if (typeComputations[targetTypeIndex]->copyDeviceValueToNode(virtualInputNodeName, rankVirtualInputsBuffer[sourceRank] + i, countIntervalWidth)) {
+                                        continue;
+                                    }
+                                    double newValue;
+                                    cudaMemcpy(&newValue, rankVirtualInputsBuffer[sourceRank] + i, sizeof(double), cudaMemcpyDeviceToHost);
+                                    newValue *= countIntervalWidth;
+#else
                                     double newValue = rankVirtualInputsBuffer[sourceRank][i]*countIntervalWidth;
+#endif
                                     try{
                                         if(sourceType == targetType){
                                             if(sameTypeCommunication) typeComputations[targetTypeIndex ]->setInputNodeValue(virtualInputNodeName, newValue);
@@ -1822,6 +1970,17 @@ int main(int argc, char** argv) {
 
                         
                     }
+                }
+            }
+        }
+
+        for(int targetRank = 0; targetRank < numProcesses; targetRank++){
+            std::pair<int, int> keyRanks = std::make_pair(rank, targetRank);
+            if(ranksPairMappedVirtualNodesVectors.contains(keyRanks)){
+                int completed = 0;
+                while (!completed) {
+                    MPI_Test(&sendRequest[targetRank], &completed, MPI_STATUS_IGNORE);
+                    if (!completed) std::this_thread::yield();
                 }
             }
         }
@@ -1873,12 +2032,29 @@ int main(int argc, char** argv) {
     
     // delete the virtual outputs vector of arrays
     for(uint i = 0; i < virtualOutputs.size(); i++){
-        if (virtualOutputs.at(i) != nullptr) delete[] virtualOutputs.at(i);
+        if (virtualOutputs.at(i) != nullptr) {
+#ifdef USE_CUDA
+            cudaFree(virtualOutputs.at(i));
+#else
+            delete[] virtualOutputs.at(i);
+#endif
+        }
     }
     // delete the virtual inputs vector of arrays
     for(uint i = 0; i < rankVirtualInputsBuffer.size(); i++){
-        if (rankVirtualInputsBuffer.at(i) != nullptr) delete[] rankVirtualInputsBuffer.at(i);
+        if (rankVirtualInputsBuffer.at(i) != nullptr) {
+#ifdef USE_CUDA
+            cudaFree(rankVirtualInputsBuffer.at(i));
+#else
+            delete[] rankVirtualInputsBuffer.at(i);
+#endif
+        }
     }
+#ifdef USE_CUDA
+    for (cudaStream_t stream : mpiPackingStreams) {
+        cudaStreamDestroy(stream);
+    }
+#endif
 
     // save into the iterationMatrix files for every type if the option was set
     if (outputFormat == "iterationMatrix") {

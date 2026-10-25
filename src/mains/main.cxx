@@ -749,18 +749,36 @@ int main(int argc, char** argv ) {
                     if(vm.count("saturationTerm") == 0){
                         // std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced2((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = true);
                         //std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced3((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = true, std::vector<double>(), std::vector<double>(), propagationScalingFunction);
+#ifdef USE_CUDA
+                        if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true)) {
+                            typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true);
+                        }
+#else
                         std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true);
+#endif
                     } else if (vm.count("saturationTerm") >= 1) {
                         double saturationTerm = vm["saturationTerm"].as<double>();
                         std::vector<double> saturationVector = std::vector<double>(graphsNodes[invertedTypesIndexes[i]].size(),saturationTerm);
                         // std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced2((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = true, saturationVector);
                         //std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced3((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = true, saturationVector, std::vector<double>(), propagationScalingFunction); 
+#ifdef USE_CUDA
+                        if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true, saturationVector)) {
+                            typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true, saturationVector);
+                        }
+#else
                         std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = true, saturationVector);
+#endif
                     }
                 } else{
                     // std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced2((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = false);
                     //std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced3((iterationIntertype*intratypeIterations + iterationIntratype)*timestep, saturation = false, std::vector<double>(), std::vector<double>(), propagationScalingFunction);
+#ifdef USE_CUDA
+                    if (!typeComputations[i]->advanceAugmentedPerturbationOnDevice((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = false)) {
+                        typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = false);
+                    }
+#else
                     std::vector<double> outputValues = typeComputations[i]->computeAugmentedPerturbationEnhanced4((iterationInterType*intratypeIterations + iterationIntraType)*timestep, saturation = false);
+#endif
                 }
             }
             //save output values
